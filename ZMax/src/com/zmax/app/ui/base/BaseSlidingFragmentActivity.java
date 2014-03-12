@@ -31,12 +31,11 @@ public class BaseSlidingFragmentActivity extends SlidingFragmentActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setTitle(R.string.app_name);
-		setContentView(R.layout.content_frame);
-		requestWindowFeature(Window.FEATURE_NO_TITLE);
+		setContentView(R.layout.above_content_frame);
 // 
 		// check if the content frame contains the menu frame
 		if (findViewById(R.id.menu_frame) == null) {
-			setBehindContentView(R.layout.menu_frame);
+			setBehindContentView(R.layout.behind_menu_frame);
 			getSlidingMenu().setSlidingEnabled(true);
 			getSlidingMenu().setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
 			// show home as up so we can toggle
