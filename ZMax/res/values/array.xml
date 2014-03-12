@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="color_names">
+        <item>首页</item>
+        <item>玩转ZMAX</item>
+        <item>我的账户</item>
+        <item>设置</item>
+    </string-array>
+
+    <array name="colors">
+        <item>#FFFF0000</item>
+        <item>#FF00FF00</item>
+        <item>#FF0000FF</item>
+    </array>
+
+</resources>
