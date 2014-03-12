@@ -20,7 +20,7 @@ import com.zmax.app.ui.fragment.MoreMenuFragment;
  * mode, it will enable the SlidingMenu, and in landscape mode, it
  * will be a dual pane layout.
  * 
- * @author jeremy
+ * @author jeremyssss
  *
  */
 public class BaseSlidingFragmentActivity extends SlidingFragmentActivity {

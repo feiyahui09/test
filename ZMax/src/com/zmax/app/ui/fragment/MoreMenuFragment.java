@@ -15,7 +15,8 @@ import com.zmax.app.ui.MainActivity;
 public class MoreMenuFragment extends ListFragment {
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
 		return inflater.inflate(R.layout.bedind_menu_list, null);
 	}
 
@@ -23,8 +24,9 @@ public class MoreMenuFragment extends ListFragment {
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 		String[] colors = getResources().getStringArray(R.array.color_names);
-		ArrayAdapter<String> colorAdapter = new ArrayAdapter<String>(getActivity(), 
-				android.R.layout.simple_list_item_1, android.R.id.text1, colors);
+		ArrayAdapter<String> colorAdapter = new ArrayAdapter<String>(
+				getActivity(), android.R.layout.simple_list_item_1,
+				android.R.id.text1, colors);
 		setListAdapter(colorAdapter);
 	}
 
@@ -44,7 +46,7 @@ public class MoreMenuFragment extends ListFragment {
 		case 3:
 			newContent = new SettingFragment(android.R.color.white);
 			break;
-		 
+
 		}
 		if (newContent != null)
 			switchFragment(newContent);
@@ -54,12 +56,11 @@ public class MoreMenuFragment extends ListFragment {
 	private void switchFragment(Fragment fragment) {
 		if (getActivity() == null)
 			return;
-		
+
 		if (getActivity() instanceof MainActivity) {
 			MainActivity fca = (MainActivity) getActivity();
 			fca.switchContent(fragment);
-		}  
+		}
 	}
-
 
 }

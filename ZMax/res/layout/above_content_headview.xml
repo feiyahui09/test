@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="50dp" 
+    android:background="#ffffff">
+
+    <Button
+        android:id="@+id/btn_more"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:text="more " >
+    </Button>
+
+    <TextView
+        android:id="@+id/xlistview_footer_hint_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="hihi"
+        android:visibility="gone" />
+
+    <Button
+        android:id="@+id/btn_activities"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="活动 " >
+    </Button>
+
+    <Button
+        android:id="@+id/btn_hotel_book"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        
+        android:layout_toRightOf="@+id/btn_activities"
+        android:text="酒店预订 " >
+    </Button>
+
+</RelativeLayout>
