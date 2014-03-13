@@ -1,5 +1,8 @@
 package com.zmax.app.ui.fragment;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -9,7 +12,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.zmax.app.R;
+import com.zmax.app.adapter.ActititiesListAdapter;
+import com.zmax.app.model.ActivityDetail;
 import com.zmax.app.ui.MainActivity;
+import com.zmax.app.utils.Constant;
 import com.zmax.app.widget.XListView;
 import com.zmax.app.widget.XListView.IXListViewListener;
 
@@ -23,6 +29,8 @@ public class ActvitesListFragment extends Fragment implements
 	private Button btn_hotel_book;
 	private Button btn_activities_list;
 	private Button btn_more;
+
+	private ActititiesListAdapter adapter;
 
 	public ActvitesListFragment() {
 		this(R.color.white);
@@ -67,8 +75,14 @@ public class ActvitesListFragment extends Fragment implements
 			}
 		});
 
+		adapter = new ActititiesListAdapter(getActivity());
+		adapter.appendToList(Constant.getFalseData(false));
+		listview.setAdapter(adapter);
+
 		return view;
 	}
+
+
 
 	private void switchFragment(Fragment fragment) {
 		if (getActivity() == null)
@@ -99,14 +113,19 @@ public class ActvitesListFragment extends Fragment implements
 
 	@Override
 	public void onRefresh() {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void onLoadMore() {
-		// TODO Auto-generated method stub
+		adapter.appendToList(Constant.getFalseData(false));
+		onLoad();
+	}
 
+	protected void onLoad() {
+		listview.stopRefresh();
+		listview.stopLoadMore();
+		listview.setRefreshTime("刚刚");
 	}
 
 }

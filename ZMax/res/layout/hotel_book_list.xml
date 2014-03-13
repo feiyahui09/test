@@ -2,11 +2,27 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="#333333" >
+    android:background="#333333"
+    android:orientation="vertical" >
 
     <include layout="@layout/above_content_headview" />
 
-    
+    <FrameLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" >
+
+        <com.zmax.app.widget.VerticalViewPager
+            android:id="@+id/vvp_hotel"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <LinearLayout
+            android:id="@+id/indicator"
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|right"
+            android:layout_marginBottom="6dp" />
+    </FrameLayout>
 
 </LinearLayout>
