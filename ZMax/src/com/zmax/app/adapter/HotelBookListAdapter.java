@@ -11,28 +11,25 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.zmax.app.R;
-import com.zmax.app.model.ActivityDetail;
+import com.zmax.app.model.Act;
 import com.zmax.app.widget.PagerAdapter;
 
 public class HotelBookListAdapter extends PagerAdapter {
 
 	private List<View> mListViews=new ArrayList<View>();
-	private List<ActivityDetail> mDetails=new ArrayList<ActivityDetail>();
+	private List<Act> mDetails=new ArrayList<Act>();
 	private Context mContext;
 
-	public HotelBookListAdapter(Context context, List<ActivityDetail> list) {
+	public HotelBookListAdapter(Context context, List<View> list) {
 		this.mContext = context;
-		this.mDetails = list;
-	}
-	
-	public HotelBookListAdapter( List<View> list) {
 		this.mListViews = list;
 	}
+	 
 
 	private void init() {
 		LayoutInflater inflater = ((Activity) mContext).getLayoutInflater();
 		for (int i = 0; i < mDetails.size(); i++) {
-			View view = inflater.inflate(R.layout.activities_list_item, null);
+			View view = inflater.inflate(R.layout.hotel_book_list_item, null);
 			((ImageView) view.findViewById(R.id.iv_img))
 					.setBackgroundResource(R.drawable.ic_launcher);
 			mListViews.add(view);

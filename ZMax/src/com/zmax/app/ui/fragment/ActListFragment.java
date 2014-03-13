@@ -1,26 +1,26 @@
 package com.zmax.app.ui.fragment;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 
 import com.zmax.app.R;
-import com.zmax.app.adapter.ActititiesListAdapter;
-import com.zmax.app.model.ActivityDetail;
+import com.zmax.app.adapter.ActListAdapter;
+import com.zmax.app.ui.ActDetailFlashActivity;
 import com.zmax.app.ui.MainActivity;
 import com.zmax.app.utils.Constant;
 import com.zmax.app.widget.XListView;
 import com.zmax.app.widget.XListView.IXListViewListener;
 
-public class ActvitesListFragment extends Fragment implements
-		IXListViewListener {
+public class ActListFragment extends Fragment implements IXListViewListener,
+		OnItemClickListener {
 
 	protected XListView listview;
 	protected View view;
@@ -30,13 +30,13 @@ public class ActvitesListFragment extends Fragment implements
 	private Button btn_activities_list;
 	private Button btn_more;
 
-	private ActititiesListAdapter adapter;
+	private ActListAdapter adapter;
 
-	public ActvitesListFragment() {
+	public ActListFragment() {
 		this(R.color.white);
 	}
 
-	public ActvitesListFragment(int colorRes) {
+	public ActListFragment(int colorRes) {
 		mColorRes = colorRes;
 		setRetainInstance(true);
 	}
@@ -48,11 +48,14 @@ public class ActvitesListFragment extends Fragment implements
 			mColorRes = savedInstanceState.getInt("mColorRes");
 		int color = getResources().getColor(mColorRes);
 
-		view = inflater.inflate(R.layout.activities_list, null);
+		view = inflater.inflate(R.layout.act_list, null);
 		listview = (XListView) view.findViewById(R.id.list_view);
 		listview.setPullLoadEnable(true);
 		listview.setPullRefreshEnable(false);
 
+		/*
+		 * 头部tab切换 活动和预订酒店
+		 */
 		btn_activities_list = (Button) view.findViewById(R.id.btn_activities);
 		btn_hotel_book = (Button) view.findViewById(R.id.btn_hotel_book);
 
@@ -75,14 +78,13 @@ public class ActvitesListFragment extends Fragment implements
 			}
 		});
 
-		adapter = new ActititiesListAdapter(getActivity());
+		adapter = new ActListAdapter(getActivity());
 		adapter.appendToList(Constant.getFalseData(false));
 		listview.setAdapter(adapter);
+		listview.setOnItemClickListener(this);
 
 		return view;
 	}
-
-
 
 	private void switchFragment(Fragment fragment) {
 		if (getActivity() == null)
@@ -126,6 +128,15 @@ public class ActvitesListFragment extends Fragment implements
 		listview.stopRefresh();
 		listview.stopLoadMore();
 		listview.setRefreshTime("刚刚");
+	}
+
+	@Override
+	public void onItemClick(AdapterView<?> parent, View view, int position,
+			long id) {
+		Intent intent = new Intent();
+		intent.setClass(getActivity(), ActDetailFlashActivity.class);
+		getActivity().startActivity(intent);
+
 	}
 
 }

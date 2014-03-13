@@ -13,19 +13,19 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.zmax.app.R;
-import com.zmax.app.model.ActivityDetail;
+import com.zmax.app.model.Act;
 
-public class ActititiesListAdapter  extends BaseAdapter {
+public class ActListAdapter  extends BaseAdapter {
 
-		List<ActivityDetail> mList = new ArrayList<ActivityDetail>();
+		List<Act> mList = new ArrayList<Act>();
 		private Context mContext;
 		private LayoutInflater mInflater;
-		public ActititiesListAdapter(Context  context) {
+		public ActListAdapter(Context  context) {
 			mContext=context;
 			mInflater=((Activity)mContext).getLayoutInflater();
 		}
 
-		public void appendToList(List<ActivityDetail> lists) {
+		public void appendToList(List<Act> lists) {
 
 			if (lists == null) {
 				return;
@@ -56,10 +56,10 @@ public class ActititiesListAdapter  extends BaseAdapter {
 		public View getView(int position, View convertView, ViewGroup parent) {
 			// TODO Auto-generated method stub
 			ViewHolder holder;
-			ActivityDetail item = mList.get(position);
+			Act item = mList.get(position);
 			if (convertView == null) {
 				holder = new ViewHolder();
-				convertView = mInflater.inflate(R.layout.activities_list_item,
+				convertView = mInflater.inflate(R.layout.act_list_item,
 						null);
 				 
 				holder.img_thu = (ImageView) convertView

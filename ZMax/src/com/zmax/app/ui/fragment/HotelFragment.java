@@ -10,7 +10,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import com.zmax.app.R;
-import com.zmax.app.adapter.ActititiesListAdapter;
+import com.zmax.app.adapter.ActListAdapter;
 import com.zmax.app.adapter.HotelBookListAdapter;
 import com.zmax.app.ui.MainActivity;
 import com.zmax.app.utils.Constant;
@@ -45,7 +45,7 @@ public class HotelFragment extends Fragment {
 			mColorRes = savedInstanceState.getInt("mColorRes");
 		int color = getResources().getColor(mColorRes);
 
-		view = inflater.inflate(R.layout.activities_list_item, null);
+		view = inflater.inflate(R.layout.act_list_item, null);
 		((ImageView) view.findViewById(R.id.iv_img))
 				.setImageResource(R.drawable.ic_launcher);
 		return view;

@@ -5,7 +5,7 @@
     android:background="#333333"
     android:orientation="vertical" >
 
-    <include layout="@layout/above_content_headview" />
+    <include layout="@layout/above_content_header" />
 
     <FrameLayout
         android:layout_width="fill_parent"

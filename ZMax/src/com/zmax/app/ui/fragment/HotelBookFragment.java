@@ -9,6 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -20,7 +22,7 @@ import com.zmax.app.utils.Constant;
 import com.zmax.app.widget.VerticalViewPager;
 import com.zmax.app.widget.VerticalViewPager.OnPageChangeListener;
 
-public class HotelBookFragment extends Fragment implements OnPageChangeListener {
+public class HotelBookFragment extends Fragment implements OnPageChangeListener,OnItemClickListener {
 
 	private int mPosition = 0;
 
@@ -60,7 +62,7 @@ public class HotelBookFragment extends Fragment implements OnPageChangeListener 
 		btn_activities_list.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				switchFragment(new ActvitesListFragment(R.color.red));
+				switchFragment(new ActListFragment(R.color.red));
 			}
 		});
 
@@ -75,12 +77,12 @@ public class HotelBookFragment extends Fragment implements OnPageChangeListener 
 
 		pager = (VerticalViewPager) view.findViewById(R.id.vvp_hotel);
 		indicator = (LinearLayout) view.findViewById(R.id.indicator);
-		adapter = new HotelBookListAdapter(Constant.getFalseDataView(inflater,
-				false));
+		adapter = new HotelBookListAdapter(getActivity(),Constant.getHotelFalseDataView(getActivity(),inflater));
 		pager.setAdapter(adapter);
 		pager.setCurrentItem(mPosition);
 		pager.setOnPageChangeListener(this);
-		initPagerIndicator(Constant.getFalseDataView(inflater, false),
+		
+		initPagerIndicator(Constant.getHotelFalseDataView(getActivity(),inflater ),
 				indicator);
 		return view;
 	}
@@ -157,6 +159,13 @@ public class HotelBookFragment extends Fragment implements OnPageChangeListener 
 	public void onPageScrollStateChanged(int state) {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public void onItemClick(AdapterView<?> parent, View view, int position,
+			long id) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

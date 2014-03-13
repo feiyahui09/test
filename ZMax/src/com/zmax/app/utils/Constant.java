@@ -3,13 +3,17 @@ package com.zmax.app.utils;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.app.Activity;
+import android.content.Intent;
+import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.ImageView;
 
 import com.zmax.app.R;
-import com.zmax.app.model.ActivityDetail;
+import com.zmax.app.model.Act;
+import com.zmax.app.ui.HotelDetailActivity;
 
 public class Constant {
 	public static final boolean LOGD_ENABLE = true;
@@ -24,7 +28,7 @@ public class Constant {
 		List<Object> mList = new ArrayList<Object>();
 
 		for (int i = 0; i < 10; i++) {
-			ActivityDetail activityDetail = new ActivityDetail();
+			Act activityDetail = new Act();
 			if (bo)
 				activityDetail.dt = "2";
 			else
@@ -36,12 +40,12 @@ public class Constant {
 		return mList;
 	}
 
-	public static List<ActivityDetail> getFalseData(boolean bo) {
+	public static List<Act> getFalseData(boolean bo) {
 
-		List<ActivityDetail> mList = new ArrayList<ActivityDetail>();
+		List<Act> mList = new ArrayList<Act>();
 
 		for (int i = 0; i < 10; i++) {
-			ActivityDetail activityDetail = new ActivityDetail();
+			Act activityDetail = new Act();
 			if (bo)
 				activityDetail.dt = "2";
 			else
@@ -53,15 +57,24 @@ public class Constant {
 		return mList;
 	}
 
-	public static List<View> getFalseDataView(LayoutInflater inflater,
-			boolean bo) {
+	public static List<View> getHotelFalseDataView(final FragmentActivity fragmentActivity,
+			LayoutInflater inflater) {
 
 		List<View> mList = new ArrayList<View>();
 
 		for (int i = 0; i < 10; i++) {
-			View view = inflater.inflate(R.layout.activities_list_item, null);
+			View view = inflater.inflate(R.layout.hotel_book_list_item, null);
 			((ImageView) view.findViewById(R.id.iv_img))
-					.setBackgroundResource(R.drawable.ic_launcher);
+					.setBackgroundResource(R.drawable.icon2);
+
+			((Button) view.findViewById(R.id.btn_book))
+					.setOnClickListener(new OnClickListener() {
+						@Override
+						public void onClick(View v) {
+							fragmentActivity.startActivity(new Intent(fragmentActivity, HotelDetailActivity.class));
+
+						}
+					});
 			mList.add(view);
 
 		}

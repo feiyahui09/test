@@ -12,8 +12,7 @@
         android:name="com.zmax.app.ZMaxApplication"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
-        android:label="@string/app_name"
-       >
+        android:label="@string/app_name" >
         <activity
             android:name="com.zmax.app.ui.MainActivity"
             android:label="@string/app_name"
@@ -24,6 +23,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name="com.zmax.app.ui.ActDetailFlashActivity" />
+        <activity android:name="com.zmax.app.ui.ActDetailActivity" />
+         <activity android:name="com.zmax.app.ui.HotelDetailActivity" />
+          <activity android:name="com.zmax.app.ui.ActCalendarActivity" />
     </application>
 
 </manifest>

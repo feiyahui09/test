@@ -35,7 +35,7 @@ public class MoreMenuFragment extends ListFragment {
 		Fragment newContent = null;
 		switch (position) {
 		case 0:
-			newContent = new ActvitesListFragment(R.color.red);
+			newContent = new ActListFragment(R.color.red);
 			break;
 		case 1:
 			newContent = new PlayInZmaxFragment(R.color.green);

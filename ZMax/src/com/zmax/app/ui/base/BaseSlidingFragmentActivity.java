@@ -9,7 +9,7 @@ import android.view.Window;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.jeremyfeinstein.slidingmenu.lib.app.SlidingFragmentActivity;
 import com.zmax.app.R;
-import com.zmax.app.ui.fragment.ColorFragment;
+import com.zmax.app.ui.fragment.DefaultFragment;
 import com.zmax.app.ui.fragment.MoreMenuFragment;
 
 /**
@@ -52,7 +52,7 @@ public class BaseSlidingFragmentActivity extends SlidingFragmentActivity {
 		if (savedInstanceState != null)
 			mContent = getSupportFragmentManager().getFragment(savedInstanceState, "mContent");
 		if (mContent == null)
-			mContent = new ColorFragment(R.color.blue);	
+			mContent = new DefaultFragment(R.color.white);	
 		getSupportFragmentManager()
 		.beginTransaction()
 		.replace(R.id.content_frame, mContent)

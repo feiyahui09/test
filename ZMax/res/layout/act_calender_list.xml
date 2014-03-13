@@ -4,7 +4,15 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <include layout="@layout/above_content_headview" />
+    <include layout="@layout/detail_header" />
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="武汉关谷酒店" 
+        android:gravity="center"
+        android:textSize="21dp"/>
 
     <com.zmax.app.widget.XListView
         android:id="@+id/list_view"

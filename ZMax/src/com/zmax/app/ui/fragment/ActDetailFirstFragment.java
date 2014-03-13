@@ -9,15 +9,15 @@ import android.widget.RelativeLayout;
 
 import com.zmax.app.R;
 
-public class ColorFragment extends Fragment {
+public class ActDetailFirstFragment extends Fragment {
 	
 	private int mColorRes = -1;
 	
-	public ColorFragment() { 
+	public ActDetailFirstFragment() { 
 		this(R.color.white);
 	}
 	
-	public ColorFragment(int colorRes) {
+	public ActDetailFirstFragment(int colorRes) {
 		mColorRes = colorRes;
 		setRetainInstance(true);
 	}
