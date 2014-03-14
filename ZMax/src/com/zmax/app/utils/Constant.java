@@ -20,8 +20,15 @@ public class Constant {
 	public static final boolean LOG_SDCARD_ENABLE = true; // 是否打印日志在SDcard上，正式发版前记得设置为false
 	public static final String LOG_FILE_NAME = "com.zmax.app" + "_log.txt"; // 根据包名改变日志文件名字
 
-	// 登陆成功后的SessionKEY
-	public static String SESSION_KEY = "sessionKey";
+	public static final String FANCY_URL = "http://fancy.189.cn/service/request"; // 正式环境
+	// public static String FANCY_URL = "http://125.88.74.85/service/request"; //测试环境
+	// public static String FANCY_URL = "http://220.181.187.155/service/request"; //预发布环境
+
+	//  百度地图定位
+//	public static String AK = "seIhcSk2TiTqdHTjyGG8sjCn";
+	public static String AK = "F454f8a5efe5e577997931cc01de3974";
+	
+	public static String IP_LOCATION_URL = "http://api.map.baidu.com/location/ip";
 
 	public static List<Object> getFalseDataObject(boolean bo) {
 
@@ -57,8 +64,8 @@ public class Constant {
 		return mList;
 	}
 
-	public static List<View> getHotelFalseDataView(final FragmentActivity fragmentActivity,
-			LayoutInflater inflater) {
+	public static List<View> getHotelFalseDataView(
+			final FragmentActivity fragmentActivity, LayoutInflater inflater) {
 
 		List<View> mList = new ArrayList<View>();
 
@@ -71,7 +78,9 @@ public class Constant {
 					.setOnClickListener(new OnClickListener() {
 						@Override
 						public void onClick(View v) {
-							fragmentActivity.startActivity(new Intent(fragmentActivity, HotelDetailActivity.class));
+							fragmentActivity
+									.startActivity(new Intent(fragmentActivity,
+											HotelDetailActivity.class));
 
 						}
 					});

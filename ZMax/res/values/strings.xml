@@ -5,7 +5,7 @@
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
 
-        <!-- 上拉下拉 -->
+    <!-- 上拉下拉 -->
     <string name="xlistview_header_hint_normal">下拉刷新</string>
     <string name="xlistview_header_hint_ready">松开刷新数据</string>
     <string name="xlistview_header_hint_loading">正在加载...</string>
@@ -13,6 +13,9 @@
     <string name="xlistview_footer_hint_normal">点击加载更多</string>
     <string name="xlistview_footer_hint_ready">松开载入更多</string>
     <string name="press_again_exit">再按一次退出</string>
-    
-        
+
+    <!-- 错误提示 -->
+    <string name="httpError">连接失败</string>
+    <string name="httpisNull">没有网络</string>
+
 </resources>

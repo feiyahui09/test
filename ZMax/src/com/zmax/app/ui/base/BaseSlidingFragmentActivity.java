@@ -1,14 +1,15 @@
 package com.zmax.app.ui.base;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.view.View;
-import android.view.Window;
 
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.jeremyfeinstein.slidingmenu.lib.app.SlidingFragmentActivity;
 import com.zmax.app.R;
+import com.zmax.app.ui.fragment.ActListFragment;
 import com.zmax.app.ui.fragment.DefaultFragment;
 import com.zmax.app.ui.fragment.MoreMenuFragment;
 
@@ -72,12 +73,7 @@ public class BaseSlidingFragmentActivity extends SlidingFragmentActivity {
 		sm.setBehindScrollScale(0.25f);
 		sm.setFadeDegree(0.25f);
 
-		// show the explanation dialog
-		/*if (savedInstanceState == null)
-			new AlertDialog.Builder(this)
-			.setTitle(R.string.hello_world)
-			.setMessage(R.string.action_settings)
-			.show();*/
+
 	}
 
 //	@Override
@@ -95,7 +91,7 @@ public class BaseSlidingFragmentActivity extends SlidingFragmentActivity {
 		getSupportFragmentManager().putFragment(outState, "mContent", mContent);
 	}
 
-	public void switchContent(final Fragment fragment) {
+	public   void switchContent(final Fragment fragment) {
 		mContent = fragment;
 		getSupportFragmentManager()
 		.beginTransaction()

@@ -2,11 +2,20 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.zmax.app"
     android:versionCode="1"
-    android:versionName="1.0" >
+    android:versionName="0.1.0" >
 
     <uses-sdk
         android:minSdkVersion="8"
         android:targetSdkVersion="18" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_LOGS" />
 
     <application
         android:name="com.zmax.app.ZMaxApplication"
@@ -25,8 +34,8 @@
         </activity>
         <activity android:name="com.zmax.app.ui.ActDetailFlashActivity" />
         <activity android:name="com.zmax.app.ui.ActDetailActivity" />
-         <activity android:name="com.zmax.app.ui.HotelDetailActivity" />
-          <activity android:name="com.zmax.app.ui.ActCalendarActivity" />
+        <activity android:name="com.zmax.app.ui.HotelDetailActivity" />
+        <activity android:name="com.zmax.app.ui.ActCalendarActivity" />
     </application>
 
 </manifest>
