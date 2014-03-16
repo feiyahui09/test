@@ -23,6 +23,7 @@ public class Constant {
 	public static final String FANCY_URL = "http://fancy.189.cn/service/request"; // 正式环境
 	// public static String FANCY_URL = "http://125.88.74.85/service/request"; //测试环境
 	// public static String FANCY_URL = "http://220.181.187.155/service/request"; //预发布环境
+	public static final String TEST_ICON_URI = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQQGKJtgkUvw47FeyYwTia3chxBqChjxqKgRmX_QItRWAhVqJjc";
 
 	//  百度地图定位
 	public static String MAP_SDK_KEY = "seIhcSk2TiTqdHTjyGG8sjCn";

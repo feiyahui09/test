@@ -63,7 +63,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/ll_avail_service"
+                android:id="@+id/ll_hotel_facility"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal" >

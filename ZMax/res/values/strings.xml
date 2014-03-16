@@ -18,4 +18,17 @@
     <string name="httpError">连接失败</string>
     <string name="httpisNull">没有网络</string>
 
+    
+    
+    
+    
+    
+    
+    
+    
+    <!-- hotel -->
+     
+    <string name="hotel_facility">酒店配套设施</string>
+    
+    
 </resources>

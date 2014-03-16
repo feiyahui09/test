@@ -20,7 +20,7 @@ public class HotelDetailActivity extends BaseActivity implements
 
 	private Button btn_Back, btn_Share;
 	private LinearLayout ll_act_calendar, ll_address, ll_phone,
-			ll_avail_service, ll_date_pick, ll_room_list, ll_comment;
+	ll_hotel_facility, ll_date_pick, ll_room_list, ll_comment;
 	private ImageView iv_head_img;
 
 	@Override
@@ -38,7 +38,7 @@ public class HotelDetailActivity extends BaseActivity implements
 		ll_act_calendar = (LinearLayout) findViewById(R.id.ll_act_calendar);
 		ll_address = (LinearLayout) findViewById(R.id.ll_address);
 		ll_phone = (LinearLayout) findViewById(R.id.ll_phone);
-		ll_avail_service = (LinearLayout) findViewById(R.id.ll_avail_service);
+		ll_hotel_facility = (LinearLayout) findViewById(R.id.ll_hotel_facility);
 		ll_date_pick = (LinearLayout) findViewById(R.id.ll_date_pick);
 		ll_room_list = (LinearLayout) findViewById(R.id.ll_room_list);
 		ll_comment = (LinearLayout) findViewById(R.id.ll_comment);
@@ -47,7 +47,7 @@ public class HotelDetailActivity extends BaseActivity implements
 		ll_act_calendar.setOnClickListener(this);
 		ll_address.setOnClickListener(this);
 		ll_phone.setOnClickListener(this);
-		ll_avail_service.setOnClickListener(this);
+		ll_hotel_facility.setOnClickListener(this);
 		ll_date_pick.setOnClickListener(this);
 		ll_room_list.setOnClickListener(this);
 		ll_comment.setOnClickListener(this);
@@ -92,8 +92,9 @@ public class HotelDetailActivity extends BaseActivity implements
 		case R.id.ll_phone:
 			Utility.goDialPhone(mContext, "10086");
 			break;
-		case R.id.ll_avail_service:
-
+		case R.id.ll_hotel_facility:
+			intent.setClass(mContext, HotelFacilityActivity.class);
+			mContext.startActivity(intent);
 			break;
 		case R.id.ll_date_pick:
 

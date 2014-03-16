@@ -54,6 +54,7 @@
         <activity android:name="com.zmax.app.ui.ActDetailFlashActivity" />
         <activity android:name="com.zmax.app.ui.ActDetailActivity" />
         <activity android:name="com.zmax.app.ui.HotelDetailActivity" />
+        <activity android:name="com.zmax.app.ui.HotelFacilityActivity" />
         <activity android:name="com.zmax.app.ui.ActCalendarActivity" />
         <activity android:name="com.zmax.app.map.RoutePlanDemo" />
 
