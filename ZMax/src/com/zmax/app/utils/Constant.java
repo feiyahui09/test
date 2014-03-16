@@ -25,9 +25,9 @@ public class Constant {
 	// public static String FANCY_URL = "http://220.181.187.155/service/request"; //预发布环境
 
 	//  百度地图定位
-//	public static String AK = "seIhcSk2TiTqdHTjyGG8sjCn";
-	public static String AK = "F454f8a5efe5e577997931cc01de3974";
-	
+	public static String MAP_SDK_KEY = "seIhcSk2TiTqdHTjyGG8sjCn";
+	 public static String MAP_AK = "Io8gL4Aybx3CZsdpSoKCqZPB";//avail 
+	  
 	public static String IP_LOCATION_URL = "http://api.map.baidu.com/location/ip";
 
 	public static List<Object> getFalseDataObject(boolean bo) {

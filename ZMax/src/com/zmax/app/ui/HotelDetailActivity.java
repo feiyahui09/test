@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.zmax.app.R;
+import com.zmax.app.map.RoutePlanDemo;
 import com.zmax.app.ui.base.BaseActivity;
 import com.zmax.app.utils.Utility;
 
@@ -84,6 +85,8 @@ public class HotelDetailActivity extends BaseActivity implements
 			break;
 
 		case R.id.ll_address:
+			intent.setClass(mContext, RoutePlanDemo.class);
+			mContext.startActivity(intent);
 
 			break;
 		case R.id.ll_phone:

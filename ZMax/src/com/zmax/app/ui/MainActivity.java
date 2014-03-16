@@ -33,7 +33,7 @@ public class MainActivity extends BaseSlidingFragmentActivity {
 							"   " + result.province + result.city, 2222).show();
 				}
 			}
-		}).execute(Constant.AK);
+		}).execute(Constant.MAP_AK);
 
 	}
 
