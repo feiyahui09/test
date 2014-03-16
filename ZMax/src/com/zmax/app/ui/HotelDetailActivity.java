@@ -103,7 +103,8 @@ public class HotelDetailActivity extends BaseActivity implements
 
 			break;
 		case R.id.ll_comment:
-
+			intent.setClass(mContext, HotelCommentActivity.class);
+			mContext.startActivity(intent);
 			break;
 
 		default:

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <include layout="@layout/detail_header" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/green"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/tv_hotel_name"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" >
+        </TextView>
+
+        <TextView
+            android:id="@+id/tv_hotel_index"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" >
+        </TextView>
+    </LinearLayout>
+
+    <com.zmax.app.widget.XListView
+        android:id="@+id/list_view"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="#f5f5f5"
+        android:cacheColorHint="#0000"
+        android:divider="@null" />
+
+    <TextView
+        android:id="@+id/tv_bottom_more"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="more " >
+    </TextView>
+
+</LinearLayout>

@@ -29,6 +29,6 @@
     <!-- hotel -->
      
     <string name="hotel_facility">酒店配套设施</string>
-    
+    <string name="hotel_comment">酒店评价</string>
     
 </resources>
