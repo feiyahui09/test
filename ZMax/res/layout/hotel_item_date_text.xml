@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="fill_parent"
+                android:layout_height="50dp">
+
+    <LinearLayout
+            android:id="@+id/date_text_cnt"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+
+        <CheckedTextView
+                android:textColor="@drawable/date_text_color_sel"
+                android:background="@drawable/date_item_bg_sel"
+                android:textSize="18sp"
+                android:padding="8dp"
+                android:textStyle="bold"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:layout_marginRight="1dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"/>
+
+        <CheckedTextView
+                android:textColor="@drawable/date_text_color_sel"
+                android:background="@drawable/date_item_bg_sel"
+                android:textSize="18sp"
+                android:padding="8dp"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:layout_marginRight="1dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"/>
+
+        <CheckedTextView
+                android:textColor="@drawable/date_text_color_sel"
+                android:background="@drawable/date_item_bg_sel"
+                android:textSize="18sp"
+                android:padding="8dp"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:layout_marginRight="1dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"/>
+
+        <CheckedTextView
+                android:textColor="@drawable/date_text_color_sel"
+                android:background="@drawable/date_item_bg_sel"
+                android:textSize="18sp"
+                android:padding="8dp"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:layout_marginRight="1dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"/>
+
+        <CheckedTextView
+                android:textColor="@drawable/date_text_color_sel"
+                android:background="@drawable/date_item_bg_sel"
+                android:textSize="18sp"
+                android:padding="8dp"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:layout_marginRight="1dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"/>
+
+        <CheckedTextView
+                android:textColor="@drawable/date_text_color_sel"
+                android:background="@drawable/date_item_bg_sel"
+                android:textSize="18sp"
+                android:padding="8dp"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:layout_width="50dp"
+                android:layout_marginRight="1dp"
+                android:layout_height="50dp"/>
+
+        <CheckedTextView
+             
+                android:background="@drawable/date_item_bg_sel"
+                android:textSize="18sp"
+                android:padding="8dp"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:layout_width="50dp"
+                android:layout_height="50dp"/>
+    </LinearLayout>
+
+    <LinearLayout
+            android:id="@+id/date_tag_cnt"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+
+        <ImageView
+                android:contentDescription="@string/pic_des"
+                android:background="@drawable/date_tag_start"
+                android:layout_weight="1"
+                android:layout_marginRight="1dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"/>
+
+
+        <ImageView
+                android:contentDescription="@string/pic_des"
+                android:background="@drawable/date_tag_start"
+                android:layout_weight="1"
+                android:layout_marginRight="1dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"/>
+
+
+        <ImageView
+                android:contentDescription="@string/pic_des"
+                android:background="@drawable/date_tag_start"
+                android:layout_weight="1"
+                android:layout_marginRight="1dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"/>
+
+        <ImageView
+                android:contentDescription="@string/pic_des"
+                android:background="@drawable/date_tag_start"
+                android:layout_weight="1"
+                android:layout_marginRight="1dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"/>
+
+
+        <ImageView
+                android:contentDescription="@string/pic_des"
+                android:background="@drawable/date_tag_start"
+                android:layout_weight="1"
+                android:layout_marginRight="1dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"/>
+
+
+        <ImageView
+                android:contentDescription="@string/pic_des"
+                android:background="@drawable/date_tag_start"
+                android:layout_weight="1"
+                android:layout_marginRight="1dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"/>
+
+
+        <ImageView
+                android:contentDescription="@string/pic_des"
+                android:background="@drawable/date_tag_start"
+                android:layout_weight="1"
+                android:layout_width="50dp"
+                android:layout_height="50dp"/>
+    </LinearLayout>
+
+</RelativeLayout>

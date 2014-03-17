@@ -31,6 +31,8 @@ public class MainActivity extends BaseSlidingFragmentActivity {
 					switchContent(new ActListFragment(R.color.red));
 					Toast.makeText(mContext,
 							"   " + result.province + result.city, 2222).show();
+
+				
 				}
 			}
 		}).execute(Constant.MAP_AK);

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
@@ -100,6 +101,8 @@ public class RoutePlanDemo extends Activity {
 			 */
 			app.mBMapManager.init(Constant.MAP_SDK_KEY, null);
 		}
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
+
 		setContentView(R.layout.routeplan);
 		CharSequence titleLable = "路线规划功能";
 		setTitle(titleLable);

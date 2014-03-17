@@ -18,17 +18,15 @@
     <string name="httpError">连接失败</string>
     <string name="httpisNull">没有网络</string>
 
-    
-    
-    
-    
-    
-    
-    
-    
     <!-- hotel -->
-     
+
     <string name="hotel_facility">酒店配套设施</string>
     <string name="hotel_comment">酒店评价</string>
+    <string name="hotel_date_pick">选择入住离店时间</string>
+    <string name="hotel_date_pick_info"> 您可最多可预订3个月内最多90天，如果需要入住更久，请致电027-88888888，我们将竭诚为您服务。</string>
+
+    
+     <string name="date_sel_text">MM 月 yyyy</string>
+        <string name="pic_des">pic_des</string>
     
 </resources>

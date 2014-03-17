@@ -1,9 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <color name="red">#900</color>
     <color name="green">#090</color>
     <color name="blue">#009</color>
     <color name="white">#FFF</color>
     <color name="black">#000</color>
-    
+
+    <!-- 日历 -->
+
+
+    <!--
+         <color name="calendar_active_month_bg">#fff5f7f9</color>
+    <color name="calendar_bg">#ffffffff</color>
+    <color name="calendar_divider">#ffbababa</color>
+    <color name="calendar_inactive_month_bg">#ffd7d9db</color>
+    <color name="calendar_selected_day_bg">#ff379bff</color>
+    <color name="calendar_highlighted_day_bg">#ccffcc</color>
+    <color name="calendar_selected_range_bg">#ff96caff</color>
+    -->
+
+    <color name="overtime_date_color">#090</color>
+    <!-- <color name="calendar_text_active">#ff778088</color> -->
+
+    <color name="current_date_color">#900</color>
+    <color name="unable_date_color">#009</color>
+
 </resources>
