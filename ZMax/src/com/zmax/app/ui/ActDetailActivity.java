@@ -80,10 +80,22 @@ public class ActDetailActivity extends BaseFragmentActivity {
 		if (Environment.MEDIA_MOUNTED.equals(Environment
 				.getExternalStorageState())) {
 			try {
-				sendIntent.setType("image/*");
-		        Uri uri = Uri.fromFile(getFileStreamPath("icon2.png"));
-		        sendIntent.putExtra(Intent.EXTRA_STREAM, uri);
-//			startActivity(Intent.createChooser(shareIntent, "请选择"));
+
+				sendIntent.setType("image/jpeg");
+				File tempFile = new File(FileUtils
+						.getSDRoot(), "share.jpeg");
+				if (!tempFile.exists()) {
+					tempFile.createNewFile();
+					FileOutputStream fOut = new FileOutputStream(
+							tempFile);
+					Bitmap bm = BitmapFactory.decodeResource(
+							getResources(), R.drawable.ic_launcher);
+					bm.compress(Bitmap.CompressFormat.JPEG, 100, fOut);
+					fOut.flush();
+					fOut.close();
+				}
+				sendIntent.putExtra(Intent.EXTRA_STREAM, Uri
+						.fromFile(tempFile));
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
