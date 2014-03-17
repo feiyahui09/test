@@ -20,3 +20,4 @@ gen
 target/
 
 *.iml
+/TimesSquare_Library
