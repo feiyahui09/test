@@ -101,7 +101,8 @@ public class HotelDetailActivity extends BaseActivity implements
 			mContext.startActivity(intent);
 			break;
 		case R.id.ll_room_list:
-
+			intent.setClass(mContext, OrderFillActivity.class);
+			mContext.startActivity(intent);
 			break;
 		case R.id.ll_comment:
 			intent.setClass(mContext, HotelCommentActivity.class);

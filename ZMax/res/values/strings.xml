@@ -24,9 +24,12 @@
     <string name="hotel_comment">酒店评价</string>
     <string name="hotel_date_pick">选择入住离店时间</string>
     <string name="hotel_date_pick_info"> 您可最多可预订3个月内最多90天，如果需要入住更久，请致电027-88888888，我们将竭诚为您服务。</string>
+   
+    <string name="order_fill">填写订单</string>
+    <string name="order_submit">确认订单</string>
+    <string name="order_detail">订单详情</string>
+    
+    <string name="date_sel_text">MM 月 yyyy</string>
+    <string name="pic_des">pic_des</string>
 
-    
-     <string name="date_sel_text">MM 月 yyyy</string>
-        <string name="pic_des">pic_des</string>
-    
 </resources>
