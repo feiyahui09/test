@@ -26,6 +26,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_LOGS" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
+      <uses-permission android:name="android.permission.SEND_SMS" />
 
     <!-- 使用定位功能所需权限 -->
     <permission android:name="android.permission.BAIDU_LOCATION_SERVICE" />
