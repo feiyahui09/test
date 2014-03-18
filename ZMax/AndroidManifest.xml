@@ -26,7 +26,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_LOGS" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
-      <uses-permission android:name="android.permission.SEND_SMS" />
+    <uses-permission android:name="android.permission.SEND_SMS" />
 
     <!-- 使用定位功能所需权限 -->
     <permission android:name="android.permission.BAIDU_LOCATION_SERVICE" />
@@ -59,8 +59,8 @@
         <activity android:name="com.zmax.app.ui.HotelCommentActivity" />
         <activity android:name="com.zmax.app.ui.HotelDatePickActivity" />
         <activity android:name="com.zmax.app.ui.ActCalendarActivity" />
-        
-           <activity android:name="com.zmax.app.ui.OrderFillActivity" />
+        <activity android:name="com.zmax.app.ui.RoomControlActivity" />
+        <activity android:name="com.zmax.app.ui.OrderFillActivity" />
         <activity android:name="com.zmax.app.map.RoutePlanDemo" />
 
         <service
