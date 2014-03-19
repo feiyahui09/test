@@ -1,6 +1,5 @@
 package com.zmax.app.ui.fragment;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import android.os.Bundle;
@@ -11,9 +10,12 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 
 import com.zmax.app.R;
 import com.zmax.app.adapter.HotelBookListAdapter;
@@ -27,8 +29,7 @@ public class HotelBookFragment extends Fragment implements OnPageChangeListener,
 	private int mPosition = 0;
 
 	protected View view;
-	private Button btn_activities_list;
-	private Button btn_hotel_book;
+	private RadioGroup rg_top_title;
 	private Button btn_more;
 
 	private HotelBookListAdapter adapter;
@@ -54,15 +55,16 @@ public class HotelBookFragment extends Fragment implements OnPageChangeListener,
 
 		view = inflater.inflate(R.layout.hotel_book_list, null);
 
-		btn_hotel_book = (Button) view.findViewById(R.id.btn_hotel_book);
-		btn_activities_list = (Button) view.findViewById(R.id.btn_activities);
-		btn_activities_list.setBackgroundResource(R.drawable.xlistview_arrow);
-		btn_hotel_book.setBackgroundResource(R.drawable.ic_launcher);
+		rg_top_title = (RadioGroup) view.findViewById(R.id.rg_top_title);
 
-		btn_activities_list.setOnClickListener(new OnClickListener() {
+		rg_top_title.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+
 			@Override
-			public void onClick(View v) {
-				switchFragment(new ActListFragment(R.color.red));
+			public void onCheckedChanged(RadioGroup group, int checkedId) {
+				if (checkedId == R.id.btn_hotel_book)
+					switchFragment(new HotelBookFragment(R.color.red));
+				else if (checkedId == R.id.btn_activities)
+					switchFragment(new ActListFragment(R.color.red));
 			}
 		});
 

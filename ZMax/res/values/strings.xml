@@ -2,6 +2,7 @@
 <resources>
 
     <string name="app_name">zmax</string>
+     <string name="app_name_en">ZMAX HOTEL</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
 
@@ -18,18 +19,24 @@
     <string name="httpError">连接失败</string>
     <string name="httpisNull">没有网络</string>
 
+    <!-- 侧滑菜单 -->
+
+    <string name="menu_index">首页</string>
+    <string name="menu_playzmax">玩转ZMAX</string>
+    <string name="menu_myaccount">我的账户</string>
+    <string name="menu_setting">设置</string>
     <!-- hotel -->
 
     <string name="hotel_facility">酒店配套设施</string>
     <string name="hotel_comment">酒店评价</string>
     <string name="hotel_date_pick">选择入住离店时间</string>
     <string name="hotel_date_pick_info"> 您可最多可预订3个月内最多90天，如果需要入住更久，请致电027-88888888，我们将竭诚为您服务。</string>
-     <string name="room_control">智能房控</string>
+    <string name="room_control">智能房控</string>
     <string name="order_fill">填写订单</string>
     <string name="order_submit">确认订单</string>
     <string name="order_detail">订单详情</string>
-    
     <string name="date_sel_text">MM 月 yyyy</string>
     <string name="pic_des">pic_des</string>
+
 
 </resources>

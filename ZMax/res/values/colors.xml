@@ -26,4 +26,13 @@
     <color name="current_date_color">#900</color>
     <color name="unable_date_color">#009</color>
 
+    
+    
+    <color name="default_menu_actived">#43c1ee</color>
+    <color name="default_menu_normal">#b2b2b2</color>
+     <color name="hotel_list_tile">#222222</color>
+     
+     <color name="index_title_actived">#43c1ee</color>
+    <color name="index_title_normal">#ffffff</color>
+    
 </resources>

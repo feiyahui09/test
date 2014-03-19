@@ -19,15 +19,13 @@ import com.zmax.app.utils.Constant;
 import com.zmax.app.widget.XListView;
 import com.zmax.app.widget.XListView.IXListViewListener;
 
-public class ActDetailSecondFragment extends Fragment implements IXListViewListener,
-		OnItemClickListener {
+public class ActDetailSecondFragment extends Fragment implements
+		IXListViewListener, OnItemClickListener {
 
 	protected XListView listview;
 	protected View view;
 	private int mColorRes = -1;
 
-	private Button btn_hotel_book;
-	private Button btn_activities_list;
 	private Button btn_more;
 
 	private ActListAdapter adapter;
@@ -52,19 +50,6 @@ public class ActDetailSecondFragment extends Fragment implements IXListViewListe
 		listview = (XListView) view.findViewById(R.id.list_view);
 		listview.setPullLoadEnable(true);
 		listview.setPullRefreshEnable(false);
-
-		btn_activities_list = (Button) view.findViewById(R.id.btn_activities);
-		btn_hotel_book = (Button) view.findViewById(R.id.btn_hotel_book);
-
-		btn_activities_list.setBackgroundResource(R.drawable.ic_launcher);
-		btn_hotel_book.setBackgroundResource(R.drawable.xlistview_arrow);
-
-		btn_hotel_book.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				switchFragment(new HotelBookFragment(R.color.red));
-			}
-		});
 
 		btn_more = (Button) view.findViewById(R.id.btn_more);
 		btn_more.setOnClickListener(new OnClickListener() {
@@ -130,7 +115,6 @@ public class ActDetailSecondFragment extends Fragment implements IXListViewListe
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
-	 
 
 	}
 

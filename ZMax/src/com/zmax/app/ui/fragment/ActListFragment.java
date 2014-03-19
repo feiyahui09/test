@@ -10,6 +10,9 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.RadioGroup.OnCheckedChangeListener;
 
 import com.zmax.app.R;
 import com.zmax.app.adapter.ActListAdapter;
@@ -26,9 +29,8 @@ public class ActListFragment extends Fragment implements IXListViewListener,
 	protected View view;
 	private int mColorRes = -1;
 
-	private Button btn_hotel_book;
-	private Button btn_activities_list;
 	private Button btn_more;
+	private RadioGroup rg_top_title;
 
 	private ActListAdapter adapter;
 
@@ -56,16 +58,16 @@ public class ActListFragment extends Fragment implements IXListViewListener,
 		/*
 		 * 头部tab切换 活动和预订酒店
 		 */
-		btn_activities_list = (Button) view.findViewById(R.id.btn_activities);
-		btn_hotel_book = (Button) view.findViewById(R.id.btn_hotel_book);
+		rg_top_title = (RadioGroup) view.findViewById(R.id.rg_top_title);
 
-		btn_activities_list.setBackgroundResource(R.drawable.ic_launcher);
-		btn_hotel_book.setBackgroundResource(R.drawable.xlistview_arrow);
+		rg_top_title.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 
-		btn_hotel_book.setOnClickListener(new OnClickListener() {
 			@Override
-			public void onClick(View v) {
-				switchFragment(new HotelBookFragment(R.color.red));
+			public void onCheckedChanged(RadioGroup group, int checkedId) {
+				if (checkedId == R.id.btn_hotel_book)
+					switchFragment(new HotelBookFragment(R.color.red));
+				else if (checkedId == R.id.btn_activities)
+					switchFragment(new ActListFragment(R.color.red));
 			}
 		});
 
@@ -135,7 +137,7 @@ public class ActListFragment extends Fragment implements IXListViewListener,
 			long id) {
 		Intent intent = new Intent();
 		intent.setClass(getActivity(), ActDetailFlashActivity.class);
-		getActivity().startActivity(intent);
+		// getActivity().startActivity(intent);
 
 	}
 
