@@ -21,14 +21,16 @@ public class Constant {
 	public static final String LOG_FILE_NAME = "com.zmax.app" + "_log.txt"; // 根据包名改变日志文件名字
 
 	public static final String FANCY_URL = "http://fancy.189.cn/service/request"; // 正式环境
-	// public static String FANCY_URL = "http://125.88.74.85/service/request"; //测试环境
-	// public static String FANCY_URL = "http://220.181.187.155/service/request"; //预发布环境
+	// public static String FANCY_URL = "http://125.88.74.85/service/request";
+	// //测试环境
+	// public static String FANCY_URL =
+	// "http://220.181.187.155/service/request"; //预发布环境
 	public static final String TEST_ICON_URI = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQQGKJtgkUvw47FeyYwTia3chxBqChjxqKgRmX_QItRWAhVqJjc";
 
 	//  百度地图定位
 	public static String MAP_SDK_KEY = "seIhcSk2TiTqdHTjyGG8sjCn";
-	 public static String MAP_AK = "Io8gL4Aybx3CZsdpSoKCqZPB";//avail 
-	  
+	public static String MAP_AK = "Io8gL4Aybx3CZsdpSoKCqZPB";// avail
+
 	public static String IP_LOCATION_URL = "http://api.map.baidu.com/location/ip";
 
 	public static List<Object> getFalseDataObject(boolean bo) {
@@ -72,19 +74,15 @@ public class Constant {
 
 		for (int i = 0; i < 10; i++) {
 			View view = inflater.inflate(R.layout.hotel_book_list_item, null);
-			((ImageView) view.findViewById(R.id.iv_img))
-					.setBackgroundResource(R.drawable.icon2);
 
-			((Button) view.findViewById(R.id.btn_book))
-					.setOnClickListener(new OnClickListener() {
-						@Override
-						public void onClick(View v) {
-							fragmentActivity
-									.startActivity(new Intent(fragmentActivity,
-											HotelDetailActivity.class));
+			view.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					fragmentActivity.startActivity(new Intent(fragmentActivity,
+							HotelDetailActivity.class));
 
-						}
-					});
+				}
+			});
 			mList.add(view);
 
 		}

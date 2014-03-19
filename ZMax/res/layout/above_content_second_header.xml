@@ -16,8 +16,8 @@
             android:layout_height="fill_parent"
             android:layout_weight="1"
             android:background="@drawable/index_title_bg_sel"
-            android:gravity="center"
             android:button="@null"
+            android:gravity="center"
             android:text="活动"
             android:textColor="@drawable/index_title_textview_sel"
             android:textSize="14sp" >
@@ -29,9 +29,9 @@
             android:layout_height="fill_parent"
             android:layout_weight="1"
             android:background="@drawable/index_title_bg_sel"
+            android:button="@null"
             android:gravity="center"
-            android:text="酒店预订 "
-               android:button="@null"
+            android:text="酒店"
             android:textColor="@drawable/index_title_textview_sel"
             android:textSize="14sp" >
         </RadioButton>
