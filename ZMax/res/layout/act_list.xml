@@ -4,10 +4,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <include layout="@layout/above_content_header" />
-
-    <include layout="@layout/above_content_second_header" />
-
     <com.zmax.app.widget.XListView
         android:id="@+id/list_view"
         android:layout_width="fill_parent"

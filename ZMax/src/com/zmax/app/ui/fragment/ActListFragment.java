@@ -29,9 +29,6 @@ public class ActListFragment extends Fragment implements IXListViewListener,
 	protected View view;
 	private int mColorRes = -1;
 
-	private Button btn_more;
-	private RadioGroup rg_top_title;
-
 	private ActListAdapter adapter;
 
 	public ActListFragment() {
@@ -55,47 +52,12 @@ public class ActListFragment extends Fragment implements IXListViewListener,
 		listview.setPullLoadEnable(true);
 		listview.setPullRefreshEnable(false);
 
-		/*
-		 * 头部tab切换 活动和预订酒店
-		 */
-		rg_top_title = (RadioGroup) view.findViewById(R.id.rg_top_title);
-
-		rg_top_title.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-
-			@Override
-			public void onCheckedChanged(RadioGroup group, int checkedId) {
-				if (checkedId == R.id.btn_hotel_book)
-					switchFragment(new HotelBookFragment(R.color.red));
-				else if (checkedId == R.id.btn_activities)
-					switchFragment(new ActListFragment(R.color.red));
-			}
-		});
-
-		btn_more = (Button) view.findViewById(R.id.btn_more);
-		btn_more.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				toggleMenu();
-			}
-		});
-
 		adapter = new ActListAdapter(getActivity());
 		adapter.appendToList(Constant.getFalseData(false));
 		listview.setAdapter(adapter);
 		listview.setOnItemClickListener(this);
 
 		return view;
-	}
-
-	private void switchFragment(Fragment fragment) {
-		if (getActivity() == null)
-			return;
-
-		if (getActivity() instanceof MainActivity) {
-			MainActivity fca = (MainActivity) getActivity();
-			fca.switchContent(fragment);
-		}
 	}
 
 	private void toggleMenu() {

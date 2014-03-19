@@ -21,8 +21,6 @@ public class HotelFragment extends Fragment {
 	private int mColorRes = -1;
 
 	protected View view;
-	private Button btn_activities_list;
-	private Button btn_hotel_book;
 	private Button btn_more;
 
 	private HotelBookListAdapter adapter;

@@ -17,38 +17,11 @@ import com.zmax.app.R;
 import com.zmax.app.ui.MainActivity;
 
 public class NetErrorFragment extends Fragment {
-	private RadioGroup rg_top_title;
-	private Button btn_more;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.net_error, null);
-		/*
-		 * 头部tab切换 活动和预订酒店
-		 */
-		rg_top_title = (RadioGroup) view.findViewById(R.id.rg_top_title);
-
-		rg_top_title.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-
-			@Override
-			public void onCheckedChanged(RadioGroup group, int checkedId) {
-				if (checkedId == R.id.btn_hotel_book)
-					switchFragment(new HotelBookFragment(R.color.red));
-				else if (checkedId == R.id.btn_activities)
-					switchFragment(new ActListFragment(R.color.red));
-			}
-		});
-
-		btn_more = (Button) view.findViewById(R.id.btn_more);
-		btn_more.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				if (getActivity() != null && isAdded())
-					((MainActivity) getActivity()).toggle();
-			}
-		});
 
 		view.setOnTouchListener(new OnTouchListener() {
 			@Override

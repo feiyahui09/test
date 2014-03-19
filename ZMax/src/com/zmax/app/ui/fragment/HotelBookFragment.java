@@ -24,13 +24,12 @@ import com.zmax.app.utils.Constant;
 import com.zmax.app.widget.VerticalViewPager;
 import com.zmax.app.widget.VerticalViewPager.OnPageChangeListener;
 
-public class HotelBookFragment extends Fragment implements OnPageChangeListener,OnItemClickListener {
+public class HotelBookFragment extends Fragment implements
+		OnPageChangeListener, OnItemClickListener {
 
 	private int mPosition = 0;
 
 	protected View view;
-	private RadioGroup rg_top_title;
-	private Button btn_more;
 
 	private HotelBookListAdapter adapter;
 
@@ -51,40 +50,19 @@ public class HotelBookFragment extends Fragment implements OnPageChangeListener,
 			Bundle savedInstanceState) {
 		if (savedInstanceState != null)
 			mPosition = savedInstanceState.getInt("mPosition");
-		 
 
 		view = inflater.inflate(R.layout.hotel_book_list, null);
 
-		rg_top_title = (RadioGroup) view.findViewById(R.id.rg_top_title);
-
-		rg_top_title.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-
-			@Override
-			public void onCheckedChanged(RadioGroup group, int checkedId) {
-				if (checkedId == R.id.btn_hotel_book)
-					switchFragment(new HotelBookFragment(R.color.red));
-				else if (checkedId == R.id.btn_activities)
-					switchFragment(new ActListFragment(R.color.red));
-			}
-		});
-
-		btn_more = (Button) view.findViewById(R.id.btn_more);
-		btn_more.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				toggleMenu();
-			}
-		});
-
 		pager = (VerticalViewPager) view.findViewById(R.id.vvp_hotel);
 		indicator = (LinearLayout) view.findViewById(R.id.indicator);
-		adapter = new HotelBookListAdapter(getActivity(),Constant.getHotelFalseDataView(getActivity(),inflater));
+		adapter = new HotelBookListAdapter(getActivity(),
+				Constant.getHotelFalseDataView(getActivity(), inflater));
 		pager.setAdapter(adapter);
 		pager.setCurrentItem(mPosition);
 		pager.setOnPageChangeListener(this);
-		
-		initPagerIndicator(Constant.getHotelFalseDataView(getActivity(),inflater ),
+
+		initPagerIndicator(
+				Constant.getHotelFalseDataView(getActivity(), inflater),
 				indicator);
 		return view;
 	}
@@ -104,27 +82,17 @@ public class HotelBookFragment extends Fragment implements OnPageChangeListener,
 	}
 
 	private void switchInidcator(int position) {
-		mPosition=position;
+		mPosition = position;
 		ImageView imageView;
 		for (int i = 0; i < indicator.getChildCount(); i++) {
 			imageView = (ImageView) indicator.getChildAt(i).findViewById(
 					R.id.iv_img);
 			imageView.setImageResource(R.drawable.ic_launcher);
 		}
-		imageView = (ImageView) indicator.getChildAt(position )
-				.findViewById(R.id.iv_img);
+		imageView = (ImageView) indicator.getChildAt(position).findViewById(
+				R.id.iv_img);
 		imageView.setImageResource(R.drawable.progress_drawable_);
 
-	}
-
-	private void switchFragment(Fragment fragment) {
-
-		if (getActivity() == null)
-			return;
-		if (getActivity() instanceof MainActivity) {
-			MainActivity fca = (MainActivity) getActivity();
-			fca.switchContent(fragment);
-		}
 	}
 
 	private void toggleMenu() {
@@ -147,7 +115,7 @@ public class HotelBookFragment extends Fragment implements OnPageChangeListener,
 	@Override
 	public void onPageScrolled(int position, float positionOffset,
 			int positionOffsetPixels) {
-		
+
 		switchInidcator(position);
 	}
 
@@ -167,7 +135,7 @@ public class HotelBookFragment extends Fragment implements OnPageChangeListener,
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }

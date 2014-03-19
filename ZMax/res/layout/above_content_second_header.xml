@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/above_content_second_header"
     android:layout_width="fill_parent"
     android:layout_height="@dimen/top_second_heigth"
     android:gravity="center_vertical" >
@@ -12,6 +13,7 @@
 
         <RadioButton
             android:id="@+id/btn_activities"
+            android:checked="true"
             android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:layout_weight="1"

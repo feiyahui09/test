@@ -27,6 +27,7 @@ public class MainActivity extends BaseSlidingFragmentActivity {
 			return;
 		}
 		initLocate();
+		 
 	}
 
 	private void initLocate() {
