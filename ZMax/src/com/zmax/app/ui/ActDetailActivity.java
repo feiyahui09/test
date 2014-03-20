@@ -56,9 +56,9 @@ public class ActDetailActivity extends BaseFragmentActivity {
 	}
 
 	private void initHeader() {
-		btn_Back = (Button) findViewById(R.id.btn_back);
+		btn_Back = (Button) findViewById(R.id.btn_more);
 		btn_Share = (Button) findViewById(R.id.btn_share);
-
+		btn_Share.setVisibility(View.VISIBLE);
 		btn_Back.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -68,8 +68,8 @@ public class ActDetailActivity extends BaseFragmentActivity {
 		btn_Share.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
- 			share();
-				
+				share();
+
 			}
 		});
 
@@ -84,20 +84,18 @@ public class ActDetailActivity extends BaseFragmentActivity {
 			try {
 
 				sendIntent.setType("image/jpeg");
-				File tempFile = new File(FileUtils
-						.getSDRoot(), "share.jpeg");
+				File tempFile = new File(FileUtils.getSDRoot(), "share.jpeg");
 				if (!tempFile.exists()) {
 					tempFile.createNewFile();
-					FileOutputStream fOut = new FileOutputStream(
-							tempFile);
-					Bitmap bm = BitmapFactory.decodeResource(
-							getResources(), R.drawable.ic_launcher);
+					FileOutputStream fOut = new FileOutputStream(tempFile);
+					Bitmap bm = BitmapFactory.decodeResource(getResources(),
+							R.drawable.ic_launcher);
 					bm.compress(Bitmap.CompressFormat.JPEG, 100, fOut);
 					fOut.flush();
 					fOut.close();
 				}
-				sendIntent.putExtra(Intent.EXTRA_STREAM, Uri
-						.fromFile(tempFile));
+				sendIntent
+						.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(tempFile));
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

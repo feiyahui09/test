@@ -37,4 +37,12 @@
 
     <integer name="num_cols">1</integer>
 
+    <!-- 活动详情 -->
+    <dimen name="act_detail_index_margin_top">10dp</dimen>
+    <dimen name="act_detail_index_margin_left">8dp</dimen>
+    <dimen name="act_detail_index_envelope_title_margin_top">200dp</dimen>
+    <dimen name="act_detail_index_envelope_title_margin_bottom">20dp</dimen>
+    <dimen name="act_detail_index_envelope_title_city_margin_top">99dp</dimen>
+    <dimen name="act_detail_index_envelope_title_city_margin_bottom">8dp</dimen>
+
 </resources>

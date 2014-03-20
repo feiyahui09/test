@@ -24,7 +24,7 @@ public class ActDetailFlashActivity extends BaseActivity {
 				goActDetail();
 			}
 		};
-		timer.schedule(task, 1100);
+		timer.schedule(task, 11100);
 	}
 
 	private void goActDetail() {

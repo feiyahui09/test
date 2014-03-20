@@ -99,7 +99,7 @@ public class ActListFragment extends Fragment implements IXListViewListener,
 			long id) {
 		Intent intent = new Intent();
 		intent.setClass(getActivity(), ActDetailFlashActivity.class);
-		// getActivity().startActivity(intent);
+		  getActivity().startActivity(intent);
 
 	}
 

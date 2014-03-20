@@ -26,7 +26,6 @@ public class ActDetailSecondFragment extends Fragment implements
 	protected View view;
 	private int mColorRes = -1;
 
-	private Button btn_more;
 
 	private ActListAdapter adapter;
 
@@ -51,14 +50,7 @@ public class ActDetailSecondFragment extends Fragment implements
 		listview.setPullLoadEnable(true);
 		listview.setPullRefreshEnable(false);
 
-		btn_more = (Button) view.findViewById(R.id.btn_more);
-		btn_more.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				toggleMenu();
-			}
-		});
+ 
 
 		adapter = new ActListAdapter(getActivity());
 		adapter.appendToList(Constant.getFalseData(false));
