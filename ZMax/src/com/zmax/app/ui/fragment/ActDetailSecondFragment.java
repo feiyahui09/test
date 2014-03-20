@@ -26,7 +26,6 @@ public class ActDetailSecondFragment extends Fragment implements
 	protected View view;
 	private int mColorRes = -1;
 
-
 	private ActListAdapter adapter;
 
 	public ActDetailSecondFragment() {
@@ -43,31 +42,19 @@ public class ActDetailSecondFragment extends Fragment implements
 			Bundle savedInstanceState) {
 		if (savedInstanceState != null)
 			mColorRes = savedInstanceState.getInt("mColorRes");
-		int color = getResources().getColor(mColorRes);
-
-		view = inflater.inflate(R.layout.act_list, null);
-		listview = (XListView) view.findViewById(R.id.list_view);
-		listview.setPullLoadEnable(true);
-		listview.setPullRefreshEnable(false);
-
- 
-
-		adapter = new ActListAdapter(getActivity());
-		adapter.appendToList(Constant.getFalseData(false));
-		listview.setAdapter(adapter);
-		listview.setOnItemClickListener(this);
+		//
+		// view = inflater.inflate(R.layout.act_list, null);
+		// listview = (XListView) view.findViewById(R.id.list_view);
+		// listview.setPullLoadEnable(true);
+		// listview.setPullRefreshEnable(false);
+		//
+		// adapter = new ActListAdapter(getActivity());
+		// adapter.appendToList(Constant.getFalseData(false));
+		// listview.setAdapter(adapter);
+		// listview.setOnItemClickListener(this);
+		view = inflater.inflate(R.layout.act_detail_second, null);
 
 		return view;
-	}
-
-	private void switchFragment(Fragment fragment) {
-		if (getActivity() == null)
-			return;
-
-		if (getActivity() instanceof MainActivity) {
-			MainActivity fca = (MainActivity) getActivity();
-			fca.switchContent(fragment);
-		}
 	}
 
 	private void toggleMenu() {

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_marginLeft="@dimen/act_detail_index_margin_left"
+        android:layout_marginRight="@dimen/act_detail_index_margin_left"
+        android:layout_marginTop="@dimen/act_detail_index_margin_top"
+        android:background="@drawable/act_detial_index_bg" >
+
+        <TextView
+            android:id="@+id/act_detail_title_hotel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginBottom="@dimen/act_detail_index_envelope_title_margin_bottom"
+            android:layout_marginTop="@dimen/act_detail_index_envelope_title_margin_top"
+            android:gravity="center"
+            android:text="ZMAX-HOTEL"
+            android:textColor="#000000"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/act_detail_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/act_detail_title_hotel"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:text="活动邀请函"
+            android:textColor="#000000"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/act_detail_city"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/act_detail_title"
+            android:layout_centerInParent="true"
+            android:layout_marginBottom="@dimen/act_detail_index_envelope_title_city_margin_bottom"
+            android:layout_marginTop="@dimen/act_detail_index_envelope_title_city_margin_top"
+            android:gravity="center"
+            android:text="武汉"
+            android:textColor="#595959"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/act_detail_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/act_detail_city"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:text="5月1号"
+            android:textColor="#595959"
+            android:textSize="14sp" />
+    </RelativeLayout>
+
+ 
+
+</RelativeLayout>
