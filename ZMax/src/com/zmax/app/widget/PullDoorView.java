@@ -38,6 +38,12 @@ public class PullDoorView extends RelativeLayout {
 
 	private ImageView mImgView;
 
+	private PullCallBack callBack;
+
+	public void setCallBack(PullCallBack closeCallBack) {
+		this.callBack = closeCallBack;
+	}
+
 	public PullDoorView(Context context) {
 		super(context);
 		mContext = context;
@@ -71,7 +77,8 @@ public class PullDoorView extends RelativeLayout {
 		mImgView.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT,
 				LayoutParams.MATCH_PARENT));
 		mImgView.setScaleType(ImageView.ScaleType.FIT_XY);// 填充整个屏幕
-		mImgView.setBackgroundColor(R.color.white);; // 默认背景
+		mImgView.setBackgroundColor(R.color.white);
+		; // 默认背景
 		addView(mImgView);
 	}
 
@@ -145,9 +152,19 @@ public class PullDoorView extends RelativeLayout {
 			postInvalidate();
 		} else {
 			if (mCloseFlag) {
-				this.setVisibility(View.GONE);
+				if (callBack == null)
+					this.setVisibility(View.GONE);
+				else {
+					callBack.onClosed(this);
+				}
 			}
 		}
+	}
+
+	public interface PullCallBack {
+
+		public void onClosed(PullDoorView pdv);
+
 	}
 
 }

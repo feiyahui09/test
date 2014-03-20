@@ -3,7 +3,8 @@
     android:id="@+id/above_content_second_header"
     android:layout_width="fill_parent"
     android:layout_height="@dimen/top_second_heigth"
-    android:gravity="center_vertical" >
+    android:gravity="center_vertical" 
+    android:visibility="gone">
 
     <RadioGroup
         android:id="@+id/rg_top_title"

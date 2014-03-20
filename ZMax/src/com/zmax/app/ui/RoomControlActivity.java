@@ -13,11 +13,12 @@ import com.zmax.app.ui.base.BaseFragmentActivity;
 import com.zmax.app.ui.fragment.ActDetailFirstFragment;
 import com.zmax.app.ui.fragment.ActDetailSecondFragment;
 import com.zmax.app.ui.fragment.ActDetailThirdFragment;
+import com.zmax.app.ui.fragment.RoomControlAirConditionFragment;
 
 public class RoomControlActivity extends BaseFragmentActivity {
 	private static final String TAG = RoomControlActivity.class.getSimpleName();
 
-	private Button btn_Back ;
+	private Button btn_Back;
 	private TextView tv_title;
 	private ViewPager pager;
 	private ActDetailAdapter adapter;
@@ -28,13 +29,12 @@ public class RoomControlActivity extends BaseFragmentActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.room_control);
 		initHeader();
-//		init();
-//		initData();
+		init();
+		initData();
 	}
 
 	private void init() {
 
- 
 		pager = (ViewPager) findViewById(R.id.pager);
 
 		adapter = new ActDetailAdapter(this);
@@ -44,9 +44,9 @@ public class RoomControlActivity extends BaseFragmentActivity {
 
 	private void initData() {
 
-		adapter.addTab(new ActDetailFirstFragment(R.color.red));
-		adapter.addTab(new ActDetailSecondFragment());
-		adapter.addTab(new ActDetailThirdFragment(R.color.white));
+		adapter.addTab(new RoomControlAirConditionFragment(R.color.red));
+		adapter.addTab(new RoomControlAirConditionFragment());
+		adapter.addTab(new RoomControlAirConditionFragment(R.color.white));
 	}
 
 	private void initHeader() {
@@ -57,9 +57,8 @@ public class RoomControlActivity extends BaseFragmentActivity {
 				finish();
 			}
 		});
-		tv_title=(TextView) findViewById(R.id.tv_title);
+		tv_title = (TextView) findViewById(R.id.tv_title);
 		tv_title.setText(getString(R.string.room_control));
 	}
 
-	 
 }
