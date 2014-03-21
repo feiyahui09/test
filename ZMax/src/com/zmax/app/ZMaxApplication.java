@@ -22,7 +22,7 @@ import com.zmax.app.utils.Log;
 
 public class ZMaxApplication extends Application {
 
-	private static final String TAG = ZMaxApplication.class.getSimpleName();
+	private static final String TAG_ = ZMaxApplication.class.getSimpleName();
 	private static ZMaxApplication mInstance = null;
 	public BMapManager mBMapManager = null;
 
@@ -31,7 +31,7 @@ public class ZMaxApplication extends Application {
 		super.onCreate();
 		mInstance=this;
 		init();
-		Log.d("TAG", "onCreate");
+		Log.d("TAG", "branch-test");
 
 	}
 
@@ -41,7 +41,12 @@ public class ZMaxApplication extends Application {
 		}
 		return mInstance;
 	}
-
+	public static ZMaxApplication getInstance2() {
+		if (mInstance == null) {
+			mInstance = new ZMaxApplication();
+		}
+		return mInstance;
+	}
 	public void init() {
 		
 		initImageLoader();
