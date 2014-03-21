@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.zmax.app.R;
 import com.zmax.app.model.Act;
@@ -87,36 +86,6 @@ public class Constant {
 			mList.add(view);
 
 		}
-
-		return mList;
-	}
-
-	public static List<View> getRoomControllFalseDataView(
-			final FragmentActivity fragmentActivity, LayoutInflater inflater) {
-
-		List<View> mList = new ArrayList<View>();
-
-		View view = inflater.inflate(R.layout.room_control_tv_above, null);
-
-		view.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				fragmentActivity.startActivity(new Intent(fragmentActivity,
-						HotelDetailActivity.class));
-
-			}
-		});
-		mList.add(view);
-		view = inflater.inflate(R.layout.room_control_tv_behind, null);
-
-		view.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-			Toast.makeText(fragmentActivity, "hi,this is from child echo", 2200).show();
-
-			}
-		});
-		mList.add(view);
 
 		return mList;
 	}

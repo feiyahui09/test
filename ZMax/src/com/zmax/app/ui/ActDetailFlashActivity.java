@@ -8,6 +8,7 @@ import android.os.Bundle;
 
 import com.zmax.app.R;
 import com.zmax.app.ui.base.BaseActivity;
+import com.zmax.app.ui.base.BaseFragmentActivity;
 
 public class ActDetailFlashActivity extends BaseActivity {
 	@Override

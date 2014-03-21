@@ -45,7 +45,7 @@ public class ZMaxApplication extends Application {
 	public void init() {
 		
 		initImageLoader();
-//		initEngineManager(this);
+		initEngineManager(this);
 		Thread.setDefaultUncaughtExceptionHandler(new CustomExceptionHandler());
 
 	}

@@ -45,7 +45,7 @@ public class RoomControlAirConditionFragment extends Fragment implements
 			mColorRes = savedInstanceState.getInt("mColorRes");
 		view = inflater.inflate(R.layout.room_control_fragment, null);
 //		pdv_bottom = ((CounterPullDoorView) view.findViewById(R.id.pdv_bottom));
-//		pdv_top = ((PullDoorView) view.findViewById(R.id.pdv_top));
+		pdv_top = ((PullDoorView) view.findViewById(R.id.pdv_top));
 //		pdv_top.setCallBack(this);
 //		pdv_bottom.setCallBack(this);
 		return view;
