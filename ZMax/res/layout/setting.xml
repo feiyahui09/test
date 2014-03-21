@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <include layout="@layout/detail_header" />
+
+    <Button
+        android:id="@+id/btn_feedback"
+        style="@style/setting_btn"
+        android:text="建议与反馈" />
+
+    <Button
+        android:id="@+id/btn_check_update"
+        style="@style/setting_btn"
+        android:text="版本检测" />
+
+    <Button
+        android:id="@+id/btn_welcome"
+        style="@style/setting_btn"
+        android:text="欢迎页" />
+
+    <Button
+        android:id="@+id/btn_user_regulation"
+        style="@style/setting_btn"
+        android:text="用户条款" />
+
+    <Button
+        android:id="@+id/btn_play_zmax"
+        style="@style/setting_btn"
+        android:text="玩转ZMAX指南" />
+
+    <Button
+        android:id="@+id/btn_member"
+        style="@style/setting_btn"
+        android:text="ZMAX会员权益" />
+
+    <Button
+        android:id="@+id/btn_about"
+        style="@style/setting_btn"
+        android:text="关于ZMAX" />
+
+</LinearLayout>

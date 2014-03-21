@@ -48,13 +48,43 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_marginLeft">@dimen/menu_item_padding_left</item>
     </style>
-     <style name="menu_item_ll">
+
+    <style name="menu_item_ll">
         <item name="android:gravity">center_vertical</item>
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">@dimen/menu_item_height</item>
         <item name="android:orientation">horizontal</item>
     </style>
 
-     
-     
+    <style name="setting_btn">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@null</item>
+    </style>
+
+    <style name="account_edittext">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/et_account_round_bg</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:selectAllOnFocus">true</item>
+    </style>
+
+    <style name="password_edittext">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/et_account_round_bg</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:selectAllOnFocus">true</item>
+        <item name="android:password">true</item>
+    </style>
+
+    <style name="sure_btn">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/btn_password_round_bg</item>
+    </style>
+
 </resources>

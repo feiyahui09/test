@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <EditText
+        android:id="@+id/et_account"
+        style="@style/account_edittext"
+        android:hint="手机号/证件号/会员卡号" />
+
+    <EditText
+        android:id="@+id/et_password"
+        style="@style/password_edittext"
+        android:hint="密码" />
+
+    <Button
+        android:id="@+id/btn_confirm"
+        style="@style/sure_btn"
+        android:text="登录" />
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/tv_forget_pw"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:gravity="center"
+            android:text="忘记密码？" />
+
+        <TextView
+            android:id="@+id/tv_regist"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:gravity="center"
+            android:text="还没有账号？注册吧~" />
+    </RelativeLayout>
+
+</LinearLayout>
