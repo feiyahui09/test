@@ -5,12 +5,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.zmax.app.R;
 import com.zmax.app.adapter.HotelCommentListAdapter;
-import com.zmax.app.adapter.HotelFacilityListAdapter;
 import com.zmax.app.ui.base.BaseActivity;
 import com.zmax.app.utils.Constant;
 import com.zmax.app.widget.XListView;
