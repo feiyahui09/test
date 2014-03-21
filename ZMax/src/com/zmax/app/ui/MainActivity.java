@@ -6,7 +6,6 @@ import android.widget.Toast;
 
 import com.zmax.app.R;
 import com.zmax.app.model.CityLocation;
-import com.zmax.app.net.NetWorkHelper;
 import com.zmax.app.task.GetCityLocationTask;
 import com.zmax.app.ui.base.BaseSlidingFragmentActivity;
 import com.zmax.app.ui.fragment.ActListFragment;

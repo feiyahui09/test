@@ -4,7 +4,7 @@
     android:layout_height="fill_parent" >
 
     <com.zmax.app.widget.VerticalViewPager
-        android:id="@+id/vpager"
+        android:id="@+id/vvp_hotel"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
