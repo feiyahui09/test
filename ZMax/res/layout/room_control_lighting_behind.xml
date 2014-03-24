@@ -1,11 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent" >
+    android:layout_height="fill_parent"
+    android:background="@drawable/room_control_tv_control_bg"
+    android:paddingBottom="@dimen/room_control_tv_behind_padding_left"
+    android:paddingLeft="@dimen/room_control_tv_behind_padding_left"
+    android:paddingRight="@dimen/room_control_tv_behind_padding_left" >
 
-    <com.zmax.app.widget.VerticalViewPager
-        android:id="@+id/vvp_hotel"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+    <RadioGroup
+        android:id="@+id/rg_lighting_model"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:orientation="vertical" >
 
-</FrameLayout>
+        <RadioButton
+            android:id="@+id/rb_lighting"
+            style="@style/room_control_lighting_model_button"
+            android:button="@null"
+            android:text="明亮模式" />
+
+        <RadioButton
+            android:id="@+id/rb_tv"
+            style="@style/room_control_lighting_model_button"
+            android:button="@null"
+            android:text="电视模式" />
+
+        <RadioButton
+            android:id="@+id/rb_reading"
+            style="@style/room_control_lighting_model_button"
+            android:button="@null"
+            android:text="阅读模式" />
+
+        <RadioButton
+            android:id="@+id/rb_sleep"
+            style="@style/room_control_lighting_model_button"
+            android:button="@null"
+            android:text="睡眠模式" />
+    </RadioGroup>
+
+</RelativeLayout>

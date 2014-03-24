@@ -1,8 +1,6 @@
 package com.zmax.app.ui;
 
 import android.os.Bundle;
-import android.support.v4.view.ViewPager;
-import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -11,13 +9,19 @@ import android.widget.TextView;
 
 import com.zmax.app.R;
 import com.zmax.app.adapter.ActDetailAdapter;
+import com.zmax.app.ui.RoomControlActivity.VerticalChangedCallback;
 import com.zmax.app.ui.base.BaseFragmentActivity;
+import com.zmax.app.ui.fragment.RoomControlAirConditionFragment;
+import com.zmax.app.ui.fragment.RoomControlLightingFragment;
 import com.zmax.app.ui.fragment.RoomControlTVFragment;
-import com.zmax.app.ui.fragment.RoomControlTVFragment.VerticalChangedCallback;
 import com.zmax.app.widget.SmartViewPager;
 
-public class RoomControlActivity extends BaseFragmentActivity implements
-		VerticalChangedCallback {
+public class RoomControlActivity extends BaseFragmentActivity {
+
+	public interface VerticalChangedCallback {
+		public void onCallBack(boolean isCurAbove);
+	}
+
 	private static final String TAG = RoomControlActivity.class.getSimpleName();
 
 	private ViewGroup above_content_header;
@@ -25,6 +29,7 @@ public class RoomControlActivity extends BaseFragmentActivity implements
 	private TextView tv_title;
 	private SmartViewPager pager;
 	private ActDetailAdapter adapter;
+	private VerticalChangedCallback callback;
 
 	public static boolean isCurAbove = true;
 
@@ -44,14 +49,29 @@ public class RoomControlActivity extends BaseFragmentActivity implements
 		adapter = new ActDetailAdapter(this);
 		pager.setAdapter(adapter);
 		pager.setOffscreenPageLimit(3);
+		callback = new VerticalChangedCallback() {
+
+			@Override
+			public void onCallBack(boolean isCurAbove) {
+				if (isCurAbove) {
+					// above_content_header.setVisibility(View.VISIBLE);
+					pager.setCanScroll(true);
+				} else {
+					// above_content_header.setVisibility(View.GONE);
+					pager.setCanScroll(false);
+				}
+
+			}
+		};
 
 	}
 
 	private void initData() {
+		adapter.addTab(new RoomControlLightingFragment(callback));
+		 adapter.addTab(new RoomControlTVFragment(callback));
+		 adapter.addTab(new RoomControlAirConditionFragment(callback));
+	
 
-		adapter.addTab(new RoomControlTVFragment(this));
-		adapter.addTab(new RoomControlTVFragment(this));
-		adapter.addTab(new RoomControlTVFragment(this));
 	}
 
 	private void initHeader() {
@@ -65,19 +85,6 @@ public class RoomControlActivity extends BaseFragmentActivity implements
 		});
 		tv_title = (TextView) findViewById(R.id.tv_title);
 		tv_title.setText(getString(R.string.room_control));
-	}
-
-	@Override
-	public void onCallBack(boolean isCurAbove) {
-
-		if (isCurAbove) {
-			above_content_header.setVisibility(View.VISIBLE);
-			pager.setCanScroll(true);
-		} else {
-			above_content_header.setVisibility(View.GONE);
-			pager.setCanScroll(false);
-		}
-
 	}
 
 }

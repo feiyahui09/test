@@ -15,7 +15,8 @@ import com.zmax.app.manage.RoomControlManage;
 import com.zmax.app.ui.RoomControlActivity.VerticalChangedCallback;
 import com.zmax.app.widget.VerticalViewPager;
 
-public class RoomControlTVFragment extends Fragment {
+public class RoomControlLightingFragment extends Fragment {
+	 
 
 	protected View view;
 
@@ -25,7 +26,7 @@ public class RoomControlTVFragment extends Fragment {
 
 	private VerticalChangedCallback callback;
 
-	public RoomControlTVFragment(VerticalChangedCallback callback) {
+	public RoomControlLightingFragment(VerticalChangedCallback callback) {
 		this.callback = callback;
 		setRetainInstance(true);
 	}
@@ -36,7 +37,7 @@ public class RoomControlTVFragment extends Fragment {
 		view = inflater.inflate(R.layout.room_control_fragment, null);
 		vpager = (VerticalViewPager) view.findViewById(R.id.vpager);
 		adapter = new RoomControlAdapter(getActivity(),
-				RoomControlManage.getTVView(getActivity(), inflater));
+				RoomControlManage.getLightingView(getActivity(), inflater));
 		vpager.setAdapter(adapter);
 		vpager.setCurrentItem(0);
 
@@ -87,15 +88,6 @@ public class RoomControlTVFragment extends Fragment {
 
 			}
 		}
-	}
-
-	private View getAboveView(LayoutInflater inflater) {
-		TextView tv_hint_above;
-		View view = inflater.inflate(R.layout.room_control_above, null);
-		tv_hint_above = (TextView) view.findViewById(R.id.tv_hint_above);
-		setTvAnimation(tv_hint_above);
-		return view;
-
 	}
 
 	private void setTvAnimation(TextView textView) {

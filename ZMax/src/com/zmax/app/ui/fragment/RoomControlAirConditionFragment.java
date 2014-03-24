@@ -5,64 +5,98 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.widget.TextView;
 
 import com.zmax.app.R;
-import com.zmax.app.adapter.HotelBookListAdapter;
-import com.zmax.app.widget.CounterPullDoorView;
-import com.zmax.app.widget.PullDoorView;
-import com.zmax.app.widget.CounterPullDoorView.CounterPullCallBack;
-import com.zmax.app.widget.PullDoorView.PullCallBack;
+import com.zmax.app.adapter.RoomControlAdapter;
+import com.zmax.app.manage.RoomControlManage;
+import com.zmax.app.ui.RoomControlActivity.VerticalChangedCallback;
 import com.zmax.app.widget.VerticalViewPager;
 
-public class RoomControlAirConditionFragment extends Fragment implements
-		PullCallBack {
-
-	private int mColorRes = -1;
+public class RoomControlAirConditionFragment extends Fragment {
+	 
 
 	protected View view;
-	private Button btn_more;
-	private CounterPullDoorView pdv_bottom;
-	private PullDoorView pdv_top;
 
-	private HotelBookListAdapter adapter;
+	private VerticalViewPager vpager;
 
-	private VerticalViewPager pager;
+	private RoomControlAdapter adapter;
 
-	public RoomControlAirConditionFragment() {
-		this(R.color.white);
-	}
+	private VerticalChangedCallback callback;
 
-	public RoomControlAirConditionFragment(int colorRes) {
-		mColorRes = colorRes;
+	public RoomControlAirConditionFragment(VerticalChangedCallback callback) {
+		this.callback = callback;
 		setRetainInstance(true);
 	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		if (savedInstanceState != null)
-			mColorRes = savedInstanceState.getInt("mColorRes");
 		view = inflater.inflate(R.layout.room_control_fragment, null);
-//		pdv_bottom = ((CounterPullDoorView) view.findViewById(R.id.pdv_bottom));
-//		pdv_top = ((PullDoorView) view.findViewById(R.id.pdv_top));
-//		pdv_top.setCallBack(this);
-//		pdv_bottom.setCallBack(this);
+		vpager = (VerticalViewPager) view.findViewById(R.id.vpager);
+		adapter = new RoomControlAdapter(getActivity(),
+				RoomControlManage.getAirconditionView(getActivity(), inflater));
+		vpager.setAdapter(adapter);
+		vpager.setCurrentItem(0);
+
+		vpager.setOnPageChangeListener(new VerticalViewPager.OnPageChangeListener() {
+
+			@Override
+			public void onPageSelected(int position) {
+				if (callback != null) {
+
+					callback.onCallBack(position == 0 ? true : false);
+				}
+
+			}
+
+			@Override
+			public void onPageScrolled(int position, float positionOffset,
+					int positionOffsetPixels) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void onPageScrollStateChanged(int state) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
 		return view;
 	}
 
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
-		outState.putInt("mColorRes", mColorRes);
 	}
 
 	@Override
-	public void onClosed(PullDoorView pdv) {
-		pdv_top.setVisibility(View.GONE);
-		pdv_bottom.setVisibility(View.VISIBLE);
+	public void setUserVisibleHint(boolean isVisibleToUser) {
+		super.setUserVisibleHint(isVisibleToUser);
+		if (isVisibleToUser) {
+			// 相当于Fragment的onResume
+			if (callback != null) {
+				if (adapter != null && adapter.getCount() > 0)
+					callback.onCallBack(vpager.getCurrentItem() == 0 ? true
+							: false);
+				else
+					callback.onCallBack(true);
+
+			}
+		}
 	}
 
-	 
+	private void setTvAnimation(TextView textView) {
+
+		Animation ani = new AlphaAnimation(0f, 1f);
+		ani.setDuration(1500);
+		ani.setRepeatMode(Animation.REVERSE);
+		ani.setRepeatCount(Animation.INFINITE);
+		textView.startAnimation(ani);
+	}
 
 }

@@ -4,8 +4,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <include layout="@layout/detail_header" />
-
     <Button
         android:id="@+id/btn_feedback"
         style="@style/setting_btn"

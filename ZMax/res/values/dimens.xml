@@ -52,19 +52,29 @@
     <dimen name="act_detail_third_time_banner_margin_top">24dp</dimen>
     <dimen name="act_detail_third_time_banner_margin_bottom">12dp</dimen>
     <!-- second -->
-        <dimen name="act_detail_second_title_margin_top">30dp</dimen>
+    <dimen name="act_detail_second_title_margin_top">30dp</dimen>
     <dimen name="act_detail_second_title_margin_bottom">28dp</dimen>
-   
+
     <!-- third - time zone -->
-<!--     <dimen name="act_detail_third_time_day_margin_left">44dp</dimen>
+    <!--
+         <dimen name="act_detail_third_time_day_margin_left">44dp</dimen>
     <dimen name="act_detail_third_time_year_margin_left">68dp</dimen>
-    <dimen name="act_detail_third_time_day_margin_bottom">10dp</dimen>-->
-    <dimen name="act_detail_third_time_year_margin_bottom">8dp</dimen> 
+    <dimen name="act_detail_third_time_day_margin_bottom">10dp</dimen>
+    -->
+    <dimen name="act_detail_third_time_year_margin_bottom">8dp</dimen>
     <dimen name="act_detail_third_time_minuter_margin_top">8dp</dimen>
     <!-- third - hotel zone -->
     <dimen name="act_detail_third_hotel_banner_margin_top">18dp</dimen>
     <dimen name="act_detail_third_hotel_banner_margin_bottom">16dp</dimen>
     <dimen name="act_detail_third_hotel_address_height">60dp</dimen>
     <dimen name="act_detail_third_hotel_address_more_height">40dp</dimen>
+
+    <!-- room control tv -->
+
+    <dimen name="room_control_tv_behind_padding_left">30dp</dimen>
+    <dimen name="room_control_tv_behind_padding_bottom">30dp</dimen>
+    
+     <dimen name="room_control_tv_behind_control_bg_height">210dp</dimen>
+      <dimen name="room_control_tv_behind_control_bg_margin_top">60dp</dimen>
 
 </resources>

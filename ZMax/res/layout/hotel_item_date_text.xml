@@ -10,7 +10,7 @@
             android:layout_height="fill_parent">
 
         <CheckedTextView
-                android:textColor="@drawable/date_text_color_sel"
+                android:textColor="@color/date_text_color_sel"
                 android:background="@drawable/date_item_bg_sel"
                 android:textSize="18sp"
                 android:padding="8dp"
@@ -22,7 +22,7 @@
                 android:layout_height="50dp"/>
 
         <CheckedTextView
-                android:textColor="@drawable/date_text_color_sel"
+                android:textColor="@color/date_text_color_sel"
                 android:background="@drawable/date_item_bg_sel"
                 android:textSize="18sp"
                 android:padding="8dp"
@@ -34,7 +34,7 @@
                 android:layout_height="50dp"/>
 
         <CheckedTextView
-                android:textColor="@drawable/date_text_color_sel"
+                android:textColor="@color/date_text_color_sel"
                 android:background="@drawable/date_item_bg_sel"
                 android:textSize="18sp"
                 android:padding="8dp"
@@ -46,7 +46,7 @@
                 android:layout_height="50dp"/>
 
         <CheckedTextView
-                android:textColor="@drawable/date_text_color_sel"
+                android:textColor="@color/date_text_color_sel"
                 android:background="@drawable/date_item_bg_sel"
                 android:textSize="18sp"
                 android:padding="8dp"
@@ -58,7 +58,7 @@
                 android:layout_height="50dp"/>
 
         <CheckedTextView
-                android:textColor="@drawable/date_text_color_sel"
+                android:textColor="@color/date_text_color_sel"
                 android:background="@drawable/date_item_bg_sel"
                 android:textSize="18sp"
                 android:padding="8dp"
@@ -70,7 +70,7 @@
                 android:layout_height="50dp"/>
 
         <CheckedTextView
-                android:textColor="@drawable/date_text_color_sel"
+                android:textColor="@color/date_text_color_sel"
                 android:background="@drawable/date_item_bg_sel"
                 android:textSize="18sp"
                 android:padding="8dp"
