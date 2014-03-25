@@ -1,5 +1,6 @@
 package com.zmax.app.ui.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -9,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.zmax.app.R;
+import com.zmax.app.ui.WelcomeActivity;
 
 public class SettingFragment extends Fragment implements OnClickListener {
 
@@ -53,6 +55,7 @@ public class SettingFragment extends Fragment implements OnClickListener {
 
 	@Override
 	public void onClick(View v) {
+		Intent intent = new Intent();
 		switch (v.getId()) {
 
 		case R.id.btn_feedback:
@@ -62,7 +65,8 @@ public class SettingFragment extends Fragment implements OnClickListener {
 
 			break;
 		case R.id.btn_welcome:
-
+			intent.setClass(getActivity(), WelcomeActivity.class);
+			startActivity(intent);
 			break;
 		case R.id.btn_user_regulation:
 

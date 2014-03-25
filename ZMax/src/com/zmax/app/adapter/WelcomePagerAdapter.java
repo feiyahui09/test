@@ -9,13 +9,13 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.view.ViewGroup;
 
-public class ActDetailAdapter extends FragmentPagerAdapter {
+public class WelcomePagerAdapter extends FragmentPagerAdapter {
 
 	public ArrayList<Fragment> mFragments = new ArrayList<Fragment>();;
 
 	private Activity mActivity;
 
-	public ActDetailAdapter(FragmentActivity activity) {
+	public WelcomePagerAdapter(FragmentActivity activity) {
 		super(activity.getSupportFragmentManager());
 		this.mActivity = activity;
 	}

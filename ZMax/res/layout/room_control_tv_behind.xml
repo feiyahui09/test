@@ -160,9 +160,10 @@
 
     <RadioGroup
         android:id="@+id/rg_model"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="215dp"
+        android:layout_height="40dp"
         android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
         android:background="@drawable/room_control_tv_control_btn_bg"
         android:orientation="horizontal" >
 
