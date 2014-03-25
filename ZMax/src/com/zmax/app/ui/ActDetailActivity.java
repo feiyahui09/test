@@ -22,7 +22,6 @@ import com.zmax.app.ui.fragment.ActDetailSecondFragment;
 import com.zmax.app.ui.fragment.ActDetailThirdFragment;
 import com.zmax.app.utils.FileUtils;
 import com.zmax.app.utils.ShareUtils;
-import com.zmax.app.widget.ShareDialog;
 
 public class ActDetailActivity extends BaseFragmentActivity {
 

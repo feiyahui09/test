@@ -37,7 +37,7 @@ public class ShareUtils {
 	public void showShare(Context context, boolean silent, String platform) {
 		initPic(context);
 		try {
-			Thread.sleep(1122);
+			Thread.sleep(122);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
