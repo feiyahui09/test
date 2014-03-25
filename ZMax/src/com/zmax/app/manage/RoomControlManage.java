@@ -3,14 +3,16 @@ package com.zmax.app.manage;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.content.Context;
+import android.graphics.Typeface;
 import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 
 import com.zmax.app.R;
@@ -25,15 +27,21 @@ public class RoomControlManage {
 
 		List<View> mList = new ArrayList<View>();
 		mList.add(getAbove(inflater, ROOM_CONTROL_AIR_CONDITION));
-		mList.add(geAirconditionBehind(inflater));
+		mList.add(geAirconditionBehind(inflater,fragmentActivity));
 
 		return mList;
 	}
 
-	private static View geAirconditionBehind(LayoutInflater inflater) {
+	private static View geAirconditionBehind(LayoutInflater inflater,Context context) {
+		
+		Typeface fontFace = Typeface.createFromAsset(context.getAssets(),
+			    "font.TTF");
+		TextView  tv_room_control_air_temperature;
 		final View view = inflater.inflate(
 				R.layout.room_control_aircondition_behind, null);
-
+		tv_room_control_air_temperature=(TextView)view.findViewById(R.id.tv_room_control_air_temperature);
+		tv_room_control_air_temperature.setTypeface(fontFace);
+		tv_room_control_air_temperature.setText("26");
 		return view;
 	}
 

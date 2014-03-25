@@ -17,22 +17,25 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content" >
 
-            <Button
+            <ImageButton
                 style="@style/room_control_round_button"
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
+                android:src="@drawable/room_control_power_btn"
                 android:text="1" />
 
             <Button
                 style="@style/room_control_round_button"
                 android:layout_centerInParent="true"
-                android:text="2" />
+                android:text="HDMI"
+                android:textSize="16sp"
+                android:textColor="#a6a6a6" />
 
-            <Button
+            <ImageButton
                 style="@style/room_control_round_button"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:text="3" />
+                android:src="@drawable/room_control_tv_control_sound_mute" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -45,27 +48,29 @@
 
             <Button
                 style="@style/room_control_digital_button"
-                android:layout_alignParentLeft="true"
-                android:layout_centerVertical="true"
-                android:text="CH-" />
-
-            <Button
-                style="@style/room_control_digital_button"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:text="CH+" />
-
-            <Button
-                style="@style/room_control_digital_button"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
                 android:text="VOL+" />
 
             <Button
                 style="@style/room_control_digital_button"
+                android:layout_alignBaseline="@+id/button1"
+                android:layout_alignBottom="@+id/button1"
+                android:layout_alignParentLeft="true"
+                android:text="CH-" />
+
+            <Button
+                style="@style/room_control_digital_button"
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
                 android:text="VOL-" />
+
+            <Button
+                android:id="@+id/button1"
+                style="@style/room_control_digital_button"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:text="CH+" />
         </RelativeLayout>
     </LinearLayout>
 
@@ -152,8 +157,7 @@
                 android:text="2" />
         </RelativeLayout>
     </LinearLayout>
-
-    <RadioGroup
+<RadioGroup
         android:id="@+id/rg_model"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -186,5 +190,4 @@
             android:textColor="@color/room_control_tv_model_text_color_sel"
             android:textSize="14sp" />
     </RadioGroup>
-
 </RelativeLayout>
