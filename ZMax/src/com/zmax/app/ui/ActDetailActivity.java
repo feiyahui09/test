@@ -21,6 +21,7 @@ import com.zmax.app.ui.fragment.ActDetailFirstFragment;
 import com.zmax.app.ui.fragment.ActDetailSecondFragment;
 import com.zmax.app.ui.fragment.ActDetailThirdFragment;
 import com.zmax.app.utils.FileUtils;
+import com.zmax.app.utils.ShareUtils;
 import com.zmax.app.widget.ShareDialog;
 
 public class ActDetailActivity extends BaseFragmentActivity {
@@ -62,13 +63,13 @@ public class ActDetailActivity extends BaseFragmentActivity {
 		btn_Back.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				new ShareDialog(ActDetailActivity.this).show();
+				finish();
 			}
 		});
 		btn_Share.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				share();
+			new ShareUtils().showShare(ActDetailActivity.this, false, null);
 
 			}
 		});

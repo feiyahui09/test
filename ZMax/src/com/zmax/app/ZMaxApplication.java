@@ -8,6 +8,7 @@ import java.lang.Thread.UncaughtExceptionHandler;
 import android.app.Application;
 import android.content.Context;
 import android.graphics.Bitmap.CompressFormat;
+import cn.sharesdk.framework.ShareSDK;
 
 import com.baidu.mapapi.BMapManager;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiscCache;
@@ -29,7 +30,7 @@ public class ZMaxApplication extends Application {
 	@Override
 	public void onCreate() {
 		super.onCreate();
-		mInstance=this;
+		mInstance = this;
 		init();
 		Log.d("TAG", "onCreate");
 
@@ -43,9 +44,10 @@ public class ZMaxApplication extends Application {
 	}
 
 	public void init() {
-		
+
 		initImageLoader();
-//		initEngineManager(this);
+		// initEngineManager(this);
+		ShareSDK.initSDK(this);// ShareSDK.stopSDK(this);?
 		Thread.setDefaultUncaughtExceptionHandler(new CustomExceptionHandler());
 
 	}
