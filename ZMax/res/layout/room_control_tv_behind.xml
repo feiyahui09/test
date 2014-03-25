@@ -28,8 +28,8 @@
                 style="@style/room_control_round_button"
                 android:layout_centerInParent="true"
                 android:text="HDMI"
-                android:textSize="16sp"
-                android:textColor="#a6a6a6" />
+                android:textColor="#a6a6a6"
+                android:textSize="16sp" />
 
             <ImageButton
                 style="@style/room_control_round_button"
@@ -111,18 +111,18 @@
                 style="@style/room_control_round_button"
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
-                android:text="1" />
+                android:text="4" />
 
             <Button
                 style="@style/room_control_round_button"
                 android:layout_centerInParent="true"
-                android:text="2" />
+                android:text="5" />
 
             <Button
                 style="@style/room_control_round_button"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:text="3" />
+                android:text="6" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -133,18 +133,18 @@
                 style="@style/room_control_round_button"
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
-                android:text="1" />
+                android:text="7" />
 
             <Button
                 style="@style/room_control_round_button"
                 android:layout_centerInParent="true"
-                android:text="2" />
+                android:text="8" />
 
             <Button
                 style="@style/room_control_round_button"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:text="3" />
+                android:text="9" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -154,10 +154,11 @@
             <Button
                 style="@style/room_control_round_button"
                 android:layout_centerInParent="true"
-                android:text="2" />
+                android:text="0" />
         </RelativeLayout>
     </LinearLayout>
-<RadioGroup
+
+    <RadioGroup
         android:id="@+id/rg_model"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -190,4 +191,5 @@
             android:textColor="@color/room_control_tv_model_text_color_sel"
             android:textSize="14sp" />
     </RadioGroup>
+
 </RelativeLayout>

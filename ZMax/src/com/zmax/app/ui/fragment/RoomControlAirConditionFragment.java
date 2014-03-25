@@ -1,12 +1,19 @@
 package com.zmax.app.ui.fragment;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import android.content.Context;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.zmax.app.R;
@@ -16,7 +23,6 @@ import com.zmax.app.ui.RoomControlActivity.VerticalChangedCallback;
 import com.zmax.app.widget.VerticalViewPager;
 
 public class RoomControlAirConditionFragment extends Fragment {
-	 
 
 	protected View view;
 
@@ -36,11 +42,9 @@ public class RoomControlAirConditionFragment extends Fragment {
 			Bundle savedInstanceState) {
 		view = inflater.inflate(R.layout.room_control_fragment, null);
 		vpager = (VerticalViewPager) view.findViewById(R.id.vpager);
-		adapter = new RoomControlAdapter(getActivity(),
-				RoomControlManage.getAirconditionView(getActivity(), inflater));
+		adapter = new RoomControlAdapter(getActivity(), null);
 		vpager.setAdapter(adapter);
-		vpager.setCurrentItem(0);
-
+		adapter.addViews(getAirconditionView(getActivity(), inflater));
 		vpager.setOnPageChangeListener(new VerticalViewPager.OnPageChangeListener() {
 
 			@Override
@@ -88,6 +92,39 @@ public class RoomControlAirConditionFragment extends Fragment {
 
 			}
 		}
+	}
+
+	public static List<View> getAirconditionView(
+			final FragmentActivity fragmentActivity, LayoutInflater inflater) {
+
+		List<View> mList = new ArrayList<View>();
+		mList.add(getAbove(inflater));
+		mList.add(geAirconditionBehind(inflater, fragmentActivity));
+
+		return mList;
+	}
+
+	private static View getAbove(LayoutInflater inflater) {
+		final View view = inflater.inflate(R.layout.room_control_above, null);
+		ImageView big_icon = ((ImageView) view.findViewById(R.id.iv_big_logo));
+		big_icon.setImageResource(R.drawable.room_control_above_aircondition);
+
+		return view;
+	}
+
+	private static View geAirconditionBehind(LayoutInflater inflater,
+			Context context) {
+
+		Typeface fontFace = Typeface.createFromAsset(context.getAssets(),
+				"font.TTF");
+		TextView tv_room_control_air_temperature;
+		final View view = inflater.inflate(
+				R.layout.room_control_aircondition_behind, null);
+		tv_room_control_air_temperature = (TextView) view
+				.findViewById(R.id.tv_room_control_air_temperature);
+		tv_room_control_air_temperature.setTypeface(fontFace);
+		tv_room_control_air_temperature.setText("26");
+		return view;
 	}
 
 	private void setTvAnimation(TextView textView) {

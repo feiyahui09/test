@@ -1,13 +1,22 @@
 package com.zmax.app.ui.fragment;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.RadioGroup.OnCheckedChangeListener;
 
 import com.zmax.app.R;
 import com.zmax.app.adapter.RoomControlAdapter;
@@ -35,10 +44,10 @@ public class RoomControlTVFragment extends Fragment {
 			Bundle savedInstanceState) {
 		view = inflater.inflate(R.layout.room_control_fragment, null);
 		vpager = (VerticalViewPager) view.findViewById(R.id.vpager);
-		adapter = new RoomControlAdapter(getActivity(),
-				RoomControlManage.getTVView(getActivity(), inflater));
+		adapter = new RoomControlAdapter(getActivity(), null);
 		vpager.setAdapter(adapter);
-		vpager.setCurrentItem(0);
+
+		adapter.addViews(getTVView(getActivity(), inflater));
 
 		vpager.setOnPageChangeListener(new VerticalViewPager.OnPageChangeListener() {
 
@@ -89,13 +98,51 @@ public class RoomControlTVFragment extends Fragment {
 		}
 	}
 
-	private View getAboveView(LayoutInflater inflater) {
-		TextView tv_hint_above;
-		View view = inflater.inflate(R.layout.room_control_above, null);
-		tv_hint_above = (TextView) view.findViewById(R.id.tv_hint_above);
-		setTvAnimation(tv_hint_above);
-		return view;
+	public static List<View> getTVView(final FragmentActivity fragmentActivity,
+			LayoutInflater inflater) {
 
+		List<View> mList = new ArrayList<View>();
+		mList.add(getAbove(inflater));
+		mList.add(getTVBehind(inflater));
+
+		return mList;
+	}
+
+	private static View getAbove(LayoutInflater inflater) {
+		final View view = inflater.inflate(R.layout.room_control_above, null);
+		ImageView big_icon = ((ImageView) view.findViewById(R.id.iv_big_logo));
+		big_icon.setImageResource(R.drawable.room_control_above_tv);
+
+		return view;
+	}
+
+	private static View getTVBehind(LayoutInflater inflater) {
+		final LinearLayout ll_digital, ll_orient;
+		RadioGroup rg_model;
+		RadioButton rb_orient;
+		final View view = inflater.inflate(R.layout.room_control_tv_behind,
+				null);
+
+		ll_digital = (LinearLayout) view.findViewById(R.id.ll_digital);
+		ll_orient = (LinearLayout) view.findViewById(R.id.ll_orient);
+		rg_model = ((RadioGroup) view.findViewById(R.id.rg_model));
+		rb_orient = ((RadioButton) view.findViewById(R.id.rb_orient));
+
+		rg_model.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+			@Override
+			public void onCheckedChanged(RadioGroup group, int checkedId) {
+				if (checkedId == R.id.rb_digital) {
+					ll_digital.setVisibility(View.VISIBLE);
+					ll_orient.setVisibility(View.GONE);
+				} else if (checkedId == R.id.rb_orient) {
+					ll_digital.setVisibility(View.GONE);
+					ll_orient.setVisibility(View.VISIBLE);
+				}
+			}
+		});
+
+		rb_orient.setChecked(true);
+		return view;
 	}
 
 	private void setTvAnimation(TextView textView) {

@@ -28,26 +28,24 @@ public class RoomControlAdapter extends PagerAdapter {
 		this.mListViews = list;
 	}
 
-	private void init() {
-		LayoutInflater inflater = ((Activity) mContext).getLayoutInflater();
-		for (int i = 0; i < mDetails.size(); i++) {
-			View view = inflater.inflate(R.layout.hotel_book_list_item, null);
-			((ImageView) view.findViewById(R.id.iv_img))
-					.setBackgroundResource(R.drawable.ic_launcher);
-			mListViews.add(view);
-		}
+	public void addViews(List<View> list) {
+		this.mListViews = list;
 		notifyDataSetChanged();
 	}
 
 	@Override
 	public void destroyItem(ViewGroup container, int position, Object object) {
-		container.removeView(mListViews.get(position));
+		if (mListViews != null && mListViews.size() > 0)
+			container.removeView(mListViews.get(position));
 	}
 
 	@Override
 	public Object instantiateItem(ViewGroup container, int position) {
-		container.addView(mListViews.get(position), 0);
-		return mListViews.get(position);
+		if (mListViews != null && mListViews.size() > 0) {
+			container.addView(mListViews.get(position), 0);
+			return mListViews.get(position);
+		}
+		return null;
 	}
 
 	@Override
