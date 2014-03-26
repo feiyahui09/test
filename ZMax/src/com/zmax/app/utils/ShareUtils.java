@@ -49,7 +49,7 @@ public class ShareUtils {
 		oks.setTitle(context.getString(R.string.share_title));
 		oks.setTitleUrl("http://sharesdk.cn");
 		oks.setText(context.getString(R.string.share_content));
-		  oks.setImagePath( TEST_IMAGE);
+		oks.setImagePath(TEST_IMAGE);
 		// oks.setImageUrl(MainActivity.TEST_IMAGE_URL);
 		oks.setUrl("http://www.sharesdk.cn");
 		// oks.setFilePath(MainActivity.TEST_IMAGE);
@@ -112,7 +112,7 @@ public class ShareUtils {
 
 		public void onError(Platform plat, int action, Throwable t) {
 			t.printStackTrace();
-			// 在这里添加分享失败的处理代码
+			Log.e("ShareUtils", "onError:" + t.getMessage());
 		}
 
 		public void onCancel(Platform plat, int action) {
@@ -121,7 +121,7 @@ public class ShareUtils {
 
 	}
 
-	public void initPic(final Context context ) {
+	public void initPic(final Context context) {
 		new Thread() {
 			public void run() {
 				initImagePath(context);
@@ -131,14 +131,14 @@ public class ShareUtils {
 
 	private void initImagePath(Context context) {
 		try {
-			String cachePath = cn.sharesdk.framework.utils.R.getCachePath(context,
-					null);
+			String cachePath = cn.sharesdk.framework.utils.R.getCachePath(
+					context, null);
 			TEST_IMAGE = cachePath + "share_file.jpg";
 			File file = new File(TEST_IMAGE);
 			if (!file.exists()) {
 				file.createNewFile();
-				Bitmap pic = BitmapFactory.decodeResource(context.getResources(),
-						R.drawable.icon);
+				Bitmap pic = BitmapFactory.decodeResource(
+						context.getResources(), R.drawable.icon);
 				FileOutputStream fos = new FileOutputStream(file);
 				pic.compress(CompressFormat.JPEG, 100, fos);
 				fos.flush();
