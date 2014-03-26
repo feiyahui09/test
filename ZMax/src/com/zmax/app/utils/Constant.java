@@ -73,7 +73,7 @@ public class Constant {
 
 		List<View> mList = new ArrayList<View>();
 
-		for (int i = 0; i < 10; i++) {
+		for (int i = 0; i < 12; i++) {
 			View view = inflater.inflate(R.layout.hotel_book_list_item, null);
 
 			view.setOnClickListener(new OnClickListener() {

@@ -50,6 +50,8 @@ public class RoomControlAdapter extends PagerAdapter {
 
 	@Override
 	public int getCount() {
+		if (mListViews == null)
+			return 0;
 		return mListViews.size();
 	}
 

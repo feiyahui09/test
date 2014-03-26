@@ -55,22 +55,34 @@ public class HotelBookFragment extends Fragment implements
 
 		pager = (VerticalViewPager) view.findViewById(R.id.vvp_hotel);
 		indicator = (LinearLayout) view.findViewById(R.id.indicator);
-		adapter = new HotelBookListAdapter(getActivity(),
-				Constant.getHotelFalseDataView(getActivity(), inflater));
+		adapter = new HotelBookListAdapter(getActivity(), null);
 		pager.setAdapter(adapter);
-		pager.setCurrentItem(mPosition);
-		pager.setOnPageChangeListener(this);
 
+		pager.setOnPageChangeListener(this);
+		adapter.addViews(Constant.getHotelFalseDataView(getActivity(),
+				getActivity().getLayoutInflater()));
 		initPagerIndicator(
 				Constant.getHotelFalseDataView(getActivity(), inflater),
 				indicator);
+		pager.setCurrentItem(mPosition);
 		return view;
+	}
+
+	@Override
+	public void setUserVisibleHint(boolean isVisibleToUser) {
+		super.setUserVisibleHint(isVisibleToUser);
+		// if (isVisibleToUser)
+		// adapter.addViews(Constant.getHotelFalseDataView(getActivity(),
+		// getActivity().getLayoutInflater()));
+
 	}
 
 	private void initPagerIndicator(List<View> falseDataView,
 			LinearLayout indicator) {
+		if (falseDataView == null || falseDataView.size() <= 0)
+			return;
 		LayoutInflater inflater = getActivity().getLayoutInflater();
-		for (int i = 0; i < 10; i++) {
+		for (int i = 0; i < falseDataView.size(); i++) {
 			View view = inflater.inflate(R.layout.vpager_indicator_item, null);
 			((ImageView) view.findViewById(R.id.iv_img))
 					.setImageResource(R.drawable.hotel_list_indicator_normal);
@@ -116,12 +128,11 @@ public class HotelBookFragment extends Fragment implements
 	public void onPageScrolled(int position, float positionOffset,
 			int positionOffsetPixels) {
 
-		switchInidcator(position);
 	}
 
 	@Override
 	public void onPageSelected(int position) {
-		// TODO Auto-generated method stub
+		switchInidcator(position);
 
 	}
 

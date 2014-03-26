@@ -16,15 +16,19 @@ import com.zmax.app.widget.PagerAdapter;
 
 public class HotelBookListAdapter extends PagerAdapter {
 
-	private List<View> mListViews=new ArrayList<View>();
-	private List<Act> mDetails=new ArrayList<Act>();
+	private List<View> mListViews = new ArrayList<View>();
+	private List<Act> mDetails = new ArrayList<Act>();
 	private Context mContext;
 
 	public HotelBookListAdapter(Context context, List<View> list) {
 		this.mContext = context;
 		this.mListViews = list;
 	}
-	 
+
+	public void addViews(List<View> list) {
+		this.mListViews = list;
+		notifyDataSetChanged();
+	}
 
 	private void init() {
 		LayoutInflater inflater = ((Activity) mContext).getLayoutInflater();
@@ -39,17 +43,23 @@ public class HotelBookListAdapter extends PagerAdapter {
 
 	@Override
 	public void destroyItem(ViewGroup container, int position, Object object) {
-		container.removeView(mListViews.get(position));
+		if (mListViews != null && mListViews.size() > 0)
+			container.removeView(mListViews.get(position));
 	}
 
 	@Override
 	public Object instantiateItem(ViewGroup container, int position) {
-		container.addView(mListViews.get(position), 0);
-		return mListViews.get(position);
+		if (mListViews != null && mListViews.size() > 0) {
+			container.addView(mListViews.get(position), 0);
+			return mListViews.get(position);
+		}
+		return null;
 	}
 
 	@Override
 	public int getCount() {
+		if (mListViews == null)
+			return 0;
 		return mListViews.size();
 	}
 
