@@ -3,7 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
-
     <com.zmax.app.widget.SmartViewPager
         android:id="@+id/pager"
         android:layout_width="match_parent"
@@ -11,25 +10,25 @@
     </com.zmax.app.widget.SmartViewPager>
 
     <include layout="@layout/detail_header" />
-    
-    
+
     <ImageView
         android:id="@+id/iv_right"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:layout_marginTop="168dp"
-        android:background="@drawable/room_control_above_triangle"
+        android:layout_marginRight="17dp"
+        android:layout_marginTop="233dp"
+        android:background="@drawable/room_control_indicator_right"
         android:scaleType="center" />
 
     <ImageView
         android:id="@+id/iv_left"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_marginTop="168dp"
-        android:background="@drawable/room_control_above_triangle"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="17dp"
+        android:layout_marginTop="233dp"
+        android:background="@drawable/room_control_indicator_left"
         android:scaleType="center" />
 
 </RelativeLayout>

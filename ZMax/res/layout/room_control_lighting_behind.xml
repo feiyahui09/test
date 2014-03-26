@@ -37,6 +37,12 @@
             style="@style/room_control_lighting_model_button"
             android:button="@null"
             android:text="睡眠模式" />
+
+        <RadioButton
+            android:id="@+id/rb_self"
+            style="@style/room_control_lighting_model_button"
+            android:button="@null"
+            android:text="自定义模式" />
     </RadioGroup>
 
 </RelativeLayout>

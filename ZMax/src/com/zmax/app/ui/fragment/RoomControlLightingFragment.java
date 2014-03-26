@@ -38,7 +38,11 @@ public class RoomControlLightingFragment extends Fragment {
 
 	private PageChangedCallback pageChangedCallback;
 
-	/* child views */
+	/* above views */
+	private ImageView big_icon;
+	private TextView tv_mode, tv_mode_detail;
+
+	/* behind views */
 	public RoomControlLightingFragment(VerticalChangedCallback callback) {
 		this.callback = callback;
 		setRetainInstance(true);
@@ -118,8 +122,8 @@ public class RoomControlLightingFragment extends Fragment {
 		textView.startAnimation(ani);
 	}
 
-	public static List<View> getLightingView(
-			final FragmentActivity fragmentActivity, LayoutInflater inflater) {
+	public List<View> getLightingView(final FragmentActivity fragmentActivity,
+			LayoutInflater inflater) {
 
 		List<View> mList = new ArrayList<View>();
 		mList.add(getAbove(inflater));
@@ -128,7 +132,18 @@ public class RoomControlLightingFragment extends Fragment {
 		return mList;
 	}
 
-	private static View getLightingBehind(LayoutInflater inflater) {
+	private View getAbove(LayoutInflater inflater) {
+		final View view = inflater.inflate(R.layout.room_control_above, null);
+		big_icon = ((ImageView) view.findViewById(R.id.iv_big_logo));
+		big_icon.setImageResource(R.drawable.room_control_above_lighting);
+		tv_mode = (TextView) view.findViewById(R.id.tv_mode_tile);
+		tv_mode.setText("灯光控制");
+		tv_mode_detail = ((TextView) view.findViewById(R.id.tv_mode_detail));
+		tv_mode_detail.setVisibility(View.VISIBLE);
+		return view;
+	}
+
+	private View getLightingBehind(LayoutInflater inflater) {
 		final View view = inflater.inflate(
 				R.layout.room_control_lighting_behind, null);
 		((RadioGroup) view.findViewById(R.id.rg_lighting_model))
@@ -138,36 +153,26 @@ public class RoomControlLightingFragment extends Fragment {
 					public void onCheckedChanged(RadioGroup group, int checkedId) {
 						switch (checkedId) {
 						case R.id.rb_lighting:
-
+							tv_mode_detail.setText("明亮模式");
 							break;
 						case R.id.rb_tv:
-
+							tv_mode_detail.setText("电视模式");
 							break;
 						case R.id.rb_reading:
-
+							tv_mode_detail.setText("阅读模式");
 							break;
 						case R.id.rb_sleep:
-
+							tv_mode_detail.setText("睡眠模式");
 							break;
-
+						case R.id.rb_self:
+							tv_mode_detail.setText("自定义模式");
+							break;
 						default:
 							break;
 						}
 					}
 				});
 		((RadioButton) view.findViewById(R.id.rb_lighting)).setChecked(true);
-		return view;
-	}
-
-	private static View getAbove(LayoutInflater inflater) {
-		final View view = inflater.inflate(R.layout.room_control_above, null);
-		ImageView big_icon = ((ImageView) view.findViewById(R.id.iv_big_logo));
-		big_icon.setImageResource(R.drawable.room_control_above_lighting);
-		TextView tv_mode = (TextView) view.findViewById(R.id.tv_mode_tile);
-		tv_mode.setText("灯光控制");
-		TextView tv_mode_detail = ((TextView) view
-				.findViewById(R.id.tv_mode_detail));
-		tv_mode_detail.setVisibility(View.VISIBLE);
 		return view;
 	}
 

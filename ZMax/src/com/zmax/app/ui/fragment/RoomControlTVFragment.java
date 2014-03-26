@@ -36,6 +36,10 @@ public class RoomControlTVFragment extends Fragment {
 	private VerticalChangedCallback callback;
 
 	private PageChangedCallback pageChangedCallback;
+	/**
+	 * above views
+	 */
+	private ImageView iv;
 
 	public RoomControlTVFragment(VerticalChangedCallback callback) {
 		this.callback = callback;
@@ -127,6 +131,7 @@ public class RoomControlTVFragment extends Fragment {
 		TextView tv_mode_detail = ((TextView) view
 				.findViewById(R.id.tv_mode_detail));
 		tv_mode_detail.setVisibility(View.GONE);
+
 		return view;
 	}
 
