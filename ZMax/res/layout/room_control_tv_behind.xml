@@ -31,11 +31,11 @@
                 android:textColor="#a6a6a6"
                 android:textSize="16sp" />
 
-            <ImageButton
+            <CheckBox
                 style="@style/room_control_round_button"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:src="@drawable/room_control_tv_control_sound_mute" />
+                android:button="@drawable/room_control_tv_control_sound_sel" />
         </RelativeLayout>
 
         <RelativeLayout
