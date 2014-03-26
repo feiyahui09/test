@@ -16,7 +16,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_marginLeft="9dp"
-        android:layout_marginRight="9dp"
+        android:layout_marginRight="51dp"
         android:background="@drawable/act_list_item_bottom_bg_even" >
 
         <TextView
@@ -51,9 +51,22 @@
         android:background="@drawable/act_list_item_bottom_icon"
         android:focusable="false"
         android:gravity="center"
-        android:text="5月1日"
         android:textColor="#ffffff"
         android:textSize="12sp" >
     </Button>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="34dp"
+        android:layout_marginRight="33dp"
+        android:focusable="false"
+        android:gravity="center"
+        android:text="5月1日"
+        android:textColor="#ffffff"
+        android:textSize="12sp" >
+    </TextView>
 
 </RelativeLayout>

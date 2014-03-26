@@ -9,22 +9,45 @@
         android:id="@+id/iv_big_logo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="107dp"
         android:scaleType="center" />
 
     <ImageView
+        android:id="@+id/iv_shawdow"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/iv_big_logo"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="32dp"
         android:background="@drawable/room_control_above_shadow" />
+
+    <TextView
+        android:id="@+id/tv_mode_tile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/iv_shawdow"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="44dp"
+        android:text="灯光模式"
+        android:textColor="#5d5d5d"
+        android:textSize="22sp" />
+
+    <TextView
+        android:id="@+id/tv_mode_detail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_mode_tile"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:text="当前灯光模式：自定义模式"
+        android:textColor="#5d5d5d"
+        android:textSize="14sp" />
 
     <RelativeLayout
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="68dp"
         android:layout_alignParentBottom="true"
-        android:gravity="center"
         android:orientation="vertical" >
 
         <ImageView
@@ -32,25 +55,25 @@
             android:layout_height="wrap_content"
             android:background="@drawable/room_control_above_bottom_bg_" />
 
-        <LinearLayout
-            android:layout_width="fill_parent"
+        <ImageView
+            android:id="@+id/iv_big_logo"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="14dp"
+            android:background="@drawable/room_control_above_triangle"
+            android:gravity="center_horizontal" />
+
+        <TextView
+            android:id="@+id/tv_hint_above"
+            style="@style/room_control_small_textview"
+            android:layout_below="@+id/iv_big_logo"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
             android:gravity="center_horizontal"
-            android:orientation="vertical" >
-
-            <ImageView
-                android:id="@+id/iv_big_logo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/room_control_above_triangle" />
-
-            <TextView
-                android:layout_marginTop="5dp"
-                android:id="@+id/tv_hint_above"
-                style="@style/room_control_small_textview"
-                android:text="往上滑动显示面板" />
-        </LinearLayout>
+            android:text="往上滑动显示面板"
+            android:textColor="#999999"
+            android:textSize="12sp" />
     </RelativeLayout>
 
 </RelativeLayout>

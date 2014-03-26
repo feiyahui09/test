@@ -1,14 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
-   
 
     <com.zmax.app.widget.SmartViewPager
         android:id="@+id/pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
     </com.zmax.app.widget.SmartViewPager>
- <include layout="@layout/detail_header" />
-</FrameLayout>
+
+    <include layout="@layout/detail_header" />
+    
+    
+    <ImageView
+        android:id="@+id/iv_right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginTop="168dp"
+        android:background="@drawable/room_control_above_triangle"
+        android:scaleType="center" />
+
+    <ImageView
+        android:id="@+id/iv_left"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginTop="168dp"
+        android:background="@drawable/room_control_above_triangle"
+        android:scaleType="center" />
+
+</RelativeLayout>

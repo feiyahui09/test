@@ -34,7 +34,7 @@ public class MainActivity extends BaseSlidingFragmentActivity {
 
 			@Override
 			public void onCallBack(CityLocation result) {
-				if (result != null) {
+				if (result != null&&!isFinishing()) {
 					switchContent(new ActListFragment(R.color.red));
 					Toast.makeText(mContext,
 							"   " + result.province + result.city, 2222).show();

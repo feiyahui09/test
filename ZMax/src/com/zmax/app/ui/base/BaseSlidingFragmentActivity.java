@@ -114,15 +114,20 @@ public class BaseSlidingFragmentActivity extends SlidingFragmentActivity {
 	}
 
 	public void switchContent(final Fragment fragment) {
+//		if (fragment == null || fragment.getActivity() == null
+//				|| !fragment.isAdded())
+//			return;
 		mContent = fragment;
 		if (mContent instanceof ActListFragment
 				|| mContent instanceof HotelBookFragment)
-			findViewById(R.id.above_content_second_header).setVisibility(View.VISIBLE);
-		else 
-			findViewById(R.id.above_content_second_header).setVisibility(View.GONE);
+			findViewById(R.id.above_content_second_header).setVisibility(
+					View.VISIBLE);
+		else
+			findViewById(R.id.above_content_second_header).setVisibility(
+					View.GONE);
 
-			getSupportFragmentManager().beginTransaction()
-					.replace(R.id.content_frame, fragment).commit();
+		getSupportFragmentManager().beginTransaction()
+				.replace(R.id.content_frame, fragment).commit();
 		Handler h = new Handler();
 		h.postDelayed(new Runnable() {
 			public void run() {

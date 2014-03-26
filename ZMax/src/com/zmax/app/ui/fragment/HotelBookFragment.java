@@ -73,7 +73,7 @@ public class HotelBookFragment extends Fragment implements
 		for (int i = 0; i < 10; i++) {
 			View view = inflater.inflate(R.layout.vpager_indicator_item, null);
 			((ImageView) view.findViewById(R.id.iv_img))
-					.setBackgroundResource(R.drawable.ic_launcher);
+					.setImageResource(R.drawable.hotel_list_indicator_normal);
 
 			indicator.addView(view);
 
@@ -87,11 +87,11 @@ public class HotelBookFragment extends Fragment implements
 		for (int i = 0; i < indicator.getChildCount(); i++) {
 			imageView = (ImageView) indicator.getChildAt(i).findViewById(
 					R.id.iv_img);
-			imageView.setImageResource(R.drawable.ic_launcher);
+			imageView.setImageResource(R.drawable.hotel_list_indicator_normal);
 		}
 		imageView = (ImageView) indicator.getChildAt(position).findViewById(
 				R.id.iv_img);
-		imageView.setImageResource(R.drawable.progress_drawable_);
+		imageView.setImageResource(R.drawable.hotel_list_indicator_activited);
 
 	}
 
