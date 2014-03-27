@@ -1,13 +1,13 @@
 package com.zmax.app.ui.base;
 
+import java.security.spec.MGF1ParameterSpec;
+
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
@@ -33,12 +33,8 @@ import com.zmax.app.ui.fragment.MoreMenuFragment;
 public class BaseSlidingFragmentActivity extends SlidingFragmentActivity {
 
 	protected Fragment mContent;
-	protected Fragment mContentSecondary;
-	private RadioGroup rg_top_title;
-	private Button btn_more;
-
-	private LinearLayout above_content_second_header;
-	private FrameLayout content_frame_secondary, content_frame;
+	protected RadioGroup rg_top_title;
+	protected Button btn_more;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -66,20 +62,16 @@ public class BaseSlidingFragmentActivity extends SlidingFragmentActivity {
 		if (savedInstanceState != null) {
 			mContent = getSupportFragmentManager().getFragment(
 					savedInstanceState, "mContent");
-
-			mContentSecondary = getSupportFragmentManager().getFragment(
-					savedInstanceState, "mContentSecondary");
+			// int checkedId = savedInstanceState.getInt("check_view_id");
+			// if (checkedId == R.id.btn_hotel_book)
+			// switchContent(new HotelBookFragment(R.color.red));
+			// else if (checkedId == R.id.btn_activities)
+			// switchContent(new ActListFragment(R.color.red));
 		}
 		if (mContent == null)
 			mContent = new DefaultFragment(R.color.white);
-		if (mContentSecondary == null)
-			mContentSecondary = new HotelBookFragment(R.color.white);
-
 		getSupportFragmentManager().beginTransaction()
 				.replace(R.id.content_frame, mContent).commit();
-		getSupportFragmentManager().beginTransaction()
-				.replace(R.id.content_frame_secondary, mContentSecondary)
-				.commit();
 
 		// set the Behind View Fragment
 		getSupportFragmentManager().beginTransaction()
@@ -93,14 +85,10 @@ public class BaseSlidingFragmentActivity extends SlidingFragmentActivity {
 		sm.setBehindScrollScale(0.25f);
 		sm.setFadeDegree(0.25f);
 
-		initView();
+		initHeader();
 	}
 
-	private void initView() {
-
-		above_content_second_header = (LinearLayout) findViewById(R.id.above_content_second_header);
-		content_frame_secondary = (FrameLayout) findViewById(R.id.content_frame_secondary);
-		content_frame = (FrameLayout) findViewById(R.id.content_frame);
+	private void initHeader() {
 		/*
 		 * 头部tab切换 活动和预订酒店
 		 */
@@ -111,13 +99,11 @@ public class BaseSlidingFragmentActivity extends SlidingFragmentActivity {
 			@Override
 			public void onCheckedChanged(RadioGroup group, int checkedId) {
 				if (checkedId == R.id.btn_hotel_book)
-					switchContentAct(new HotelBookFragment(R.color.red));
+					switchContent(new HotelBookFragment(R.color.red));
 				else if (checkedId == R.id.btn_activities)
 					switchContent(new ActListFragment(R.color.red));
 			}
 		});
-		((RadioButton) findViewById(R.id.btn_activities)).setChecked(true);
-
 		btn_more = (Button) findViewById(R.id.btn_more);
 		btn_more.setOnClickListener(new OnClickListener() {
 
@@ -134,43 +120,39 @@ public class BaseSlidingFragmentActivity extends SlidingFragmentActivity {
 	public void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
 		getSupportFragmentManager().putFragment(outState, "mContent", mContent);
-		getSupportFragmentManager().putFragment(outState, "mContentSecondary",
-				mContentSecondary);
+		outState.putInt("check_view_id", rg_top_title.getCheckedRadioButtonId());
+
 	}
 
 	public void switchContent(final Fragment fragment) {
+		// if (fragment == null || fragment.getActivity() == null
+		// || !fragment.isAdded())
+		// return;
 		mContent = fragment;
-		if (mContent instanceof ActListFragment
-				|| mContent instanceof HotelBookFragment)
-			above_content_second_header.setVisibility(View.VISIBLE);
-		else {
-			above_content_second_header.setVisibility(View.GONE);
+		if (mContent instanceof ActListFragment) {
+			findViewById(R.id.above_content_second_header).setVisibility(
+					View.VISIBLE);
+			((RadioButton) findViewById(R.id.btn_activities)).setChecked(true);
+		} else if (mContent instanceof HotelBookFragment) {
+			findViewById(R.id.above_content_second_header).setVisibility(
+					View.VISIBLE);
+			((RadioButton) findViewById(R.id.btn_hotel_book)).setChecked(true);
 
-		}
-		content_frame_secondary.setVisibility(View.GONE);
-		content_frame.setVisibility(View.VISIBLE);
+		} else
+			findViewById(R.id.above_content_second_header).setVisibility(
+					View.GONE);
+
 		getSupportFragmentManager().beginTransaction()
 				.replace(R.id.content_frame, fragment).commit();
 		Handler h = new Handler();
 		h.postDelayed(new Runnable() {
 			public void run() {
 				getSlidingMenu().showContent();
+				findViewById(R.id.content_frame).setVisibility(View.GONE);
+				findViewById(R.id.content_frame).setVisibility(View.VISIBLE);
 			}
 		}, 50);
-	}
 
-	public void switchContentAct(final Fragment fragment) {
-		findViewById(R.id.above_content_second_header).setVisibility(
-				View.VISIBLE);
-
-		content_frame_secondary.setVisibility(View.VISIBLE);
-		content_frame.setVisibility(View.GONE);
-
-		// if (mContentSecondary == null || !mContentSecondary.isAdded()) {
-		// mContentSecondary = fragment;
-		// getSupportFragmentManager().beginTransaction()
-		// .replace(R.id.content_frame, fragment).commit();
-		// }
 	}
 
 	public void onBirdPressed(int pos) {
