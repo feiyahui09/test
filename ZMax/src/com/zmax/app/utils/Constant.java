@@ -29,9 +29,10 @@ public class Constant {
 	public static final String TEST_ICON_URI = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQQGKJtgkUvw47FeyYwTia3chxBqChjxqKgRmX_QItRWAhVqJjc";
 
 	//  百度地图定位
-	public static String MAP_SDK_KEY = "seIhcSk2TiTqdHTjyGG8sjCn";
-	public static String MAP_AK = "Io8gL4Aybx3CZsdpSoKCqZPB";// avail
-
+	public static String MAP_SDK_KEY = "seIhcSk2TiTqdHTjyGG8sjCn";// 个人
+//	public static String MAP_AK = "Io8gL4Aybx3CZsdpSoKCqZPB";// 个人
+	public static String MAP_AK = "nGf4WdZTlTgAjFSQ0AtuSWjc";//zmax
+	
 	public static String IP_LOCATION_URL = "http://api.map.baidu.com/location/ip";
 
 	public static List<Object> getFalseDataObject(boolean bo) {
@@ -68,6 +69,21 @@ public class Constant {
 		return mList;
 	}
 
+	public static List<Act> getFalseData(int count) {
+
+		List<Act> mList = new ArrayList<Act>();
+
+		for (int i = 0; i < count; i++) {
+			Act activityDetail = new Act();
+
+			activityDetail.dt = "12";
+			mList.add(activityDetail);
+
+		}
+
+		return mList;
+	}
+
 	public static List<View> getHotelFalseDataView(
 			final FragmentActivity fragmentActivity, LayoutInflater inflater) {
 
@@ -90,7 +106,5 @@ public class Constant {
 
 		return mList;
 	}
-
-
 
 }

@@ -29,9 +29,9 @@ import com.zmax.app.ui.fragment.MoreMenuFragment;
  */
 public class BaseSlidingFragmentActivity extends SlidingFragmentActivity {
 
-	private Fragment mContent;
-	private RadioGroup rg_top_title;
-	private Button btn_more;
+	protected Fragment mContent;
+	protected RadioGroup rg_top_title;
+	protected Button btn_more;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {

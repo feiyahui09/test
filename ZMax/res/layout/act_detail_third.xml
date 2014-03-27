@@ -1,204 +1,190 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
     android:orientation="vertical" >
 
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_marginLeft="@dimen/act_detail_index_margin_left"
-        android:layout_marginRight="@dimen/act_detail_index_margin_left"
-        android:layout_marginTop="@dimen/act_detail_index_margin_top"
-        android:background="@drawable/act_detial_envelope_bg"
-        android:orientation="vertical"
-        android:paddingLeft="@dimen/act_detail_third_inner_margin_left"
-        android:paddingRight="@dimen/act_detail_third_inner_margin_left"
-        android:paddingTop="@dimen/act_detail_third_inner_margin_top" >
-
-        <RelativeLayout
-            android:layout_width="fill_parent"
-            android:layout_height="@dimen/act_detail_third_img_height" >
-
-            <ImageView
-                android:id="@+id/iv_act_detail_index_img"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:scaleType="fitXY"
-                android:src="@drawable/act_detail_icon_test" />
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:src="@drawable/act_detial_photo_lt" />
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentRight="true"
-                android:src="@drawable/act_detial_photo_rb" />
-        </RelativeLayout>
-
-        <ImageView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/act_detial_photo_bottom" />
-
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="@dimen/act_detail_third_time_banner_margin_bottom"
-            android:layout_marginTop="@dimen/act_detail_third_time_banner_margin_top"
-            android:background="@drawable/act_detial_time_banner"
-            android:gravity="center_horizontal"
-            android:paddingTop="2dp"
-            android:text="活动时间"
-            android:textColor="#ffffff"
-            android:textSize="14sp" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical" >
 
         <LinearLayout
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/act_detail_third_time_year_margin_bottom"
-            android:orientation="horizontal" >
+            android:layout_height="fill_parent"
+            android:layout_marginLeft="@dimen/act_detail_index_margin_left"
+            android:layout_marginRight="@dimen/act_detail_index_margin_left"
+            android:layout_marginTop="@dimen/act_detail_index_margin_top"
+            android:background="@drawable/act_detial_envelope_bg"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/act_detail_third_inner_margin_left"
+            android:paddingRight="@dimen/act_detail_third_inner_margin_left"
+            android:paddingTop="@dimen/act_detail_third_inner_margin_top" >
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="@dimen/act_detail_third_img_height" >
+
+                <ImageView
+                    android:id="@+id/iv_act_detail_index_img"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/act_detail_icon_test" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:src="@drawable/act_detial_photo_lt" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentRight="true"
+                    android:src="@drawable/act_detial_photo_rb" />
+            </RelativeLayout>
+
+            <ImageView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="@dimen/act_detail_third_time_banner_margin_bottom"
+                android:layout_marginTop="@dimen/act_detail_third_time_banner_margin_top"
+                android:background="@drawable/act_detial_time_banner"
+                android:gravity="center_horizontal"
+                android:paddingTop="2dp"
+                android:text="活动时间"
+                android:textColor="#ffffff"
+                android:textSize="14sp" />
 
             <LinearLayout
-                android:layout_width="0dp"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical" >
+                android:layout_marginBottom="@dimen/act_detail_third_time_year_margin_bottom"
+                android:orientation="horizontal" >
 
-                <TextView
-                    android:id="@+id/tv_act_detail_third_start_day"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:gravity="center"
-                    android:text="05 - 01"
-                    android:textColor="#3686B2"
-                    android:textSize="32sp" />
+                    android:layout_weight="1"
+                    android:orientation="vertical" >
 
-                <TextView
-                    android:id="@+id/tv_act_detail_third_start_year"
-                    android:layout_width="wrap_content"
+                    <TextView
+                        android:id="@+id/tv_act_detail_third_start_day"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:gravity="center"
+                        android:text="05 - 01"
+                        android:textColor="#3686B2"
+                        android:textSize="32sp" />
+
+                    <TextView
+                        android:id="@+id/tv_act_detail_third_start_year"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:gravity="center"
+                        android:text="2014"
+                        android:textColor="#3686B2"
+                        android:textSize="18sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:gravity="center"
-                    android:text="2014"
-                    android:textColor="#3686B2"
-                    android:textSize="18sp" />
+                    android:layout_weight="1"
+                    android:orientation="vertical" >
+
+                    <TextView
+                        android:id="@+id/tv_act_detail_third_end_day"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:gravity="center"
+                        android:text="05 - 24"
+                        android:textColor="#3686B2"
+                        android:textSize="32sp" />
+
+                    <TextView
+                        android:id="@+id/tv_act_detail_third_end_year"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:gravity="center"
+                        android:text="2014"
+                        android:textColor="#3686B2"
+                        android:textSize="18sp" />
+                </LinearLayout>
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="0dp"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical" >
+                android:layout_marginTop="@dimen/act_detail_third_time_minuter_margin_top"
+                android:gravity="center"
+                android:orientation="horizontal" >
 
                 <TextView
-                    android:id="@+id/tv_act_detail_third_end_day"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
+                    android:layout_gravity="center_vertical"
                     android:gravity="center"
-                    android:text="05 - 24"
-                    android:textColor="#3686B2"
-                    android:textSize="32sp" />
+                    android:text="每天"
+                    android:textColor="#333333"
+                    android:textSize="12sp" />
 
                 <TextView
-                    android:id="@+id/tv_act_detail_third_end_year"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="5dp"
                     android:gravity="center"
-                    android:text="2014"
-                    android:textColor="#3686B2"
+                    android:text="18：00"
+                    android:textColor="#333333"
                     android:textSize="18sp" />
             </LinearLayout>
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="@dimen/act_detail_third_hotel_banner_margin_bottom"
+                android:layout_marginTop="@dimen/act_detail_third_hotel_banner_margin_top"
+                android:background="@drawable/act_detial_hotel_banner"
+                android:gravity="center_horizontal"
+                android:paddingTop="2dp"
+                android:text="活动酒店"
+                android:textColor="#ffffff"
+                android:textSize="14sp" />
+
+            <ListView
+                android:id="@+id/list_view"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:cacheColorHint="#0000"
+                android:divider="@drawable/act_detial_third_divider" >
+            </ListView>
+
+            <Button
+                android:id="@+id/btn_more"
+                android:layout_width="234dp"
+                android:layout_height="34dp"
+                android:layout_gravity="center"
+                android:background="@drawable/act_detail_third_book_btn_sel"
+                android:text="查看其余10家分店"
+                android:textColor="@color/act_detail_third_book_text_color_sel"
+                android:textSize="14sp" >
+            </Button>
         </LinearLayout>
+    </RelativeLayout>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:gravity="center"
-            android:text="每天"
-            android:textColor="#333333"
-            android:textSize="12sp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="@dimen/act_detail_third_time_minuter_margin_top"
-            android:gravity="center"
-            android:text="18：00"
-            android:textColor="#333333"
-            android:textSize="14sp" />
-
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="@dimen/act_detail_third_hotel_banner_margin_bottom"
-            android:layout_marginTop="@dimen/act_detail_third_hotel_banner_margin_top"
-            android:background="@drawable/act_detial_hotel_banner"
-            android:gravity="center_horizontal"
-            android:paddingTop="2dp"
-            android:text="活动酒店"
-            android:textColor="#ffffff"
-            android:textSize="14sp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:gravity="center"
-            android:text="广州天河潮漫酒店"
-            android:textColor="#333333"
-            android:textSize="16sp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:gravity="center"
-            android:text="广州市天和去提那和录333号"
-            android:textColor="#333333"
-            android:textSize="14sp" />
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/act_detial_third_divider" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:gravity="center"
-            android:text="广州天河潮漫酒店"
-            android:textColor="#333333"
-            android:textSize="16sp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:gravity="center"
-            android:text="广州市天和去提那和录333号"
-            android:textColor="#333333"
-            android:textSize="14sp" />
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/act_detial_third_divider" />
-    </LinearLayout>
-
-</RelativeLayout>
+</ScrollView>
