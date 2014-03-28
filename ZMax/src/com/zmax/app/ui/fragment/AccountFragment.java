@@ -13,22 +13,21 @@ import android.widget.TextView;
 import com.zmax.app.R;
 
 public class AccountFragment extends Fragment implements OnClickListener {
-
+	
 	private Button btn_confirm;
 	private EditText et_account, et_password;
 	private TextView tv_forget_pw, tv_regist;
-
+	
 	public AccountFragment() {
 		this(R.color.white);
 	}
-
+	
 	public AccountFragment(int colorRes) {
 		setRetainInstance(true);
 	}
-
+	
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.account_login, null);
 		btn_confirm = (Button) view.findViewById(R.id.btn_confirm);
 		btn_confirm.setOnClickListener(this);
@@ -40,38 +39,38 @@ public class AccountFragment extends Fragment implements OnClickListener {
 		tv_forget_pw.setOnClickListener(this);
 		tv_regist = (TextView) view.findViewById(R.id.tv_regist);
 		tv_regist.setOnClickListener(this);
-
+		
 		return view;
 	}
-
+	
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
 	}
-
+	
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
-
-		case R.id.tv_regist:
-
-			break;
-		case R.id.tv_forget_pw:
-
-			break;
-		case R.id.et_password:
-
-			break;
-		case R.id.et_account:
-
-			break;
-		case R.id.btn_confirm:
-
-			break;
-
-		default:
-			break;
+		
+			case R.id.tv_regist:
+				
+				break;
+			case R.id.tv_forget_pw:
+				
+				break;
+			case R.id.et_password:
+				
+				break;
+			case R.id.et_account:
+				
+				break;
+			case R.id.btn_confirm:
+				
+				break;
+			
+			default:
+				break;
 		}
-
+		
 	}
 }

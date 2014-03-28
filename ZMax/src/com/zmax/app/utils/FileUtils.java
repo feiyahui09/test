@@ -21,21 +21,22 @@ import android.util.Log;
  */
 public class FileUtils {
 	
-	
 	/**
 	 * Get or cerate the directory for caching icom image files
+	 * 
 	 * @return If null, the directory is not accessibe
 	 */
-	public static File getSdcardDir(){
-	    File retVal = Environment.getExternalStorageDirectory();
-	    if( retVal != null ){
-	      retVal = new File( retVal.getAbsolutePath() + "/zmax/cacheImg");
-	      if( ! retVal.exists() && ! retVal.mkdirs() ){
-	        retVal = null;
-	      }
-	    }
-	    return retVal;
+	public static File getSdcardDir() {
+		File retVal = Environment.getExternalStorageDirectory();
+		if (retVal != null) {
+			retVal = new File(retVal.getAbsolutePath() + "/zmax/cacheImg");
+			if (!retVal.exists() && !retVal.mkdirs()) {
+				retVal = null;
+			}
+		}
+		return retVal;
 	}
+	
 	/**
 	 * 写文本文件 在Android系统中，文件保存在 /data/data/PACKAGE_NAME/files 目录下
 	 * 
@@ -43,20 +44,19 @@ public class FileUtils {
 	 * @param msg
 	 */
 	public static void write(Context context, String fileName, String content) {
-		if (content == null)
-			content = "";
-
+		if (content == null) content = "";
+		
 		try {
-			FileOutputStream fos = context.openFileOutput(fileName,
-					Context.MODE_PRIVATE);
+			FileOutputStream fos = context.openFileOutput(fileName, Context.MODE_PRIVATE);
 			fos.write(content.getBytes());
-
+			
 			fos.close();
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-
+	
 	/**
 	 * 读取文本文件
 	 * 
@@ -68,12 +68,13 @@ public class FileUtils {
 		try {
 			FileInputStream in = context.openFileInput(fileName);
 			return readInStream(in);
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			e.printStackTrace();
 		}
 		return "";
 	}
-
+	
 	private static String readInStream(FileInputStream inStream) {
 		try {
 			ByteArrayOutputStream outStream = new ByteArrayOutputStream();
@@ -82,16 +83,17 @@ public class FileUtils {
 			while ((length = inStream.read(buffer)) != -1) {
 				outStream.write(buffer, 0, length);
 			}
-
+			
 			outStream.close();
 			inStream.close();
 			return outStream.toString();
-		} catch (IOException e) {
+		}
+		catch (IOException e) {
 			Log.i("FileTest", e.getMessage());
 		}
 		return null;
 	}
-
+	
 	public static File createFile(String folderPath, String fileName) {
 		File destDir = new File(folderPath);
 		if (!destDir.exists()) {
@@ -99,7 +101,7 @@ public class FileUtils {
 		}
 		return new File(folderPath, fileName + fileName);
 	}
-
+	
 	/**
 	 * 向手机写图片
 	 * 
@@ -108,45 +110,46 @@ public class FileUtils {
 	 * @param fileName
 	 * @return
 	 */
-	public static boolean writeFile(byte[] buffer, String folder,
-			String fileName) {
+	public static boolean writeFile(byte[] buffer, String folder, String fileName) {
 		boolean writeSucc = false;
-
-		boolean sdCardExist = Environment.getExternalStorageState().equals(
-				android.os.Environment.MEDIA_MOUNTED);
-
+		
+		boolean sdCardExist = Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED);
+		
 		String folderPath = "";
 		if (sdCardExist) {
-			folderPath = Environment.getExternalStorageDirectory()
-					+ File.separator + folder + File.separator;
-		} else {
+			folderPath = Environment.getExternalStorageDirectory() + File.separator + folder + File.separator;
+		}
+		else {
 			writeSucc = false;
 		}
-
+		
 		File fileDir = new File(folderPath);
 		if (!fileDir.exists()) {
 			fileDir.mkdirs();
 		}
-
+		
 		File file = new File(folderPath + fileName);
 		FileOutputStream out = null;
 		try {
 			out = new FileOutputStream(file);
 			out.write(buffer);
 			writeSucc = true;
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			e.printStackTrace();
-		} finally {
+		}
+		finally {
 			try {
 				out.close();
-			} catch (IOException e) {
+			}
+			catch (IOException e) {
 				e.printStackTrace();
 			}
 		}
-
+		
 		return writeSucc;
 	}
-
+	
 	/**
 	 * 根据文件绝对路径获取文件名
 	 * 
@@ -154,11 +157,10 @@ public class FileUtils {
 	 * @return
 	 */
 	public static String getFileName(String filePath) {
-		if (TextUtils.isEmpty(filePath))
-			return "";
+		if (TextUtils.isEmpty(filePath)) return "";
 		return filePath.substring(filePath.lastIndexOf(File.separator) + 1);
 	}
-
+	
 	/**
 	 * 根据文件的绝对路径获取文件名但不包含扩展名
 	 * 
@@ -170,10 +172,9 @@ public class FileUtils {
 			return "";
 		}
 		int point = filePath.lastIndexOf('.');
-		return filePath.substring(filePath.lastIndexOf(File.separator) + 1,
-				point);
+		return filePath.substring(filePath.lastIndexOf(File.separator) + 1, point);
 	}
-
+	
 	/**
 	 * 获取文件扩展名
 	 * 
@@ -181,13 +182,12 @@ public class FileUtils {
 	 * @return
 	 */
 	public static String getFileFormat(String fileName) {
-		if (TextUtils.isEmpty(fileName))
-			return "";
-
+		if (TextUtils.isEmpty(fileName)) return "";
+		
 		int point = fileName.lastIndexOf('.');
 		return fileName.substring(point + 1);
 	}
-
+	
 	/**
 	 * 获取文件大小
 	 * 
@@ -196,14 +196,14 @@ public class FileUtils {
 	 */
 	public static long getFileSize(String filePath) {
 		long size = 0;
-
+		
 		File file = new File(filePath);
 		if (file != null && file.exists()) {
 			size = file.length();
 		}
 		return size;
 	}
-
+	
 	/**
 	 * 获取文件大小
 	 * 
@@ -212,17 +212,17 @@ public class FileUtils {
 	 * @return
 	 */
 	public static String getFileSize(long size) {
-		if (size <= 0)
-			return "0";
+		if (size <= 0) return "0";
 		java.text.DecimalFormat df = new java.text.DecimalFormat("##.##");
 		float temp = (float) size / 1024;
 		if (temp >= 1024) {
 			return df.format(temp / 1024) + "M";
-		} else {
+		}
+		else {
 			return df.format(temp) + "K";
 		}
 	}
-
+	
 	/**
 	 * 转换文件大小
 	 * 
@@ -234,16 +234,19 @@ public class FileUtils {
 		String fileSizeString = "";
 		if (fileS < 1024) {
 			fileSizeString = df.format((double) fileS) + "B";
-		} else if (fileS < 1048576) {
+		}
+		else if (fileS < 1048576) {
 			fileSizeString = df.format((double) fileS / 1024) + "KB";
-		} else if (fileS < 1073741824) {
+		}
+		else if (fileS < 1073741824) {
 			fileSizeString = df.format((double) fileS / 1048576) + "MB";
-		} else {
+		}
+		else {
 			fileSizeString = df.format((double) fileS / 1073741824) + "G";
 		}
 		return fileSizeString;
 	}
-
+	
 	/**
 	 * 获取目录文件大小
 	 * 
@@ -262,14 +265,15 @@ public class FileUtils {
 		for (File file : files) {
 			if (file.isFile()) {
 				dirSize += file.length();
-			} else if (file.isDirectory()) {
+			}
+			else if (file.isDirectory()) {
 				dirSize += file.length();
 				dirSize += getDirSize(file); // 递归调用继续统计
 			}
 		}
 		return dirSize;
 	}
-
+	
 	/**
 	 * 获取目录文件个数
 	 * 
@@ -288,7 +292,7 @@ public class FileUtils {
 		}
 		return count;
 	}
-
+	
 	public static byte[] toBytes(InputStream in) throws IOException {
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
 		int ch;
@@ -299,7 +303,7 @@ public class FileUtils {
 		out.close();
 		return buffer;
 	}
-
+	
 	/**
 	 * 检查文件是否存在
 	 * 
@@ -312,12 +316,13 @@ public class FileUtils {
 			File path = Environment.getExternalStorageDirectory();
 			File newPath = new File(path.toString() + name);
 			status = newPath.exists();
-		} else {
+		}
+		else {
 			status = false;
 		}
 		return status;
 	}
-
+	
 	/**
 	 * 检查路径是否存在
 	 * 
@@ -327,7 +332,7 @@ public class FileUtils {
 	public static boolean checkFilePathExists(String path) {
 		return new File(path).exists();
 	}
-
+	
 	/**
 	 * 计算SD卡的剩余空间
 	 * 
@@ -343,15 +348,17 @@ public class FileUtils {
 				long blockSize = stat.getBlockSize();
 				long availableBlocks = stat.getAvailableBlocks();
 				freeSpace = availableBlocks * blockSize / 1024;
-			} catch (Exception e) {
+			}
+			catch (Exception e) {
 				e.printStackTrace();
 			}
-		} else {
+		}
+		else {
 			return -1;
 		}
 		return (freeSpace);
 	}
-
+	
 	/**
 	 * 新建目录
 	 * 
@@ -365,11 +372,12 @@ public class FileUtils {
 			File newPath = new File(path.toString() + directoryName);
 			status = newPath.mkdir();
 			status = true;
-		} else
+		}
+		else
 			status = false;
 		return status;
 	}
-
+	
 	/**
 	 * 检查是否安装SD卡
 	 * 
@@ -380,11 +388,12 @@ public class FileUtils {
 		boolean status;
 		if (sDCardStatus.equals(Environment.MEDIA_MOUNTED)) {
 			status = true;
-		} else
+		}
+		else
 			status = false;
 		return status;
 	}
-
+	
 	/**
 	 * 删除目录(包括：目录里的所有文件)
 	 * 
@@ -394,9 +403,9 @@ public class FileUtils {
 	public static boolean deleteDirectory(String fileName) {
 		boolean status;
 		SecurityManager checker = new SecurityManager();
-
+		
 		if (!fileName.equals("")) {
-
+			
 			File path = Environment.getExternalStorageDirectory();
 			File newPath = new File(path.toString() + fileName);
 			checker.checkDelete(newPath.toString());
@@ -406,25 +415,27 @@ public class FileUtils {
 				// delete the directory
 				try {
 					for (int i = 0; i < listfile.length; i++) {
-						File deletedFile = new File(newPath.toString() + "/"
-								+ listfile[i].toString());
+						File deletedFile = new File(newPath.toString() + "/" + listfile[i].toString());
 						deletedFile.delete();
 					}
 					newPath.delete();
 					Log.i("DirectoryManager deleteDirectory", fileName);
 					status = true;
-				} catch (Exception e) {
+				}
+				catch (Exception e) {
 					e.printStackTrace();
 					status = false;
 				}
-
-			} else
+				
+			}
+			else
 				status = false;
-		} else
+		}
+		else
 			status = false;
 		return status;
 	}
-
+	
 	/**
 	 * 删除文件
 	 * 
@@ -434,9 +445,9 @@ public class FileUtils {
 	public static boolean deleteFile(String fileName) {
 		boolean status;
 		SecurityManager checker = new SecurityManager();
-
+		
 		if (!fileName.equals("")) {
-
+			
 			File path = Environment.getExternalStorageDirectory();
 			File newPath = new File(path.toString() + fileName);
 			checker.checkDelete(newPath.toString());
@@ -445,17 +456,20 @@ public class FileUtils {
 					Log.i("DirectoryManager deleteFile", fileName);
 					newPath.delete();
 					status = true;
-				} catch (SecurityException se) {
+				}
+				catch (SecurityException se) {
 					se.printStackTrace();
 					status = false;
 				}
-			} else
+			}
+			else
 				status = false;
-		} else
+		}
+		else
 			status = false;
 		return status;
 	}
-
+	
 	/**
 	 * 删除空目录
 	 * 
@@ -476,7 +490,7 @@ public class FileUtils {
 		}
 		return 3;
 	}
-
+	
 	/**
 	 * 重命名
 	 * 
@@ -488,7 +502,7 @@ public class FileUtils {
 		File f = new File(oldName);
 		return f.renameTo(new File(newName));
 	}
-
+	
 	/**
 	 * 删除文件
 	 * 
@@ -505,17 +519,16 @@ public class FileUtils {
 		}
 		return false;
 	}
-
+	
 	/**
 	 * 获取SD卡的根目录，末尾带\
 	 * 
 	 * @return
 	 */
 	public static String getSDRoot() {
-		return Environment.getExternalStorageDirectory().getAbsolutePath()
-				+ File.separator;
+		return Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator;
 	}
-
+	
 	/**
 	 * 列出root目录下所有子目录
 	 * 
@@ -536,11 +549,11 @@ public class FileUtils {
 		}
 		return allDir;
 	}
-
+	
 	public enum PathStatus {
 		SUCCESS, EXITS, ERROR
 	}
-
+	
 	/**
 	 * 创建目录
 	 * 
@@ -553,11 +566,12 @@ public class FileUtils {
 		}
 		if (path.mkdir()) {
 			return PathStatus.SUCCESS;
-		} else {
+		}
+		else {
 			return PathStatus.ERROR;
 		}
 	}
-
+	
 	/**
 	 * 截取路径名
 	 * 

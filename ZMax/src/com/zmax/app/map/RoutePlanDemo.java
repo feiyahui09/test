@@ -4,8 +4,8 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.Window;
 import android.view.View.OnClickListener;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -50,14 +50,14 @@ import com.zmax.app.utils.Constant;
  * 
  */
 public class RoutePlanDemo extends Activity {
-
+	
 	// UI相关
 	Button mBtnDrive = null; // 驾车搜索
 	Button mBtnTransit = null; // 公交搜索
 	Button mBtnWalk = null; // 步行搜索
 	Button mBtnCusRoute = null; // 自定义路线
 	Button mBtnCusIcon = null; // 自定义起终点图标
-
+	
 	// 浏览路线节点相关
 	Button mBtnPre = null;// 上一个节点
 	Button mBtnNext = null;// 下一个节点
@@ -70,13 +70,13 @@ public class RoutePlanDemo extends Activity {
 	private PopupOverlay pop = null;// 弹出泡泡图层，浏览节点时使用
 	private TextView popupText = null;// 泡泡view
 	private View viewCache = null;
-
+	
 	// 地图相关，使用继承MapView的MyRouteMapView目的是重写touch事件实现泡泡处理
 	// 如果不处理touch事件，则无需继承，直接使用MapView即可
 	MapView mMapView = null; // 地图View
 	// 搜索相关
 	MKSearch mSearch = null; // 搜索模块，也可去掉地图模块独立使用
-
+	
 	// 定位相关
 	LocationClient mLocClient;
 	LocationData locData = null;
@@ -84,9 +84,9 @@ public class RoutePlanDemo extends Activity {
 	// 定位图层
 	locationOverlay myLocationOverlay = null;
 	boolean isFirstLoc = true;// 是否首次定位
-
+	
 	private MapController mMapController = null;
-
+	
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		/**
@@ -102,7 +102,7 @@ public class RoutePlanDemo extends Activity {
 			app.mBMapManager.init(Constant.MAP_SDK_KEY, null);
 		}
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
-
+		
 		setContentView(R.layout.routeplan);
 		CharSequence titleLable = "路线规划功能";
 		setTitle(titleLable);
@@ -111,7 +111,7 @@ public class RoutePlanDemo extends Activity {
 		mMapView.setBuiltInZoomControls(true);
 		mMapView.getController().setZoom(12);
 		mMapView.getController().enableClick(true);
-
+		
 		// 初始化按键
 		mBtnDrive = (Button) findViewById(R.id.drive);
 		mBtnTransit = (Button) findViewById(R.id.transit);
@@ -122,7 +122,7 @@ public class RoutePlanDemo extends Activity {
 		mBtnCusIcon = (Button) findViewById(R.id.customicon);
 		mBtnPre.setVisibility(View.INVISIBLE);
 		mBtnNext.setVisibility(View.INVISIBLE);
-
+		
 		// 按键点击事件
 		OnClickListener clickListener = new OnClickListener() {
 			public void onClick(View v) {
@@ -140,19 +140,19 @@ public class RoutePlanDemo extends Activity {
 			public void onClick(View v) {
 				// 自设路线绘制示例
 				intentToActivity();
-
+				
 			}
 		};
-
+		
 		OnClickListener changeRouteIconListener = new OnClickListener() {
-
+			
 			@Override
 			public void onClick(View arg0) {
 				changeRouteIcon();
 			}
-
+			
 		};
-
+		
 		mBtnDrive.setOnClickListener(clickListener);
 		mBtnTransit.setOnClickListener(clickListener);
 		mBtnWalk.setOnClickListener(clickListener);
@@ -162,10 +162,10 @@ public class RoutePlanDemo extends Activity {
 		mBtnCusIcon.setOnClickListener(changeRouteIconListener);
 		// 创建 弹出泡泡图层
 		createPaopao();
-
+		
 		// 地图点击事件处理
 		mMapView.regMapTouchListner(new MKMapTouchListener() {
-
+			
 			@Override
 			public void onMapClick(GeoPoint point) {
 				// 在此处理地图点击事件
@@ -174,24 +174,23 @@ public class RoutePlanDemo extends Activity {
 					pop.hidePop();
 				}
 			}
-
+			
 			@Override
 			public void onMapDoubleClick(GeoPoint point) {
-
+				
 			}
-
+			
 			@Override
 			public void onMapLongClick(GeoPoint point) {
-
+				
 			}
-
+			
 		});
 		// 初始化搜索模块，注册事件监听
 		mSearch = new MKSearch();
 		mSearch.init(app.mBMapManager, new MKSearchListener() {
-
-			public void onGetDrivingRouteResult(MKDrivingRouteResult res,
-					int error) {
+			
+			public void onGetDrivingRouteResult(MKDrivingRouteResult res, int error) {
 				// 起点或终点有歧义，需要选择具体的城市列表或地址列表
 				if (error == MKEvent.ERROR_ROUTE_ADDR) {
 					// 遍历所有地址
@@ -207,11 +206,10 @@ public class RoutePlanDemo extends Activity {
 				}
 				// 错误号可参考MKEvent中的定义
 				if (error != 0 || res == null) {
-					Toast.makeText(RoutePlanDemo.this, "抱歉，未找到结果",
-							Toast.LENGTH_SHORT).show();
+					Toast.makeText(RoutePlanDemo.this, "抱歉，未找到结果", Toast.LENGTH_SHORT).show();
 					return;
 				}
-
+				
 				searchType = 0;
 				routeOverlay = new RouteOverlay(RoutePlanDemo.this, mMapView);
 				// 此处仅展示一个方案作为示例
@@ -223,9 +221,7 @@ public class RoutePlanDemo extends Activity {
 				// 执行刷新使生效
 				mMapView.refresh();
 				// 使用zoomToSpan()绽放地图，使路线能完全显示在地图上
-				mMapView.getController().zoomToSpan(
-						routeOverlay.getLatSpanE6(),
-						routeOverlay.getLonSpanE6());
+				mMapView.getController().zoomToSpan(routeOverlay.getLatSpanE6(), routeOverlay.getLonSpanE6());
 				// 移动地图到起点
 				mMapView.getController().animateTo(res.getStart().pt);
 				// 将路线数据保存给全局变量
@@ -235,9 +231,8 @@ public class RoutePlanDemo extends Activity {
 				mBtnPre.setVisibility(View.VISIBLE);
 				mBtnNext.setVisibility(View.VISIBLE);
 			}
-
-			public void onGetTransitRouteResult(MKTransitRouteResult res,
-					int error) {
+			
+			public void onGetTransitRouteResult(MKTransitRouteResult res, int error) {
 				// 起点或终点有歧义，需要选择具体的城市列表或地址列表
 				if (error == MKEvent.ERROR_ROUTE_ADDR) {
 					// 遍历所有地址
@@ -252,14 +247,12 @@ public class RoutePlanDemo extends Activity {
 					return;
 				}
 				if (error != 0 || res == null) {
-					Toast.makeText(RoutePlanDemo.this, "抱歉，未找到结果",
-							Toast.LENGTH_SHORT).show();
+					Toast.makeText(RoutePlanDemo.this, "抱歉，未找到结果", Toast.LENGTH_SHORT).show();
 					return;
 				}
-
+				
 				searchType = 1;
-				transitOverlay = new TransitOverlay(RoutePlanDemo.this,
-						mMapView);
+				transitOverlay = new TransitOverlay(RoutePlanDemo.this, mMapView);
 				// 此处仅展示一个方案作为示例
 				transitOverlay.setData(res.getPlan(0));
 				// 清除其他图层
@@ -269,9 +262,7 @@ public class RoutePlanDemo extends Activity {
 				// 执行刷新使生效
 				mMapView.refresh();
 				// 使用zoomToSpan()绽放地图，使路线能完全显示在地图上
-				mMapView.getController().zoomToSpan(
-						transitOverlay.getLatSpanE6(),
-						transitOverlay.getLonSpanE6());
+				mMapView.getController().zoomToSpan(transitOverlay.getLatSpanE6(), transitOverlay.getLonSpanE6());
 				// 移动地图到起点
 				mMapView.getController().animateTo(res.getStart().pt);
 				// 重置路线节点索引，节点浏览时使用
@@ -279,9 +270,8 @@ public class RoutePlanDemo extends Activity {
 				mBtnPre.setVisibility(View.VISIBLE);
 				mBtnNext.setVisibility(View.VISIBLE);
 			}
-
-			public void onGetWalkingRouteResult(MKWalkingRouteResult res,
-					int error) {
+			
+			public void onGetWalkingRouteResult(MKWalkingRouteResult res, int error) {
 				// 起点或终点有歧义，需要选择具体的城市列表或地址列表
 				if (error == MKEvent.ERROR_ROUTE_ADDR) {
 					// 遍历所有地址
@@ -296,11 +286,10 @@ public class RoutePlanDemo extends Activity {
 					return;
 				}
 				if (error != 0 || res == null) {
-					Toast.makeText(RoutePlanDemo.this, "抱歉，未找到结果",
-							Toast.LENGTH_SHORT).show();
+					Toast.makeText(RoutePlanDemo.this, "抱歉，未找到结果", Toast.LENGTH_SHORT).show();
 					return;
 				}
-
+				
 				searchType = 2;
 				routeOverlay = new RouteOverlay(RoutePlanDemo.this, mMapView);
 				// 此处仅展示一个方案作为示例
@@ -312,9 +301,7 @@ public class RoutePlanDemo extends Activity {
 				// 执行刷新使生效
 				mMapView.refresh();
 				// 使用zoomToSpan()绽放地图，使路线能完全显示在地图上
-				mMapView.getController().zoomToSpan(
-						routeOverlay.getLatSpanE6(),
-						routeOverlay.getLonSpanE6());
+				mMapView.getController().zoomToSpan(routeOverlay.getLatSpanE6(), routeOverlay.getLonSpanE6());
 				// 移动地图到起点
 				mMapView.getController().animateTo(res.getStart().pt);
 				// 将路线数据保存给全局变量
@@ -323,35 +310,34 @@ public class RoutePlanDemo extends Activity {
 				nodeIndex = -1;
 				mBtnPre.setVisibility(View.VISIBLE);
 				mBtnNext.setVisibility(View.VISIBLE);
-
+				
 			}
-
+			
 			public void onGetAddrResult(MKAddrInfo res, int error) {
 			}
-
+			
 			public void onGetPoiResult(MKPoiResult res, int arg1, int arg2) {
 			}
-
+			
 			public void onGetBusDetailResult(MKBusLineResult result, int iError) {
 			}
-
+			
 			@Override
 			public void onGetSuggestionResult(MKSuggestionResult res, int arg1) {
 			}
-
+			
 			@Override
 			public void onGetPoiDetailSearchResult(int type, int iError) {
 				// TODO Auto-generated method stub
 			}
-
+			
 			@Override
-			public void onGetShareUrlResult(MKShareUrlResult result, int type,
-					int error) {
+			public void onGetShareUrlResult(MKShareUrlResult result, int type, int error) {
 				// TODO Auto-generated method stub
-
+				
 			}
 		});
-
+		
 		// 定位初始化
 		mMapController = mMapView.getController();
 		mLocClient = new LocationClient(this);
@@ -363,7 +349,7 @@ public class RoutePlanDemo extends Activity {
 		option.setScanSpan(1000);
 		mLocClient.setLocOption(option);
 		mLocClient.start();
-
+		
 		// 定位图层初始化
 		myLocationOverlay = new locationOverlay(mMapView);
 		// 设置定位数据
@@ -375,7 +361,7 @@ public class RoutePlanDemo extends Activity {
 		mMapView.refresh();
 		requestLocClick();
 	}
-
+	
 	/**
 	 * 手动触发一次定位请求
 	 */
@@ -383,10 +369,9 @@ public class RoutePlanDemo extends Activity {
 		mLocClient.requestLocation();
 		Toast.makeText(this, "正在定位……", Toast.LENGTH_SHORT).show();
 	}
-
+	
 	public void moveToLoc(BDLocation location) {
-		if (location == null)
-			return;
+		if (location == null) return;
 		locData.latitude = location.getLatitude();
 		locData.longitude = location.getLongitude();
 		// 如果不显示定位精度圈，将accuracy赋值为0即可
@@ -400,14 +385,13 @@ public class RoutePlanDemo extends Activity {
 		// 是手动触发请求或首次定位时，移动到定位点
 		// 移动地图到定位点
 		Log.d("LocationOverlay", "receive location, animate to it");
-		mMapController.animateTo(new GeoPoint((int) (locData.latitude * 1e6),
-				(int) (locData.longitude * 1e6)));
+		mMapController.animateTo(new GeoPoint((int) (locData.latitude * 1e6), (int) (locData.longitude * 1e6)));
 		myLocationOverlay.setLocationMode(LocationMode.FOLLOWING);
-
+		
 		// 首次定位完成
 		isFirstLoc = false;
 	}
-
+	
 	/**
 	 * 发起路线规划搜索示例
 	 * 
@@ -423,107 +407,95 @@ public class RoutePlanDemo extends Activity {
 		// 处理搜索按钮响应
 		EditText editSt = (EditText) findViewById(R.id.start);
 		EditText editEn = (EditText) findViewById(R.id.end);
-
+		
 		// 对起点终点的name进行赋值，也可以直接对坐标赋值，赋值坐标则将根据坐标进行搜索
 		MKPlanNode stNode = new MKPlanNode();
 		stNode.name = editSt.getText().toString();
 		MKPlanNode enNode = new MKPlanNode();
 		enNode.name = editEn.getText().toString();
-
+		
 		// 实际使用中请对起点终点城市进行正确的设定
 		if (mBtnDrive.equals(v)) {
 			mSearch.drivingSearch("北京", stNode, "北京", enNode);
-		} else if (mBtnTransit.equals(v)) {
+		}
+		else if (mBtnTransit.equals(v)) {
 			mSearch.transitSearch("北京", stNode, enNode);
-		} else if (mBtnWalk.equals(v)) {
+		}
+		else if (mBtnWalk.equals(v)) {
 			mSearch.walkingSearch("北京", stNode, "北京", enNode);
 		}
 	}
-
+	
 	/**
 	 * 节点浏览示例
 	 * 
 	 * @param v
 	 */
 	public void nodeClick(View v) {
-		viewCache = getLayoutInflater()
-				.inflate(R.layout.custom_text_view, null);
+		viewCache = getLayoutInflater().inflate(R.layout.custom_text_view, null);
 		popupText = (TextView) viewCache.findViewById(R.id.textcache);
 		if (searchType == 0 || searchType == 2) {
 			// 驾车、步行使用的数据结构相同，因此类型为驾车或步行，节点浏览方法相同
-			if (nodeIndex < -1 || route == null
-					|| nodeIndex >= route.getNumSteps())
-				return;
-
+			if (nodeIndex < -1 || route == null || nodeIndex >= route.getNumSteps()) return;
+			
 			// 上一个节点
 			if (mBtnPre.equals(v) && nodeIndex > 0) {
 				// 索引减
 				nodeIndex--;
 				// 移动到指定索引的坐标
-				mMapView.getController().animateTo(
-						route.getStep(nodeIndex).getPoint());
+				mMapView.getController().animateTo(route.getStep(nodeIndex).getPoint());
 				// 弹出泡泡
 				popupText.setBackgroundResource(R.drawable.map_popup);
 				popupText.setText(route.getStep(nodeIndex).getContent());
-				pop.showPopup(BMapUtil.getBitmapFromView(popupText), route
-						.getStep(nodeIndex).getPoint(), 5);
+				pop.showPopup(BMapUtil.getBitmapFromView(popupText), route.getStep(nodeIndex).getPoint(), 5);
 			}
 			// 下一个节点
 			if (mBtnNext.equals(v) && nodeIndex < (route.getNumSteps() - 1)) {
 				// 索引加
 				nodeIndex++;
 				// 移动到指定索引的坐标
-				mMapView.getController().animateTo(
-						route.getStep(nodeIndex).getPoint());
+				mMapView.getController().animateTo(route.getStep(nodeIndex).getPoint());
 				// 弹出泡泡
 				popupText.setBackgroundResource(R.drawable.map_popup);
 				popupText.setText(route.getStep(nodeIndex).getContent());
-				pop.showPopup(BMapUtil.getBitmapFromView(popupText), route
-						.getStep(nodeIndex).getPoint(), 5);
+				pop.showPopup(BMapUtil.getBitmapFromView(popupText), route.getStep(nodeIndex).getPoint(), 5);
 			}
 		}
 		if (searchType == 1) {
 			// 公交换乘使用的数据结构与其他不同，因此单独处理节点浏览
-			if (nodeIndex < -1 || transitOverlay == null
-					|| nodeIndex >= transitOverlay.getAllItem().size())
-				return;
-
+			if (nodeIndex < -1 || transitOverlay == null || nodeIndex >= transitOverlay.getAllItem().size()) return;
+			
 			// 上一个节点
 			if (mBtnPre.equals(v) && nodeIndex > 1) {
 				// 索引减
 				nodeIndex--;
 				// 移动到指定索引的坐标
-				mMapView.getController().animateTo(
-						transitOverlay.getItem(nodeIndex).getPoint());
+				mMapView.getController().animateTo(transitOverlay.getItem(nodeIndex).getPoint());
 				// 弹出泡泡
 				popupText.setBackgroundResource(R.drawable.map_popup);
 				popupText.setText(transitOverlay.getItem(nodeIndex).getTitle());
-				pop.showPopup(BMapUtil.getBitmapFromView(popupText),
-						transitOverlay.getItem(nodeIndex).getPoint(), 5);
+				pop.showPopup(BMapUtil.getBitmapFromView(popupText), transitOverlay.getItem(nodeIndex).getPoint(), 5);
 			}
 			// 下一个节点
-			if (mBtnNext.equals(v)
-					&& nodeIndex < (transitOverlay.getAllItem().size() - 2)) {
+			if (mBtnNext.equals(v) && nodeIndex < (transitOverlay.getAllItem().size() - 2)) {
 				// 索引加
 				nodeIndex++;
 				// 移动到指定索引的坐标
-				mMapView.getController().animateTo(
-						transitOverlay.getItem(nodeIndex).getPoint());
+				mMapView.getController().animateTo(transitOverlay.getItem(nodeIndex).getPoint());
 				// 弹出泡泡
 				popupText.setBackgroundResource(R.drawable.map_popup);
 				popupText.setText(transitOverlay.getItem(nodeIndex).getTitle());
-				pop.showPopup(BMapUtil.getBitmapFromView(popupText),
-						transitOverlay.getItem(nodeIndex).getPoint(), 5);
+				pop.showPopup(BMapUtil.getBitmapFromView(popupText), transitOverlay.getItem(nodeIndex).getPoint(), 5);
 			}
 		}
-
+		
 	}
-
+	
 	/**
 	 * 创建弹出泡泡图层
 	 */
 	public void createPaopao() {
-
+		
 		// 泡泡点击响应回调
 		PopupClickListener popListener = new PopupClickListener() {
 			@Override
@@ -532,9 +504,9 @@ public class RoutePlanDemo extends Activity {
 			}
 		};
 		pop = new PopupOverlay(mMapView, popListener);
-
+		
 	}
-
+	
 	/**
 	 * 跳转自设路线Activity
 	 */
@@ -543,7 +515,7 @@ public class RoutePlanDemo extends Activity {
 		// Intent intent = new Intent(this, CustomRouteOverlayDemo.class);
 		// startActivity(intent);
 	}
-
+	
 	/**
 	 * 切换路线图标，刷新地图使其生效 注意： 起终点图标使用中心对齐.
 	 */
@@ -563,97 +535,91 @@ public class RoutePlanDemo extends Activity {
 			}
 			btn.setText("自定义起终点图标");
 			Toast.makeText(this, "将使用系统起终点图标", Toast.LENGTH_SHORT).show();
-		} else {
+		}
+		else {
 			if (routeOverlay != null) {
-				routeOverlay.setStMarker(getResources().getDrawable(
-						R.drawable.map_icon_st));
-				routeOverlay.setEnMarker(getResources().getDrawable(
-						R.drawable.map_icon_en));
+				routeOverlay.setStMarker(getResources().getDrawable(R.drawable.map_icon_st));
+				routeOverlay.setEnMarker(getResources().getDrawable(R.drawable.map_icon_en));
 			}
 			if (transitOverlay != null) {
-				transitOverlay.setStMarker(getResources().getDrawable(
-						R.drawable.map_icon_st));
-				transitOverlay.setEnMarker(getResources().getDrawable(
-						R.drawable.map_icon_en));
+				transitOverlay.setStMarker(getResources().getDrawable(R.drawable.map_icon_st));
+				transitOverlay.setEnMarker(getResources().getDrawable(R.drawable.map_icon_en));
 			}
 			btn.setText("系统起终点图标");
 			Toast.makeText(this, "将使用自定义起终点图标", Toast.LENGTH_SHORT).show();
 		}
 		useDefaultIcon = !useDefaultIcon;
 		mMapView.refresh();
-
+		
 	}
-
+	
 	/**
 	 * 定位SDK监听函数
 	 */
 	public class MyLocationListenner implements BDLocationListener {
-
+		
 		@Override
 		public void onReceiveLocation(BDLocation location) {
-			if(isFirstLoc)
-			moveToLoc(location);
+			if (isFirstLoc) moveToLoc(location);
 		}
-
+		
 		public void onReceivePoi(BDLocation poiLocation) {
 			if (poiLocation == null) {
 				return;
 			}
 		}
 	}
-
+	
 	// 继承MyLocationOverlay重写dispatchTap实现点击处理
 	public class locationOverlay extends MyLocationOverlay {
-
+		
 		public locationOverlay(MapView mapView) {
 			super(mapView);
 			// TODO Auto-generated constructor stub
 		}
-
+		
 		@Override
 		protected boolean dispatchTap() {
 			// TODO Auto-generated method stub
 			// 处理点击事件,弹出泡泡
 			popupText.setBackgroundResource(R.drawable.map_popup);
 			popupText.setText("我的位置");
-			pop.showPopup(BMapUtil.getBitmapFromView(popupText), new GeoPoint(
-					(int) (locData.latitude * 1e6),
+			pop.showPopup(BMapUtil.getBitmapFromView(popupText), new GeoPoint((int) (locData.latitude * 1e6),
 					(int) (locData.longitude * 1e6)), 8);
 			return true;
 		}
-
+		
 	}
-
+	
 	@Override
 	protected void onPause() {
 		mMapView.onPause();
 		super.onPause();
 	}
-
+	
 	@Override
 	protected void onResume() {
 		mMapView.onResume();
 		super.onResume();
 	}
-
+	
 	@Override
 	protected void onDestroy() {
-
+		
 		// 退出时销毁定位
-		if (mLocClient != null)
-			mLocClient.stop();
+		if (mLocClient != null) mLocClient.stop();
 		mMapView.destroy();
 		mSearch.destory();
 		super.onDestroy();
 	}
-
+	
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
 		mMapView.onSaveInstanceState(outState);
-
+		
 	}
-
+	
 	@Override
 	protected void onRestoreInstanceState(Bundle savedInstanceState) {
 		super.onRestoreInstanceState(savedInstanceState);

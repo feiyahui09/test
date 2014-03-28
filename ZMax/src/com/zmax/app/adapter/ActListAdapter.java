@@ -31,7 +31,7 @@ public class ActListAdapter extends BaseAdapter {
 		mContext = context;
 		mInflater = ((Activity) mContext).getLayoutInflater();
 	}
-
+	
 	public void appendToList(List<Act> lists) {
 
 		if (lists == null) {

@@ -17,7 +17,7 @@ public class ActDetailFlashActivity extends BaseActivity {
 		setContentView(R.layout.act_detail_flash);
 		Timer timer = new Timer();
 		TimerTask task = new TimerTask() {
-
+			
 			@Override
 			public void run() {
 				goActDetail();
@@ -25,10 +25,10 @@ public class ActDetailFlashActivity extends BaseActivity {
 		};
 		timer.schedule(task, 900);
 	}
-
+	
 	private void goActDetail() {
 		startActivity(new Intent(this, ActDetailActivity.class));
 		finish();
 	}
-
+	
 }

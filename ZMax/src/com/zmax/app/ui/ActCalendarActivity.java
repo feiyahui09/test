@@ -16,14 +16,13 @@ import com.zmax.app.utils.Constant;
 import com.zmax.app.widget.XListView;
 import com.zmax.app.widget.XListView.IXListViewListener;
 
-public class ActCalendarActivity extends BaseActivity implements
-		IXListViewListener, OnItemClickListener {
+public class ActCalendarActivity extends BaseActivity implements IXListViewListener, OnItemClickListener {
 	private Context mContext;
 	private Button btn_Back;
 	protected XListView listview;
-
+	
 	private ActListAdapter adapter;
-
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -33,9 +32,9 @@ public class ActCalendarActivity extends BaseActivity implements
 		initHeader();
 		init();
 	}
-
+	
 	private void init() {
-
+		
 		listview = (XListView) findViewById(R.id.list_view);
 		listview.setPullLoadEnable(true);
 		listview.setPullRefreshEnable(false);
@@ -44,7 +43,7 @@ public class ActCalendarActivity extends BaseActivity implements
 		listview.setAdapter(adapter);
 		listview.setOnItemClickListener(this);
 	}
-
+	
 	private void initHeader() {
 		btn_Back = (Button) findViewById(R.id.btn_back);
 		btn_Back.setOnClickListener(new OnClickListener() {
@@ -53,28 +52,27 @@ public class ActCalendarActivity extends BaseActivity implements
 				finish();
 			}
 		});
-
+		
 	}
-
+	
 	@Override
-	public void onItemClick(AdapterView<?> parent, View view, int position,
-			long id) {
+	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 		Intent intent = new Intent();
 		intent.setClass(mContext, ActDetailFlashActivity.class);
 		mContext.startActivity(intent);
-
+		
 	}
-
+	
 	@Override
 	public void onRefresh() {
 		// TODO Auto-generated method stub
-
+		
 	}
-
+	
 	@Override
 	public void onLoadMore() {
 		// TODO Auto-generated method stub
-
+		
 	}
-
+	
 }

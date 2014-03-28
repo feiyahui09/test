@@ -15,9 +15,9 @@ import cn.sharesdk.onekeyshare.OnekeyShare;
 import com.zmax.app.R;
 
 public class ShareUtils {
-
+	
 	private String TEST_IMAGE = "";
-
+	
 	// 使用快捷分享完成分享（请务必仔细阅读位于SDK解压目录下Docs文件夹中OnekeyShare类的JavaDoc）
 	/**
 	 * ShareSDK集成方法有两种</br>
@@ -38,13 +38,13 @@ public class ShareUtils {
 		initPic(context);
 		try {
 			Thread.sleep(122);
-		} catch (InterruptedException e) {
+		}
+		catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		final OnekeyShare oks = new OnekeyShare();
-		oks.setNotification(R.drawable.ic_launcher,
-				context.getString(R.string.app_name));
+		oks.setNotification(R.drawable.ic_launcher, context.getString(R.string.app_name));
 		oks.setAddress("12345678901");
 		oks.setTitle(context.getString(R.string.share_title));
 		oks.setTitleUrl("http://sharesdk.cn");
@@ -64,18 +64,18 @@ public class ShareUtils {
 		if (platform != null) {
 			oks.setPlatform(platform);
 		}
-
+		
 		// 去除注释，可令编辑页面显示为Dialog模式
 		// oks.setDialogMode();
-
+		
 		// 去除注释，在自动授权时可以禁用SSO方式
 		// oks.disableSSOWhenAuthorize();
-
+		
 		// 去除注释，则快捷分享的操作结果将通过OneKeyShareCallback回调
 		oks.setCallback(new OneKeyShareCallback());
 		// oks.setShareContentCustomizeCallback(new
 		// ShareContentCustomizeDemo());
-
+		
 		// 去除注释，演示在九宫格设置自定义的图标
 		// Bitmap logo = BitmapFactory.decodeResource(menu.getResources(),
 		// R.drawable.ic_launcher);
@@ -89,38 +89,37 @@ public class ShareUtils {
 		// }
 		// };
 		// oks.setCustomerLogo(logo, label, listener);
-
+		
 		// 去除注释，则快捷分享九宫格中将隐藏新浪微博和腾讯微博
 		// oks.addHiddenPlatform(SinaWeibo.NAME);
 		// oks.addHiddenPlatform(TencentWeibo.NAME);
-
+		
 		oks.show(context);
 	}
-
+	
 	/**
 	 * OneKeyShareCallback是快捷分享功能的一个“外部回调”示例。通过
 	 * {@link OnekeyShare#setCallback(PlatformActionListener)}将
 	 * 本类的示例传递进快捷分享，分享操作结束后，快捷分享会将分享结果 回调到本类中来做自定义处理。
 	 */
 	class OneKeyShareCallback implements PlatformActionListener {
-
-		public void onComplete(Platform plat, int action,
-				HashMap<String, Object> res) {
+		
+		public void onComplete(Platform plat, int action, HashMap<String, Object> res) {
 			System.out.println(res.toString());
 			// 在这里添加分享成功的处理代码
 		}
-
+		
 		public void onError(Platform plat, int action, Throwable t) {
 			t.printStackTrace();
 			Log.e("ShareUtils", "onError:" + t.getMessage());
 		}
-
+		
 		public void onCancel(Platform plat, int action) {
 			// 在这里添加取消分享的处理代码
 		}
-
+		
 	}
-
+	
 	public void initPic(final Context context) {
 		new Thread() {
 			public void run() {
@@ -128,23 +127,22 @@ public class ShareUtils {
 			}
 		}.start();
 	}
-
+	
 	private void initImagePath(Context context) {
 		try {
-			String cachePath = cn.sharesdk.framework.utils.R.getCachePath(
-					context, null);
+			String cachePath = cn.sharesdk.framework.utils.R.getCachePath(context, null);
 			TEST_IMAGE = cachePath + "share_file.jpg";
 			File file = new File(TEST_IMAGE);
 			if (!file.exists()) {
 				file.createNewFile();
-				Bitmap pic = BitmapFactory.decodeResource(
-						context.getResources(), R.drawable.icon);
+				Bitmap pic = BitmapFactory.decodeResource(context.getResources(), R.drawable.icon);
 				FileOutputStream fos = new FileOutputStream(file);
 				pic.compress(CompressFormat.JPEG, 100, fos);
 				fos.flush();
 				fos.close();
 			}
-		} catch (Throwable t) {
+		}
+		catch (Throwable t) {
 			t.printStackTrace();
 			TEST_IMAGE = null;
 		}

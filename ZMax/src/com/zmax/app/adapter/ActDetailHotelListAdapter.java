@@ -18,43 +18,43 @@ import com.zmax.app.model.Act;
 import com.zmax.app.utils.PhoneUtil;
 
 public class ActDetailHotelListAdapter extends BaseAdapter {
-
+	
 	List<Act> mList = new ArrayList<Act>();
 	private Context mContext;
 	private LayoutInflater mInflater;
-
+	
 	public ActDetailHotelListAdapter(Context context) {
 		mContext = context;
 		mInflater = ((Activity) mContext).getLayoutInflater();
 	}
-
+	
 	public void appendToList(List<Act> lists) {
-
+		
 		if (lists == null) {
 			return;
 		}
 		mList.addAll(lists);
 		notifyDataSetChanged();
 	}
-
+	
 	@Override
 	public int getCount() {
 		// TODO Auto-generated method stub
 		return mList.size();
 	}
-
+	
 	@Override
 	public Object getItem(int position) {
 		// TODO Auto-generated method stub
 		return mList.get(position);
 	}
-
+	
 	@Override
 	public long getItemId(int position) {
 		// TODO Auto-generated method stub
 		return position;
 	}
-
+	
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		// TODO Auto-generated method stub
@@ -62,29 +62,27 @@ public class ActDetailHotelListAdapter extends BaseAdapter {
 		Act item = mList.get(position);
 		if (convertView == null) {
 			holder = new ViewHolder();
-			convertView = mInflater.inflate(R.layout.act_detail_third_listitem,
-					null);
-			convertView.setLayoutParams(new AbsListView.LayoutParams(AbsListView.LayoutParams.FILL_PARENT,
-				PhoneUtil.dip2px(mContext, 60)));
+			convertView = mInflater.inflate(R.layout.act_detail_third_listitem, null);
+			convertView.setLayoutParams(new AbsListView.LayoutParams(AbsListView.LayoutParams.FILL_PARENT, PhoneUtil.dip2px(mContext, 60)));
 			holder.tv_name = (TextView) convertView.findViewById(R.id.tv_name);
-			holder.tv_address = (TextView) convertView
-					.findViewById(R.id.tv_address);
+			holder.tv_address = (TextView) convertView.findViewById(R.id.tv_address);
 			holder.btn_book = (Button) convertView.findViewById(R.id.btn_book);
 			convertView.setTag(holder);
-
-		} else {
+			
+		}
+		else {
 			holder = (ViewHolder) convertView.getTag();
 		}
 		// holder.tv_name.setText("酒店设施");
 		// holder.tv_address.setText("酒店设施");
-
+		
 		return convertView;
 	}
-
+	
 	class ViewHolder {
 		public TextView tv_name;
 		public TextView tv_address;
 		public Button btn_book;
 	}
-
+	
 }

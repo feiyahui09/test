@@ -24,12 +24,12 @@ import com.zmax.app.utils.FileUtils;
 import com.zmax.app.utils.ShareUtils;
 
 public class ActDetailActivity extends BaseFragmentActivity {
-
+	
 	private Button btn_Back, btn_Share;
-
+	
 	private ViewPager pager;
 	private ActDetailAdapter adapter;
-
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -39,22 +39,22 @@ public class ActDetailActivity extends BaseFragmentActivity {
 		init();
 		initData();
 	}
-
+	
 	private void init() {
 		pager = (ViewPager) findViewById(R.id.pager);
-
+		
 		adapter = new ActDetailAdapter(this);
 		pager.setAdapter(adapter);
-
+		
 	}
-
+	
 	private void initData() {
-
+		
 		adapter.addTab(new ActDetailFirstFragment(R.color.red));
 		adapter.addTab(new ActDetailSecondFragment());
 		adapter.addTab(new ActDetailThirdFragment(R.color.white));
 	}
-
+	
 	private void initHeader() {
 		btn_Back = (Button) findViewById(R.id.btn_more);
 		btn_Share = (Button) findViewById(R.id.btn_share);
@@ -68,46 +68,40 @@ public class ActDetailActivity extends BaseFragmentActivity {
 		btn_Share.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-			new ShareUtils().showShare(ActDetailActivity.this, false, null);
-
+				new ShareUtils().showShare(ActDetailActivity.this, false, null);
+				
 			}
 		});
-
+		
 	}
-
+	
 	private void share() {
-
+		
 		Intent sendIntent = new Intent(Intent.ACTION_SEND);
 		sendIntent.setType("text/plain");
-		if (Environment.MEDIA_MOUNTED.equals(Environment
-				.getExternalStorageState())) {
+		if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())) {
 			try {
-
+				
 				sendIntent.setType("image/jpeg");
 				File tempFile = new File(FileUtils.getSDRoot(), "share.jpeg");
 				if (!tempFile.exists()) {
 					tempFile.createNewFile();
 					FileOutputStream fOut = new FileOutputStream(tempFile);
-					Bitmap bm = BitmapFactory.decodeResource(getResources(),
-							R.drawable.ic_launcher);
+					Bitmap bm = BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher);
 					bm.compress(Bitmap.CompressFormat.JPEG, 100, fOut);
 					fOut.flush();
 					fOut.close();
 				}
-				sendIntent
-						.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(tempFile));
-			} catch (Exception e) {
+				sendIntent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(tempFile));
+			}
+			catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
 		sendIntent.putExtra(Intent.EXTRA_SUBJECT, "分享应用");
-		sendIntent
-				.putExtra(Intent.EXTRA_TEXT,
-						"一款不错的微博和人人网同步更新工具，http://fancy.189.cn/portal/app/download/71559");
-		sendIntent
-				.putExtra("sms_body",
-						"一款不错的微博和人人网同步更新工具，http://fancy.189.cn/portal/app/download/71559");
+		sendIntent.putExtra(Intent.EXTRA_TEXT, "一款不错的微博和人人网同步更新工具，http://fancy.189.cn/portal/app/download/71559");
+		sendIntent.putExtra("sms_body", "一款不错的微博和人人网同步更新工具，http://fancy.189.cn/portal/app/download/71559");
 		startActivity(Intent.createChooser(sendIntent, "分享应用"));
 	}
-
+	
 }

@@ -15,7 +15,7 @@ import com.zmax.app.utils.PhoneUtil;
 
 public class MainActivity extends BaseSlidingFragmentActivity {
 	private Context mContext;
-
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -26,31 +26,31 @@ public class MainActivity extends BaseSlidingFragmentActivity {
 			return;
 		}
 		initLocate();
-
+		
 	}
-
+	
 	private void initLocate() {
 		new GetCityLocationTask(this, new GetCityLocationTask.TaskCallBack() {
-
+			
 			@Override
 			public void onCallBack(CityLocation result) {
-				if (mContent instanceof ActListFragment)
-					return;
+				if (mContent instanceof ActListFragment) return;
 				if (result != null && !isFinishing()) {
 					switchContent(new ActListFragment(R.color.red));
-					Toast.makeText(mContext,
-							"   " + result.province + result.city, 2222).show();
-
-				} else if (!PhoneUtil.isNetworkOk(mContext)) {
+					Toast.makeText(mContext, "   " + result.province + result.city, 2222).show();
+					
+				}
+				else if (!PhoneUtil.isNetworkOk(mContext)) {
 					switchContent(new NetErrorFragment());
 					return;
-				} else {
+				}
+				else {
 					// 显示默认列表
 				}
-
+				
 			}
 		}).execute(Constant.MAP_AK);
-
+		
 	}
-
+	
 }

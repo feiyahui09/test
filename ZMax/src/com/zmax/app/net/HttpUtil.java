@@ -27,8 +27,7 @@ public class HttpUtil {
 	 * 
 	 * @return
 	 */
-	public static String sendRequest(Context context, String urlPath,
-			String requestType, String request) throws Exception {
+	public static String sendRequest(Context context, String urlPath, String requestType, String request) throws Exception {
 		Log.d("HttpUtil", urlPath);
 		URL url = null;
 		HttpURLConnection conn = null;
@@ -50,37 +49,37 @@ public class HttpUtil {
 			 * conn.addRequestProperty("ScreenH",
 			 * PhoneUtil.getScreenW(context));
 			 * conn.addRequestProperty("ScreenW",
-			 * PhoneUtil.getScreenH(context)); 
+			 * PhoneUtil.getScreenH(context));
 			 * conn.addRequestProperty("IMSI",
 			 * PhoneUtil.getImsi(context));
 			 * conn.addRequestProperty("Tuser-Agent",
 			 * "BoutiqueApp/1.0 channel-2");
 			 * conn.addRequestProperty("Android-release",
-			 * PhoneUtil.getClientOsVersion()); 
+			 * PhoneUtil.getClientOsVersion());
 			 * conn.addRequestProperty("Load",
 			 * PhoneUtil.getNetworkType(context));
 			 */
 			conn.setRequestProperty("Connection", "keep-alive");
-			Log.v("HttpUtil", "**" + "baseUrl:" + urlPath + ", requestMethod:"
-					+ requestType + ", request:" + request + "**");
-			Log.v("HttpUtil", "**" + "RequestProperty:"
-					+ conn.getRequestProperties().toString() + "**");
+			Log.v("HttpUtil", "**" + "baseUrl:" + urlPath + ", requestMethod:" + requestType + ", request:" + request + "**");
+			Log.v("HttpUtil", "**" + "RequestProperty:" + conn.getRequestProperties().toString() + "**");
 			if (request != null && !"".equals(request)) {
 				os = conn.getOutputStream();
 				os.write(request.getBytes());
 				os.flush();
 			}
 			Log.i("HttpUtil", "code=" + conn.getResponseCode());
-
+			
 			if (200 == conn.getResponseCode()) {
 				is = conn.getInputStream();
 				byte[] temp = readStream(is);
 				result = new String(temp);
 			}
-
-		} catch (Exception e) {
+			
+		}
+		catch (Exception e) {
 			throw e;
-		} finally {
+		}
+		finally {
 			try {
 				if (is != null) {
 					is.close();
@@ -91,13 +90,14 @@ public class HttpUtil {
 				if (conn != null) {
 					conn.disconnect();
 				}
-			} catch (IOException e) {
+			}
+			catch (IOException e) {
 				e.printStackTrace();
 			}
 		}
 		return result;
 	}
-
+	
 	public static byte[] readStream(InputStream is) throws Exception {
 		ByteArrayOutputStream os = new ByteArrayOutputStream();
 		byte[] buffer = new byte[2048];
@@ -108,18 +108,18 @@ public class HttpUtil {
 		is.close();
 		return os.toByteArray();
 	}
-
+	
 	public static interface HttpRequestErrorHandler {
 		void handleError(int actionId, Exception e);
 	}
-
+	
 	public static boolean isNetworkOk(Context context1) {
 		Context context = context1;
-		ConnectivityManager connectivity = (ConnectivityManager) context
-				.getSystemService(Context.CONNECTIVITY_SERVICE);
+		ConnectivityManager connectivity = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
 		if (connectivity == null) {
 			return false;
-		} else {
+		}
+		else {
 			NetworkInfo[] info = connectivity.getAllNetworkInfo();
 			if (info != null) {
 				for (int i = 0; i < info.length; i++) {

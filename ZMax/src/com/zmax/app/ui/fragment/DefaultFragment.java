@@ -14,7 +14,7 @@ public class DefaultFragment extends Fragment {
 	
 	private int mColorRes = -1;
 	
-	public DefaultFragment() { 
+	public DefaultFragment() {
 		this(R.color.white);
 	}
 	
@@ -22,16 +22,15 @@ public class DefaultFragment extends Fragment {
 		mColorRes = colorRes;
 		setRetainInstance(true);
 	}
-
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		if (savedInstanceState != null)
-			mColorRes = savedInstanceState.getInt("mColorRes");
+		if (savedInstanceState != null) mColorRes = savedInstanceState.getInt("mColorRes");
 		int color = getResources().getColor(mColorRes);
 		// construct the RelativeLayout
 		RelativeLayout v = new RelativeLayout(getActivity());
-		v.setBackgroundColor(color);	
-		TextView tv=new TextView(getActivity());
+		v.setBackgroundColor(color);
+		TextView tv = new TextView(getActivity());
 		tv.setText("正在定位中");
 		v.addView(tv);
 		return v;

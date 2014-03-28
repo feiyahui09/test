@@ -41,6 +41,6 @@ public class SwipeBackActivity extends FragmentActivity implements SwipeBackActi
 
     @Override
     public void scrollToFinishActivity() {
-        getSwipeBackLayout().scrollToFinishActivity();
-    }
+		getSwipeBackLayout().scrollToFinishActivity();
+	}
 }

@@ -22,36 +22,36 @@ import com.zmax.app.utils.FileUtils;
 import com.zmax.app.utils.Log;
 
 public class ZMaxApplication extends Application {
-
+	
 	private static final String TAG = ZMaxApplication.class.getSimpleName();
 	private static ZMaxApplication mInstance = null;
 	public BMapManager mBMapManager = null;
-
+	
 	@Override
 	public void onCreate() {
 		super.onCreate();
 		mInstance = this;
 		init();
 		Log.d("TAG", "onCreate");
-
+		
 	}
-
+	
 	public static ZMaxApplication getInstance() {
 		if (mInstance == null) {
 			mInstance = new ZMaxApplication();
 		}
 		return mInstance;
 	}
-
+	
 	public void init() {
-
+		
 		initImageLoader();
 		// initEngineManager(this);
 		ShareSDK.initSDK(this);// ShareSDK.stopSDK(this);?
 		Thread.setDefaultUncaughtExceptionHandler(new CustomExceptionHandler());
-
+		
 	}
-
+	
 	/*
 	 * baidu map
 	 */
@@ -61,36 +61,30 @@ public class ZMaxApplication extends Application {
 		}
 		mBMapManager.init(Constant.MAP_SDK_KEY, null);
 	}
-
+	
 	private void initImageLoader() {
 		ImageLoaderConfiguration config;
-		DisplayImageOptions options = new DisplayImageOptions.Builder()
-				.cacheInMemory() // true
+		DisplayImageOptions options = new DisplayImageOptions.Builder().cacheInMemory() // true
 				.cacheOnDisc() // true
 				.build();
-		config = new ImageLoaderConfiguration.Builder(this)
-				.threadPriority(Thread.NORM_PRIORITY - 2)
-				.denyCacheImageMultipleSizesInMemory()
-				.discCacheExtraOptions(480, 800, CompressFormat.PNG, 90, null)
-				.discCacheFileNameGenerator(new Md5FileNameGenerator())
-				.tasksProcessingOrder(QueueProcessingType.LIFO)
-				.discCache(new UnlimitedDiscCache(FileUtils.getSdcardDir()))
-				.discCacheSize(4 * 1024 * 1024).discCacheFileCount(100)
-				.defaultDisplayImageOptions(options).build();
+		config = new ImageLoaderConfiguration.Builder(this).threadPriority(Thread.NORM_PRIORITY - 2).denyCacheImageMultipleSizesInMemory()
+				.discCacheExtraOptions(480, 800, CompressFormat.PNG, 90, null).discCacheFileNameGenerator(new Md5FileNameGenerator())
+				.tasksProcessingOrder(QueueProcessingType.LIFO).discCache(new UnlimitedDiscCache(FileUtils.getSdcardDir()))
+				.discCacheSize(4 * 1024 * 1024).discCacheFileCount(100).defaultDisplayImageOptions(options).build();
 		ImageLoader.getInstance().init(config);
 	}
-
+	
 	/**
 	 * 打印日志
 	 */
 	static class CustomExceptionHandler implements UncaughtExceptionHandler {
-
+		
 		private UncaughtExceptionHandler defaultUEH;
-
+		
 		public CustomExceptionHandler() {
 			defaultUEH = Thread.getDefaultUncaughtExceptionHandler();
 		}
-
+		
 		public void uncaughtException(Thread t, Throwable e) {
 			final Writer result = new StringWriter();
 			final PrintWriter printWriter = new PrintWriter(result);

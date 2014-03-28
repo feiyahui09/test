@@ -13,14 +13,14 @@ import com.zmax.app.ui.base.BaseActivity;
 import com.zmax.app.utils.Constant;
 import com.zmax.app.widget.XListView;
 
-public class HotelFacilityActivity extends BaseActivity    {
+public class HotelFacilityActivity extends BaseActivity {
 	private Context mContext;
-
+	
 	private Button btn_Back;
 	private TextView tv_title;
 	private XListView listView;
 	private HotelFacilityListAdapter adapter;
-
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -29,23 +29,23 @@ public class HotelFacilityActivity extends BaseActivity    {
 		init();
 		initHeader();
 	}
-
+	
 	private void init() {
 		mContext = this;
 		tv_title = (TextView) findViewById(R.id.tv_title);
 		tv_title.setText(getResources().getString(R.string.hotel_facility));
-		listView=(XListView)findViewById(R.id.list_view);
+		listView = (XListView) findViewById(R.id.list_view);
 		listView.setPullLoadEnable(false);
 		listView.setPullRefreshEnable(false);
-		adapter = new HotelFacilityListAdapter( mContext);
+		adapter = new HotelFacilityListAdapter(mContext);
 		adapter.appendToList(Constant.getFalseData(false));
 		listView.setAdapter(adapter);
-
+		
 	}
-
+	
 	private void initHeader() {
 		btn_Back = (Button) findViewById(R.id.btn_back);
-
+		
 		btn_Back.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -53,5 +53,5 @@ public class HotelFacilityActivity extends BaseActivity    {
 			}
 		});
 	}
-
+	
 }

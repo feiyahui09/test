@@ -1,9 +1,5 @@
 package com.zmax.app.net;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONObject;
 
@@ -15,17 +11,16 @@ import com.zmax.app.utils.Constant;
 import com.zmax.app.utils.Log;
 
 public class NetAccessor {
-
+	
 	private static final String TAG = NetAccessor.class.getSimpleName();
-
+	
 	public static CityLocation getCityLoacationByIp(Context context, String ak) {
 		CityLocation cityLocation = null;
 		try {
 			JSONObject params = new JSONObject();
 			params.put("ak", ak);
-
-			String jsonString = HttpUtils.getByHttpClient(context,
-					Constant.IP_LOCATION_URL, new BasicNameValuePair("ak", ak));
+			
+			String jsonString = HttpUtils.getByHttpClient(context, Constant.IP_LOCATION_URL, new BasicNameValuePair("ak", ak));
 			// String jsonString = HttpUtil.sendRequest(context,
 			// Constant.IP_LOCATION_URL+"ak="+ak, "POST", null);
 			Log.d(TAG, "getCityLoacationByIp responeString -->\n" + jsonString);
@@ -33,27 +28,20 @@ public class NetAccessor {
 				cityLocation = new CityLocation();
 				JSONObject result = new JSONObject(jsonString);
 				if (result.has("content")) {
-					JSONObject content = new JSONObject(
-							result.optString("content"));
+					JSONObject content = new JSONObject(result.optString("content"));
 					if (content.has("address_detail")) {
-						JSONObject address_detail = new JSONObject(
-								content.optString("address_detail"));
-						if (address_detail.has("province"))
-							cityLocation.province = address_detail
-									.optString("province");
-						if (address_detail.has("city"))
-							cityLocation.city = address_detail
-									.optString("city");
-						if (address_detail.has("city_code"))
-							cityLocation.city_code = address_detail
-									.optString("city_code");
+						JSONObject address_detail = new JSONObject(content.optString("address_detail"));
+						if (address_detail.has("province")) cityLocation.province = address_detail.optString("province");
+						if (address_detail.has("city")) cityLocation.city = address_detail.optString("city");
+						if (address_detail.has("city_code")) cityLocation.city_code = address_detail.optString("city_code");
 					}
 				}
 			}
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			Log.e(TAG, " getCityLoacationByIp Exception :" + e.toString());
 			e.printStackTrace();
-
+			
 			cityLocation = null;
 		}
 		return cityLocation;
@@ -131,5 +119,5 @@ public class NetAccessor {
 	 * }finally{ Log.v(TAG, "****" + new Timestamp(System.currentTimeMillis()) +
 	 * " end uploadV2AdvertLogs ****"); } return null; }
 	 */
-
+	
 }

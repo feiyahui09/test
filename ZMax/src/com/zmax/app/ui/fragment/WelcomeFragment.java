@@ -15,40 +15,38 @@ import com.zmax.app.ui.MainActivity;
 public class WelcomeFragment extends Fragment {
 	private int drawbleID;
 	private LinearLayout ll_bg;
-
+	
 	public WelcomeFragment(int drawbleID) {
 		super();
 		this.drawbleID = drawbleID;
 	}
-
+	
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.welcome_pager, null);
 		ll_bg = (LinearLayout) view.findViewById(R.id.ll_bg);
 		if (drawbleID > 0)
 			ll_bg.setBackgroundResource(drawbleID);
 		else
 			ll_bg.setBackgroundResource(R.drawable.ic_launcher);
-
+		
 		ll_bg.setOnTouchListener(new OnTouchListener() {
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
-
+				
 				return false;
 			}
 		});
 		return view;
 	}
-
+	
 	private void switchFragment(Fragment fragment) {
-
-		if (getActivity() == null)
-			return;
+		
+		if (getActivity() == null) return;
 		if (getActivity() instanceof MainActivity) {
 			MainActivity fca = (MainActivity) getActivity();
 			fca.switchContent(fragment);
 		}
 	}
-
+	
 }

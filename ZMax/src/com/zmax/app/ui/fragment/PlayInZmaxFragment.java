@@ -16,7 +16,7 @@ public class PlayInZmaxFragment extends Fragment {
 	
 	private int mColorRes = -1;
 	
-	public PlayInZmaxFragment() { 
+	public PlayInZmaxFragment() {
 		this(R.color.white);
 	}
 	
@@ -24,26 +24,25 @@ public class PlayInZmaxFragment extends Fragment {
 		mColorRes = colorRes;
 		setRetainInstance(true);
 	}
-
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		if (savedInstanceState != null)
-			mColorRes = savedInstanceState.getInt("mColorRes");
+		if (savedInstanceState != null) mColorRes = savedInstanceState.getInt("mColorRes");
 		int color = getResources().getColor(mColorRes);
 		// construct the RelativeLayout
 		RelativeLayout v = new RelativeLayout(getActivity());
-		v.setBackgroundColor(color);		
+		v.setBackgroundColor(color);
 		v.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				startActivity(new Intent(getActivity(),RoomControlActivity.class));
+				startActivity(new Intent(getActivity(), RoomControlActivity.class));
 			}
 		});
 		return v;
 	}
-	 
+	
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
