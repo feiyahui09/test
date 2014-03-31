@@ -2,6 +2,8 @@ package com.zmax.app.ui;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.Toast;
 
 import com.zmax.app.R;
@@ -10,10 +12,11 @@ import com.zmax.app.task.GetCityLocationTask;
 import com.zmax.app.ui.base.BaseSlidingFragmentActivity;
 import com.zmax.app.ui.fragment.ActListFragment;
 import com.zmax.app.ui.fragment.NetErrorFragment;
+import com.zmax.app.ui.fragment.PlayInZmaxFragment.PlayZmaxLogoutCallback;
 import com.zmax.app.utils.Constant;
 import com.zmax.app.utils.PhoneUtil;
 
-public class MainActivity extends BaseSlidingFragmentActivity {
+public class MainActivity extends BaseSlidingFragmentActivity implements PlayZmaxLogoutCallback {
 	private Context mContext;
 	
 	@Override
@@ -50,6 +53,24 @@ public class MainActivity extends BaseSlidingFragmentActivity {
 				
 			}
 		}).execute(Constant.MAP_AK);
+		
+	}
+	
+	@Override
+	public void onLogoutViewCreate() {
+		btn_share.setVisibility(View.VISIBLE);
+		btn_share.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				
+			}
+		});
+	}
+	
+	@Override
+	public void onLogoutViewDestroy() {
+		btn_share.setVisibility(View.GONE);
 		
 	}
 	

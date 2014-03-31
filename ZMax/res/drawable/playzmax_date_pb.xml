@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item android:id="@android:id/progress">
+        <clip android:drawable="@drawable/playzmax_date_pb_progress" >
+        </clip>
+    </item>
+    <item android:id="@android:id/background">
+        <clip android:drawable="@drawable/playzmax_date_pb_second_progress" >
+        </clip>
+    </item>
+
+</layer-list>

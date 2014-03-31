@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:gravity="center_horizontal"
+    android:orientation="vertical" >
+
+    <TextView
+        style="@style/playzmax_login_sucess_textview"
+        android:layout_marginTop="24dp"
+        android:text="用户昵称"
+        android:textSize="24sp" />
+
+    <TextView
+        style="@style/playzmax_login_sucess_textview"
+        android:layout_marginTop="37dp"
+        android:text="ZMAX-广州赛马场"
+        android:textSize="14sp" />
+
+    <TextView
+        style="@style/playzmax_login_sucess_textview"
+        android:layout_marginTop="8dp"
+        android:text="8102房"
+        android:textSize="18sp" />
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="30dp"
+        android:layout_marginTop="18dp"
+        android:paddingLeft="47dp"
+        android:paddingRight="47dp" >
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true" >
+
+            <TextView
+                android:id="@+id/tv_start_day"
+                style="@style/playzmax_login_sucess_textview"
+                android:layout_centerVertical="true"
+                android:text="17"
+                android:textSize="22sp" />
+
+            <TextView
+                android:id="@+id/tv_start_week_day"
+                style="@style/playzmax_login_sucess_textview"
+                android:layout_alignParentTop="true"
+                android:layout_toRightOf="@+id/tv_start_day"
+                android:text="周一"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/tv_start_month"
+                style="@style/playzmax_login_sucess_textview"
+                android:layout_alignParentBottom="true"
+                android:layout_toRightOf="@+id/tv_start_day"
+                android:text="2月"
+                android:textSize="12sp" />
+        </RelativeLayout>
+
+        <SeekBar
+            android:id="@+id/pb_date"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="150dp"
+            android:layout_height="6dp"
+            android:layout_centerInParent="true"
+            android:clickable="false"
+            android:focusable="false"
+            android:max="100"
+            android:progress="60"
+            android:progressDrawable="@drawable/playzmax_date_pb"
+            android:thumb="@drawable/playzmax_date_pb_bg" />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true" >
+
+            <TextView
+                android:id="@+id/tv_end_day"
+                style="@style/playzmax_login_sucess_textview"
+                android:layout_centerVertical="true"
+                android:text="17"
+                android:textSize="22sp" />
+
+            <TextView
+                android:id="@+id/tv_end_week_day"
+                style="@style/playzmax_login_sucess_textview"
+                android:layout_alignParentTop="true"
+                android:layout_toRightOf="@+id/tv_end_day"
+                android:text="周一"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/tv_end_month"
+                style="@style/playzmax_login_sucess_textview"
+                android:layout_alignParentBottom="true"
+                android:layout_toRightOf="@+id/tv_end_day"
+                android:text="2月"
+                android:textSize="12sp" />
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal" >
+
+        <Button
+            android:id="@+id/btn_act"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="49dp"
+            android:background="@drawable/playzmax_act_btn_sel" />
+
+        <Button
+            android:id="@+id/btn_chat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="139dp"
+            android:background="@drawable/playzmax_chat_btn_sel" />
+
+        <Button
+            android:id="@+id/btn_room"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="49dp"
+            android:background="@drawable/playzmax_room_btn_sel" />
+    </RelativeLayout>
+
+</LinearLayout>

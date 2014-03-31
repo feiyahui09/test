@@ -1,52 +1,46 @@
 package com.zmax.app.ui.fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.RelativeLayout;
 
 import com.zmax.app.R;
-import com.zmax.app.ui.RoomControlActivity;
 
 public class PlayInZmaxFragment extends Fragment {
 	
-	private int mColorRes = -1;
-	
-	public PlayInZmaxFragment() {
-		this(R.color.white);
+	public interface PlayZmaxLogoutCallback {
+		
+		public void onLogoutViewCreate();
+		
+		public void onLogoutViewDestroy();
 	}
 	
-	public PlayInZmaxFragment(int colorRes) {
-		mColorRes = colorRes;
+	private View view;
+	private PlayZmaxLogoutCallback callback;
+	
+	public PlayInZmaxFragment(PlayZmaxLogoutCallback callback) {
+		this.callback = callback;
 		setRetainInstance(true);
 	}
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		if (savedInstanceState != null) mColorRes = savedInstanceState.getInt("mColorRes");
-		int color = getResources().getColor(mColorRes);
-		// construct the RelativeLayout
-		RelativeLayout v = new RelativeLayout(getActivity());
-		v.setBackgroundColor(color);
-		v.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				startActivity(new Intent(getActivity(), RoomControlActivity.class));
-			}
-		});
-		return v;
+		view = inflater.inflate(R.layout.playzmax, null);
+		if (callback != null) callback.onLogoutViewCreate();
+		return view;
+	}
+	
+	@Override
+	public void onDestroyView() {
+		if (callback != null) callback.onLogoutViewDestroy();
+		super.onDestroyView();
 	}
 	
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
-		outState.putInt("mColorRes", mColorRes);
 	}
 	
 }
