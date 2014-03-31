@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:gravity="center_horizontal"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/playzmax_login_bg"
+        android:gravity="center_horizontal"
+        android:orientation="vertical" >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/playzmax_login_logo" />
+
+        <EditText
+            android:id="@+id/et_room_number"
+            style="@style/playzmax_login_edittext"
+            android:hint="房间号" />
+
+        <EditText
+            android:id="@+id/et_namecard"
+            style="@style/playzmax_login_edittext"
+            android:layout_marginTop="8dp"
+            android:hint="身份证号后四位" />
+
+        <EditText
+            android:id="@+id/et_password"
+            style="@style/playzmax_login_edittext"
+            android:layout_marginTop="8dp"
+            android:hint="密码" />
+
+        <Button
+            android:id="@+id/btn_check_update"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="26dp"
+            android:background="@drawable/playzmax_login_btn_sel" />
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="37dp"
+        android:background="@drawable/playzmax_login_bottom_logo_bg" />
+
+</LinearLayout>

@@ -127,4 +127,13 @@
         <item name="android:background">@drawable/room_control_lighting_control_btn_sel</item>
     </style>
 
+    <style name="playzmax_login_edittext">
+        <item name="android:layout_gravity">center_horizontal</item>
+        <item name="android:layout_width">294dp</item>
+        <item name="android:layout_height">40dp</item>
+        <item name="android:textColor">#a0a09f</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+
 </resources>
