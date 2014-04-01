@@ -67,6 +67,7 @@
         <activity android:name="com.zmax.app.ui.RoomControlActivity" />
         <activity android:name="com.zmax.app.ui.OrderFillActivity" />
         <activity android:name="com.zmax.app.ui.WelcomeActivity" />
+        <activity android:name="com.zmax.app.ui.ChatRoomActivity" />
         <activity android:name="com.zmax.app.map.RoutePlanDemo" />
         <!-- share sdk 授权操作 -->
         <activity

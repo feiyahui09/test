@@ -1,5 +1,6 @@
 package com.zmax.app.ui.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -9,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.zmax.app.R;
+import com.zmax.app.ui.ChatRoomActivity;
 import com.zmax.app.ui.MainActivity;
 import com.zmax.app.ui.fragment.PlayInZmaxFragment.PlayZmaxLogoutCallback;
 
@@ -33,7 +35,9 @@ public class PlayInZmaxLoginFragment extends Fragment {
 			
 			@Override
 			public void onClick(View v) {
-				switchFragment(new PlayInZmaxFragment((PlayZmaxLogoutCallback) getActivity()));
+				// switchFragment(new
+				// PlayInZmaxFragment((PlayZmaxLogoutCallback) getActivity()));
+				startActivity(new Intent(getActivity(), ChatRoomActivity.class));
 			}
 		});
 		return view;
