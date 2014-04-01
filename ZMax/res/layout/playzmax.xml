@@ -24,23 +24,25 @@
         android:text="8102房"
         android:textSize="18sp" />
 
-    <RelativeLayout
-        android:layout_width="fill_parent"
+    <LinearLayout
+        android:layout_width="wrap_content"
         android:layout_height="30dp"
         android:layout_marginTop="18dp"
-        android:paddingLeft="47dp"
-        android:paddingRight="47dp" >
+        android:clickable="false"
+        android:focusable="false"
+        android:orientation="horizontal" >
 
         <RelativeLayout
+            android:id="@+id/rl_start"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true" >
+            android:layout_gravity="center_vertical" >
 
             <TextView
                 android:id="@+id/tv_start_day"
                 style="@style/playzmax_login_sucess_textview"
                 android:layout_centerVertical="true"
+                android:layout_marginRight="8dp"
                 android:text="17"
                 android:textSize="22sp" />
 
@@ -56,34 +58,36 @@
                 android:id="@+id/tv_start_month"
                 style="@style/playzmax_login_sucess_textview"
                 android:layout_alignParentBottom="true"
+                android:layout_marginTop="4dp"
                 android:layout_toRightOf="@+id/tv_start_day"
                 android:text="2月"
                 android:textSize="12sp" />
         </RelativeLayout>
 
         <SeekBar
-            android:id="@+id/pb_date"
-            style="?android:attr/progressBarStyleHorizontal"
+            android:id="@+id/sb_date"
             android:layout_width="150dp"
-            android:layout_height="6dp"
-            android:layout_centerInParent="true"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
             android:clickable="false"
             android:focusable="false"
             android:max="100"
+            android:maxHeight="1dip"
+            android:minHeight="1dip"
             android:progress="60"
-            android:progressDrawable="@drawable/playzmax_date_pb"
-            android:thumb="@drawable/playzmax_date_pb_bg" />
+            android:progressDrawable="@drawable/playzmax_date_sb_style"
+            android:thumb="@drawable/playzmax_date_sb_thumb" />
 
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true" >
+            android:layout_gravity="center_vertical" >
 
             <TextView
                 android:id="@+id/tv_end_day"
                 style="@style/playzmax_login_sucess_textview"
                 android:layout_centerVertical="true"
+                android:layout_marginRight="8dp"
                 android:text="17"
                 android:textSize="22sp" />
 
@@ -99,16 +103,19 @@
                 android:id="@+id/tv_end_month"
                 style="@style/playzmax_login_sucess_textview"
                 android:layout_alignParentBottom="true"
+                android:layout_marginTop="4dp"
                 android:layout_toRightOf="@+id/tv_end_day"
                 android:text="2月"
                 android:textSize="12sp" />
         </RelativeLayout>
-    </RelativeLayout>
+    </LinearLayout>
 
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal" >
+        android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="14dp"
+        android:layout_marginRight="14dp" >
 
         <Button
             android:id="@+id/btn_act"
@@ -133,5 +140,14 @@
             android:layout_marginTop="49dp"
             android:background="@drawable/playzmax_room_btn_sel" />
     </RelativeLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        android:text="Zmax酒店欢迎您的到来，祝您假期愉快！"
+        android:textColor="#666666"
+        android:textSize="14sp" />
 
 </LinearLayout>
