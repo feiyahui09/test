@@ -23,7 +23,7 @@ public class NetAccessor {
 			String jsonString = HttpUtils.getByHttpClient(context, Constant.IP_LOCATION_URL, new BasicNameValuePair("ak", ak));
 			// String jsonString = HttpUtil.sendRequest(context,
 			// Constant.IP_LOCATION_URL+"ak="+ak, "POST", null);
-			Log.d(TAG, "getCityLoacationByIp responeString -->\n" + jsonString);
+			Log.d( "getCityLoacationByIp responeString -->\n" + jsonString);
 			if (!TextUtils.isEmpty(jsonString)) {
 				cityLocation = new CityLocation();
 				JSONObject result = new JSONObject(jsonString);
@@ -39,7 +39,7 @@ public class NetAccessor {
 			}
 		}
 		catch (Exception e) {
-			Log.e(TAG, " getCityLoacationByIp Exception :" + e.toString());
+			Log.e( " getCityLoacationByIp Exception :" + e.toString());
 			e.printStackTrace();
 			
 			cityLocation = null;
@@ -49,7 +49,7 @@ public class NetAccessor {
 	/*
 	 * public static AdvertList getV2AdvertList(Context context, String
 	 * positionName, int count, String density ,String longitude , String
-	 * latitude) throws Exception{ Log.v(TAG, "****" + new
+	 * latitude) throws Exception{ Log.v( "****" + new
 	 * Timestamp(System.currentTimeMillis()) + " start getV2AdvertList " +
 	 * "****"); AdvertList advertList = new AdvertList(); try{ JSONObject params
 	 * = new JSONObject(); JSONObject data = new JSONObject(); data.put("dt",
@@ -63,7 +63,7 @@ public class NetAccessor {
 	 * params.toString()); // if(positionName.equals("SearchKeyword")) { //
 	 * jsonString =
 	 * "{\"data\":{\"dt\":\"madvert_response\",\"madverts\":{\"dt\":\"array\",\"array\":[{\"dt\":\"madvert\",\"id\":2,\"actionType\":2,\"actionContent\":\"com.myzaker.ZAKER_Phone\",\"word\":\"ZAKER\",\"msgTitle\":\"ZAKER\",\"msgContent\":\"ZAKER领略真正阅读之美\",\"msgIcon\":\"http://125.88.74.85:8000/res/apprepo/icon.png\",\"picture\":\"http://125.88.74.85/res/images2.1/banner/1004X262/list4.jpg\"},{\"dt\":\"madvert\",\"id\":2,\"actionType\":2,\"actionContent\":\"com.tencent.mobileqq\",\"word\":\"手机QQ2013\",\"msgTitle\":\"手机QQ2013\",\"msgContent\":\"手机QQ2013手机QQ2013手机QQ2013手机QQ2013\",\"msgIcon\":\"http://125.88.74.85:8000/res/apprepo/icon.png\",\"picture\":\"http://125.88.74.85/res/images2.1/banner/1004X262/list4.jpg\"},{\"dt\":\"madvert\",\"id\":2,\"actionType\":2,\"actionContent\":\"com.myzaker.ZAKERShopping\",\"word\":\"ZAKER橱窗\",\"msgTitle\":\"ZAKER橱窗\",\"msgContent\":\"ZAKER橱窗ZAKER橱窗ZAKER橱窗ZAKER橱窗ZAKER橱窗\",\"msgIcon\":\"http://125.88.74.85:8000/res/apprepo/icon.png\",\"picture\":\"http://125.88.74.85/res/images2.1/banner/1004X262/list4.jpg\"},{\"dt\":\"madvert\",\"id\":2,\"actionType\":2,\"actionContent\":\"telecom.mdesk.widgetprovider\",\"word\":\"应用超市独立版\",\"msgTitle\":\"应用超市独立版\",\"msgContent\":\"天翼云桌面应用超市独立版本\",\"msgIcon\":\"http://125.88.74.85:8000/res/apprepo/icon.png\",\"picture\":\"http://125.88.74.85/res/images2.1/banner/1004X262/list4.jpg\"},{\"dt\":\"madvert\",\"id\":2,\"actionType\":2,\"actionContent\":\"com.rovio.angrybirds\",\"word\":\"愤怒的小鸟\",\"msgTitle\":\"愤怒的小鸟\",\"msgContent\":\"愤怒的小鸟愤怒的小鸟愤怒的小鸟愤怒的小鸟愤怒的小鸟\",\"msgIcon\":\"http://125.88.74.85:8000/res/apprepo/icon.png\",\"picture\":\"http://125.88.74.85/res/images2.1/banner/1004X262/list4.jpg\"}]}},\"cmd\":\"get madvert list\",\"rcd\":0}"
-	 * ; // } Log.d(TAG, "getV2AdvertList()  responeString -->"+jsonString); if
+	 * ; // } Log.d( "getV2AdvertList()  responeString -->"+jsonString); if
 	 * (!TextUtils.isEmpty(jsonString)) { JSONObject result = new
 	 * JSONObject(jsonString); if (result.has("rcd")) { advertList.rcd =
 	 * result.optInt("rcd"); } if (result.has("data")) { JSONObject resultData =
@@ -84,9 +84,9 @@ public class NetAccessor {
 	 * appObj.optString("msgContent"); advertObj.msgIcon =
 	 * appObj.optString("msgIcon"); advertList.list.add(advertObj); } } } } }
 	 * 
-	 * } } }catch(Exception e){ Log.e(TAG,
+	 * } } }catch(Exception e){ Log.e(
 	 * " NetAccessor getV2AdvertList Exception :"+e.toString()); throw e;
-	 * }finally{ Log.v(TAG, "****" + new Timestamp(System.currentTimeMillis()) +
+	 * }finally{ Log.v( "****" + new Timestamp(System.currentTimeMillis()) +
 	 * " end getV2AdvertList ****"); } return advertList; }
 	 *//**
 	 * 上报广告Log （01月新版）
@@ -98,7 +98,7 @@ public class NetAccessor {
 	 */
 	/*
 	 * public static String uploadV2AdvertLogs(Context context, List<AdvertLog>
-	 * advertLogList ) throws Exception{ Log.v(TAG, "****" + new
+	 * advertLogList ) throws Exception{ Log.v( "****" + new
 	 * Timestamp(System.currentTimeMillis()) + " start uploadV2AdvertLogs " +
 	 * "****"); String jsonString = null; try{ // AdvertLogs logs = new
 	 * AdvertLogs(); // logs.array.addAll(advertLogList); JSONObject params =
@@ -108,15 +108,15 @@ public class NetAccessor {
 	 * params.put("cmdtype", "");
 	 * 
 	 * jsonString = HttpUtil.sendRequest(context,FANCY_URL, "POST",
-	 * params.toString()); Log.d(TAG,
+	 * params.toString()); Log.d(
 	 * "uploadV2AdvertLogs()  responeString -->"+jsonString); if
 	 * (!TextUtils.isEmpty(jsonString)) { JSONObject result = new
 	 * JSONObject(jsonString); if (result.has("rcd") && result.optInt("rcd") ==
 	 * 0) { return jsonString; } }
 	 * 
-	 * }catch(Exception e){ Log.e(TAG,
+	 * }catch(Exception e){ Log.e(
 	 * " NetAccessor uploadV2AdvertLogs Exception :"+e.toString()); throw e;
-	 * }finally{ Log.v(TAG, "****" + new Timestamp(System.currentTimeMillis()) +
+	 * }finally{ Log.v( "****" + new Timestamp(System.currentTimeMillis()) +
 	 * " end uploadV2AdvertLogs ****"); } return null; }
 	 */
 	

@@ -7,261 +7,109 @@ import java.sql.Timestamp;
 
 import android.os.Environment;
 
-public final class Log {
+import com.zmax.app.BuildConfig;
+
+/**
+ * @date 21.06.2012
+ * @author Mustafa Ferhan Akman
+ * 
+ *         Create a simple and more understandable Android logs.
+ * */
+
+public class Log {
 	
-	private static final boolean LOGD_ENABLE = Constant.LOGD_ENABLE;
-	private static final boolean LOGE_ENABLE = Constant.LOGD_ENABLE;
-	private static final boolean LOGI_ENABLE = Constant.LOGD_ENABLE;
-	private static final boolean LOGV_ENABLE = Constant.LOGD_ENABLE;
-	private static final boolean LOGW_ENABLE = Constant.LOGD_ENABLE;
 	
-	/**
-	 * Priority constant for the println method; use Log.v.
-	 */
-	public static final int VERBOSE = android.util.Log.VERBOSE;
-	
-	/**
-	 * Priority constant for the println method; use Log.d.
-	 */
-	public static final int DEBUG = android.util.Log.DEBUG;
-	
-	/**
-	 * Priority constant for the println method; use Log.i.
-	 */
-	public static final int INFO = android.util.Log.INFO;
-	
-	/**
-	 * Priority constant for the println method; use Log.w.
-	 */
-	public static final int WARN = android.util.Log.WARN;
-	
-	/**
-	 * Priority constant for the println method; use Log.e.
-	 */
-	public static final int ERROR = android.util.Log.ERROR;
-	
-	/**
-	 * Priority constant for the println method.
-	 */
-	public static final int ASSERT = android.util.Log.ASSERT;
+	static String className;
+	static String methodName;
+	static int lineNumber;
+	static final boolean LOG_SDCARD_ENABLE = true;// 是否打印sd卡
 	
 	private Log() {
-	}
-	
-	public static boolean isLoggable(String tag, int level) {
-		return android.util.Log.isLoggable(tag, level);
+		/* Protect from instantiations */
 	}
 	
 	/**
-	 * Send a {@link #VERBOSE} log message.
+	 * 判断是否是处在debug模式下，只有在这种模式下才打印日志;
 	 * 
-	 * @param tag
-	 *            Used to identify the source of a log message. It usually
-	 *            identifies
-	 *            the class or activity where the log call occurs.
-	 * @param msg
-	 *            The message you would like logged.
+	 * @return
 	 */
-	public static int v(String tag, String msg) {
-		if (!LOGV_ENABLE) return 0;
-		if (Constant.LOG_SDCARD_ENABLE) fileLog(tag, msg + "");
-		return android.util.Log.v(tag, msg + "");
+	public static boolean isDebuggable() {
+		return BuildConfig.DEBUG && true;
 	}
 	
-	/**
-	 * Send a {@link #VERBOSE} log message and log the exception.
-	 * 
-	 * @param tag
-	 *            Used to identify the source of a log message. It usually
-	 *            identifies
-	 *            the class or activity where the log call occurs.
-	 * @param msg
-	 *            The message you would like logged.
-	 * @param tr
-	 *            An exception to log
-	 */
-	public static int v(String tag, String msg, Throwable tr) {
-		if (!LOGV_ENABLE) return 0;
-		if (Constant.LOG_SDCARD_ENABLE) fileLog(tag, msg + "");
-		return android.util.Log.v(tag, msg + "", tr);
+	private static String createLog(String log) {
+		
+		StringBuffer buffer = new StringBuffer();
+		buffer.append("[");
+		buffer.append(methodName);
+		buffer.append(":");
+		buffer.append(lineNumber);
+		buffer.append("]");
+		buffer.append(log);
+		
+		return buffer.toString();
 	}
 	
-	/**
-	 * Send a {@link #DEBUG} log message.
-	 * 
-	 * @param tag
-	 *            Used to identify the source of a log message. It usually
-	 *            identifies
-	 *            the class or activity where the log call occurs.
-	 * @param msg
-	 *            The message you would like logged.
-	 */
-	public static int d(String tag, String msg) {
-		if (!LOGD_ENABLE) return 0;
-		if (Constant.LOG_SDCARD_ENABLE) fileLog(tag, msg + "");
-		return android.util.Log.d(tag, msg + "");
+	private static void getMethodNames(StackTraceElement[] sElements) {
+		className = sElements[1].getFileName();
+		methodName = sElements[1].getMethodName();
+		lineNumber = sElements[1].getLineNumber();
 	}
 	
-	/**
-	 * Send a {@link #DEBUG} log message and log the exception.
-	 * 
-	 * @param tag
-	 *            Used to identify the source of a log message. It usually
-	 *            identifies
-	 *            the class or activity where the log call occurs.
-	 * @param msg
-	 *            The message you would like logged.
-	 * @param tr
-	 *            An exception to log
-	 */
-	public static int d(String tag, String msg, Throwable tr) {
-		if (!LOGD_ENABLE) return 0;
-		if (Constant.LOG_SDCARD_ENABLE) fileLog(tag, msg + "");
-		return android.util.Log.d(tag, msg + "", tr);
+	public static void e(String message) {
+		if (!isDebuggable()) return;
+		
+		// Throwable instance must be created before any methods
+		getMethodNames(new Throwable().getStackTrace());
+		String msg = createLog(message);
+		fileLog(className, msg);
+		android.util.Log.e(className, msg);
 	}
 	
-	/**
-	 * Send an {@link #INFO} log message.
-	 * 
-	 * @param tag
-	 *            Used to identify the source of a log message. It usually
-	 *            identifies
-	 *            the class or activity where the log call occurs.
-	 * @param msg
-	 *            The message you would like logged.
-	 */
-	public static int i(String tag, String msg) {
-		if (!LOGI_ENABLE) return 0;
-		if (Constant.LOG_SDCARD_ENABLE) fileLog(tag, msg + "");
-		return android.util.Log.i(tag, msg + "");
+	public static void i(String message) {
+		if (!isDebuggable()) return;
+		
+		getMethodNames(new Throwable().getStackTrace());
+		String msg = createLog(message);
+		fileLog(className, msg);
+		android.util.Log.i(className, msg);
 	}
 	
-	/**
-	 * Send a {@link #INFO} log message and log the exception.
-	 * 
-	 * @param tag
-	 *            Used to identify the source of a log message. It usually
-	 *            identifies
-	 *            the class or activity where the log call occurs.
-	 * @param msg
-	 *            The message you would like logged.
-	 * @param tr
-	 *            An exception to log
-	 */
-	public static int i(String tag, String msg, Throwable tr) {
-		if (!LOGI_ENABLE) return 0;
-		if (Constant.LOG_SDCARD_ENABLE) fileLog(tag, msg + "");
-		return android.util.Log.i(tag, msg + "", tr);
+	public static void d(String message) {
+		if (!isDebuggable()) return;
+		
+		getMethodNames(new Throwable().getStackTrace());
+		String msg = createLog(message);
+		fileLog(className, msg);
+		android.util.Log.d(className, msg);
 	}
 	
-	/**
-	 * Send a {@link #WARN} log message.
-	 * 
-	 * @param tag
-	 *            Used to identify the source of a log message. It usually
-	 *            identifies
-	 *            the class or activity where the log call occurs.
-	 * @param msg
-	 *            The message you would like logged.
-	 */
-	public static int w(String tag, String msg) {
-		if (!LOGW_ENABLE) return 0;
-		if (Constant.LOG_SDCARD_ENABLE) fileLog(tag, msg + "");
-		return android.util.Log.w(tag, msg + "");
+	public static void v(String message) {
+		if (!isDebuggable()) return;
+		
+		getMethodNames(new Throwable().getStackTrace());
+		String msg = createLog(message);
+		fileLog(className, msg);
+		android.util.Log.v(className, msg);
 	}
 	
-	/**
-	 * Send a {@link #WARN} log message and log the exception.
-	 * 
-	 * @param tag
-	 *            Used to identify the source of a log message. It usually
-	 *            identifies
-	 *            the class or activity where the log call occurs.
-	 * @param msg
-	 *            The message you would like logged.
-	 * @param tr
-	 *            An exception to log
-	 */
-	public static int w(String tag, String msg, Throwable tr) {
-		if (!LOGW_ENABLE) return 0;
-		if (Constant.LOG_SDCARD_ENABLE) fileLog(tag, msg + "");
-		return android.util.Log.w(tag, msg + "", tr);
+	public static void w(String message) {
+		if (!isDebuggable()) return;
+		/**
+		 * new Throwable().getStackTrace() 跟踪应用的堆栈的信息
+		 */
+		getMethodNames(new Throwable().getStackTrace());
+		String msg = createLog(message);
+		fileLog(className, msg);
+		android.util.Log.w(className, msg);
 	}
 	
-	/*
-	 * Send a {@link #WARN} log message and log the exception.
-	 * 
-	 * @param tag Used to identify the source of a log message. It usually
-	 * identifies
-	 * the class or activity where the log call occurs.
-	 * 
-	 * @param tr An exception to log
-	 */
-	public static int w(String tag, Throwable tr) {
-		if (!LOGW_ENABLE) return 0;
-		if (Constant.LOG_SDCARD_ENABLE) fileLog(tag, tr.getMessage());
-		return android.util.Log.w(tag, tr);
-	}
-	
-	/**
-	 * Send an {@link #ERROR} log message.
-	 * 
-	 * @param tag
-	 *            Used to identify the source of a log message. It usually
-	 *            identifies
-	 *            the class or activity where the log call occurs.
-	 * @param msg
-	 *            The message you would like logged.
-	 */
-	public static int e(String tag, String msg) {
-		if (!LOGE_ENABLE) return 0;
-		if (Constant.LOG_SDCARD_ENABLE) fileLog(tag, msg + "");
-		return android.util.Log.e(tag, msg + "");
-	}
-	
-	/**
-	 * Send a {@link #ERROR} log message and log the exception.
-	 * 
-	 * @param tag
-	 *            Used to identify the source of a log message. It usually
-	 *            identifies
-	 *            the class or activity where the log call occurs.
-	 * @param msg
-	 *            The message you would like logged.
-	 * @param tr
-	 *            An exception to log
-	 */
-	public static int e(String tag, String msg, Throwable tr) {
-		if (!LOGE_ENABLE) return 0;
-		if (Constant.LOG_SDCARD_ENABLE) fileLog(tag, msg + "");
-		return android.util.Log.e(tag, msg + "", tr);
-	}
-	
-	/**
-	 * Handy function to get a loggable stack trace from a Throwable
-	 * 
-	 * @param tr
-	 *            An exception to log
-	 */
-	public static String getStackTraceString(Throwable tr) {
-		return android.util.Log.getStackTraceString(tr);
-	}
-	
-	/**
-	 * Low-level logging call.
-	 * 
-	 * @param priority
-	 *            The priority/type of this log message
-	 * @param tag
-	 *            Used to identify the source of a log message. It usually
-	 *            identifies
-	 *            the class or activity where the log call occurs.
-	 * @param msg
-	 *            The message you would like logged.
-	 * @return The number of bytes written.
-	 */
-	public static int println(int priority, String tag, String msg) {
-		return android.util.Log.println(priority, tag, msg + "");
+	public static void wtf(String message) {
+		if (!isDebuggable()) return;
+		getMethodNames(new Throwable().getStackTrace());
+		String msg = createLog(message);
+		fileLog(className, msg);
+		android.util.Log.wtf(className, msg);
 	}
 	
 	/**
@@ -281,7 +129,7 @@ public final class Log {
 				logFile.createNewFile();
 			}
 			BufferedWriter bw = new BufferedWriter(new FileWriter(logFile, true));
-			bw.append(new Timestamp(System.currentTimeMillis()).toString()).append("----").append(tag).append("----").append(msg)
+			bw.append(new Timestamp(System.currentTimeMillis()).toString()).append("---").append(tag).append("---").append(msg)
 					.append("\n");
 			bw.close();
 		}

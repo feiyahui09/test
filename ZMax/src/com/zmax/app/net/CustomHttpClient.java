@@ -73,11 +73,11 @@ public class CustomHttpClient {
 			return (resEntity == null) ? null : EntityUtils.toString(resEntity, CHARSET_UTF8);
 		}
 		catch (UnsupportedEncodingException e) {
-			Log.w(TAG, e.getMessage());
+			Log.w(e.getMessage());
 			return null;
 		}
 		catch (ClientProtocolException e) {
-			Log.w(TAG, e.getMessage());
+			Log.w(e.getMessage());
 			return null;
 		}
 		catch (IOException e) {
@@ -107,11 +107,11 @@ public class CustomHttpClient {
 			return (resEntity == null) ? null : EntityUtils.toString(resEntity, CHARSET_UTF8);
 		}
 		catch (UnsupportedEncodingException e) {
-			Log.w(TAG, e.getMessage());
+			Log.w(e.getMessage());
 			return null;
 		}
 		catch (ClientProtocolException e) {
-			Log.w(TAG, e.getMessage());
+			Log.w(e.getMessage());
 			return null;
 		}
 		catch (IOException e) {
@@ -120,7 +120,7 @@ public class CustomHttpClient {
 	}
 	
 	public static String getFromWebByHttpClient(Context context, String url, NameValuePair... nameValuePairs) throws Exception {
-		Log.d(TAG, "getFromWebByHttpClient url = " + url);
+		Log.d(url);
 		try {
 			// http地址
 			// String httpUrl =
@@ -155,7 +155,7 @@ public class CustomHttpClient {
 		catch (IOException e) {
 			;
 			// TODO Auto-generated catch block
-			Log.e(TAG, "IOException ");
+			Log.e("IOException ");
 			e.printStackTrace();
 			throw new RuntimeException(context.getResources().getString(R.string.httpError), e);
 		}

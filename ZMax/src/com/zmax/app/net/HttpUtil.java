@@ -28,7 +28,7 @@ public class HttpUtil {
 	 * @return
 	 */
 	public static String sendRequest(Context context, String urlPath, String requestType, String request) throws Exception {
-		Log.d("HttpUtil", urlPath);
+		Log.d(  urlPath);
 		URL url = null;
 		HttpURLConnection conn = null;
 		OutputStream os = null;
@@ -60,14 +60,14 @@ public class HttpUtil {
 			 * PhoneUtil.getNetworkType(context));
 			 */
 			conn.setRequestProperty("Connection", "keep-alive");
-			Log.v("HttpUtil", "**" + "baseUrl:" + urlPath + ", requestMethod:" + requestType + ", request:" + request + "**");
-			Log.v("HttpUtil", "**" + "RequestProperty:" + conn.getRequestProperties().toString() + "**");
+			Log.v(  "**" + "baseUrl:" + urlPath + ", requestMethod:" + requestType + ", request:" + request + "**");
+			Log.v( "**" + "RequestProperty:" + conn.getRequestProperties().toString() + "**");
 			if (request != null && !"".equals(request)) {
 				os = conn.getOutputStream();
 				os.write(request.getBytes());
 				os.flush();
 			}
-			Log.i("HttpUtil", "code=" + conn.getResponseCode());
+			Log.i( "code=" + conn.getResponseCode());
 			
 			if (200 == conn.getResponseCode()) {
 				is = conn.getInputStream();

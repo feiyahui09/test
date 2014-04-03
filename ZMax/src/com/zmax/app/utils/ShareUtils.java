@@ -111,7 +111,7 @@ public class ShareUtils {
 		
 		public void onError(Platform plat, int action, Throwable t) {
 			t.printStackTrace();
-			Log.e("ShareUtils", "onError:" + t.getMessage());
+			Log.e(t.getMessage());
 		}
 		
 		public void onCancel(Platform plat, int action) {

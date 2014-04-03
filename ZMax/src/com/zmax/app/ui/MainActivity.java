@@ -30,7 +30,6 @@ public class MainActivity extends BaseSlidingFragmentActivity implements PlayZma
 			return;
 		}
 		initLocate();
-		
 	}
 	
 	private void initLocate() {

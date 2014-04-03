@@ -32,8 +32,6 @@ public class ZMaxApplication extends Application {
 		super.onCreate();
 		mInstance = this;
 		init();
-		Log.d("TAG", "onCreate");
-		
 	}
 	
 	public static ZMaxApplication getInstance() {
@@ -91,7 +89,7 @@ public class ZMaxApplication extends Application {
 			e.printStackTrace(printWriter);
 			String stacktrace = result.toString();
 			printWriter.close();
-			Log.e("error", "" + stacktrace);
+			Log.e("ERROR:" + stacktrace);
 			defaultUEH.uncaughtException(t, e);
 		}
 	}
