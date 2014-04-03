@@ -18,7 +18,6 @@ import com.zmax.app.BuildConfig;
 
 public class Log {
 	
-	
 	static String className;
 	static String methodName;
 	static int lineNumber;
@@ -110,6 +109,66 @@ public class Log {
 		String msg = createLog(message);
 		fileLog(className, msg);
 		android.util.Log.wtf(className, msg);
+	}
+	
+	/**
+	 * 以下是带自定义TAG的log
+	 */
+	
+	public static void e(String tag, String message) {
+		if (!isDebuggable()) return;
+		
+		// Throwable instance must be created before any methods
+		getMethodNames(new Throwable().getStackTrace());
+		String msg = createLog(message);
+		fileLog(tag, msg);
+		android.util.Log.e(tag, msg);
+	}
+	
+	public static void i(String tag, String message) {
+		if (!isDebuggable()) return;
+		
+		getMethodNames(new Throwable().getStackTrace());
+		String msg = createLog(message);
+		fileLog(tag, msg);
+		android.util.Log.i(tag, msg);
+	}
+	
+	public static void d(String tag, String message) {
+		if (!isDebuggable()) return;
+		
+		getMethodNames(new Throwable().getStackTrace());
+		String msg = createLog(message);
+		fileLog(tag, msg);
+		android.util.Log.d(tag, msg);
+	}
+	
+	public static void v(String tag, String message) {
+		if (!isDebuggable()) return;
+		
+		getMethodNames(new Throwable().getStackTrace());
+		String msg = createLog(message);
+		fileLog(tag, msg);
+		android.util.Log.v(tag, msg);
+	}
+	
+	public static void w(String tag, String message) {
+		if (!isDebuggable()) return;
+		/**
+		 * new Throwable().getStackTrace() 跟踪应用的堆栈的信息
+		 */
+		getMethodNames(new Throwable().getStackTrace());
+		String msg = createLog(message);
+		fileLog(tag, msg);
+		android.util.Log.w(tag, msg);
+	}
+	
+	public static void wtf(String tag, String message) {
+		if (!isDebuggable()) return;
+		getMethodNames(new Throwable().getStackTrace());
+		String msg = createLog(message);
+		fileLog(tag, msg);
+		android.util.Log.wtf(tag, msg);
 	}
 	
 	/**
