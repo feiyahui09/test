@@ -35,9 +35,8 @@ public class PlayInZmaxLoginFragment extends Fragment {
 			
 			@Override
 			public void onClick(View v) {
-				// switchFragment(new
-				// PlayInZmaxFragment((PlayZmaxLogoutCallback) getActivity()));
-				startActivity(new Intent(getActivity(), ChatRoomActivity.class));
+				switchFragment(new PlayInZmaxFragment((PlayZmaxLogoutCallback) getActivity()));
+//				startActivity(new Intent(getActivity(), ChatRoomActivity.class));
 			}
 		});
 		return view;
