@@ -7,10 +7,13 @@
     android:paddingLeft="@dimen/room_control_tv_behind_padding_left"
     android:paddingRight="@dimen/room_control_tv_behind_padding_left" >
 
+    <include layout="@layout/room_control_behind_indicator" />
+
     <LinearLayout
         android:id="@+id/ll_orient"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/room_control_behind_indicator"
         android:orientation="vertical" >
 
         <RelativeLayout
@@ -78,6 +81,7 @@
         android:id="@+id/ll_digital"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
+        android:layout_below="@+id/room_control_behind_indicator"
         android:orientation="vertical"
         android:visibility="gone" >
 

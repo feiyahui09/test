@@ -19,6 +19,7 @@ import com.zmax.app.utils.PhoneUtil;
 
 public class MainActivity extends BaseSlidingFragmentActivity implements PlayZmaxLogoutCallback {
 	private Context mContext;
+	private GetCityLocationTask locationTask;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -33,7 +34,7 @@ public class MainActivity extends BaseSlidingFragmentActivity implements PlayZma
 	}
 	
 	private void initLocate() {
-		new GetCityLocationTask(this, new GetCityLocationTask.TaskCallBack() {
+		locationTask = new GetCityLocationTask(this, new GetCityLocationTask.TaskCallBack() {
 			
 			@Override
 			public void onCallBack(CityLocation result) {
@@ -41,7 +42,6 @@ public class MainActivity extends BaseSlidingFragmentActivity implements PlayZma
 				if (result != null && !isFinishing()) {
 					switchContent(new ActListFragment(R.color.red));
 					Toast.makeText(mContext, "   " + result.province + result.city, 2222).show();
-					
 				}
 				else if (!PhoneUtil.isNetworkOk(mContext)) {
 					switchContent(new NetErrorFragment());
@@ -50,16 +50,23 @@ public class MainActivity extends BaseSlidingFragmentActivity implements PlayZma
 				else {
 					// 显示默认列表
 				}
-				
 			}
-		}).execute(Constant.MAP_AK);
+		});
+		locationTask.execute(Constant.MAP_AK);
 		
 	}
 	
 	@Override
+	protected void onPause() {
+		// TODO Auto-generated method stub
+		super.onPause();
+		locationTask.cancel(true);
+	}
+	
+	@Override
 	public void onLogoutViewCreate() {
-		btn_share.setVisibility(View.VISIBLE);
-		btn_share.setOnClickListener(new OnClickListener() {
+		btn_more.setVisibility(View.VISIBLE);
+		btn_more.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
@@ -70,7 +77,7 @@ public class MainActivity extends BaseSlidingFragmentActivity implements PlayZma
 	
 	@Override
 	public void onLogoutViewDestroy() {
-		btn_share.setVisibility(View.GONE);
+		btn_more.setVisibility(View.GONE);
 		
 	}
 	

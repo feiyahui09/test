@@ -9,6 +9,8 @@
     android:paddingLeft="@dimen/room_control_tv_behind_padding_left"
     android:paddingRight="@dimen/room_control_tv_behind_padding_left" >
 
+    <include layout="@layout/room_control_behind_indicator"/>
+
     <RelativeLayout
         android:id="@+id/rg_lighting_model"
         android:layout_width="fill_parent"
@@ -25,13 +27,20 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="风速" />
+                android:layout_gravity="center_horizontal"
+                android:gravity="center"
+                android:text="风速"
+                android:textColor="#929292"
+                android:textSize="12sp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:drawableLeft="@drawable/room_control_air_control_wind_icon"
-                android:text="高" />
+                android:gravity="center"
+                android:text="高"
+                android:textColor="#3d3e3a"
+                android:textSize="14sp" />
         </LinearLayout>
 
         <TextView
@@ -39,8 +48,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="26" 
-            android:textSize="38sp"/>
+            android:gravity="center"
+            android:text="26"
+            android:textColor="#3d3e3a"
+            android:textSize="60sp" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -52,13 +63,20 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="模式" />
+                android:layout_gravity="center_horizontal"
+                android:gravity="center"
+                android:text="模式"
+                android:textColor="#929292"
+                android:textSize="12sp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:drawableLeft="@drawable/room_control_air_control_wind_icon"
-                android:text="冷风" />
+                android:gravity="center"
+                android:text="冷风"
+                android:textColor="#3d3e3a"
+                android:textSize="14sp" />
         </LinearLayout>
     </RelativeLayout>
 
@@ -70,23 +88,24 @@
             style="@style/room_control_round_button"
             android:layout_alignParentLeft="true"
             android:scaleType="center"
-            android:src="@drawable/room_control_power_btn" />
+            android:src="@drawable/room_control_air_control_power_activited" />
 
         <ImageButton
             style="@style/room_control_round_button"
             android:layout_alignParentRight="true"
-            android:text="MODE" />
+            android:text="模式" />
     </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:visibility="gone"
-        android:background="@drawable/room_control_air_control_circle_bg" >
+        android:background="@drawable/room_control_air_control_circle_bg"
+        android:visibility="gone" >
     </RelativeLayout>
 
-    <LinearLayout
+    <!--
+         <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
@@ -108,5 +127,77 @@
             android:layout_height="wrap_content"
             android:background="@drawable/room_control_air_control_wind_strong" />
     </LinearLayout>
+    -->
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_gravity="center" >
+
+        <RelativeLayout
+            android:id="@+id/rl_circle"
+            android:layout_width="210dp"
+            android:layout_height="210dp"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:background="@drawable/room_control_air_control_circle_bg" >
+
+            <ImageButton
+                style="@style/room_control_air_conditon_circle_button"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:src="@drawable/room_control_air_control_temp_add" />
+
+            <ImageButton
+                style="@style/room_control_air_conditon_circle_button"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/room_control_air_control_wind_minus" />
+
+            <ImageButton
+                style="@style/room_control_air_conditon_circle_button"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:src="@drawable/room_control_air_control_temp_minus" />
+
+            <ImageButton
+                style="@style/room_control_air_conditon_circle_button"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/room_control_air_control_wind_add" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tv_temp_add"
+            style="@style/room_control_air_conditon_circle_tv"
+            android:layout_above="@+id/rl_circle"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="8dp"
+            android:text="温度+" />
+
+        <TextView
+            android:id="@+id/tv_wind_minus"
+            style="@style/room_control_air_conditon_circle_tv"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="8dp"
+            android:layout_toLeftOf="@+id/rl_circle"
+            android:text="风速-" />
+
+        <TextView
+            android:id="@+id/tv_temp_minus"
+            style="@style/room_control_air_conditon_circle_tv"
+            android:layout_below="@+id/rl_circle"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="8dp"
+            android:text="温度-" />
+
+        <TextView
+            android:id="@+id/tv_wind_add"
+            style="@style/room_control_air_conditon_circle_tv"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="8dp"
+            android:layout_toRightOf="@+id/rl_circle"
+            android:text="风速+" />
+    </RelativeLayout>
 
 </LinearLayout>
