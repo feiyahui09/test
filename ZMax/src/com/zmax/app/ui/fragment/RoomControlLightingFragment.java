@@ -139,32 +139,6 @@ public class RoomControlLightingFragment extends Fragment {
 	
 	private View getLightingBehind(LayoutInflater inflater) {
 		final View view = inflater.inflate(R.layout.room_control_lighting_behind, null);
-		((RadioGroup) view.findViewById(R.id.rg_lighting_model)).setOnCheckedChangeListener(new OnCheckedChangeListener() {
-			
-			@Override
-			public void onCheckedChanged(RadioGroup group, int checkedId) {
-				switch (checkedId) {
-					case R.id.rb_lighting:
-						tv_mode_detail.setText("明亮模式");
-						break;
-					case R.id.rb_tv:
-						tv_mode_detail.setText("电视模式");
-						break;
-					case R.id.rb_reading:
-						tv_mode_detail.setText("阅读模式");
-						break;
-					case R.id.rb_sleep:
-						tv_mode_detail.setText("睡眠模式");
-						break;
-					case R.id.rb_self:
-						tv_mode_detail.setText("自定义模式");
-						break;
-					default:
-						break;
-				}
-			}
-		});
-		((RadioButton) view.findViewById(R.id.rb_lighting)).setChecked(true);
 		return view;
 	}
 	

@@ -22,19 +22,19 @@
         <EditText
             android:id="@+id/et_room_number"
             style="@style/playzmax_login_edittext"
-            android:hint="房间号" />
+            android:hint="   房间号" />
 
         <EditText
             android:id="@+id/et_namecard"
             style="@style/playzmax_login_edittext"
             android:layout_marginTop="8dp"
-            android:hint="身份证号后四位" />
+            android:hint="   身份证号后四位" />
 
         <EditText
             android:id="@+id/et_password"
             style="@style/playzmax_login_edittext"
             android:layout_marginTop="8dp"
-            android:hint="密码" />
+            android:hint="   密码" />
 
         <Button
             android:id="@+id/btn_login"

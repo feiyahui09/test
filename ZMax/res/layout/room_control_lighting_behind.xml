@@ -2,50 +2,78 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@drawable/room_control_tv_control_bg"
     android:paddingBottom="@dimen/room_control_tv_behind_padding_left"
-    android:paddingLeft="@dimen/room_control_tv_behind_padding_left"
-    android:paddingRight="@dimen/room_control_tv_behind_padding_left" >
+    android:paddingLeft="15dp"
+    android:paddingRight="15dp" >
 
     <include layout="@layout/room_control_behind_indicator" />
 
-    <RadioGroup
-        android:id="@+id/rg_lighting_model"
+    <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="fill_parent"
         android:layout_below="@+id/room_control_behind_indicator"
-        android:layout_centerInParent="true"
-        android:orientation="vertical" >
+        android:background="@drawable/room_control_lighting_content_bg"
+        android:orientation="vertical"
+        android:paddingBottom="22dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:paddingTop="20dp" >
 
-        <RadioButton
-            android:id="@+id/rb_lighting"
-            style="@style/room_control_lighting_model_button"
-            android:button="@null"
-            android:text="明亮模式" />
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="20dp"
+            android:gravity="center"
+            android:text="灯光控制"
+            android:textColor="#716c65"
+            android:textSize="18sp" />
 
-        <RadioButton
-            android:id="@+id/rb_tv"
-            style="@style/room_control_lighting_model_button"
-            android:button="@null"
-            android:text="电视模式" />
+        <ImageView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/room_control_lighting_control_divider" />
 
-        <RadioButton
-            android:id="@+id/rb_reading"
-            style="@style/room_control_lighting_model_button"
-            android:button="@null"
-            android:text="阅读模式" />
+        <ImageView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/room_control_lighting_control_divider" />
 
-        <RadioButton
-            android:id="@+id/rb_sleep"
-            style="@style/room_control_lighting_model_button"
-            android:button="@null"
-            android:text="睡眠模式" />
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" >
 
-        <RadioButton
-            android:id="@+id/rb_self"
-            style="@style/room_control_lighting_model_button"
-            android:button="@null"
-            android:text="自定义模式" />
-    </RadioGroup>
+            <ImageButton
+                style="@style/room_control_round_button"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/room_control_lighting_control_left_btn" />
+
+            <TextView
+                android:layout_width="125dp"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:background="@drawable/room_control_lighting_control_tv_bg"
+                android:gravity="center"
+                android:text="明亮模式"
+                android:textColor="#4c4c4b"
+                android:textSize="18sp" />
+
+            <ImageButton
+                style="@style/room_control_round_button"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/room_control_lighting_control_right_btn" />
+        </RelativeLayout>
+
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/room_control_lighting_control_btn_bg"
+            android:gravity="center"
+            android:text="应用"
+            android:textColor="#716c65"
+            android:textSize="18sp" />
+    </LinearLayout>
 
 </RelativeLayout>
