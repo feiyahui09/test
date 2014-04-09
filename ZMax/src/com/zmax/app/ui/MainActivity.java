@@ -21,6 +21,9 @@ public class MainActivity extends BaseSlidingFragmentActivity implements PlayZma
 	private Context mContext;
 	private GetCityLocationTask locationTask;
 	
+	
+
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub

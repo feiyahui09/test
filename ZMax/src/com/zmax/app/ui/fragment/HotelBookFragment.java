@@ -15,11 +15,12 @@ import android.widget.LinearLayout;
 import com.zmax.app.R;
 import com.zmax.app.adapter.HotelBookListAdapter;
 import com.zmax.app.ui.MainActivity;
+import com.zmax.app.ui.base.BaseSlidingFragmentActivity.HotelBookVisivleCallback;
 import com.zmax.app.utils.Constant;
 import com.zmax.app.widget.VerticalViewPager;
 import com.zmax.app.widget.VerticalViewPager.OnPageChangeListener;
 
-public class HotelBookFragment extends Fragment implements OnPageChangeListener, OnItemClickListener {
+public class HotelBookFragment extends Fragment implements OnPageChangeListener, OnItemClickListener, HotelBookVisivleCallback {
 	
 	private int mPosition = 0;
 	
@@ -51,19 +52,13 @@ public class HotelBookFragment extends Fragment implements OnPageChangeListener,
 		pager.setAdapter(adapter);
 		
 		pager.setOnPageChangeListener(this);
-		adapter.addViews(Constant.getHotelFalseDataView(getActivity(), getActivity().getLayoutInflater()));
-		initPagerIndicator(Constant.getHotelFalseDataView(getActivity(), inflater), indicator);
-		pager.setCurrentItem(mPosition);
+		// view.setOnClickListener(this);
 		return view;
 	}
 	
 	@Override
 	public void setUserVisibleHint(boolean isVisibleToUser) {
 		super.setUserVisibleHint(isVisibleToUser);
-		// if (isVisibleToUser)
-		// adapter.addViews(Constant.getHotelFalseDataView(getActivity(),
-		// getActivity().getLayoutInflater()));
-		
 	}
 	
 	private void initPagerIndicator(List<View> falseDataView, LinearLayout indicator) {
@@ -126,7 +121,14 @@ public class HotelBookFragment extends Fragment implements OnPageChangeListener,
 	
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-		// TODO Auto-generated method stub
+		
+	}
+	
+	@Override
+	public void onCallBack() {
+		adapter.addViews(Constant.getHotelFalseDataView(getActivity(), getActivity().getLayoutInflater()));
+		initPagerIndicator(Constant.getHotelFalseDataView(getActivity(), getActivity().getLayoutInflater()), indicator);
+		pager.setCurrentItem(mPosition);
 		
 	}
 	
