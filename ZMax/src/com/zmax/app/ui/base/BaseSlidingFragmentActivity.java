@@ -95,7 +95,7 @@ public class BaseSlidingFragmentActivity extends SlidingFragmentActivity {
 		/*
 		 * 头部tab切换 活动和预订酒店
 		 */
-		rg_top_title = (RadioGroup) findViewById(R.id.rg_top_title);
+		rg_top_title = (RadioGroup) findViewById(R.id.above_content_second_header);
 		
 		rg_top_title.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 			

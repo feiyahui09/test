@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/rg_top_title"
     android:id="@+id/above_content_second_header"
     android:layout_width="fill_parent"
     android:layout_height="@dimen/top_second_heigth"
@@ -20,7 +19,7 @@
         android:textColor="@color/index_title_textview_sel"
         android:textSize="14sp" >
     </RadioButton>
-s
+
     <RadioButton
         android:id="@+id/btn_hotel_book"
         android:layout_width="0dp"

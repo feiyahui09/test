@@ -4,6 +4,7 @@
     <item android:state_selected="true" android:color="@color/index_title_actived"/>
     <item android:state_focused="true" android:color="@color/index_title_actived"/>
     <item android:state_pressed="true" android:color="@color/index_title_actived"/>
+    <item android:state_checked="true" android:color="@color/index_title_actived"/>
     <item android:color="@color/index_title_normal"/>
 
 </selector>
