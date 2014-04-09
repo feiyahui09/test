@@ -2,9 +2,13 @@ package com.zmax.app.task;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.util.Log;
 
+import com.zmax.app.db.DBAccessor;
+import com.zmax.app.db.DBHelper;
 import com.zmax.app.model.CityLocation;
 import com.zmax.app.net.NetAccessor;
+import com.zmax.app.utils.Utility;
 
 public class GetCityLocationTask extends AsyncTask<String, Void, CityLocation> {
 	private Context context;
@@ -25,7 +29,10 @@ public class GetCityLocationTask extends AsyncTask<String, Void, CityLocation> {
 	@Override
 	protected CityLocation doInBackground(String... params) {
 		
-		return NetAccessor.getCityLoacationByIp(context, params[0]);
+		CityLocation cityLocation = NetAccessor.getCityLoacationByIp(context, params[0]);
+		 
+		if (cityLocation != null) DBAccessor.saveObject(cityLocation);
+		return cityLocation;
 	}
 	
 	@Override

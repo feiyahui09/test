@@ -68,4 +68,9 @@
 -libraryjars libs/locSDK_3.1.jar
 -dontwarn com.baidu.location.**  
 -keep class com.baidu.location.** { *; }
+
+-libraryjars libs/ormlite-core-4.40.jar
+-libraryjars libs/ormlite-android-4.40.jar
+-dontwarn  com.j256.ormlite.**  
+-keep class  com.j256.ormlite.** { *; }
   

@@ -1,6 +1,8 @@
 package com.zmax.app.ui;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -14,7 +16,6 @@ import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
 
 import com.zmax.app.R;
-import com.zmax.app.map.RoutePlanDemo;
 import com.zmax.app.ui.base.BaseActivity;
 
 public class ChatRoomActivity extends BaseActivity implements OnClickListener {
@@ -73,11 +74,22 @@ public class ChatRoomActivity extends BaseActivity implements OnClickListener {
 	
 	@Override
 	public void onClick(View v) {
-		Intent intent = new Intent();
 		
 		switch (v.getId()) {
 			case R.id.iv_pic:
-				
+				new AlertDialog.Builder(mContext).setTitle("title")
+						.setItems(R.array.pic_dialog_items, new DialogInterface.OnClickListener() {
+							
+							@Override
+							public void onClick(DialogInterface dialog, int which) {
+								if (which == 0) {
+									
+								}
+								else if (which == 1) {
+									
+								}
+							}
+						}).show();
 				break;
 			case R.id.iv_emotion:
 				break;
@@ -90,5 +102,4 @@ public class ChatRoomActivity extends BaseActivity implements OnClickListener {
 				break;
 		}
 	}
-	
 }

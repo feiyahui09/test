@@ -7,4 +7,9 @@
         <item>#FF0000FF</item>
     </array>
 
+    <string-array name="pic_dialog_items">
+        <item>拍照</item>
+        <item>从手机选择</item>
+    </string-array>
+
 </resources>

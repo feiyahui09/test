@@ -15,6 +15,13 @@ public class MoreMenuFragment extends Fragment implements OnClickListener {
 	private LinearLayout ll_menu_index, ll_menu_playzmax, ll_menu_myaccount, ll_menu_setting;
 	
 	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		// TODO Auto-generated method stub
+		super.onCreate(savedInstanceState);
+		setRetainInstance(true);
+
+	}
+	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View v = inflater.inflate(R.layout.bedind_menu_list, null);
 		

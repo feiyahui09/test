@@ -1,5 +1,9 @@
 package com.zmax.app.utils;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Random;
+
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -12,4 +16,14 @@ public class Utility {
 		context.startActivity(intent);
 		
 	}
+	
+	public static String getDate() {
+		return new SimpleDateFormat("HH:mm:ss").format(new Date());
+	}
+	
+	public static int getRandom(int range) {
+		Random random = new Random(System.currentTimeMillis());
+		return random.nextInt(range);
+	}
+	
 }
