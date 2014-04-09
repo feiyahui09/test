@@ -1,43 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rg_top_title"
     android:id="@+id/above_content_second_header"
     android:layout_width="fill_parent"
     android:layout_height="@dimen/top_second_heigth"
-    android:gravity="center_vertical" 
-    android:visibility="gone">
+    android:orientation="horizontal"
+    android:visibility="gone" >
 
-    <RadioGroup
-        android:id="@+id/rg_top_title"
-        android:layout_width="fill_parent"
+    <RadioButton
+        android:id="@+id/btn_activities"
+        android:layout_width="0dp"
         android:layout_height="fill_parent"
-        android:orientation="horizontal" >
+        android:layout_weight="1"
+        android:background="@drawable/index_title_bg_sel"
+        android:button="@null"
+        android:checked="true"
+        android:gravity="center"
+        android:text="活动"
+        android:textColor="@color/index_title_textview_sel"
+        android:textSize="14sp" >
+    </RadioButton>
+s
+    <RadioButton
+        android:id="@+id/btn_hotel_book"
+        android:layout_width="0dp"
+        android:layout_height="fill_parent"
+        android:layout_weight="1"
+        android:background="@drawable/index_title_bg_sel"
+        android:button="@null"
+        android:gravity="center"
+        android:text="酒店"
+        android:textColor="@color/index_title_textview_sel"
+        android:textSize="14sp" >
+    </RadioButton>
 
-        <RadioButton
-            android:id="@+id/btn_activities"
-            android:checked="true"
-            android:layout_width="0dp"
-            android:layout_height="fill_parent"
-            android:layout_weight="1"
-            android:background="@drawable/index_title_bg_sel"
-            android:button="@null"
-            android:gravity="center"
-            android:text="活动"
-            android:textColor="@color/index_title_textview_sel"
-            android:textSize="14sp" >
-        </RadioButton>
-
-        <RadioButton
-            android:id="@+id/btn_hotel_book"
-            android:layout_width="0dp"
-            android:layout_height="fill_parent"
-            android:layout_weight="1"
-            android:background="@drawable/index_title_bg_sel"
-            android:button="@null"
-            android:gravity="center"
-            android:text="酒店"
-            android:textColor="@color/index_title_textview_sel"
-            android:textSize="14sp" >
-        </RadioButton>
-    </RadioGroup>
-
-</LinearLayout>
+</RadioGroup>
