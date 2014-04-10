@@ -69,6 +69,11 @@
         <activity android:name="com.zmax.app.ui.WelcomeActivity" />
         <activity android:name="com.zmax.app.ui.ChatRoomActivity" />
         <activity android:name="com.zmax.app.map.RoutePlanDemo" />
+        <activity android:name="com.zmax.app.ui.FeedBackActivity" />
+
+        <service android:name="com.zmax.app.manage.SendFeedbackService" >
+        </service>
+
         <!-- share sdk 授权操作 -->
         <activity
             android:name="cn.sharesdk.framework.ShareSDKUIShell"

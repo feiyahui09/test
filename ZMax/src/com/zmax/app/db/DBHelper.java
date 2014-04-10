@@ -46,7 +46,7 @@ public class DBHelper extends OrmLiteSqliteOpenHelper {
 	
 	@Override
 	public void onCreate(SQLiteDatabase sqliteDatabase, ConnectionSource connectionSource) {
-		Log.d(tag, "DBHelper > onCreate ");
+		Log.d( "DBHelper > onCreate ");
 		try {
 			// 在此创建model对应的表
 			TableUtils.createTable(connectionSource, CityLocation.class);
@@ -60,7 +60,7 @@ public class DBHelper extends OrmLiteSqliteOpenHelper {
 	@Override
 	public void onUpgrade(SQLiteDatabase sqliteDatabase, ConnectionSource connectionSource, int oldVer, int newVer) {
 		try {
-			Log.d(tag, "DBHelper > onUpgrade  , oldVer : " + oldVer + " , newVer : " + newVer);
+			Log.d( "DBHelper > onUpgrade  , oldVer : " + oldVer + " , newVer : " + newVer);
 			// 升级之前先删除旧表
 			TableUtils.dropTable(connectionSource, CityLocation.class, true);
 			

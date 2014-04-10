@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.zmax.app.R;
+import com.zmax.app.ui.FeedBackActivity;
 import com.zmax.app.ui.WelcomeActivity;
 
 public class SettingFragment extends Fragment implements OnClickListener {
@@ -56,7 +57,8 @@ public class SettingFragment extends Fragment implements OnClickListener {
 		switch (v.getId()) {
 		
 			case R.id.btn_feedback:
-				
+				intent.setClass(getActivity(), FeedBackActivity.class);
+				startActivity(intent);
 				break;
 			case R.id.btn_check_update:
 				

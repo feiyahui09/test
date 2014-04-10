@@ -4,8 +4,9 @@ import java.util.List;
 
 import org.apache.http.NameValuePair;
 
+import com.zmax.app.utils.Log;
+
 import android.content.Context;
-import android.util.Log;
 
 public class HttpUtils {
 	// 网络连接部分
@@ -44,7 +45,7 @@ public class HttpUtils {
 		}
 		catch (Exception e) {
 			// TODO Auto-generated catch block
-			Log.e(TAG, e.getMessage());
+			Log.e(e.getMessage());
 			e.printStackTrace();
 			return false;
 		}
@@ -58,7 +59,7 @@ public class HttpUtils {
 		}
 		catch (Exception e) {
 			// TODO Auto-generated catch block
-			Log.e(TAG, e.getMessage());
+			Log.e(e.getMessage());
 			e.printStackTrace();
 			return false;
 		}
