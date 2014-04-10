@@ -28,15 +28,6 @@
         android:textColor="@color/hotel_list_tile"
         android:textSize="18sp" />
 
-    <TextView
-        android:id="@+id/tv_price"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_title"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/hotel_book_price_marginTop"
-        android:text="$ 480 起"
-        android:textColor="@color/hotel_list_tile"
-        android:textSize="12sp" />
+     
 
 </RelativeLayout>

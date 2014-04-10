@@ -1,16 +1,21 @@
 package com.zmax.app.utils;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import android.content.Intent;
 import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.ListView;
+import android.widget.SimpleAdapter;
 
 import com.zmax.app.R;
 import com.zmax.app.model.Act;
+import com.zmax.app.model.Hotel;
 import com.zmax.app.ui.HotelDetailActivity;
 
 public class Constant {
@@ -85,7 +90,7 @@ public class Constant {
 		
 		List<View> mList = new ArrayList<View>();
 		
-		for (int i = 0; i < 12; i++) {
+		for (int i = 0; i < 3; i++) {
 			View view = inflater.inflate(R.layout.hotel_book_list_item, null);
 			
 			view.setOnClickListener(new OnClickListener() {
@@ -98,8 +103,27 @@ public class Constant {
 			mList.add(view);
 			
 		}
+		List<Map<String, String>> lists = new ArrayList<Map<String, String>>();
+		for (int i = 0; i < 5; i++) {
+			Map<String, String> map = new HashMap<String, String>();
+			map.put("date", "20121212");
+			map.put("name", "GuangZhou op en   date ");
+			lists.add(map);
+		}
+		
+		mList.add(getHotelUpcomingFalseDataView(fragmentActivity, inflater, lists));
 		
 		return mList;
 	}
 	
+	private static View getHotelUpcomingFalseDataView(final FragmentActivity fragmentActivity, LayoutInflater inflater,
+			List<Map<String, String>> lists) {
+		View view = inflater.inflate(R.layout.hotel_book_list_upcoming, null);
+		ListView listView = (ListView) view.findViewById(R.id.list_view);
+		SimpleAdapter simpleAdapter = new SimpleAdapter(fragmentActivity, lists, R.layout.hotel_book_upcoming_list_item, new String[] {
+				"date", "name" }, new int[] { R.id.tv_date, R.id.tv_name });
+		listView.setAdapter(simpleAdapter);
+		return view;
+		
+	}
 }
