@@ -21,7 +21,7 @@ public class NetErrorFragment extends Fragment {
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
 				if (getActivity() != null && isAdded()) {
-					((MainActivity) getActivity()).switchContent(new ActListFragment(R.color.red));
+					((MainActivity) getActivity()).switchContent(new ActListFragment( ));
 				}
 				return false;
 			}

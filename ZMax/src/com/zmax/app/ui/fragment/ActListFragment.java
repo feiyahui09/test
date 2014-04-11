@@ -17,7 +17,9 @@ import com.zmax.app.model.Act;
 import com.zmax.app.model.ActList;
 import com.zmax.app.task.GetActListTask;
 import com.zmax.app.ui.ActDetailFlashActivity;
+import com.zmax.app.utils.Constant;
 import com.zmax.app.utils.DateTimeUtils;
+import com.zmax.app.utils.DefaultShared;
 import com.zmax.app.utils.Log;
 import com.zmax.app.widget.XListView;
 import com.zmax.app.widget.XListView.IXListViewListener;
@@ -26,26 +28,20 @@ public class ActListFragment extends Fragment implements IXListViewListener, OnI
 	
 	protected XListView listview;
 	protected View view;
-	private int mColorRes = -1;
 	
 	private ActListAdapter adapter;
 	private GetActListTask getActListTask;
 	private int curPage = 1;
 	
 	public ActListFragment() {
-		this(R.color.white);
-	}
-	
-	public ActListFragment(int colorRes) {
-		mColorRes = colorRes;
 		setRetainInstance(true);
 	}
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		if (savedInstanceState != null) mColorRes = savedInstanceState.getInt("mColorRes");
-		int color = getResources().getColor(mColorRes);
-		
+		// if (savedInstanceState != null) mColorRes =
+		// savedInstanceState.getInt("mColorRes");
+		// int color = getResources().getColor(mColorRes);
 		view = inflater.inflate(R.layout.act_list, null);
 		listview = (XListView) view.findViewById(R.id.list_view);
 		listview.setPullLoadEnable(true);
@@ -64,8 +60,9 @@ public class ActListFragment extends Fragment implements IXListViewListener, OnI
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onViewCreated(view, savedInstanceState);
-	
+		
 	}
+	
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -82,7 +79,7 @@ public class ActListFragment extends Fragment implements IXListViewListener, OnI
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
-		outState.putInt("mColorRes", mColorRes);
+		// outState.putInt("mColorRes", mColorRes);
 	}
 	
 	@Override
@@ -122,7 +119,7 @@ public class ActListFragment extends Fragment implements IXListViewListener, OnI
 				onLoad();
 			}
 		});
-		getActListTask.execute("wuhan", String.valueOf(page), "2");
+		getActListTask.execute(Constant.CUR_CITY, String.valueOf(page), "2");
 	}
 	
 	@Override

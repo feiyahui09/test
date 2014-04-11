@@ -15,7 +15,6 @@ import android.widget.SimpleAdapter;
 
 import com.zmax.app.R;
 import com.zmax.app.model.Act;
-import com.zmax.app.model.Hotel;
 import com.zmax.app.ui.HotelDetailActivity;
 
 public class Constant {
@@ -36,6 +35,14 @@ public class Constant {
 	public static String MAP_AK = "nGf4WdZTlTgAjFSQ0AtuSWjc";// zmax
 	
 	public static String IP_LOCATION_URL = "http://api.map.baidu.com/location/ip";
+	
+	public static String CUR_CITY = "武汉";
+	
+	public static class SPFKEY {
+		
+		public static final String CITY_LOCATION_KEY = "city_location_key";
+		
+	}
 	
 	public static List<Object> getFalseDataObject(boolean bo) {
 		

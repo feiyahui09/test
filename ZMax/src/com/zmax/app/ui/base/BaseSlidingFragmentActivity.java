@@ -103,7 +103,7 @@ public class BaseSlidingFragmentActivity extends SlidingFragmentActivity {
 			public void onCheckedChanged(RadioGroup group, int checkedId) {
 				if (checkedId == R.id.btn_hotel_book)
 					switchContent(new HotelBookFragment(R.color.red));
-				else if (checkedId == R.id.btn_activities) switchContent(new ActListFragment(R.color.red));
+				else if (checkedId == R.id.btn_activities) switchContent(new ActListFragment( ));
 			}
 		});
 		btn_more = (Button) findViewById(R.id.btn_more);

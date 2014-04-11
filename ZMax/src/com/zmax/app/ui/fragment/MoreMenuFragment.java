@@ -41,7 +41,7 @@ public class MoreMenuFragment extends Fragment implements OnClickListener {
 		Fragment newContent = null;
 		switch (v.getId()) {
 			case R.id.ll_menu_index:
-				newContent = new ActListFragment(R.color.red);
+				newContent = new ActListFragment( );
 				break;
 			case R.id.ll_menu_playzmax:
 				newContent = new PlayInZmaxLoginFragment(R.color.green);

@@ -30,6 +30,7 @@ import com.zmax.app.task.GetHotelUpcomingListTask;
 import com.zmax.app.ui.HotelDetailActivity;
 import com.zmax.app.ui.MainActivity;
 import com.zmax.app.ui.base.BaseSlidingFragmentActivity.HotelBookVisivleCallback;
+import com.zmax.app.utils.Constant;
 import com.zmax.app.utils.DateTimeUtils;
 import com.zmax.app.widget.VerticalViewPager;
 import com.zmax.app.widget.VerticalViewPager.OnPageChangeListener;
@@ -92,7 +93,7 @@ public class HotelBookFragment extends Fragment implements OnPageChangeListener,
 				}
 			}
 		});
-		getHotelListTask.execute("武汉", "1", "10");
+		getHotelListTask.execute(Constant.CUR_CITY, "1", "10");
 	}
 	
 	private void initPagerIndicator(List<View> falseDataView, LinearLayout indicator) {
