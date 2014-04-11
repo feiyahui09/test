@@ -10,8 +10,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.zmax.app.R;
+import com.zmax.app.ui.DocumentsActivity;
 import com.zmax.app.ui.FeedBackActivity;
 import com.zmax.app.ui.WelcomeActivity;
+import com.zmax.app.utils.Constant;
 
 public class SettingFragment extends Fragment implements OnClickListener {
 	
@@ -68,13 +70,19 @@ public class SettingFragment extends Fragment implements OnClickListener {
 				startActivity(intent);
 				break;
 			case R.id.btn_user_regulation:
-				
+				intent.setClass(getActivity(), DocumentsActivity.class);
+				intent.putExtra(Constant.Documents.DOCUMENTS_TYPE_KEY, Constant.Documents.PROTOCAL_TYPE);
+				startActivity(intent);
 				break;
 			case R.id.btn_play_zmax:
-				
+				intent.setClass(getActivity(), DocumentsActivity.class);
+				intent.putExtra(Constant.Documents.DOCUMENTS_TYPE_KEY, Constant.Documents.GUIDE_TYPE);
+				startActivity(intent);
 				break;
 			case R.id.btn_member:
-				
+				intent.setClass(getActivity(), DocumentsActivity.class);
+				intent.putExtra(Constant.Documents.DOCUMENTS_TYPE_KEY, Constant.Documents.RIGHT_TYPE);
+				startActivity(intent);
 				break;
 			case R.id.btn_about:
 				

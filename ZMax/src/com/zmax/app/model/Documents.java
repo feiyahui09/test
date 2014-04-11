@@ -2,7 +2,7 @@ package com.zmax.app.model;
 
 import java.io.Serializable;
 
-public class Document  implements Serializable {
+public class Documents  implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -14,6 +14,6 @@ public class Document  implements Serializable {
 	public String message;
 	public String title;
 	public String content;
-	public String update_time;
+	public String updated_time;
 	
 }

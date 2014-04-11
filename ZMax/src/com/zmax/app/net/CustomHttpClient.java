@@ -63,6 +63,7 @@ public class CustomHttpClient {
 			}
 			UrlEncodedFormEntity urlEncoded = new UrlEncodedFormEntity(params, CHARSET_UTF8);
 			HttpPost httpPost = new HttpPost(url);
+			Log.d(url.toString());
 			httpPost.setEntity(urlEncoded);
 			HttpClient client = getHttpClient(context);
 			HttpResponse response = client.execute(httpPost);
@@ -97,6 +98,7 @@ public class CustomHttpClient {
 			
 			UrlEncodedFormEntity urlEncoded = new UrlEncodedFormEntity(params, CHARSET_UTF8);
 			HttpPost httpPost = new HttpPost(url);
+			Log.d(url.toString());
 			httpPost.setEntity(urlEncoded);
 			HttpClient client = getHttpClient(context);
 			HttpResponse response = client.execute(httpPost);
@@ -120,7 +122,6 @@ public class CustomHttpClient {
 	}
 	
 	public static String getFromWebByHttpClient(Context context, String url, NameValuePair... nameValuePairs) throws Exception {
-		Log.d(url);
 		try {
 			// http地址
 			// String httpUrl =
@@ -136,6 +137,8 @@ public class CustomHttpClient {
 					sb.append(String.format("%s=%s", nameValuePairs[i].getName(), nameValuePairs[i].getValue()));
 				}
 			}
+			Log.d(sb.toString());
+			
 			// HttpGet连接对象
 			HttpGet httpRequest = new HttpGet(sb.toString());
 			// 取得HttpClient对象

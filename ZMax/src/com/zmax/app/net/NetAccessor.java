@@ -8,6 +8,7 @@ import android.text.TextUtils;
 
 import com.zmax.app.model.ActList;
 import com.zmax.app.model.CityLocation;
+import com.zmax.app.model.Documents;
 import com.zmax.app.model.FeeBack;
 import com.zmax.app.model.HotelList;
 import com.zmax.app.utils.Constant;
@@ -109,6 +110,24 @@ public class NetAccessor {
 			e.printStackTrace();
 		}
 		return hotelList;
+		
+	}
+	
+	public static Documents getDocuments(Context context, String type, String updated_time) {
+		Documents documents = null;
+		try {
+			String jsonString = HttpUtils.getByHttpClient(context, Constant.ZMAX_URL + "documents/" + type, new BasicNameValuePair(
+					"updated_time", updated_time));
+			Log.d("  responeString -->\n" + jsonString);
+			if (!TextUtils.isEmpty(jsonString)) {
+				documents = JsonMapperUtils.toObject(jsonString, Documents.class);
+			}
+		}
+		catch (Exception e) {
+			Log.e("   Exception :" + e.toString());
+			e.printStackTrace();
+		}
+		return documents;
 		
 	}
 	

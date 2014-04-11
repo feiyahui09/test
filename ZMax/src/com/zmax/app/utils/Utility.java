@@ -4,9 +4,15 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Random;
 
+import org.codehaus.jackson.map.ser.ToStringSerializer;
+
+import com.zmax.app.ZMaxApplication;
+import com.zmax.app.task.GetActListTask;
+
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.widget.Toast;
 
 public class Utility {
 	
@@ -25,5 +31,19 @@ public class Utility {
 		Random random = new Random(System.currentTimeMillis());
 		return random.nextInt(range);
 	}
+	
+//	public static void toastResult(int status) {
+//		String toastStr = "";
+//		switch (status) {
+//			case 304:
+//				toastStr="";
+//				break;
+//			
+//			default:
+//				break;
+//				
+//				Toast.makeText(ZMaxApplication.getInstance(), toastStr, 333).show();
+//		}
+//	}
 	
 }

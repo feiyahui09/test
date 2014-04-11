@@ -74,6 +74,7 @@
         <activity android:name="com.zmax.app.ui.ChatRoomActivity" />
         <activity android:name="com.zmax.app.map.RoutePlanDemo" />
         <activity android:name="com.zmax.app.ui.FeedBackActivity" />
+        <activity android:name="com.zmax.app.ui.DocumentsActivity" />
 
         <service android:name="com.zmax.app.manage.SendFeedbackService" >
         </service>

@@ -65,7 +65,7 @@ public class MainActivity extends BaseSlidingFragmentActivity implements PlayZma
 	protected void onPause() {
 		// TODO Auto-generated method stub
 		super.onPause();
-		locationTask.cancel(true);
+		if (locationTask != null) locationTask.cancel(true);
 	}
 	
 	@Override

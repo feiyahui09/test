@@ -38,6 +38,20 @@ public class Constant {
 	
 	public static String CUR_CITY = "武汉";
 	
+	public static class Documents {
+		
+		public static final String DOCUMENTS_TYPE_KEY = "documents_type_key";
+		public static final int PROTOCAL_TYPE = 1;
+		public static final int GUIDE_TYPE = 2;
+		public static final int RIGHT_TYPE = 3;
+		
+		public static final String PROTOCAL_SPF_KEY = "protocal_spf_key";
+		public static final String GUIDE_SPF_KEY = "guide_spf_key";
+		public static final String RIGHT_SPF_KEY = "right_spf_key";
+
+		
+	}
+	
 	public static class SPFKEY {
 		
 		public static final String CITY_LOCATION_KEY = "city_location_key";

@@ -1,11 +1,12 @@
 package com.zmax.app.net;
 
+import com.zmax.app.utils.Log;
+
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.telephony.TelephonyManager;
-import android.util.Log;
 
 public class NetWorkHelper {
 	
@@ -20,36 +21,41 @@ public class NetWorkHelper {
 		ConnectivityManager connectivity = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
 		
 		if (connectivity == null) {
-			Log.w(LOG_TAG, "couldn't get connectivity manager");
+			Log.w("couldn't get connectivity manager");
 		}
 		else {
 			NetworkInfo[] info = connectivity.getAllNetworkInfo();
 			if (info != null) {
 				for (int i = 0; i < info.length; i++) {
 					if (info[i].isAvailable()) {
-						Log.d(LOG_TAG, "network is available");
+						Log.d("network is available");
 						return true;
 					}
 				}
 			}
 		}
-		Log.d(LOG_TAG, "network is not available");
+		Log.d("network is not available");
 		return false;
 	}
 	
 	public static boolean checkNetState(Context context) {
 		boolean netstate = false;
-		ConnectivityManager connectivity = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-		if (connectivity != null) {
-			NetworkInfo[] info = connectivity.getAllNetworkInfo();
-			if (info != null) {
-				for (int i = 0; i < info.length; i++) {
-					if (info[i].getState() == NetworkInfo.State.CONNECTED) {
-						netstate = true;
-						break;
+		try {
+			ConnectivityManager connectivity = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+			if (connectivity != null) {
+				NetworkInfo[] info = connectivity.getAllNetworkInfo();
+				if (info != null) {
+					for (int i = 0; i < info.length; i++) {
+						if (info[i].getState() == NetworkInfo.State.CONNECTED) {
+							netstate = true;
+							break;
+						}
 					}
 				}
 			}
+		}
+		catch (Exception e) {
+			Log.e(e.toString());
 		}
 		return netstate;
 	}
@@ -60,22 +66,22 @@ public class NetWorkHelper {
 	public static boolean isNetworkRoaming(Context context) {
 		ConnectivityManager connectivity = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
 		if (connectivity == null) {
-			Log.w(LOG_TAG, "couldn't get connectivity manager");
+			Log.w("couldn't get connectivity manager");
 		}
 		else {
 			NetworkInfo info = connectivity.getActiveNetworkInfo();
 			if (info != null && info.getType() == ConnectivityManager.TYPE_MOBILE) {
 				TelephonyManager tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
 				if (tm != null && tm.isNetworkRoaming()) {
-					Log.d(LOG_TAG, "network is roaming");
+					Log.d("network is roaming");
 					return true;
 				}
 				else {
-					Log.d(LOG_TAG, "network is not roaming");
+					Log.d("network is not roaming");
 				}
 			}
 			else {
-				Log.d(LOG_TAG, "not using mobile network");
+				Log.d("not using mobile network");
 			}
 		}
 		return false;
