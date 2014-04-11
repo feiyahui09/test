@@ -8,17 +8,18 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:scaleType="fitXY"
-        android:src="@drawable/act_detail_icon_test" >
+        android:src="@drawable/default_loading_img" >
     </ImageView>
 
     <RelativeLayout
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="44dp"
         android:layout_alignParentBottom="true"
         android:layout_marginLeft="50dp"
         android:background="@drawable/act_list_item_bottom_bg_odd" >
 
         <TextView
+            android:id="@+id/tv_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -31,6 +32,7 @@
             android:textSize="14sp" />
 
         <TextView
+            android:id="@+id/tv_city"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
@@ -42,28 +44,27 @@
             android:textSize="12sp" />
     </RelativeLayout>
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <RelativeLayout
+        android:layout_width="101dp"
+        android:layout_height="103dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:background="@drawable/act_list_item_bottom_icon"
         android:focusable="false"
         android:gravity="center"
         android:textColor="#ffffff"
-        android:textSize="12sp" />
+        android:textSize="12sp" >
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_marginBottom="34dp"
-        android:layout_marginLeft="33dp"
-        android:focusable="false"
-        android:gravity="center"
-        android:text="5月1日"
-        android:textColor="#ffffff"
-        android:textSize="12sp" />
+        <TextView
+            android:id="@+id/tv_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="25dp"
+            android:gravity="center"
+            android:text="5月1日"
+            android:textColor="#ffffff"
+            android:textSize="12sp" />
+    </RelativeLayout>
 
 </RelativeLayout>

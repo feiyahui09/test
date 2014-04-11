@@ -4,8 +4,12 @@ import java.io.Serializable;
 
 public class Act implements Serializable {
 	
-	private static final long serialVersionUID = 3553301183679396542L;
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	public String dt; // 数据类型名
 	
 	public int id;

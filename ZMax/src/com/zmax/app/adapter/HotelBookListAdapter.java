@@ -30,6 +30,11 @@ public class HotelBookListAdapter extends PagerAdapter {
 		notifyDataSetChanged();
 	}
 	
+	public void addViews(View view) {
+		this.mListViews.add(view);
+		notifyDataSetChanged();
+	}
+	
 	private void init() {
 		LayoutInflater inflater = ((Activity) mContext).getLayoutInflater();
 		for (int i = 0; i < mDetails.size(); i++) {

@@ -1,5 +1,7 @@
 package com.zmax.app.ui.fragment;
 
+import java.util.List;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -11,9 +13,12 @@ import android.widget.AdapterView.OnItemClickListener;
 
 import com.zmax.app.R;
 import com.zmax.app.adapter.ActListAdapter;
+import com.zmax.app.model.Act;
+import com.zmax.app.model.ActList;
+import com.zmax.app.task.GetActListTask;
 import com.zmax.app.ui.ActDetailFlashActivity;
-import com.zmax.app.ui.MainActivity;
-import com.zmax.app.utils.Constant;
+import com.zmax.app.utils.DateTimeUtils;
+import com.zmax.app.utils.Log;
 import com.zmax.app.widget.XListView;
 import com.zmax.app.widget.XListView.IXListViewListener;
 
@@ -24,6 +29,8 @@ public class ActListFragment extends Fragment implements IXListViewListener, OnI
 	private int mColorRes = -1;
 	
 	private ActListAdapter adapter;
+	private GetActListTask getActListTask;
+	private int curPage = 1;
 	
 	public ActListFragment() {
 		this(R.color.white);
@@ -42,24 +49,34 @@ public class ActListFragment extends Fragment implements IXListViewListener, OnI
 		view = inflater.inflate(R.layout.act_list, null);
 		listview = (XListView) view.findViewById(R.id.list_view);
 		listview.setPullLoadEnable(true);
-		listview.setPullRefreshEnable(false);
+		listview.setPullRefreshEnable(true);
 		
 		adapter = new ActListAdapter(getActivity());
-		adapter.appendToList(Constant.getFalseData(false));
+		// adapter.appendToList(Constant.getFalseData(false));
 		listview.setAdapter(adapter);
 		listview.setOnItemClickListener(this);
-		
+		listview.setXListViewListener(this);
+		curPage = 1;
 		return view;
 	}
 	
-	private void toggleMenu() {
-		if (getActivity() == null) return;
-		
-		if (getActivity() instanceof MainActivity) {
-			MainActivity fca = (MainActivity) getActivity();
-			fca.toggle();
-		}
-		
+	@Override
+	public void onViewCreated(View view, Bundle savedInstanceState) {
+		// TODO Auto-generated method stub
+		super.onViewCreated(view, savedInstanceState);
+	
+	}
+	@Override
+	public void onActivityCreated(Bundle savedInstanceState) {
+		// TODO Auto-generated method stub
+		super.onActivityCreated(savedInstanceState);
+		onRefresh();
+	}
+	
+	@Override
+	public void setUserVisibleHint(boolean isVisibleToUser) {
+		// TODO Auto-generated method stub
+		super.setUserVisibleHint(isVisibleToUser);
 	}
 	
 	@Override
@@ -70,19 +87,42 @@ public class ActListFragment extends Fragment implements IXListViewListener, OnI
 	
 	@Override
 	public void onRefresh() {
-		
+		curPage = 1;
+		getActList(curPage);
+		onLoad();
 	}
 	
 	@Override
 	public void onLoadMore() {
-		adapter.appendToList(Constant.getFalseData(false));
-		onLoad();
+		getActList(curPage);
+		
 	}
 	
 	protected void onLoad() {
 		listview.stopRefresh();
 		listview.stopLoadMore();
-		listview.setRefreshTime("刚刚");
+		listview.setRefreshTime(DateTimeUtils.formatTime(System.currentTimeMillis()));
+	}
+	
+	private void getActList(int page) {
+		
+		getActListTask = new GetActListTask(getActivity(), new GetActListTask.TaskCallBack() {
+			
+			@Override
+			public void onCallBack(ActList result) {
+				if (getActivity() == null) return;
+				if (result != null && result.status == 200) {
+					List<Act> actList = result.events;
+					if (actList != null && !actList.isEmpty()) {
+						if (curPage == 1) adapter.Clear();
+						adapter.appendToList(actList);
+						curPage++;
+					}
+				}
+				onLoad();
+			}
+		});
+		getActListTask.execute("wuhan", String.valueOf(page), "2");
 	}
 	
 	@Override

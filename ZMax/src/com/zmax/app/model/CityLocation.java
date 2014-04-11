@@ -10,7 +10,7 @@ public class CityLocation implements Serializable {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 7242610724172086121L;
+	private static final long serialVersionUID = 1L;
 	
 	@DatabaseField
 	public String province;

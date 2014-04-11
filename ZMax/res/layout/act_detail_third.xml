@@ -7,7 +7,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white"
+     
         android:orientation="vertical" >
 
         <LinearLayout
@@ -31,7 +31,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
                     android:scaleType="fitXY"
-                    android:src="@drawable/act_detail_icon_test" />
+                    android:src="@drawable/default_loading_img" />
 
                 <ImageView
                     android:layout_width="wrap_content"

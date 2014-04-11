@@ -30,7 +30,7 @@ public class GetCityLocationTask extends AsyncTask<String, Void, CityLocation> {
 	protected CityLocation doInBackground(String... params) {
 		
 		CityLocation cityLocation = NetAccessor.getCityLoacationByIp(context, params[0]);
-		 
+		
 		if (cityLocation != null) DBAccessor.saveObject(cityLocation);
 		return cityLocation;
 	}
