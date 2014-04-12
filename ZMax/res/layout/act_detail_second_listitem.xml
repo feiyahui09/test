@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="300dp" >
+
+        <ImageView
+            android:id="@+id/iv_img"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:scaleType="centerCrop"
+            android:src="@drawable/default_loading_img" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:src="@drawable/act_detial_photo_lt" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/act_detial_photo_rb" />
+    </RelativeLayout>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/act_detial_photo_bottom" />
+
+    <TextView
+        android:id="@+id/tv_des_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="冲动是扑街冲动是扑街冲动是扑街冲动是扑街冲动是扑街冲动是扑街冲动是扑街冲动是扑街冲动是扑街冲动是扑街冲动是扑街冲动是扑街冲动是扑街冲动是扑街冲动是扑街冲动是扑街冲动是扑街冲动是扑街冲动是扑街冲动是扑街冲动是扑街冲动是扑街冲动是扑街"
+        android:textColor="#595959"
+        android:textSize="12sp" />
+
+</LinearLayout>

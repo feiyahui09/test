@@ -8,4 +8,5 @@ public class ActDetail implements Serializable {
 	
 	public int status;
 	public String message;
+	public ActDetailContent event;
 }

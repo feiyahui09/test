@@ -9,61 +9,47 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 
 import com.zmax.app.R;
+import com.zmax.app.adapter.ActDescptionListAdapter;
 import com.zmax.app.adapter.ActListAdapter;
+import com.zmax.app.model.ActDetailContent;
 import com.zmax.app.ui.MainActivity;
+import com.zmax.app.ui.ActDetailActivity.RefreshDataCallBack;
 import com.zmax.app.utils.Constant;
 import com.zmax.app.widget.XListView;
 import com.zmax.app.widget.XListView.IXListViewListener;
 
-public class ActDetailSecondFragment extends Fragment implements IXListViewListener, OnItemClickListener {
+public class ActDetailSecondFragment extends Fragment implements IXListViewListener, OnItemClickListener, RefreshDataCallBack {
 	
 	protected XListView listview;
 	protected View view;
-	private int mColorRes = -1;
 	
-	private ActListAdapter adapter;
+	private ActDescptionListAdapter adapter;
 	
 	public ActDetailSecondFragment() {
 		this(R.color.white);
 	}
 	
 	public ActDetailSecondFragment(int colorRes) {
-		mColorRes = colorRes;
 		setRetainInstance(true);
 	}
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		if (savedInstanceState != null) mColorRes = savedInstanceState.getInt("mColorRes");
-		//
-		// view = inflater.inflate(R.layout.act_list, null);
-		// listview = (XListView) view.findViewById(R.id.list_view);
-		// listview.setPullLoadEnable(true);
-		// listview.setPullRefreshEnable(false);
-		//
-		// adapter = new ActListAdapter(getActivity());
-		// adapter.appendToList(Constant.getFalseData(false));
-		// listview.setAdapter(adapter);
-		// listview.setOnItemClickListener(this);
 		view = inflater.inflate(R.layout.act_detail_second, null);
+		listview = (XListView) view.findViewById(R.id.list_view);
+		listview.setPullLoadEnable(false);
+		listview.setPullRefreshEnable(false);
+		
+		adapter = new ActDescptionListAdapter(getActivity());
+		
+		listview.setOnItemClickListener(this);
 		
 		return view;
-	}
-	
-	private void toggleMenu() {
-		if (getActivity() == null) return;
-		
-		if (getActivity() instanceof MainActivity) {
-			MainActivity fca = (MainActivity) getActivity();
-			fca.toggle();
-		}
-		
 	}
 	
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
-		outState.putInt("mColorRes", mColorRes);
 	}
 	
 	@Override
@@ -73,7 +59,7 @@ public class ActDetailSecondFragment extends Fragment implements IXListViewListe
 	
 	@Override
 	public void onLoadMore() {
-		adapter.appendToList(Constant.getFalseData(false));
+		// adapter.appendToList(Constant.getFalseData(false));
 		onLoad();
 	}
 	
@@ -86,6 +72,13 @@ public class ActDetailSecondFragment extends Fragment implements IXListViewListe
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 		
+	}
+	
+	@Override
+	public void onDataRefresh(ActDetailContent detailContent) {
+		if (detailContent == null) return;
+		adapter.appendToList(detailContent.description_items);
+		listview.setAdapter(adapter);
 	}
 	
 }

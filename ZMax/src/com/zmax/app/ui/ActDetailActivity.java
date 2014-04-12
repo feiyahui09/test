@@ -1,6 +1,7 @@
 package com.zmax.app.ui;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
@@ -11,6 +12,7 @@ import android.widget.Button;
 import com.zmax.app.R;
 import com.zmax.app.adapter.ActDetailAdapter;
 import com.zmax.app.model.ActDetail;
+import com.zmax.app.model.ActDetailContent;
 import com.zmax.app.task.GetActDetailTask;
 import com.zmax.app.ui.base.BaseFragmentActivity;
 import com.zmax.app.ui.fragment.ActDetailFirstFragment;
@@ -25,7 +27,7 @@ public class ActDetailActivity extends BaseFragmentActivity {
 	
 	private ViewPager pager;
 	private ActDetailAdapter adapter;
-	private ActDetail actDetail;
+	private ActDetailContent detailContent;
 	private GetActDetailTask getActDetailTask;
 	private String city, date;
 	
@@ -33,7 +35,7 @@ public class ActDetailActivity extends BaseFragmentActivity {
 	
 	public interface RefreshDataCallBack {
 		
-		public void onRefresh(ActDetail detail);
+		public void onDataRefresh(ActDetailContent detailContent);
 		
 	}
 	
@@ -53,6 +55,11 @@ public class ActDetailActivity extends BaseFragmentActivity {
 		pager = (ViewPager) findViewById(R.id.pager);
 		adapter = new ActDetailAdapter(this);
 		pager.setAdapter(adapter);
+		
+		adapter.addTab(new ActDetailFirstFragment(city, date));
+		adapter.addTab(new ActDetailSecondFragment());
+		adapter.addTab(new ActDetailThirdFragment());
+		
 		pager.setOnPageChangeListener(new OnPageChangeListener() {
 			
 			@Override
@@ -61,7 +68,8 @@ public class ActDetailActivity extends BaseFragmentActivity {
 				curPosition = position;
 				Fragment fragment = adapter.getItem(position);
 				if (fragment instanceof RefreshDataCallBack) {
-					((RefreshDataCallBack) fragment).onRefresh(actDetail);
+					((RefreshDataCallBack) fragment).onDataRefresh(detailContent);
+					
 				}
 			}
 			
@@ -78,16 +86,22 @@ public class ActDetailActivity extends BaseFragmentActivity {
 			}
 		});
 		
-		adapter.addTab(new ActDetailFirstFragment(city, date));
-		adapter.addTab(new ActDetailSecondFragment());
-		adapter.addTab(new ActDetailThirdFragment());
-		
 		getActDetailTask = new GetActDetailTask(this, new GetActDetailTask.TaskCallBack() {
 			
 			@Override
 			public void onCallBack(ActDetail result) {
-				if (result != null && result.status == 200) {
-					initData(result);
+				if (result != null && result.status == 200 && result.event != null) {
+					detailContent = result.event;
+					Handler handler = new Handler();
+					// 延迟刷新界面，确保fragment刷新在activitycreated后
+					handler.postDelayed(new Runnable() {
+						
+						@Override
+						public void run() {
+							// initData(detailContent);
+						}
+					}, 2000);
+					
 				}
 				
 			}
@@ -97,8 +111,15 @@ public class ActDetailActivity extends BaseFragmentActivity {
 		if (actid > 0) getActDetailTask.execute(String.valueOf(actid));
 	}
 	
-	private void initData(ActDetail result) {
+	private void initData(ActDetailContent result) {
 		// pager.setCurrentItem(curPosition);
+		
+		for (int i = 0; i < adapter.getCount(); i++) {
+			Fragment fragment = adapter.getItem(i);
+			if (fragment instanceof RefreshDataCallBack) {
+				((RefreshDataCallBack) fragment).onDataRefresh(detailContent);
+			}
+		}
 	}
 	
 	private void initHeader() {

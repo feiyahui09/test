@@ -11,7 +11,7 @@ import com.zmax.app.R;
 import com.zmax.app.model.ActDetail;
 import com.zmax.app.ui.ActDetailActivity.RefreshDataCallBack;
 
-public class ActDetailFirstFragment extends Fragment implements RefreshDataCallBack {
+public class ActDetailFirstFragment extends Fragment {
 	
 	private TextView tv_city, tv_date;
 	private String city, date;
@@ -35,12 +35,6 @@ public class ActDetailFirstFragment extends Fragment implements RefreshDataCallB
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
-	}
-	
-	@Override
-	public void onRefresh(ActDetail detail) {
-		// TODO Auto-generated method stub
-		
 	}
 	
 }

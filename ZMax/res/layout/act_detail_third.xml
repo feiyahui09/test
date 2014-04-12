@@ -21,7 +21,7 @@
             android:layout_height="@dimen/act_detail_third_img_height" >
 
             <ImageView
-                android:id="@+id/iv_act_detail_index_img"
+                android:id="@+id/iv_img"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:scaleType="fitXY"
@@ -72,22 +72,20 @@
                 android:orientation="vertical" >
 
                 <TextView
-                    android:id="@+id/tv_act_detail_third_start_day"
+                    android:id="@+id/tv_start_day"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:gravity="center"
-                    android:text="05 - 01"
                     android:textColor="#3686B2"
                     android:textSize="32sp" />
 
                 <TextView
-                    android:id="@+id/tv_act_detail_third_start_year"
+                    android:id="@+id/tv_start_year"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:gravity="center"
-                    android:text="2014"
                     android:textColor="#3686B2"
                     android:textSize="18sp" />
             </LinearLayout>
@@ -99,22 +97,20 @@
                 android:orientation="vertical" >
 
                 <TextView
-                    android:id="@+id/tv_act_detail_third_end_day"
+                    android:id="@+id/tv_end_day"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:gravity="center"
-                    android:text="05 - 24"
                     android:textColor="#3686B2"
                     android:textSize="32sp" />
 
                 <TextView
-                    android:id="@+id/tv_act_detail_third_end_year"
+                    android:id="@+id/tv_end_year"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:gravity="center"
-                    android:text="2014"
                     android:textColor="#3686B2"
                     android:textSize="18sp" />
             </LinearLayout>
@@ -137,6 +133,7 @@
                 android:textSize="12sp" />
 
             <TextView
+                android:id="@+id/tv_begin_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
@@ -164,8 +161,10 @@
             android:id="@+id/list_view"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
             android:cacheColorHint="#0000"
-            android:divider="@drawable/act_detial_third_divider" >
+            android:divider="@drawable/act_detial_third_divider"
+            android:listSelector="@android:color/transparent" >
         </ListView>
 
         <Button
