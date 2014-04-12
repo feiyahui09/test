@@ -5,34 +5,42 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.zmax.app.R;
+import com.zmax.app.model.ActDetail;
+import com.zmax.app.ui.ActDetailActivity.RefreshDataCallBack;
 
-public class ActDetailFirstFragment extends Fragment {
+public class ActDetailFirstFragment extends Fragment implements RefreshDataCallBack {
 	
-	private int mColorRes = -1;
+	private TextView tv_city, tv_date;
+	private String city, date;
 	
-	public ActDetailFirstFragment() {
-		this(R.color.white);
-	}
-	
-	public ActDetailFirstFragment(int colorRes) {
-		mColorRes = colorRes;
+	public ActDetailFirstFragment(String city, String date) {
+		this.city = city;
+		this.date = date;
 		setRetainInstance(true);
 	}
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		if (savedInstanceState != null) mColorRes = savedInstanceState.getInt("mColorRes");
-		int color = getResources().getColor(mColorRes);
 		View v = inflater.inflate(R.layout.act_detail_first, null);
+		tv_city = (TextView) v.findViewById(R.id.tv_city);
+		tv_date = (TextView) v.findViewById(R.id.tv_date);
+		tv_city.setText(city);
+		tv_date.setText(date);
 		return v;
 	}
 	
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
-		outState.putInt("mColorRes", mColorRes);
+	}
+	
+	@Override
+	public void onRefresh(ActDetail detail) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }

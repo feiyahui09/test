@@ -3,14 +3,14 @@ package com.zmax.app.task;
 import android.content.Context;
 import android.os.AsyncTask;
 
-import com.zmax.app.model.HotelList;
+import com.zmax.app.model.ActDetail;
 import com.zmax.app.net.NetAccessor;
 
-public class GetHotelUpcomingListTask extends AsyncTask<String, Void, HotelList> {
+public class GetActDetailTask extends AsyncTask<String, Void, ActDetail> {
 	private Context context;
 	private TaskCallBack callBack;
 	
-	public GetHotelUpcomingListTask(Context context, TaskCallBack callBack) {
+	public GetActDetailTask(Context context, TaskCallBack callBack) {
 		super();
 		this.context = context;
 		this.callBack = callBack;
@@ -23,21 +23,21 @@ public class GetHotelUpcomingListTask extends AsyncTask<String, Void, HotelList>
 	}
 	
 	@Override
-	protected HotelList doInBackground(String... params) {
+	protected ActDetail doInBackground(String... params) {
 		
-		HotelList hotelList = NetAccessor.getHotelUpcomingList(context );
+		ActDetail actDetail = NetAccessor.getActDetail(context, params[0]);
 		// if (cityLocation != null) DBAccessor.saveObject(cityLocation);
-		return hotelList;
+		return actDetail;
 	}
 	
 	@Override
-	protected void onPostExecute(HotelList result) {
+	protected void onPostExecute(ActDetail result) {
 		super.onPostExecute(result);
 		callBack.onCallBack(result);
 	}
 	
 	public interface TaskCallBack {
 		
-		public void onCallBack(HotelList result);
+		public void onCallBack(ActDetail result);
 	}
 }

@@ -48,7 +48,14 @@ public class Constant {
 		public static final String PROTOCAL_SPF_KEY = "protocal_spf_key";
 		public static final String GUIDE_SPF_KEY = "guide_spf_key";
 		public static final String RIGHT_SPF_KEY = "right_spf_key";
-
+		
+	}
+	
+	public static class Acts {
+		
+		public static final String ID_KEY = "act_id_key";
+		public static final String DATE_KEY = "act_date_key";
+		public static final String CITY_KEY = "act_city_key";
 		
 	}
 	
@@ -64,10 +71,7 @@ public class Constant {
 		
 		for (int i = 0; i < 10; i++) {
 			Act activityDetail = new Act();
-			if (bo)
-				activityDetail.dt = "2";
-			else
-				activityDetail.dt = "12";
+			
 			mList.add(activityDetail);
 			
 		}
@@ -81,10 +85,7 @@ public class Constant {
 		
 		for (int i = 0; i < 30; i++) {
 			Act activityDetail = new Act();
-			if (bo)
-				activityDetail.dt = "2";
-			else
-				activityDetail.dt = "12";
+			
 			mList.add(activityDetail);
 			
 		}
@@ -99,7 +100,6 @@ public class Constant {
 		for (int i = 0; i < count; i++) {
 			Act activityDetail = new Act();
 			
-			activityDetail.dt = "12";
 			mList.add(activityDetail);
 			
 		}

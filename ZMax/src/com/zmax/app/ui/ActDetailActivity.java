@@ -1,26 +1,22 @@
 package com.zmax.app.ui;
 
-import java.io.File;
-import java.io.FileOutputStream;
-
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 
 import com.zmax.app.R;
 import com.zmax.app.adapter.ActDetailAdapter;
+import com.zmax.app.model.ActDetail;
+import com.zmax.app.task.GetActDetailTask;
 import com.zmax.app.ui.base.BaseFragmentActivity;
 import com.zmax.app.ui.fragment.ActDetailFirstFragment;
 import com.zmax.app.ui.fragment.ActDetailSecondFragment;
 import com.zmax.app.ui.fragment.ActDetailThirdFragment;
-import com.zmax.app.utils.FileUtils;
+import com.zmax.app.utils.Constant;
 import com.zmax.app.utils.ShareUtils;
 
 public class ActDetailActivity extends BaseFragmentActivity {
@@ -29,30 +25,80 @@ public class ActDetailActivity extends BaseFragmentActivity {
 	
 	private ViewPager pager;
 	private ActDetailAdapter adapter;
+	private ActDetail actDetail;
+	private GetActDetailTask getActDetailTask;
+	private String city, date;
+	
+	private int curPosition = 0;
+	
+	public interface RefreshDataCallBack {
+		
+		public void onRefresh(ActDetail detail);
+		
+	}
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.act_detail);
-		initHeader();
 		init();
-		initData();
+		initHeader();
 	}
 	
 	private void init() {
-		pager = (ViewPager) findViewById(R.id.pager);
+		city = getIntent().getStringExtra(Constant.Acts.CITY_KEY);
+		date = getIntent().getStringExtra(Constant.Acts.DATE_KEY);
 		
+		pager = (ViewPager) findViewById(R.id.pager);
 		adapter = new ActDetailAdapter(this);
 		pager.setAdapter(adapter);
+		pager.setOnPageChangeListener(new OnPageChangeListener() {
+			
+			@Override
+			public void onPageSelected(int position) {
+				
+				curPosition = position;
+				Fragment fragment = adapter.getItem(position);
+				if (fragment instanceof RefreshDataCallBack) {
+					((RefreshDataCallBack) fragment).onRefresh(actDetail);
+				}
+			}
+			
+			@Override
+			public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void onPageScrollStateChanged(int state) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
 		
+		adapter.addTab(new ActDetailFirstFragment(city, date));
+		adapter.addTab(new ActDetailSecondFragment());
+		adapter.addTab(new ActDetailThirdFragment());
+		
+		getActDetailTask = new GetActDetailTask(this, new GetActDetailTask.TaskCallBack() {
+			
+			@Override
+			public void onCallBack(ActDetail result) {
+				if (result != null && result.status == 200) {
+					initData(result);
+				}
+				
+			}
+		});
+		
+		int actid = getIntent().getIntExtra(Constant.Acts.ID_KEY, -1);
+		if (actid > 0) getActDetailTask.execute(String.valueOf(actid));
 	}
 	
-	private void initData() {
-		
-		adapter.addTab(new ActDetailFirstFragment(R.color.red));
-		adapter.addTab(new ActDetailSecondFragment());
-		adapter.addTab(new ActDetailThirdFragment(R.color.white));
+	private void initData(ActDetail result) {
+		// pager.setCurrentItem(curPosition);
 	}
 	
 	private void initHeader() {
@@ -73,35 +119,6 @@ public class ActDetailActivity extends BaseFragmentActivity {
 			}
 		});
 		
-	}
-	
-	private void share() {
-		
-		Intent sendIntent = new Intent(Intent.ACTION_SEND);
-		sendIntent.setType("text/plain");
-		if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())) {
-			try {
-				
-				sendIntent.setType("image/jpeg");
-				File tempFile = new File(FileUtils.getSDRoot(), "share.jpeg");
-				if (!tempFile.exists()) {
-					tempFile.createNewFile();
-					FileOutputStream fOut = new FileOutputStream(tempFile);
-					Bitmap bm = BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher);
-					bm.compress(Bitmap.CompressFormat.JPEG, 100, fOut);
-					fOut.flush();
-					fOut.close();
-				}
-				sendIntent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(tempFile));
-			}
-			catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-		sendIntent.putExtra(Intent.EXTRA_SUBJECT, "分享应用");
-		sendIntent.putExtra(Intent.EXTRA_TEXT, "一款不错的微博和人人网同步更新工具，http://fancy.189.cn/portal/app/download/71559");
-		sendIntent.putExtra("sms_body", "一款不错的微博和人人网同步更新工具，http://fancy.189.cn/portal/app/download/71559");
-		startActivity(Intent.createChooser(sendIntent, "分享应用"));
 	}
 	
 }

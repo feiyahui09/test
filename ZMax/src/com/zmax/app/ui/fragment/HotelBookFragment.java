@@ -26,7 +26,7 @@ import com.zmax.app.adapter.HotelBookListAdapter;
 import com.zmax.app.model.Hotel;
 import com.zmax.app.model.HotelList;
 import com.zmax.app.task.GetHotelListTask;
-import com.zmax.app.task.GetHotelUpcomingListTask;
+import com.zmax.app.task.GetActDetailTask;
 import com.zmax.app.ui.HotelDetailActivity;
 import com.zmax.app.ui.MainActivity;
 import com.zmax.app.ui.base.BaseSlidingFragmentActivity.HotelBookVisivleCallback;
@@ -47,7 +47,6 @@ public class HotelBookFragment extends Fragment implements OnPageChangeListener,
 	private LinearLayout indicator;
 	
 	private GetHotelListTask getHotelListTask;
-	private GetHotelUpcomingListTask getHotelUpcomingListTask;
 	
 	public HotelBookFragment() {
 		this(R.color.white);

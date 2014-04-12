@@ -6,6 +6,7 @@ import org.json.JSONObject;
 import android.content.Context;
 import android.text.TextUtils;
 
+import com.zmax.app.model.ActDetail;
 import com.zmax.app.model.ActList;
 import com.zmax.app.model.CityLocation;
 import com.zmax.app.model.Documents;
@@ -110,6 +111,23 @@ public class NetAccessor {
 			e.printStackTrace();
 		}
 		return hotelList;
+		
+	}
+	
+	public static ActDetail getActDetail(Context context, String id) {
+		ActDetail actDetail = null;
+		try {
+			String jsonString = HttpUtils.getByHttpClient(context, Constant.ZMAX_URL + "events/" + id);
+			Log.d("  responeString -->\n" + jsonString);
+			if (!TextUtils.isEmpty(jsonString)) {
+				actDetail = JsonMapperUtils.toObject(jsonString, ActDetail.class);
+			}
+		}
+		catch (Exception e) {
+			Log.e("   Exception :" + e.toString());
+			e.printStackTrace();
+		}
+		return actDetail;
 		
 	}
 	

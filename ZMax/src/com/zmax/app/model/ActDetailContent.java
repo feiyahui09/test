@@ -1,20 +1,15 @@
 package com.zmax.app.model;
 
 import java.io.Serializable;
+import java.util.List;
 
-public class Act implements Serializable {
+public class ActDetailContent implements Serializable {
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	
-	public String duration; // extra added
-	
-	public int id;
 	public String name;
 	public String start_date;
 	public String end_date;
-	public String poster;
-	public String cities;
+	public String event_begin;
+	public List<ActDetailDescription> description_items;
 }

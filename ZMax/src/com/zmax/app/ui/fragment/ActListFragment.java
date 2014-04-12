@@ -16,11 +16,9 @@ import com.zmax.app.adapter.ActListAdapter;
 import com.zmax.app.model.Act;
 import com.zmax.app.model.ActList;
 import com.zmax.app.task.GetActListTask;
-import com.zmax.app.ui.ActDetailFlashActivity;
+import com.zmax.app.ui.ActDetailActivity;
 import com.zmax.app.utils.Constant;
 import com.zmax.app.utils.DateTimeUtils;
-import com.zmax.app.utils.DefaultShared;
-import com.zmax.app.utils.Log;
 import com.zmax.app.widget.XListView;
 import com.zmax.app.widget.XListView.IXListViewListener;
 
@@ -124,8 +122,14 @@ public class ActListFragment extends Fragment implements IXListViewListener, OnI
 	
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+		Act act = (Act) adapter.getItem(position-1);
+		
 		Intent intent = new Intent();
-		intent.setClass(getActivity(), ActDetailFlashActivity.class);
+		intent.setClass(getActivity(), ActDetailActivity.class);
+		intent.putExtra(Constant.Acts.ID_KEY, 1);
+		intent.putExtra(Constant.Acts.CITY_KEY, act.cities);
+		intent.putExtra(Constant.Acts.DATE_KEY, act.duration);
+		
 		getActivity().startActivity(intent);
 		
 	}

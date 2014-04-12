@@ -24,6 +24,7 @@ public class ActDetailThirdFragment extends Fragment {
 	
 	public ActDetailThirdFragment() {
 		this(R.color.white);
+
 	}
 	
 	public ActDetailThirdFragment(int colorRes) {

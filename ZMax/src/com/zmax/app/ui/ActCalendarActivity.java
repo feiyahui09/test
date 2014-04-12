@@ -58,7 +58,8 @@ public class ActCalendarActivity extends BaseActivity implements IXListViewListe
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 		Intent intent = new Intent();
-		intent.setClass(mContext, ActDetailFlashActivity.class);
+		intent.setClass(mContext, ActDetailActivity.class);
+		intent.putExtra(Constant.Acts.ID_KEY, 1);
 		mContext.startActivity(intent);
 		
 	}

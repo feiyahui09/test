@@ -110,7 +110,8 @@ public class ActListAdapter extends BaseAdapter {
 		}
 		ImageLoader.getInstance().displayImage(act.poster, holder.img_thu);
 		holder.tv_city.setText(act.cities);
-		holder.tv_date.setText(fromDateStr(act.start_date, act.end_date));
+		act.duration = fromDateStr(act.start_date, act.end_date);
+		holder.tv_date.setText(act.duration);
 		holder.tv_name.setText(act.name);
 		return convertView;
 	}
@@ -137,7 +138,8 @@ public class ActListAdapter extends BaseAdapter {
 		}
 		ImageLoader.getInstance().displayImage(act.poster, holder.img_thu);
 		holder.tv_city.setText(act.cities);
-		holder.tv_date.setText(fromDateStr(act.start_date, act.end_date));
+		act.duration = fromDateStr(act.start_date, act.end_date);
+		holder.tv_date.setText(act.duration);
 		holder.tv_name.setText(act.name);
 		
 		return convertView;

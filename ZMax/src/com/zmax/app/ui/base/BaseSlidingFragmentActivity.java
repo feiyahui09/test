@@ -143,14 +143,14 @@ public class BaseSlidingFragmentActivity extends SlidingFragmentActivity {
 		else
 			findViewById(R.id.above_content_second_header).setVisibility(View.GONE);
 		
-		getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, fragment).commit();
+		getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, mContent).commit();
 		Handler h = new Handler();
 		h.postDelayed(new Runnable() {
 			public void run() {
 				getSlidingMenu().showContent();
-				if (mContent instanceof HotelBookVisivleCallback) {
-					((HotelBookVisivleCallback) mContent).onCallBack();
-				}
+				// if (mContent instanceof HotelBookVisivleCallback) {
+				// ((HotelBookVisivleCallback) mContent).onCallBack();
+				// }
 			}
 		}, 50);
 		
