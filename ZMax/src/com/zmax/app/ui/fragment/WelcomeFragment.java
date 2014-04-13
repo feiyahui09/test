@@ -40,13 +40,4 @@ public class WelcomeFragment extends Fragment {
 		return view;
 	}
 	
-	private void switchFragment(Fragment fragment) {
-		
-		if (getActivity() == null) return;
-		if (getActivity() instanceof MainActivity) {
-			MainActivity fca = (MainActivity) getActivity();
-			fca.switchContent(fragment);
-		}
-	}
-	
 }

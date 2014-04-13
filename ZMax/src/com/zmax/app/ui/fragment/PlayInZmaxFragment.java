@@ -13,32 +13,23 @@ import android.widget.TextView;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 
 import com.zmax.app.R;
+import com.zmax.app.ui.MainActivity;
 import com.zmax.app.ui.RoomControlActivity;
 
 public class PlayInZmaxFragment extends Fragment implements OnClickListener {
 	
-	public interface PlayZmaxLogoutCallback {
-		
-		public void onLogoutViewCreate();
-		
-		public void onLogoutViewDestroy();
-	}
-	
 	private View view;
-	private PlayZmaxLogoutCallback callback;
 	private SeekBar seekbar;
 	private Button btn_act, btn_chat, btn_room;
 	private TextView tv_start_day, tv_start_week_day, tv_start_month, tv_end_day, tv_end_week_day, tv_end_month;
 	
-	public PlayInZmaxFragment(PlayZmaxLogoutCallback callback) {
-		this.callback = callback;
+	public PlayInZmaxFragment() {
 		setRetainInstance(true);
 	}
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		view = inflater.inflate(R.layout.playzmax, null);
-		if (callback != null) callback.onLogoutViewCreate();
 		
 		// seekbar can't move
 		seekbar = (SeekBar) view.findViewById(R.id.sb_date);
@@ -76,13 +67,20 @@ public class PlayInZmaxFragment extends Fragment implements OnClickListener {
 		tv_end_week_day = (TextView) view.findViewById(R.id.tv_end_week_day);
 		tv_end_month = (TextView) view.findViewById(R.id.tv_end_month);
 		
-		
 		return view;
 	}
 	
 	@Override
+	public void onActivityCreated(Bundle savedInstanceState) {
+		// TODO Auto-generated method stub
+		super.onActivityCreated(savedInstanceState);
+		((MainActivity) getActivity()).showLogoutView();
+	}
+	
+	@Override
 	public void onDestroyView() {
-		if (callback != null) callback.onLogoutViewDestroy();
+		// if (callback != null) callback.onLogoutViewDestroy();
+		((MainActivity) getActivity()).hideLogoutView();
 		super.onDestroyView();
 	}
 	

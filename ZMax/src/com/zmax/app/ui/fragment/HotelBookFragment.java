@@ -6,8 +6,10 @@ import java.util.List;
 import java.util.Map;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -26,12 +28,12 @@ import com.zmax.app.adapter.HotelBookListAdapter;
 import com.zmax.app.model.Hotel;
 import com.zmax.app.model.HotelList;
 import com.zmax.app.task.GetHotelListTask;
-import com.zmax.app.task.GetActDetailTask;
 import com.zmax.app.ui.HotelDetailActivity;
 import com.zmax.app.ui.MainActivity;
 import com.zmax.app.ui.base.BaseSlidingFragmentActivity.HotelBookVisivleCallback;
 import com.zmax.app.utils.Constant;
 import com.zmax.app.utils.DateTimeUtils;
+import com.zmax.app.utils.PhoneUtil;
 import com.zmax.app.widget.VerticalViewPager;
 import com.zmax.app.widget.VerticalViewPager.OnPageChangeListener;
 
@@ -223,9 +225,14 @@ public class HotelBookFragment extends Fragment implements OnPageChangeListener,
 		ListView listView = (ListView) view.findViewById(R.id.list_view);
 		SimpleAdapter simpleAdapter = new SimpleAdapter(getActivity(), lists, R.layout.hotel_book_upcoming_list_item, new String[] {
 				"date", "name" }, new int[] { R.id.tv_date, R.id.tv_name });
+		TextView textView = new TextView(getActivity());
+		textView.setText("敬请期待\n....");
+		textView.setTextColor(Color.parseColor("#ffffff"));
+		textView.setTextSize(PhoneUtil.sp2px(getActivity(), 11));
+		textView.setGravity(Gravity.CENTER);
+		listView.addFooterView(textView);
 		listView.setAdapter(simpleAdapter);
-		return view;
 		
+		return view;
 	}
-	
 }

@@ -1,6 +1,5 @@
 package com.zmax.app.ui.fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -10,9 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.zmax.app.R;
-import com.zmax.app.ui.ChatRoomActivity;
 import com.zmax.app.ui.MainActivity;
-import com.zmax.app.ui.fragment.PlayInZmaxFragment.PlayZmaxLogoutCallback;
 
 public class PlayInZmaxLoginFragment extends Fragment {
 	
@@ -35,8 +32,9 @@ public class PlayInZmaxLoginFragment extends Fragment {
 			
 			@Override
 			public void onClick(View v) {
-				switchFragment(new PlayInZmaxFragment((PlayZmaxLogoutCallback) getActivity()));
-//				startActivity(new Intent(getActivity(), ChatRoomActivity.class));
+				// ((MainActivity) getActivity()).switchContent(new
+				// PlayInZmaxFragment((PlayZmaxLogoutCallback) getActivity()));
+				((MainActivity) getActivity()).switchContent(new PlayInZmaxFragment());
 			}
 		});
 		return view;
@@ -45,16 +43,6 @@ public class PlayInZmaxLoginFragment extends Fragment {
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
-	}
-	
-	private void switchFragment(Fragment fragment) {
-		if (getActivity() == null) return;
-		
-		if (getActivity() instanceof MainActivity) {
-			MainActivity fca = (MainActivity) getActivity();
-			fca.switchContent(fragment);
-		}
-		
 	}
 	
 }

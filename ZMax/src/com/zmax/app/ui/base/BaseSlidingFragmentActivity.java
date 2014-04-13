@@ -32,7 +32,7 @@ public class BaseSlidingFragmentActivity extends SlidingFragmentActivity {
 	
 	protected Fragment mContent;
 	protected RadioGroup rg_top_title;
-	protected Button btn_more;
+	protected Button btn_more, btn_share;
 	
 	protected HotelBookVisivleCallback visivleCallback;
 	
@@ -103,7 +103,7 @@ public class BaseSlidingFragmentActivity extends SlidingFragmentActivity {
 			public void onCheckedChanged(RadioGroup group, int checkedId) {
 				if (checkedId == R.id.btn_hotel_book)
 					switchContent(new HotelBookFragment(R.color.red));
-				else if (checkedId == R.id.btn_activities) switchContent(new ActListFragment( ));
+				else if (checkedId == R.id.btn_activities) switchContent(new ActListFragment());
 			}
 		});
 		btn_more = (Button) findViewById(R.id.btn_more);
@@ -113,6 +113,16 @@ public class BaseSlidingFragmentActivity extends SlidingFragmentActivity {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				toggle();
+			}
+		});
+		
+		btn_share = (Button) findViewById(R.id.btn_share);
+		btn_share.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				// toggle();
 			}
 		});
 		

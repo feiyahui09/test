@@ -7,19 +7,17 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Toast;
 
-import com.zmax.app.R;
 import com.zmax.app.model.CityLocation;
 import com.zmax.app.task.GetCityLocationTask;
 import com.zmax.app.ui.base.BaseSlidingFragmentActivity;
 import com.zmax.app.ui.fragment.ActListFragment;
 import com.zmax.app.ui.fragment.NetErrorFragment;
-import com.zmax.app.ui.fragment.PlayInZmaxFragment.PlayZmaxLogoutCallback;
 import com.zmax.app.ui.fragment.PlayInZmaxLoginFragment;
 import com.zmax.app.utils.Constant;
 import com.zmax.app.utils.DefaultShared;
 import com.zmax.app.utils.PhoneUtil;
 
-public class MainActivity extends BaseSlidingFragmentActivity implements PlayZmaxLogoutCallback {
+public class MainActivity extends BaseSlidingFragmentActivity {
 	private Context mContext;
 	private GetCityLocationTask locationTask;
 	
@@ -68,22 +66,20 @@ public class MainActivity extends BaseSlidingFragmentActivity implements PlayZma
 		if (locationTask != null) locationTask.cancel(true);
 	}
 	
-	@Override
-	public void onLogoutViewCreate() {
-		btn_more.setVisibility(View.VISIBLE);
-		btn_more.setOnClickListener(new OnClickListener() {
+	public void showLogoutView() {
+		btn_share.setVisibility(View.VISIBLE);
+		btn_share.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
 				switchContent(new PlayInZmaxLoginFragment());
 			}
 		});
+		
 	}
 	
-	@Override
-	public void onLogoutViewDestroy() {
-		btn_more.setVisibility(View.GONE);
-		
+	public void hideLogoutView() {
+		btn_share.setVisibility(View.GONE);
 	}
 	
 }
