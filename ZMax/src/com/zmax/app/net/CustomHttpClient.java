@@ -67,9 +67,10 @@ public class CustomHttpClient {
 			httpPost.setEntity(urlEncoded);
 			HttpClient client = getHttpClient(context);
 			HttpResponse response = client.execute(httpPost);
-			if (response.getStatusLine().getStatusCode() != HttpStatus.SC_OK) {
-				throw new RuntimeException("请求失败");
-			}
+//			if (response.getStatusLine().getStatusCode() != HttpStatus.SC_OK) {
+//				Log.e("StatusCode" + response.getStatusLine().getStatusCode());
+//				throw new RuntimeException("请求失败");
+//			}
 			HttpEntity resEntity = response.getEntity();
 			return (resEntity == null) ? null : EntityUtils.toString(resEntity, CHARSET_UTF8);
 		}

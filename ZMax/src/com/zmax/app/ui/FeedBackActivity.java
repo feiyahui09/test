@@ -1,23 +1,35 @@
 package com.zmax.app.ui;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.zmax.app.R;
 import com.zmax.app.manage.SendFeedbackService;
 import com.zmax.app.ui.base.BaseActivity;
+import com.zmax.app.utils.Constant;
 
 public class FeedBackActivity extends BaseActivity {
 	private Button btn_Back, btn_share;
 	private Context mContext;
 	private EditText tv_advise, tv_contacts;
+	private ResponseReceiver receiver = new ResponseReceiver();
+	
+	private class ResponseReceiver extends BroadcastReceiver {
+		
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			finish();
+		}
+		
+	}
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -25,6 +37,21 @@ public class FeedBackActivity extends BaseActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.feedback);
 		init();
+	}
+	
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		registerReceiver(receiver, new IntentFilter(Constant.FEEDBACK_SENDED_ACTION));
+	}
+	
+	@Override
+	protected void onPause() {
+		// TODO Auto-generated method stub
+		super.onPause();
+		unregisterReceiver(receiver);
+		
 	}
 	
 	private void init() {

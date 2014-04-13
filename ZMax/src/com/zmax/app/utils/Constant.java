@@ -38,6 +38,8 @@ public class Constant {
 	
 	public static String CUR_CITY = "武汉";
 	
+	public static final String FEEDBACK_SENDED_ACTION = "feedback_sended_action";
+	
 	public static class Documents {
 		
 		public static final String DOCUMENTS_TYPE_KEY = "documents_type_key";
