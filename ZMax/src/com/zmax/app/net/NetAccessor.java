@@ -12,6 +12,7 @@ import com.zmax.app.model.CityLocation;
 import com.zmax.app.model.Documents;
 import com.zmax.app.model.FeeBack;
 import com.zmax.app.model.HotelList;
+import com.zmax.app.model.Update;
 import com.zmax.app.utils.Constant;
 import com.zmax.app.utils.JsonMapperUtils;
 import com.zmax.app.utils.Log;
@@ -68,6 +69,24 @@ public class NetAccessor {
 			e.printStackTrace();
 		}
 		return actList;
+	}
+	
+	public static Update checkUpdateVersion(Context context, String tag) {
+		Update update = null;
+		try {
+			String jsonString = HttpUtils.getByHttpClient(context, Constant.ZMAX_URL + "versions/check", new BasicNameValuePair("tag", tag));
+			Log.d("  responeString -->\n" + jsonString);
+			if (!TextUtils.isEmpty(jsonString)) {
+				update = JsonMapperUtils.toObject(jsonString, Update.class);
+				JSONObject jsonObject = new JSONObject(jsonString);
+				if (jsonObject.has("package")) update.package_name = jsonObject.optString("package");
+			}
+		}
+		catch (Exception e) {
+			Log.e("   Exception :" + e.toString());
+			e.printStackTrace();
+		}
+		return update;
 	}
 	
 	/**
