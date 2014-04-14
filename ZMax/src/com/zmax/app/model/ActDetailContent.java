@@ -11,6 +11,7 @@ public class ActDetailContent implements Serializable {
 	public String start_date;
 	public String end_date;
 	public String event_begin;
+	public String poster;
 	public List<ActDetailDescription> description_items;
 	public List<ActDetailHotel> hotels;
 }

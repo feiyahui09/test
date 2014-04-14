@@ -132,8 +132,8 @@ public class SettingFragment extends Fragment implements OnClickListener {
 								@Override
 								public void onClick(DialogInterface dialog, int which) {
 									dialog.dismiss();
-									// goUpdate(result.package_name);
-									goUpdate("http://immomo.com/download/momo.apk");
+									goUpdate(result.package_name);
+									// goUpdate("http://immomo.com/download/momo.apk");
 									
 								}
 							}).setNegativeButton("暂不升级", new DialogInterface.OnClickListener() {

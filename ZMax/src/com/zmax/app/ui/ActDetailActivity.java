@@ -1,5 +1,8 @@
 package com.zmax.app.ui;
 
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -8,7 +11,11 @@ import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.LinearLayout;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.assist.ImageLoadingListener;
 import com.zmax.app.R;
 import com.zmax.app.adapter.ActDetailAdapter;
 import com.zmax.app.model.ActDetail;
@@ -30,6 +37,7 @@ public class ActDetailActivity extends BaseFragmentActivity {
 	private ActDetailContent detailContent;
 	private GetActDetailTask getActDetailTask;
 	private String city, date;
+	private LinearLayout ll_bg;
 	
 	private int curPosition = 0;
 	
@@ -52,6 +60,7 @@ public class ActDetailActivity extends BaseFragmentActivity {
 		city = getIntent().getStringExtra(Constant.Acts.CITY_KEY);
 		date = getIntent().getStringExtra(Constant.Acts.DATE_KEY);
 		
+		ll_bg = (LinearLayout) findViewById(R.id.ll_bg);
 		pager = (ViewPager) findViewById(R.id.pager);
 		adapter = new ActDetailAdapter(this);
 		pager.setAdapter(adapter);
@@ -102,6 +111,31 @@ public class ActDetailActivity extends BaseFragmentActivity {
 						}
 					}, 2000);
 					
+					ImageLoader.getInstance().loadImage(detailContent.poster, new ImageLoadingListener() {
+						
+						@Override
+						public void onLoadingStarted(String imageUri, View view) {
+							// TODO Auto-generated method stub
+							
+						}
+						
+						@Override
+						public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
+							// TODO Auto-generated method stub
+							
+						}
+						
+						@Override
+						public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+							ll_bg.setBackground(new BitmapDrawable(loadedImage));
+						}
+						
+						@Override
+						public void onLoadingCancelled(String imageUri, View view) {
+							// TODO Auto-generated method stub
+							
+						}
+					});
 				}
 				
 			}
