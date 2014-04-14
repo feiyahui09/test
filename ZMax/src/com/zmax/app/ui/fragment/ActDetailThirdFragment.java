@@ -76,8 +76,8 @@ public class ActDetailThirdFragment extends Fragment implements RefreshDataCallB
 	public void onDataRefresh(ActDetailContent detailContent) {
 		if (detailContent == null) return;
 		tv_begin_time.setText(detailContent.event_begin);
-		ImageLoader.getInstance().displayImage("http://www.120ask.com/static/upload/clinic/index/big/201212/big_201212241738148789.jpg",
-				iv_img);
+//		ImageLoader.getInstance().displayImage("http://www.120ask.com/static/upload/clinic/index/big/201212/big_201212241738148789.jpg",
+//				iv_img);
 		// 活动酒店列表显示
 		hotels = detailContent.hotels;
 		initHotels(hotels);

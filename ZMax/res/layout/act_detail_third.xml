@@ -16,31 +16,12 @@
         android:paddingRight="@dimen/act_detail_third_inner_margin_left"
         android:paddingTop="@dimen/act_detail_third_inner_margin_top" >
 
-        <RelativeLayout
+        <ImageView
+            android:id="@+id/iv_img"
             android:layout_width="fill_parent"
-            android:layout_height="@dimen/act_detail_third_img_height" >
-
-            <ImageView
-                android:id="@+id/iv_img"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:scaleType="fitXY"
-                android:src="@drawable/act_detail_welcome_img" />
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:src="@drawable/act_detial_photo_lt" />
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentRight="true"
-                android:src="@drawable/act_detial_photo_rb" />
-        </RelativeLayout>
+            android:layout_height="@dimen/act_detail_third_img_height"
+            android:scaleType="fitXY"
+            android:src="@drawable/act_detail_welcome_img" />
 
         <ImageView
             android:layout_width="wrap_content"

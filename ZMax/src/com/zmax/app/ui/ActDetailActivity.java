@@ -126,6 +126,7 @@ public class ActDetailActivity extends BaseFragmentActivity {
 		btn_Back = (Button) findViewById(R.id.btn_more);
 		btn_Share = (Button) findViewById(R.id.btn_share);
 		btn_Share.setVisibility(View.VISIBLE);
+		btn_Share.setBackgroundResource(R.drawable.top_share_sel);
 		btn_Back.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {

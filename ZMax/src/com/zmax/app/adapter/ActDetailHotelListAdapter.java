@@ -5,6 +5,7 @@ import java.util.List;
 
 import android.app.Activity;
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -80,8 +81,10 @@ public class ActDetailHotelListAdapter extends BaseAdapter {
 		else {
 			holder = (ViewHolder) convertView.getTag();
 		}
-		holder.tv_name.setText(""+item.name);
-		holder.tv_address.setText(""+item.address);
+		
+		holder.tv_name.setText(TextUtils.isEmpty(item.name) ? convertView.getResources().getString(R.string.default_unkown) : item.name);
+		holder.tv_address.setText(TextUtils.isEmpty(item.address) ? convertView.getResources().getString(R.string.default_unkown)
+				: item.address);
 		
 		return convertView;
 	}
