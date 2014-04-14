@@ -48,7 +48,6 @@ public class ActDetailHotelListAdapter extends BaseAdapter {
 	public void clear() {
 		// TODO Auto-generated method stub
 		mList.clear();
-		notifyDataSetChanged();
 	}
 	
 	@Override

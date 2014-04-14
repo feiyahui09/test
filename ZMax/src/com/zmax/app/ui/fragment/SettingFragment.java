@@ -168,7 +168,7 @@ public class SettingFragment extends Fragment implements OnClickListener {
 		
 		final NotificationManager mNotifyManager = (NotificationManager) getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
 		final NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(getActivity());
-		mBuilder.setContentTitle("正在下载新版本").setSmallIcon(R.drawable.ic_launcher);
+		mBuilder.setContentTitle("正在下载新版本").setSmallIcon(R.drawable.ic_launcher_4notification);
 		mHandler = new Handler() {
 			@Override
 			public void handleMessage(Message msg) {

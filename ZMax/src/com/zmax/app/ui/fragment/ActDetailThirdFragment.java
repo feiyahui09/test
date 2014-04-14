@@ -98,7 +98,7 @@ public class ActDetailThirdFragment extends Fragment implements RefreshDataCallB
 			btn_more.setVisibility(View.GONE);
 			return;
 		}
-		
+		adapter.clear();
 		if (detailHotels.size() > 2) {
 			btn_more.setVisibility(View.VISIBLE);
 			btn_more.setText(String.format("查看其余%d家分店", detailHotels.size() - 2));
