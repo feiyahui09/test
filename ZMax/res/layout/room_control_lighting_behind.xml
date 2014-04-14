@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:paddingBottom="@dimen/room_control_tv_behind_padding_left"
+    android:paddingBottom="12dp"
     android:paddingLeft="15dp"
     android:paddingRight="15dp" >
 
@@ -30,13 +30,16 @@
             android:textSize="18sp" />
 
         <ImageView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/room_control_lighting_control_divider" />
+            android:id="@+id/iv_img"
+            android:layout_width="290dp"
+            android:layout_height="290dp"
+            android:layout_gravity="center_horizontal" />
 
         <ImageView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="17dp"
+            android:layout_marginTop="17dp"
             android:background="@drawable/room_control_lighting_control_divider" />
 
         <RelativeLayout
@@ -44,12 +47,14 @@
             android:layout_height="wrap_content" >
 
             <ImageButton
+                android:id="@+id/ib_previous"
                 style="@style/room_control_round_button"
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
                 android:src="@drawable/room_control_lighting_control_left_btn" />
 
             <TextView
+                android:id="@+id/tv_mode_hint"
                 android:layout_width="125dp"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
@@ -60,6 +65,7 @@
                 android:textSize="18sp" />
 
             <ImageButton
+                android:id="@+id/ib_next"
                 style="@style/room_control_round_button"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
@@ -67,6 +73,7 @@
         </RelativeLayout>
 
         <Button
+            android:id="@+id/btn_apply"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/room_control_lighting_control_btn_bg"

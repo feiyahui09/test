@@ -90,10 +90,12 @@
             android:scaleType="center"
             android:src="@drawable/room_control_air_control_power_activited" />
 
-        <ImageButton
+        <Button
             style="@style/room_control_round_button"
             android:layout_alignParentRight="true"
-            android:text="模式" />
+            android:text="模式" 
+            android:textColor="#999999"
+            android:textSize="12sp"/>
     </RelativeLayout>
 
     <RelativeLayout
