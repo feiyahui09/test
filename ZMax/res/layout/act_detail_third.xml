@@ -25,7 +25,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:scaleType="fitXY"
-                android:src="@drawable/default_loading_img" />
+                android:src="@drawable/act_detail_welcome_img" />
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -43,8 +43,9 @@
         </RelativeLayout>
 
         <ImageView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/act_detial_photo_bottom" />
 
         <TextView
             android:layout_width="fill_parent"
@@ -164,7 +165,9 @@
             android:background="@android:color/transparent"
             android:cacheColorHint="#0000"
             android:divider="@drawable/act_detial_third_divider"
-            android:listSelector="@android:color/transparent" >
+            android:listSelector="@android:color/transparent"
+            android:paddingLeft="25dp"
+            android:paddingRight="25dp" >
         </ListView>
 
         <Button
@@ -175,7 +178,8 @@
             android:background="@drawable/act_detail_third_book_btn_sel"
             android:text="查看其余10家分店"
             android:textColor="@color/act_detail_third_book_text_color_sel"
-            android:textSize="14sp" >
+            android:textSize="14sp"
+            android:visibility="gone" >
         </Button>
     </LinearLayout>
 

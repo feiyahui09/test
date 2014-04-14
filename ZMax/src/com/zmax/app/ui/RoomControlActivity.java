@@ -75,7 +75,7 @@ public class RoomControlActivity extends BaseFragmentActivity {
 		pager = (SmartViewPager) findViewById(R.id.pager);
 		adapter = new ActDetailAdapter(this);
 		pager.setAdapter(adapter);
-		//retained buffer size 6
+		// retained buffer size 6
 		pager.setOffscreenPageLimit(6);
 		pager.setOnPageChangeListener(new OnPageChangeListener() {
 			
@@ -128,8 +128,8 @@ public class RoomControlActivity extends BaseFragmentActivity {
 		adapter.addTab(new RoomControlLightingFragment(callback));
 		adapter.addTab(new RoomControlAirConditionFragment(callback));
 		adapter.addTab(new RoomControlTVFragment(callback));
-		adapter.addTab(new RoomControlCurtainFragment(callback));
-		adapter.addTab(new RoomControlWakeUpFragment(callback));
+		// adapter.addTab(new RoomControlCurtainFragment(callback));
+		// adapter.addTab(new RoomControlWakeUpFragment(callback));
 		pager.setCurrentItem(0);
 	}
 	

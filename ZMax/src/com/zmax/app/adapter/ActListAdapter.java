@@ -37,10 +37,19 @@ public class ActListAdapter extends BaseAdapter {
 	
 	public void appendToList(List<Act> lists) {
 		
-		if (lists == null) {
+		if (lists == null || lists.isEmpty()) {
 			return;
 		}
-		mList.addAll(lists);
+		List<Act> temlist = new ArrayList<Act>();
+		for (int i = 0; i < lists.size(); i++) {
+			Act tmp = lists.get(i);
+			boolean isExsit = false;
+			for (int j = 0; j < mList.size(); j++) {
+				if (mList.get(j).id == tmp.id) isExsit = true;
+			}
+			if (!isExsit) temlist.add(tmp);
+		}
+		mList.addAll(temlist);
 		notifyDataSetChanged();
 	}
 	
@@ -109,10 +118,10 @@ public class ActListAdapter extends BaseAdapter {
 			holder = (ViewHolder) convertView.getTag(R.id.item_even);
 		}
 		ImageLoader.getInstance().displayImage(act.poster, holder.img_thu);
-		holder.tv_city.setText(act.cities);
+		holder.tv_city.setText("" + act.cities);
 		act.duration = fromDateStr(act.start_date, act.end_date);
-		holder.tv_date.setText(act.duration);
-		holder.tv_name.setText(act.name);
+		holder.tv_date.setText("" + act.duration);
+		holder.tv_name.setText("" + act.name);
 		return convertView;
 	}
 	
@@ -137,10 +146,10 @@ public class ActListAdapter extends BaseAdapter {
 			holder = (ViewHolder) convertView.getTag(R.id.item_odd);
 		}
 		ImageLoader.getInstance().displayImage(act.poster, holder.img_thu);
-		holder.tv_city.setText(act.cities);
+		holder.tv_city.setText("" + act.cities);
 		act.duration = fromDateStr(act.start_date, act.end_date);
-		holder.tv_date.setText(act.duration);
-		holder.tv_name.setText(act.name);
+		holder.tv_date.setText("" + act.duration);
+		holder.tv_name.setText("" + act.name);
 		
 		return convertView;
 	}

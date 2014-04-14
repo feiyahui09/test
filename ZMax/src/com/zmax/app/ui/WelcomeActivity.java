@@ -32,7 +32,7 @@ public class WelcomeActivity extends BaseFragmentActivity {
 	
 	private void initData() {
 		
-		adapter.addTab(new WelcomeFragment(R.drawable.act_detail_icon_test));
+		adapter.addTab(new WelcomeFragment(R.drawable.act_detail_welcome_img));
 		adapter.addTab(new WelcomeFragment(R.drawable.ic_launcher));
 		adapter.addTab(new WelcomeFragment(R.drawable.logo_facebook));
 	}

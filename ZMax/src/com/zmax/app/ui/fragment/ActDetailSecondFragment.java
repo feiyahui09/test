@@ -42,7 +42,7 @@ public class ActDetailSecondFragment extends Fragment implements IXListViewListe
 		
 		adapter = new ActDescptionListAdapter(getActivity());
 		
-		listview.setOnItemClickListener(this);
+//		listview.setOnItemClickListener(this);
 		
 		return view;
 	}

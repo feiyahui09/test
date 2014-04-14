@@ -73,7 +73,7 @@ public class HotelCommentListAdapter extends BaseAdapter {
 		else {
 			holder = (ViewHolder) convertView.getTag();
 		}
-		holder.header_.setText("酒店设施");
+		holder.header_.setText(""+"酒店设施");
 		holder.img_thu.setImageResource(R.drawable.ic_launcher);
 		ImageLoader.getInstance().displayImage(Constant.TEST_ICON_URI, holder.img_thu);
 		return convertView;

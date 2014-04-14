@@ -29,9 +29,10 @@ public class ActDescptionListAdapter extends BaseAdapter {
 	
 	public void appendToList(List<ActDetailDescription> lists) {
 		
-		if (lists == null) {
+		if (lists == null || lists.isEmpty()) {
 			return;
 		}
+		mList.clear();
 		mList.addAll(lists);
 		notifyDataSetChanged();
 	}
@@ -72,7 +73,7 @@ public class ActDescptionListAdapter extends BaseAdapter {
 		else {
 			holder = (ViewHolder) convertView.getTag();
 		}
-		holder.tv_des_content.setText(item.content);
+		holder.tv_des_content.setText(""+item.content);
 		ImageLoader.getInstance().displayImage(item.image_path, holder.iv_img);
 		return convertView;
 	}

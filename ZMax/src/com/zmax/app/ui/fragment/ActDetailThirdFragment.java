@@ -1,5 +1,7 @@
 package com.zmax.app.ui.fragment;
 
+import java.util.List;
+
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -12,14 +14,12 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.nostra13.universalimageloader.core.ImageLoader;
 import com.zmax.app.R;
 import com.zmax.app.adapter.ActDetailHotelListAdapter;
-import com.zmax.app.model.ActDetail;
 import com.zmax.app.model.ActDetailContent;
+import com.zmax.app.model.ActDetailHotel;
 import com.zmax.app.ui.ActDetailActivity.RefreshDataCallBack;
 import com.zmax.app.utils.Constant;
-import com.zmax.app.utils.DateTimeUtils;
 
 public class ActDetailThirdFragment extends Fragment implements RefreshDataCallBack {
 	
@@ -29,6 +29,7 @@ public class ActDetailThirdFragment extends Fragment implements RefreshDataCallB
 	private View v;
 	private TextView tv_start_day, tv_start_year, tv_end_day, tv_end_year, tv_begin_time;
 	private ImageView iv_img;
+	private List<ActDetailHotel> hotels;
 	
 	public ActDetailThirdFragment() {
 		this(R.color.white);
@@ -54,22 +55,65 @@ public class ActDetailThirdFragment extends Fragment implements RefreshDataCallB
 			
 			@Override
 			public void onClick(View v) {
-				btn_more.setVisibility(View.GONE);
-				adapter.appendToList(Constant.getFalseData(12));
-				setListViewHeightBasedOnChildren(listView, true);
+				loadMoreHotels(hotels);
 			}
 		});
 		listView = (ListView) v.findViewById(R.id.list_view);
 		adapter = new ActDetailHotelListAdapter(getActivity());
 		listView.setAdapter(adapter);
-		adapter.appendToList(Constant.getFalseData(2));
-		setListViewHeightBasedOnChildren(listView, false);
+		// adapter.appendToList(Constant.getFalseData(2));
+		// setListViewHeightBasedOnChildren(listView, false);
 		return v;
 	}
 	
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
+	}
+	
+	@Override
+	public void onDataRefresh(ActDetailContent detailContent) {
+		if (detailContent == null) return;
+		tv_begin_time.setText(detailContent.event_begin);
+		// 活动酒店列表显示
+		hotels = detailContent.hotels;
+		initHotels(hotels);
+		// 日期显示
+		String start = detailContent.start_date;
+		String end = detailContent.end_date;
+		if (start.length() != 8 || end.length() != 8) return;
+		tv_start_day.setText(start.substring(4, 6) + " - " + start.substring(6, 8));
+		tv_start_year.setText(start.substring(0, 4));
+		tv_end_day.setText(end.substring(4, 6) + " - " + end.substring(6, 8));
+		tv_end_year.setText(end.substring(0, 4));
+		
+	}
+	
+	private void initHotels(List<ActDetailHotel> detailHotels) {
+		
+		if (detailHotels == null || detailHotels.isEmpty()) {
+			btn_more.setVisibility(View.GONE);
+			return;
+		}
+		
+		if (detailHotels.size() > 2) {
+			btn_more.setVisibility(View.VISIBLE);
+			btn_more.setText(String.format("查看其余%d家分店", detailHotels.size() - 2));
+			adapter.appendToList(detailHotels.subList(0, 2));
+			setListViewHeightBasedOnChildren(listView, false);
+		}
+		else {
+			adapter.appendToList(detailHotels);
+			setListViewHeightBasedOnChildren(listView, false);
+			
+		}
+	}
+	
+	private void loadMoreHotels(List<ActDetailHotel> detailHotels) {
+		btn_more.setVisibility(View.GONE);
+		adapter.clear();
+		adapter.appendToList(detailHotels);
+		setListViewHeightBasedOnChildren(listView, true);
 	}
 	
 	public static void setListViewHeightBasedOnChildren(ListView listView, boolean isExtra) {
@@ -91,20 +135,5 @@ public class ActDetailThirdFragment extends Fragment implements RefreshDataCallB
 		ViewGroup.LayoutParams params = listView.getLayoutParams();
 		params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
 		listView.setLayoutParams(params);
-	}
-	
-	@Override
-	public void onDataRefresh(ActDetailContent detailContent) {
-		if (detailContent == null) return;
-		tv_begin_time.setText(detailContent.event_begin);
-		ImageLoader.getInstance().displayImage("http://img6.itiexue.net/1249/12493122.jpg", iv_img);
-		String start = detailContent.start_date;
-		String end = detailContent.end_date;
-		if (start.length() != 8 || end.length() != 8) return;
-		tv_start_day.setText(start.substring(4, 6) + " - " + start.substring(6, 8));
-		tv_start_year.setText(start.substring(0, 4));
-		tv_end_day.setText(end.substring(4, 6) + " - " + end.substring(6, 8));
-		tv_end_year.setText(end.substring(0, 4));
-		
 	}
 }

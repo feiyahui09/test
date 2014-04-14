@@ -16,6 +16,7 @@ import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
+import android.widget.BaseAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -175,6 +176,25 @@ public class XListView extends ListView implements OnScrollListener {
 			mPullLoading = false;
 			mFooterView.setState(XListViewFooter.STATE_NORMAL);
 		}
+ mFooterView.show();
+
+	}
+	
+	public void stopLoadMoreEnd() {
+		if (mPullLoading == true) {
+			mPullLoading = false;
+			mFooterView.setState(XListViewFooter.STATE_NORMAL);
+		}
+		
+		// int bottomMargin = mFooterView.getHeight();
+		// if (bottomMargin > 0) {
+		// mScrollBack = SCROLLBACK_FOOTER;
+		// mScroller.startScroll(0, bottomMargin, 0, -bottomMargin,
+		// SCROLL_DURATION);
+		// invalidate();
+		// }
+	 	mFooterView.hide();
+		// removeFooterView(mFooterView);
 	}
 	
 	/**

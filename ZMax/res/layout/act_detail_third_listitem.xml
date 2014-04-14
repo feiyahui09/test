@@ -2,11 +2,14 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="60dp"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+   >
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="fill_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_toLeftOf="@+id/btn_book"
         android:gravity="center_vertical"
         android:orientation="vertical" >
 
@@ -14,8 +17,9 @@
             android:id="@+id/tv_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:gravity="center"
+            android:ellipsize="end"
+            android:gravity="center_vertical"
+            android:maxLines="2"
             android:text="广州天河潮漫酒店"
             android:textColor="#333333"
             android:textSize="16sp" />
@@ -24,8 +28,9 @@
             android:id="@+id/tv_address"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:gravity="center"
+            android:ellipsize="end"
+            android:gravity="center_vertical"
+            android:maxLines="2"
             android:text="广州市天和去提那和录333号"
             android:textColor="#333333"
             android:textSize="14sp" />
@@ -37,7 +42,7 @@
         android:layout_height="28dp"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        android:layout_marginRight="37dp"
+       
         android:background="@drawable/act_detail_third_book_btn_sel"
         android:text="预订酒店"
         android:textColor="@color/act_detail_third_book_text_color_sel"

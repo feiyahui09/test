@@ -27,8 +27,8 @@ public class ActDetailFirstFragment extends Fragment {
 		View v = inflater.inflate(R.layout.act_detail_first, null);
 		tv_city = (TextView) v.findViewById(R.id.tv_city);
 		tv_date = (TextView) v.findViewById(R.id.tv_date);
-		tv_city.setText(city);
-		tv_date.setText(date);
+		tv_city.setText(""+city);
+		tv_date.setText(""+date);
 		return v;
 	}
 	

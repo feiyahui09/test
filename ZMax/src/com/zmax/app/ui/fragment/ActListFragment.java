@@ -44,12 +44,12 @@ public class ActListFragment extends Fragment implements IXListViewListener, OnI
 		listview = (XListView) view.findViewById(R.id.list_view);
 		listview.setPullLoadEnable(true);
 		listview.setPullRefreshEnable(true);
-		
+		listview.setXListViewListener(this);
+
 		adapter = new ActListAdapter(getActivity());
 		// adapter.appendToList(Constant.getFalseData(false));
 		listview.setAdapter(adapter);
 		listview.setOnItemClickListener(this);
-		listview.setXListViewListener(this);
 		curPage = 1;
 		return view;
 	}
@@ -77,7 +77,7 @@ public class ActListFragment extends Fragment implements IXListViewListener, OnI
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
-		// outState.putInt("mColorRes", mColorRes);
+//		 outState.putInt("mColorRes", mColorRes);
 	}
 	
 	@Override
@@ -99,6 +99,12 @@ public class ActListFragment extends Fragment implements IXListViewListener, OnI
 		listview.setRefreshTime(DateTimeUtils.formatTime(System.currentTimeMillis()));
 	}
 	
+	protected void onLoads() {
+		listview.stopRefresh();
+		listview.stopLoadMoreEnd();
+		listview.setRefreshTime(DateTimeUtils.formatTime(System.currentTimeMillis()));
+	}
+	
 	private void getActList(int page) {
 		
 		getActListTask = new GetActListTask(getActivity(), new GetActListTask.TaskCallBack() {
@@ -109,12 +115,16 @@ public class ActListFragment extends Fragment implements IXListViewListener, OnI
 				if (result != null && result.status == 200) {
 					List<Act> actList = result.events;
 					if (actList != null && !actList.isEmpty()) {
-						if (curPage == 1) adapter.Clear();
+ 				//	if (curPage == 1) adapter.Clear();
 						adapter.appendToList(actList);
 						curPage++;
+						onLoad();
+					}
+					else if (actList != null && actList.isEmpty()) {
+						onLoads();
 					}
 				}
-				onLoad();
+				
 			}
 		});
 		getActListTask.execute(Constant.CUR_CITY, String.valueOf(page), "2");

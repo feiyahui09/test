@@ -46,9 +46,9 @@
 
     <!-- third -->
     <dimen name="act_detail_third_img_height">130dp</dimen>
-    <dimen name="act_detail_third_inner_margin_top">20dp</dimen>
+    <dimen name="act_detail_third_inner_margin_top">10dp</dimen>
     <dimen name="act_detail_third_inner_margin_left">16dp</dimen>
-    <dimen name="act_detail_third_time_banner_margin_top">24dp</dimen>
+    <dimen name="act_detail_third_time_banner_margin_top">17dp</dimen>
     <dimen name="act_detail_third_time_banner_margin_bottom">12dp</dimen>
     <!-- second -->
     <dimen name="act_detail_second_title_margin_top">30dp</dimen>
@@ -64,7 +64,7 @@
     <dimen name="act_detail_third_time_minuter_margin_top">8dp</dimen>
     <!-- third - hotel zone -->
     <dimen name="act_detail_third_hotel_banner_margin_top">18dp</dimen>
-    <dimen name="act_detail_third_hotel_banner_margin_bottom">16dp</dimen>
+    <dimen name="act_detail_third_hotel_banner_margin_bottom">7dp</dimen>
     <dimen name="act_detail_third_hotel_address_height">60dp</dimen>
     <dimen name="act_detail_third_hotel_address_more_height">40dp</dimen>
 

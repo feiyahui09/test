@@ -202,7 +202,7 @@ public class HotelBookFragment extends Fragment implements OnPageChangeListener,
 					getActivity().startActivity(new Intent(getActivity(), HotelDetailActivity.class));
 				}
 			});
-			((TextView) view.findViewById(R.id.tv_title)).setText(hotel.name);
+			((TextView) view.findViewById(R.id.tv_title)).setText(""+hotel.name);
 			ImageLoader.getInstance().displayImage(hotel.poster, ((ImageView) view.findViewById(R.id.iv_img)));
 			mList.add(view);
 		}
@@ -225,12 +225,8 @@ public class HotelBookFragment extends Fragment implements OnPageChangeListener,
 		ListView listView = (ListView) view.findViewById(R.id.list_view);
 		SimpleAdapter simpleAdapter = new SimpleAdapter(getActivity(), lists, R.layout.hotel_book_upcoming_list_item, new String[] {
 				"date", "name" }, new int[] { R.id.tv_date, R.id.tv_name });
-		TextView textView = new TextView(getActivity());
-		textView.setText("敬请期待\n....");
-		textView.setTextColor(Color.parseColor("#ffffff"));
-		textView.setTextSize(PhoneUtil.sp2px(getActivity(), 11));
-		textView.setGravity(Gravity.CENTER);
-		listView.addFooterView(textView);
+		View hint_view = getActivity().getLayoutInflater().inflate(R.layout.hotel_book_upcoming_more_hint, null);
+		listView.addFooterView(hint_view);
 		listView.setAdapter(simpleAdapter);
 		
 		return view;

@@ -12,4 +12,5 @@ public class ActDetailContent implements Serializable {
 	public String end_date;
 	public String event_begin;
 	public List<ActDetailDescription> description_items;
+	public List<ActDetailHotel> hotels;
 }

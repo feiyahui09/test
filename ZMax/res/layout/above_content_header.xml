@@ -7,8 +7,8 @@
 
     <Button
         android:id="@+id/btn_more"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/menu_item_demen"
+        android:layout_height="@dimen/menu_item_demen"
         android:layout_alignParentLeft="true"
         android:background="@drawable/top_menu_sel"
         android:drawableRight="@drawable/top_vert_divider" >
@@ -22,8 +22,8 @@
 
     <Button
         android:id="@+id/btn_share"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/menu_item_demen"
+        android:layout_height="@dimen/menu_item_demen"
         android:layout_alignParentRight="true"
         android:background="@drawable/playzmax_quit_btn_sel"
         android:drawableLeft="@drawable/top_vert_divider"

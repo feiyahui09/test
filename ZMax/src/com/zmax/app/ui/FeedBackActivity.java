@@ -69,7 +69,7 @@ public class FeedBackActivity extends BaseActivity {
 		});
 		
 		btn_share = (Button) findViewById(R.id.btn_share);
-		
+		btn_share.setVisibility(View.VISIBLE);
 		btn_share.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {

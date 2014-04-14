@@ -15,11 +15,12 @@ import android.widget.TextView;
 
 import com.zmax.app.R;
 import com.zmax.app.model.Act;
+import com.zmax.app.model.ActDetailHotel;
 import com.zmax.app.utils.PhoneUtil;
 
 public class ActDetailHotelListAdapter extends BaseAdapter {
 	
-	List<Act> mList = new ArrayList<Act>();
+	List<ActDetailHotel> mList = new ArrayList<ActDetailHotel>();
 	private Context mContext;
 	private LayoutInflater mInflater;
 	
@@ -28,9 +29,9 @@ public class ActDetailHotelListAdapter extends BaseAdapter {
 		mInflater = ((Activity) mContext).getLayoutInflater();
 	}
 	
-	public void appendToList(List<Act> lists) {
+	public void appendToList(List<ActDetailHotel> lists) {
 		
-		if (lists == null) {
+		if (lists == null || lists.isEmpty()) {
 			return;
 		}
 		mList.addAll(lists);
@@ -41,6 +42,12 @@ public class ActDetailHotelListAdapter extends BaseAdapter {
 	public int getCount() {
 		// TODO Auto-generated method stub
 		return mList.size();
+	}
+	
+	public void clear() {
+		// TODO Auto-generated method stub
+		mList.clear();
+		notifyDataSetChanged();
 	}
 	
 	@Override
@@ -59,7 +66,7 @@ public class ActDetailHotelListAdapter extends BaseAdapter {
 	public View getView(int position, View convertView, ViewGroup parent) {
 		// TODO Auto-generated method stub
 		ViewHolder holder;
-		Act item = mList.get(position);
+		ActDetailHotel item = mList.get(position);
 		if (convertView == null) {
 			holder = new ViewHolder();
 			convertView = mInflater.inflate(R.layout.act_detail_third_listitem, null);
@@ -73,8 +80,8 @@ public class ActDetailHotelListAdapter extends BaseAdapter {
 		else {
 			holder = (ViewHolder) convertView.getTag();
 		}
-		// holder.tv_name.setText("酒店设施");
-		// holder.tv_address.setText("酒店设施");
+		holder.tv_name.setText(""+item.name);
+		holder.tv_address.setText(""+item.address);
 		
 		return convertView;
 	}

@@ -106,12 +106,12 @@ public class DocumentsActivity extends BaseActivity {
 			}
 		});
 		tv_title = (TextView) findViewById(R.id.tv_title);
-		tv_title.setText(title);
+		tv_title.setText(""+title);
 	}
 	
 	private void initData(Documents document) {
-		tv_title.setText(document.title);
-		tv_content.setText(document.content);
+		tv_title.setText(""+document.title);
+		tv_content.setText(""+document.content);
 		
 	}
 	

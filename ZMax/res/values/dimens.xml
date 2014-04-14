@@ -27,6 +27,7 @@
     <dimen name="menu_item_padding_left">30dp</dimen>
     <dimen name="menu_item_padding_left_inner">50dp</dimen>
 
+      <dimen name="menu_item_demen">50dp</dimen>
     <!-- above -->
     <dimen name="top_heigth">48dp</dimen>
     <dimen name="top_second_heigth">44dp</dimen>
