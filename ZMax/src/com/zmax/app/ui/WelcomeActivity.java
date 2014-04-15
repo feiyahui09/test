@@ -32,9 +32,18 @@ public class WelcomeActivity extends BaseFragmentActivity {
 	
 	private void initData() {
 		
-		adapter.addTab(new WelcomeFragment(R.drawable.act_detail_welcome_img));
-		adapter.addTab(new WelcomeFragment(R.drawable.ic_launcher));
-		adapter.addTab(new WelcomeFragment(R.drawable.logo_facebook));
+		adapter.addTab(new WelcomeFragment(R.drawable.welcome_img_1));
+		adapter.addTab(new WelcomeFragment(R.drawable.welcome_img_2));
+		adapter.addTab(new WelcomeFragment(R.drawable.welcome_img_3, new StartAppCallBack() {
+			@Override
+			public void onStartAPP() {
+				finish();
+			}
+		}));
+	}
+	
+	public interface StartAppCallBack {
+		public void onStartAPP();
 	}
 	
 }
