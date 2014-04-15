@@ -27,6 +27,7 @@ import com.zmax.app.ui.fragment.ActDetailSecondFragment;
 import com.zmax.app.ui.fragment.ActDetailThirdFragment;
 import com.zmax.app.utils.Constant;
 import com.zmax.app.utils.ShareUtils;
+import com.zmax.app.utils.StackBlurManager;
 
 public class ActDetailActivity extends BaseFragmentActivity {
 	
@@ -127,7 +128,16 @@ public class ActDetailActivity extends BaseFragmentActivity {
 						
 						@Override
 						public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-							ll_bg.setBackground(new BitmapDrawable(loadedImage));
+							try {
+								ll_bg.setBackground(new BitmapDrawable(StackBlurManager.fastblur(ActDetailActivity.this, loadedImage, 11)));
+							}
+							catch (Exception e) {
+								e.printStackTrace();
+							}
+							catch (Error e) {
+								e.printStackTrace();
+							}
+							
 						}
 						
 						@Override
