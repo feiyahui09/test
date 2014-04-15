@@ -78,7 +78,7 @@ public class HotelDetailActivity extends BaseActivity implements OnClickListener
 				
 				break;
 			case R.id.ll_act_calendar:
-				intent.setClass(mContext, ActCalendarActivity.class);
+				intent.setClass(mContext, ActsInHotelActivity.class);
 				mContext.startActivity(intent);
 				break;
 			

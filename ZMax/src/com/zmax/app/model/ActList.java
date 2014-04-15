@@ -16,4 +16,5 @@ public class ActList implements Serializable {
 	
 	public int status;
 	public List<Act> events;
+	public String message;
 }

@@ -168,14 +168,13 @@ public class RoomControlLightingFragment extends Fragment {
 		@Override
 		public void onClick(View v) {
 			if (v.getId() == R.id.ib_previous) {
-				if (curMode == 0) return;
-				curMode--;
+				curMode = Math.abs((--curMode) % 4);
 				tv_mode_hint.setText(mode_names[curMode]);
 				iv_img.setImageResource(mode_imgs[curMode]);
 			}
 			else if (v.getId() == R.id.ib_next) {
 				if (curMode == 3) return;
-				curMode++;
+				curMode = Math.abs((++curMode) % 4);
 				tv_mode_hint.setText(mode_names[curMode]);
 				iv_img.setImageResource(mode_imgs[curMode]);
 			}

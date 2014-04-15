@@ -24,6 +24,7 @@ import android.widget.Scroller;
 import android.widget.TextView;
 
 import com.zmax.app.R;
+import com.zmax.app.utils.DateTimeUtils;
 
 public class XListView extends ListView implements OnScrollListener {
 	
@@ -176,8 +177,8 @@ public class XListView extends ListView implements OnScrollListener {
 			mPullLoading = false;
 			mFooterView.setState(XListViewFooter.STATE_NORMAL);
 		}
- mFooterView.show();
-
+		mFooterView.show();
+		
 	}
 	
 	public void stopLoadMoreEnd() {
@@ -193,7 +194,7 @@ public class XListView extends ListView implements OnScrollListener {
 		// SCROLL_DURATION);
 		// invalidate();
 		// }
-	 	mFooterView.hide();
+		mFooterView.hide();
 		// removeFooterView(mFooterView);
 	}
 	
@@ -363,6 +364,19 @@ public class XListView extends ListView implements OnScrollListener {
 		if (mScrollListener != null) {
 			mScrollListener.onScroll(view, firstVisibleItem, visibleItemCount, totalItemCount);
 		}
+	}
+	
+	//loaded   ,refresh UI
+	public void onLoad() {
+		stopRefresh();
+		stopLoadMore();
+		setRefreshTime(DateTimeUtils.formatTime(System.currentTimeMillis()));
+	}
+	//loaded   ,refresh UI,hide foot view
+	public void onLoads() {
+		stopRefresh();
+		stopLoadMoreEnd();
+		setRefreshTime(DateTimeUtils.formatTime(System.currentTimeMillis()));
 	}
 	
 	public void setXListViewListener(IXListViewListener l) {

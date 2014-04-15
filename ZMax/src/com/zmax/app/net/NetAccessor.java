@@ -71,10 +71,28 @@ public class NetAccessor {
 		return actList;
 	}
 	
+	public static ActList getActListInHotel(Context context, String id, String page_num, String per) {
+		ActList actList = null;
+		try {
+			String jsonString = HttpUtils.getByHttpClient(context, Constant.ZMAX_URL + "hotels/" + id + "/events", new BasicNameValuePair(
+					"page_num", page_num), new BasicNameValuePair("per", per));
+			Log.d("  responeString -->\n" + jsonString);
+			if (!TextUtils.isEmpty(jsonString)) {
+				actList = JsonMapperUtils.toObject(jsonString, ActList.class);
+			}
+		}
+		catch (Exception e) {
+			Log.e("   Exception :" + e.toString());
+			e.printStackTrace();
+		}
+		return actList;
+	}
+	
 	public static Update checkUpdateVersion(Context context, String tag) {
 		Update update = null;
 		try {
-			String jsonString = HttpUtils.getByHttpClient(context, Constant.ZMAX_URL + "versions/check", new BasicNameValuePair("tag", tag));
+			String jsonString = HttpUtils
+					.getByHttpClient(context, Constant.ZMAX_URL + "versions/check", new BasicNameValuePair("tag", tag));
 			Log.d("  responeString -->\n" + jsonString);
 			if (!TextUtils.isEmpty(jsonString)) {
 				update = JsonMapperUtils.toObject(jsonString, Update.class);

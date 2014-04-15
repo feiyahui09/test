@@ -84,7 +84,7 @@ public class ActListFragment extends Fragment implements IXListViewListener, OnI
 	public void onRefresh() {
 		curPage = 1;
 		getActList(curPage);
-		onLoad();
+		listview.onLoad();
 	}
 	
 	@Override
@@ -93,17 +93,7 @@ public class ActListFragment extends Fragment implements IXListViewListener, OnI
 		
 	}
 	
-	protected void onLoad() {
-		listview.stopRefresh();
-		listview.stopLoadMore();
-		listview.setRefreshTime(DateTimeUtils.formatTime(System.currentTimeMillis()));
-	}
-	
-	protected void onLoads() {
-		listview.stopRefresh();
-		listview.stopLoadMoreEnd();
-		listview.setRefreshTime(DateTimeUtils.formatTime(System.currentTimeMillis()));
-	}
+ 
 	
 	private void getActList(int page) {
 		
@@ -118,10 +108,10 @@ public class ActListFragment extends Fragment implements IXListViewListener, OnI
  				//	if (curPage == 1) adapter.Clear();
 						adapter.appendToList(actList);
 						curPage++;
-						onLoad();
+						listview.onLoad();
 					}
 					else if (actList != null && actList.isEmpty()) {
-						onLoads();
+						listview.onLoads();
 					}
 				}
 				

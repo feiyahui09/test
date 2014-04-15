@@ -13,9 +13,11 @@ import android.widget.TextView;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 
 import com.zmax.app.R;
+import com.zmax.app.ui.ActsInHotelActivity;
 import com.zmax.app.ui.ChatRoomActivity;
 import com.zmax.app.ui.MainActivity;
 import com.zmax.app.ui.RoomControlActivity;
+import com.zmax.app.utils.Constant;
 
 public class PlayInZmaxFragment extends Fragment implements OnClickListener {
 	
@@ -96,7 +98,8 @@ public class PlayInZmaxFragment extends Fragment implements OnClickListener {
 		
 		switch (v.getId()) {
 			case R.id.btn_act:
-				intent.setClass(getActivity(), RoomControlActivity.class);
+				intent.setClass(getActivity(), ActsInHotelActivity.class);
+				intent.putExtra(Constant.Acts.HOTEL_ID_KEY, 2);
 				startActivity(intent);
 				break;
 			case R.id.btn_chat:

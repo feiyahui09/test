@@ -13,4 +13,6 @@ public class HotelList implements Serializable {
 	
 	public int status;
 	public List<Hotel> hotels;
+	public String message;
+	
 }
