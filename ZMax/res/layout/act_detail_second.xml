@@ -2,24 +2,26 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:layout_marginLeft="@dimen/act_detail_index_margin_left"
-    android:layout_marginRight="@dimen/act_detail_index_margin_left"
-    android:layout_marginTop="@dimen/act_detail_index_margin_top"
+    android:layout_marginBottom="@dimen/act_detail_margin_top"
+    android:layout_marginLeft="@dimen/act_detail_margin_left"
+    android:layout_marginRight="@dimen/act_detail_margin_left"
+    android:layout_marginTop="@dimen/act_detail_margin_top"
     android:background="@drawable/act_detial_envelope_bg"
     android:orientation="vertical"
-    android:paddingBottom="@dimen/act_detail_third_inner_margin_top"
-    android:paddingLeft="@dimen/act_detail_third_inner_margin_left"
-    android:paddingRight="@dimen/act_detail_third_inner_margin_left"
-    android:paddingTop="@dimen/act_detail_third_inner_margin_top" >
+    android:paddingBottom="@dimen/act_detail_inner_padding_top"
+    android:paddingLeft="@dimen/act_detail_inner_padding_left"
+    android:paddingRight="@dimen/act_detail_inner_padding_left"
+    android:paddingTop="@dimen/act_detail_inner_padding_top" >
 
-    <com.zmax.app.widget.XListView
+    <ListView
         android:id="@+id/list_view"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:background="@android:color/transparent"
         android:cacheColorHint="#0000"
         android:divider="@null"
-        android:listSelector="@android:color/transparent" >
-    </com.zmax.app.widget.XListView>
+        android:listSelector="@android:color/transparent"
+        android:scrollbars="none" >
+    </ListView>
 
 </LinearLayout>

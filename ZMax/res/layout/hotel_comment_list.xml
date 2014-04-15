@@ -31,7 +31,8 @@
         android:layout_height="wrap_content"
         android:background="#f5f5f5"
         android:cacheColorHint="#0000"
-        android:divider="@null" />
+        android:divider="@null"
+        android:scrollbars="none" />
 
     <TextView
         android:id="@+id/tv_bottom_more"
