@@ -6,7 +6,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.zmax.app.R;
 import com.zmax.app.ui.MainActivity;
@@ -15,6 +20,7 @@ public class PlayInZmaxLoginFragment extends Fragment {
 	
 	private View view;
 	private Button btn_login;
+	private Spinner sp_hotels;
 	
 	public PlayInZmaxLoginFragment() {
 		this(R.color.white);
@@ -37,8 +43,37 @@ public class PlayInZmaxLoginFragment extends Fragment {
 				((MainActivity) getActivity()).switchContent(new PlayInZmaxFragment());
 			}
 		});
+		
+		sp_hotels = (Spinner) view.findViewById(R.id.sp_hotels);
+		fromHotelsSpinner(sp_hotels);
 		return view;
 	}
+	
+	private void fromHotelsSpinner(Spinner spinner) {
+		
+		final ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), R.layout.playzmax_login_spinner_item, mStrings);
+		adapter.setDropDownViewResource(R.layout.playzmax_login_dropdown_spinner_item);
+		
+		spinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+			
+			@Override
+			public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+				if (position != 0) ((TextView) view).setText("" + adapter.getItem(position));
+				
+			}
+			
+			@Override
+			public void onNothingSelected(AdapterView<?> parent) {
+				((TextView) view).setText("选择入住酒店");
+				
+			}
+		});
+		
+		spinner.setAdapter(adapter);
+		
+	}
+	
+	private static final String[] mStrings = { "选择入住酒店", "Mercury", "Venus", "Earth", "Mars", "Jupiter", "Saturn", "Uranus", "Neptune" };
 	
 	@Override
 	public void onSaveInstanceState(Bundle outState) {

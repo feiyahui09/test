@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@android:id/text1"
+    style="@style/playzmax_login_edittext"
+    android:background="@drawable/playzmax_login_dropdown_spinner_item"
+    android:gravity="center_vertical"
+    android:paddingLeft="@dimen/playzmax_login_padding_left" />

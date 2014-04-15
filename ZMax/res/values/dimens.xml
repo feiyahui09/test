@@ -26,8 +26,7 @@
     <dimen name="menu_item_height">60dp</dimen>
     <dimen name="menu_item_padding_left">30dp</dimen>
     <dimen name="menu_item_padding_left_inner">50dp</dimen>
-
-      <dimen name="menu_item_demen">50dp</dimen>
+    <dimen name="menu_item_demen">50dp</dimen>
     <!-- above -->
     <dimen name="top_heigth">48dp</dimen>
     <dimen name="top_second_heigth">44dp</dimen>
@@ -73,8 +72,10 @@
 
     <dimen name="room_control_tv_behind_padding_left">30dp</dimen>
     <dimen name="room_control_tv_behind_padding_bottom">30dp</dimen>
-    
-     <dimen name="room_control_tv_behind_control_bg_height">210dp</dimen>
-      <dimen name="room_control_tv_behind_control_bg_margin_top">60dp</dimen>
+    <dimen name="room_control_tv_behind_control_bg_height">210dp</dimen>
+    <dimen name="room_control_tv_behind_control_bg_margin_top">60dp</dimen>
+    <!-- playzmax -->
+
+    <dimen name="playzmax_login_padding_left">25dp</dimen>
 
 </resources>
