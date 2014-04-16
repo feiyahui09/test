@@ -13,12 +13,13 @@ import android.widget.AdapterView.OnItemClickListener;
 
 import com.zmax.app.R;
 import com.zmax.app.adapter.ActListAdapter;
+import com.zmax.app.manage.DataManage;
 import com.zmax.app.model.Act;
 import com.zmax.app.model.ActList;
 import com.zmax.app.task.GetActListTask;
 import com.zmax.app.ui.ActDetailActivity;
 import com.zmax.app.utils.Constant;
-import com.zmax.app.utils.DateTimeUtils;
+import com.zmax.app.utils.Log;
 import com.zmax.app.widget.XListView;
 import com.zmax.app.widget.XListView.IXListViewListener;
 
@@ -45,7 +46,6 @@ public class ActListFragment extends Fragment implements IXListViewListener, OnI
 		listview.setPullLoadEnable(true);
 		listview.setPullRefreshEnable(true);
 		listview.setXListViewListener(this);
-
 		adapter = new ActListAdapter(getActivity());
 		// adapter.appendToList(Constant.getFalseData(false));
 		listview.setAdapter(adapter);
@@ -65,6 +65,18 @@ public class ActListFragment extends Fragment implements IXListViewListener, OnI
 	public void onActivityCreated(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onActivityCreated(savedInstanceState);
+		int index = 0, top = 0;
+		/*
+		 * if (savedInstanceState != null) {
+		 * // Restore last state for checked position.
+		 * index = savedInstanceState.getInt("index", -1);
+		 * top = savedInstanceState.getInt("top", 0);
+		 * if (index != -1) {
+		 * listview.setSelectionFromTop(index, top);
+		 * }
+		 * }
+		 */
+		
 		onRefresh();
 	}
 	
@@ -77,7 +89,14 @@ public class ActListFragment extends Fragment implements IXListViewListener, OnI
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
-//		 outState.putInt("mColorRes", mColorRes);
+		/*
+		 * int index = listview.getFirstVisiblePosition();
+		 * View v = listview.getChildAt(0);
+		 * int top = (v == null) ? 0 : v.getTop();
+		 * Log.d("@@");
+		 * outState.putInt("index", index);
+		 * outState.putInt("top", top);
+		 */
 	}
 	
 	@Override
@@ -93,8 +112,6 @@ public class ActListFragment extends Fragment implements IXListViewListener, OnI
 		
 	}
 	
- 
-	
 	private void getActList(int page) {
 		
 		getActListTask = new GetActListTask(getActivity(), new GetActListTask.TaskCallBack() {
@@ -103,21 +120,33 @@ public class ActListFragment extends Fragment implements IXListViewListener, OnI
 			public void onCallBack(ActList result) {
 				if (getActivity() == null) return;
 				if (result != null && result.status == 200) {
-					List<Act> actList = result.events;
+					final List<Act> actList = result.events;
 					if (actList != null && !actList.isEmpty()) {
- 				//	if (curPage == 1) adapter.Clear();
+						if (curPage == 1) {
+							adapter.Clear();
+							new Thread(new Runnable() {
+								@Override
+								public void run() {
+									DataManage.saveIndexActlist2DB(actList);
+								}
+							}).start();
+						}
 						adapter.appendToList(actList);
-						curPage++;
 						listview.onLoad();
+						curPage++;
 					}
 					else if (actList != null && actList.isEmpty()) {
+						if (curPage == 1) adapter.appendToList(DataManage.getIndexActlist4DB());
 						listview.onLoads();
 					}
 				}
-				
+				else {
+					if (curPage == 1) adapter.appendToList(DataManage.getIndexActlist4DB());
+					listview.onLoads();
+				}
 			}
 		});
-		getActListTask.execute(Constant.CUR_CITY, String.valueOf(page), "2");
+		getActListTask.execute(Constant.CUR_CITY, String.valueOf(page), "" + Constant.Acts.PER_NUM_GET_ACTLIST);
 	}
 	
 	@Override
@@ -129,7 +158,6 @@ public class ActListFragment extends Fragment implements IXListViewListener, OnI
 		intent.putExtra(Constant.Acts.ID_KEY, act.id);
 		intent.putExtra(Constant.Acts.CITY_KEY, act.cities);
 		intent.putExtra(Constant.Acts.DATE_KEY, act.duration);
-		
 		getActivity().startActivity(intent);
 		
 	}

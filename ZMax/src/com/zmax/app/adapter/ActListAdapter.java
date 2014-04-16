@@ -53,6 +53,11 @@ public class ActListAdapter extends BaseAdapter {
 		notifyDataSetChanged();
 	}
 	
+	public List<Act> getList() {
+		
+		return mList;
+	}
+	
 	public void Clear() {
 		mList.clear();
 	}
