@@ -1,15 +1,15 @@
 package com.zmax.app.ui.fragment;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -25,15 +25,14 @@ import android.widget.TextView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.zmax.app.R;
 import com.zmax.app.adapter.HotelBookListAdapter;
+import com.zmax.app.manage.DataManage;
 import com.zmax.app.model.Hotel;
 import com.zmax.app.model.HotelList;
 import com.zmax.app.task.GetHotelListTask;
 import com.zmax.app.ui.HotelDetailActivity;
-import com.zmax.app.ui.MainActivity;
 import com.zmax.app.ui.base.BaseSlidingFragmentActivity.HotelBookVisivleCallback;
 import com.zmax.app.utils.Constant;
 import com.zmax.app.utils.DateTimeUtils;
-import com.zmax.app.utils.PhoneUtil;
 import com.zmax.app.widget.VerticalViewPager;
 import com.zmax.app.widget.VerticalViewPager.OnPageChangeListener;
 
@@ -56,7 +55,7 @@ public class HotelBookFragment extends Fragment implements OnPageChangeListener,
 	
 	public HotelBookFragment(int mosition) {
 		mPosition = 0;
-		// setRetainInstance(true);
+		setRetainInstance(true);
 	}
 	
 	@Override
@@ -82,7 +81,6 @@ public class HotelBookFragment extends Fragment implements OnPageChangeListener,
 	
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		super.onActivityCreated(savedInstanceState);
 		getHotelListTask = new GetHotelListTask(getActivity(), new GetHotelListTask.TaskCallBack() {
 			
@@ -92,9 +90,12 @@ public class HotelBookFragment extends Fragment implements OnPageChangeListener,
 				if (hotelList != null && hotelList.status == 200 && hotelList.hotels != null && !hotelList.hotels.isEmpty()) {
 					initData(hotelList.hotels, upcomingHotelList);
 				}
+				else {
+					initData(DataManage.getIndexHotellist4DB(false), null);
+				}
 			}
 		});
-		getHotelListTask.execute(Constant.CUR_CITY, "1", "10");
+		getHotelListTask.execute(Constant.CUR_CITY, "1", "" + Constant.PER_NUM_GET_HOTELLIST);
 	}
 	
 	private void initPagerIndicator(List<View> falseDataView, LinearLayout indicator) {
@@ -119,16 +120,6 @@ public class HotelBookFragment extends Fragment implements OnPageChangeListener,
 		}
 		imageView = (ImageView) indicator.getChildAt(position).findViewById(R.id.iv_img);
 		imageView.setImageResource(R.drawable.hotel_list_indicator_activited);
-		
-	}
-	
-	private void toggleMenu() {
-		
-		if (getActivity() == null) return;
-		if (getActivity() instanceof MainActivity) {
-			MainActivity fca = (MainActivity) getActivity();
-			fca.toggle();
-		}
 		
 	}
 	
@@ -180,13 +171,28 @@ public class HotelBookFragment extends Fragment implements OnPageChangeListener,
 		
 	}
 	
-	private void initData(List<Hotel> hotelList, HotelList upcomingHotelList) {
-		
+	private void initData(final List<Hotel> hotelList, HotelList upcomingHotelList) {
+		if (hotelList == null || hotelList.isEmpty()) return;
 		List<View> views = fromViews(hotelList, upcomingHotelList);
 		adapter.addViews(views);
 		initPagerIndicator(views, indicator);
 		pager.setCurrentItem(mPosition);
+		saveHotel(hotelList, false);
 		
+	}
+	
+	private void saveHotel(final List<Hotel> hotelList, final boolean isUpcoming) {
+		new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				List<Hotel> tmpLists = hotelList;
+				for (Hotel hotel : tmpLists) {
+					hotel.isUpcoming = isUpcoming;
+				}
+				DataManage.saveIndexHotellist2DB(tmpLists, isUpcoming);
+			}
+		}).start();
 	}
 	
 	public List<View> fromViews(List<Hotel> hotelList, HotelList upcomingHotelList) {
@@ -202,12 +208,17 @@ public class HotelBookFragment extends Fragment implements OnPageChangeListener,
 					getActivity().startActivity(new Intent(getActivity(), HotelDetailActivity.class));
 				}
 			});
-			((TextView) view.findViewById(R.id.tv_title)).setText(""+hotel.name);
+			((TextView) view.findViewById(R.id.tv_title)).setText("" + hotel.name);
 			ImageLoader.getInstance().displayImage(hotel.poster, ((ImageView) view.findViewById(R.id.iv_img)));
 			mList.add(view);
 		}
-		if (upcomingHotelList != null && upcomingHotelList.hotels != null && !upcomingHotelList.hotels.isEmpty())
+		if (upcomingHotelList != null && upcomingHotelList.hotels != null && !upcomingHotelList.hotels.isEmpty()) {
 			mList.add(fromUpcomingViews(upcomingHotelList.hotels));
+			saveHotel(upcomingHotelList.hotels, true);
+		}
+		else {
+			mList.add(fromUpcomingViews(DataManage.getIndexHotellist4DB(true)));
+		}
 		
 		return mList;
 	}

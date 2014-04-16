@@ -12,6 +12,7 @@ import com.j256.ormlite.table.TableUtils;
 import com.zmax.app.ZMaxApplication;
 import com.zmax.app.model.Act;
 import com.zmax.app.model.CityLocation;
+import com.zmax.app.model.Hotel;
 import com.zmax.app.utils.Log;
 
 /**
@@ -26,7 +27,7 @@ public class DBHelper extends OrmLiteSqliteOpenHelper {
 	
 	private static final String tag = DBHelper.class.getName();
 	
-	private static final int DATABASE_VERSION = 1;//zheli 
+	private static final int DATABASE_VERSION = 1;// zheli
 	
 	private static final String DATABASE_NAME = "db_zmax_app";
 	
@@ -47,30 +48,32 @@ public class DBHelper extends OrmLiteSqliteOpenHelper {
 	
 	@Override
 	public void onCreate(SQLiteDatabase sqliteDatabase, ConnectionSource connectionSource) {
-		Log.d( "DBHelper > onCreate ");
+		Log.d("DBHelper > onCreate ");
 		try {
 			// 在此创建model对应的表
 			TableUtils.createTable(connectionSource, CityLocation.class);
 			TableUtils.createTable(connectionSource, Act.class);
-
+			TableUtils.createTable(connectionSource, Hotel.class);
+			
 		}
 		catch (SQLException e) {
-			Log.e( "Unable to create datbases");
+			Log.e("Unable to create datbases");
 		}
 	}
 	
 	@Override
 	public void onUpgrade(SQLiteDatabase sqliteDatabase, ConnectionSource connectionSource, int oldVer, int newVer) {
 		try {
-			Log.d( "DBHelper > onUpgrade  , oldVer : " + oldVer + " , newVer : " + newVer);
+			Log.d("DBHelper > onUpgrade  , oldVer : " + oldVer + " , newVer : " + newVer);
 			// 升级之前先删除旧表
 			TableUtils.dropTable(connectionSource, CityLocation.class, true);
 			TableUtils.dropTable(connectionSource, Act.class, true);
-
+			TableUtils.dropTable(connectionSource, Hotel.class, true);
+			
 			onCreate(sqliteDatabase, connectionSource);
 		}
 		catch (SQLException e) {
-			Log.e( "Unable to upgrade database from version " + oldVer + " to new " + newVer);
+			Log.e("Unable to upgrade database from version " + oldVer + " to new " + newVer);
 		}
 	}
 	

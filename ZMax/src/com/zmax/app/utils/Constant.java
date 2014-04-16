@@ -60,10 +60,11 @@ public class Constant {
 		public static final String DATE_KEY = "act_date_key";
 		public static final String CITY_KEY = "act_city_key";
 		
-		public static final int PER_NUM_GET_ACTLIST = 5;
+	
 		
 	}
-	
+		public static final int PER_NUM_GET_ACTLIST = 5;
+		public static final int PER_NUM_GET_HOTELLIST=20;
 	public static class SPFKEY {
 		
 		public static final String CITY_LOCATION_KEY = "city_location_key";

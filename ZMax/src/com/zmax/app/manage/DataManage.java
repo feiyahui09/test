@@ -1,21 +1,24 @@
 package com.zmax.app.manage;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.j256.ormlite.stmt.Where;
 import com.zmax.app.db.DBAccessor;
 import com.zmax.app.model.Act;
+import com.zmax.app.model.Hotel;
 import com.zmax.app.utils.Constant;
 import com.zmax.app.utils.DefaultShared;
 import com.zmax.app.utils.JsonMapperUtils;
-import com.zmax.app.utils.Log;
 
 //13416388156
 public class DataManage {
 	public static final String STRING_DIVIDER = "@@_@";
 	
+	@Deprecated
 	public static void saveIndexActlist(List<Act> actList) {
 		
 		if (actList == null || actList.isEmpty()) return;
@@ -32,7 +35,6 @@ public class DataManage {
 		}
 	}
 	
-	//
 	public static List<Act> getIndexActlist4DB() {
 		List<Act> list = null;
 		try {
@@ -45,6 +47,38 @@ public class DataManage {
 		return list;
 	}
 	
+	public   static void saveIndexHotellist2DB(List<Hotel> actList, boolean  isUpcoming) {
+		
+		if (actList == null || actList.isEmpty()) return;
+		int size = actList.size();
+		Where<Hotel, Integer> where = DBAccessor.getWhere(Hotel.class);
+		try {
+			where.eq("isUpcoming", isUpcoming);
+		}
+		catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		DBAccessor.deleteALL(Hotel.class, where);
+		for (int i = 0; i < size; i++) {
+			DBAccessor.saveObject(actList.get(i));
+		}
+	}
+	
+	public   static List<Hotel> getIndexHotellist4DB(  boolean  isUpcoming) {
+		List<Hotel> list = null;
+		try {
+			Map<String, Object> fieldValues = new HashMap<String, Object>();
+			fieldValues.put("isUpcoming", isUpcoming);
+			list = DBAccessor.queryAll(Hotel.class, fieldValues);
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+	
+	@Deprecated
 	private static String convertList2String(List<Act> actList) {
 		String listStr = "";
 		int size = actList.size() > 5 ? 5 : actList.size();
@@ -58,7 +92,7 @@ public class DataManage {
 		
 	}
 	
-	//
+	@Deprecated
 	public static List<Act> getIndexActlist() {
 		List<Act> list = null;
 		try {
@@ -76,6 +110,7 @@ public class DataManage {
 		return list;
 	}
 	
+	@Deprecated
 	public static int getIndexActlistPageNum() {
 		
 		return DefaultShared.getInt(Constant.SPFKEY.INDEX_ACTLIST_PAGENUM_KEY, 1);
