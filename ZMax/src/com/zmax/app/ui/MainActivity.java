@@ -26,10 +26,10 @@ public class MainActivity extends BaseSlidingFragmentActivity {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		mContext = this;
-		if (!PhoneUtil.isNetworkOk(mContext)) {
-			switchContent(new NetErrorFragment());
-			return;
-		}
+		// if (!PhoneUtil.isNetworkOk(mContext)) {
+		// switchContent(new NetErrorFragment());
+		// return;
+		// }
 		initLocate();
 	}
 	

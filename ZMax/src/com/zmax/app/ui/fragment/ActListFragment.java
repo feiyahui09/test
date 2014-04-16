@@ -121,24 +121,21 @@ public class ActListFragment extends Fragment implements IXListViewListener, OnI
 				if (getActivity() == null) return;
 				if (result != null && result.status == 200) {
 					final List<Act> actList = result.events;
-					if (actList != null && !actList.isEmpty()) {
-						if (curPage == 1) {
-							adapter.Clear();
-							new Thread(new Runnable() {
-								@Override
-								public void run() {
-									DataManage.saveIndexActlist2DB(actList);
-								}
-							}).start();
-						}
+					if (curPage == 1) {
+						adapter.Clear();
+						new Thread(new Runnable() {
+							@Override
+							public void run() {
+								DataManage.saveIndexActlist2DB(actList);
+							}
+						}).start();
+					}
+					if (!actList.isEmpty()) {
 						adapter.appendToList(actList);
 						listview.onLoad();
 						curPage++;
-					}
-					else if (actList != null && actList.isEmpty()) {
-						if (curPage == 1) adapter.appendToList(DataManage.getIndexActlist4DB());
+					}else 
 						listview.onLoads();
-					}
 				}
 				else {
 					if (curPage == 1) adapter.appendToList(DataManage.getIndexActlist4DB());
@@ -146,7 +143,7 @@ public class ActListFragment extends Fragment implements IXListViewListener, OnI
 				}
 			}
 		});
-		getActListTask.execute(Constant.CUR_CITY, String.valueOf(page), "" + Constant.Acts.PER_NUM_GET_ACTLIST);
+		getActListTask.execute(Constant.CUR_CITY, String.valueOf(curPage), "" + Constant.PER_NUM_GET_ACTLIST);
 	}
 	
 	@Override

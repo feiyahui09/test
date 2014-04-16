@@ -27,8 +27,7 @@ public class DataManage {
 	
 	public static void saveIndexActlist2DB(List<Act> actList) {
 		
-		if (actList == null || actList.isEmpty()) return;
-		int size = actList.size() > 5 ? 5 : actList.size();
+		int size = (actList == null || actList.isEmpty()) ? 0 : actList.size() > 5 ? 5 : actList.size();
 		DBAccessor.deleteALL(Act.class, null);
 		for (int i = 0; i < size; i++) {
 			DBAccessor.saveObject(actList.get(i));
@@ -47,10 +46,8 @@ public class DataManage {
 		return list;
 	}
 	
-	public   static void saveIndexHotellist2DB(List<Hotel> actList, boolean  isUpcoming) {
-		
-		if (actList == null || actList.isEmpty()) return;
-		int size = actList.size();
+	public static void saveIndexHotellist2DB(List<Hotel> actList, boolean isUpcoming) {
+		int size = (actList == null || actList.isEmpty()) ? 0 : actList.size();
 		Where<Hotel, Integer> where = DBAccessor.getWhere(Hotel.class);
 		try {
 			where.eq("isUpcoming", isUpcoming);
@@ -65,7 +62,7 @@ public class DataManage {
 		}
 	}
 	
-	public   static List<Hotel> getIndexHotellist4DB(  boolean  isUpcoming) {
+	public static List<Hotel> getIndexHotellist4DB(boolean isUpcoming) {
 		List<Hotel> list = null;
 		try {
 			Map<String, Object> fieldValues = new HashMap<String, Object>();

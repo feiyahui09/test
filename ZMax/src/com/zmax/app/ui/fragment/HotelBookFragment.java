@@ -1,5 +1,6 @@
 package com.zmax.app.ui.fragment;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -22,9 +23,11 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
+import com.j256.ormlite.stmt.Where;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.zmax.app.R;
 import com.zmax.app.adapter.HotelBookListAdapter;
+import com.zmax.app.db.DBAccessor;
 import com.zmax.app.manage.DataManage;
 import com.zmax.app.model.Hotel;
 import com.zmax.app.model.HotelList;
@@ -87,11 +90,13 @@ public class HotelBookFragment extends Fragment implements OnPageChangeListener,
 			@Override
 			public void onCallBack(HotelList hotelList, HotelList upcomingHotelList) {
 				if (getActivity() == null) return;
-				if (hotelList != null && hotelList.status == 200 && hotelList.hotels != null && !hotelList.hotels.isEmpty()) {
-					initData(hotelList.hotels, upcomingHotelList);
+				if (hotelList != null && hotelList.status == 200) {
+					initData(hotelList.hotels, upcomingHotelList.hotels);
+					saveHotel(hotelList.hotels, false);
+					saveHotel(upcomingHotelList.hotels, true);
 				}
 				else {
-					initData(DataManage.getIndexHotellist4DB(false), null);
+					initData(DataManage.getIndexHotellist4DB(false), DataManage.getIndexHotellist4DB(true));
 				}
 			}
 		});
@@ -171,13 +176,12 @@ public class HotelBookFragment extends Fragment implements OnPageChangeListener,
 		
 	}
 	
-	private void initData(final List<Hotel> hotelList, HotelList upcomingHotelList) {
+	private void initData(final List<Hotel> hotelList, List<Hotel> upcomingHotelList) {
 		if (hotelList == null || hotelList.isEmpty()) return;
 		List<View> views = fromViews(hotelList, upcomingHotelList);
 		adapter.addViews(views);
 		initPagerIndicator(views, indicator);
 		pager.setCurrentItem(mPosition);
-		saveHotel(hotelList, false);
 		
 	}
 	
@@ -186,6 +190,7 @@ public class HotelBookFragment extends Fragment implements OnPageChangeListener,
 			
 			@Override
 			public void run() {
+				
 				List<Hotel> tmpLists = hotelList;
 				for (Hotel hotel : tmpLists) {
 					hotel.isUpcoming = isUpcoming;
@@ -195,7 +200,7 @@ public class HotelBookFragment extends Fragment implements OnPageChangeListener,
 		}).start();
 	}
 	
-	public List<View> fromViews(List<Hotel> hotelList, HotelList upcomingHotelList) {
+	public List<View> fromViews(List<Hotel> hotelList, List<Hotel> upcomingHotelList) {
 		LayoutInflater inflater = getActivity().getLayoutInflater();
 		List<View> mList = new ArrayList<View>();
 		
@@ -212,14 +217,9 @@ public class HotelBookFragment extends Fragment implements OnPageChangeListener,
 			ImageLoader.getInstance().displayImage(hotel.poster, ((ImageView) view.findViewById(R.id.iv_img)));
 			mList.add(view);
 		}
-		if (upcomingHotelList != null && upcomingHotelList.hotels != null && !upcomingHotelList.hotels.isEmpty()) {
-			mList.add(fromUpcomingViews(upcomingHotelList.hotels));
-			saveHotel(upcomingHotelList.hotels, true);
+		if (upcomingHotelList != null && !upcomingHotelList.isEmpty()) {
+			mList.add(fromUpcomingViews(upcomingHotelList));
 		}
-		else {
-			mList.add(fromUpcomingViews(DataManage.getIndexHotellist4DB(true)));
-		}
-		
 		return mList;
 	}
 	
