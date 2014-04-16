@@ -12,6 +12,7 @@ import com.zmax.app.model.CityLocation;
 import com.zmax.app.model.Documents;
 import com.zmax.app.model.FeeBack;
 import com.zmax.app.model.HotelList;
+import com.zmax.app.model.Login;
 import com.zmax.app.model.Update;
 import com.zmax.app.utils.Constant;
 import com.zmax.app.utils.JsonMapperUtils;
@@ -201,6 +202,19 @@ public class NetAccessor {
 		return feeBack;
 	}
 	
+	public static Login loginPlayZMAX(Context context) {
+		Login login = null;
+		try {
+			String jsonString = HttpUtils.postByHttpClient(context, Constant.ZMAX_URL + "users/login");
+			Log.d("  responeString -->\n" + jsonString);
+			login = JsonMapperUtils.toObject(jsonString, Login.class);
+		}
+		catch (Exception e) {
+			Log.e("  Exception :" + e.toString());
+			e.printStackTrace();
+		}
+		return login;
+	}
 	/*
 	 * 上报广告Log （01月新版）
 	 * 

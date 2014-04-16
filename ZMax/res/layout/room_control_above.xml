@@ -39,7 +39,7 @@
         android:layout_below="@+id/tv_mode_tile"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
-        android:text="当前灯光模式：自定义模式"
+        android:text="当前灯光模式：明亮模式"
         android:textColor="#5d5d5d"
         android:textSize="14sp" />
 

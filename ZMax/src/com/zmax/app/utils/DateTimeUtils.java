@@ -77,6 +77,12 @@ public class DateTimeUtils {
 			return new SimpleDateFormat("yyyyMMdd");
 		}
 	};
+	private final static ThreadLocal<SimpleDateFormat> dateFormater4 = new ThreadLocal<SimpleDateFormat>() {
+		@Override
+		protected SimpleDateFormat initialValue() {
+			return new SimpleDateFormat("yyyyMMddHHmm");
+		}
+	};
 	private final static ThreadLocal<SimpleDateFormat> dateFormater3 = new ThreadLocal<SimpleDateFormat>() {
 		@Override
 		protected SimpleDateFormat initialValue() {
@@ -93,6 +99,15 @@ public class DateTimeUtils {
 	public static Date toDate(String sdate) {
 		try {
 			return dateFormater2.get().parse(sdate);
+		}
+		catch (ParseException e) {
+			return null;
+		}
+	}
+	
+	public static Date toDatePrecisely(String sdate) {
+		try {
+			return dateFormater4.get().parse(sdate);
 		}
 		catch (ParseException e) {
 			return null;
@@ -164,4 +179,16 @@ public class DateTimeUtils {
 		return b;
 	}
 	
+	public static String getWeekOfDate(String sdate) {
+		
+		Date dt = toDatePrecisely(sdate);
+		String[] weekDays = { "周日", "周一", "周二", "周三", "周四", "周五", "周六" };
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(dt);
+		
+		int w = cal.get(Calendar.DAY_OF_WEEK) - 1;
+		if (w < 0) w = 0;
+		
+		return weekDays[w];
+	}
 }

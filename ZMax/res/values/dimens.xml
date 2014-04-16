@@ -72,7 +72,7 @@
     <dimen name="room_control_tv_behind_padding_left">30dp</dimen>
     <dimen name="room_control_tv_behind_padding_bottom">30dp</dimen>
     <dimen name="room_control_tv_behind_control_bg_height">210dp</dimen>
-    <dimen name="room_control_tv_behind_control_bg_margin_top">60dp</dimen>
+    <dimen name="room_control_tv_behind_control_bg_margin_top">47dp</dimen>
     <!-- playzmax -->
 
     <dimen name="playzmax_login_padding_left">25dp</dimen>

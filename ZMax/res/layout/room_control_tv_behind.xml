@@ -2,10 +2,12 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    android:layout_marginTop="8dp"
     android:background="@drawable/room_control_tv_control_bg"
-    android:paddingBottom="@dimen/room_control_tv_behind_padding_left"
+    android:paddingBottom="52dp"
     android:paddingLeft="@dimen/room_control_tv_behind_padding_left"
-    android:paddingRight="@dimen/room_control_tv_behind_padding_left" >
+    android:paddingRight="@dimen/room_control_tv_behind_padding_left"
+    android:paddingTop="20dp" >
 
     <include layout="@layout/room_control_behind_indicator" />
 
@@ -14,7 +16,8 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/room_control_behind_indicator"
-        android:orientation="vertical" >
+        android:orientation="vertical"
+        android:visibility="visible" >
 
         <RelativeLayout
             android:layout_width="fill_parent"
@@ -45,8 +48,7 @@
             android:layout_width="@dimen/room_control_tv_behind_control_bg_height"
             android:layout_height="@dimen/room_control_tv_behind_control_bg_height"
             android:layout_gravity="center"
-            android:layout_marginBottom="@dimen/room_control_tv_behind_control_bg_margin_top"
-            android:layout_marginTop="@dimen/room_control_tv_behind_control_bg_margin_top"
+            android:layout_marginTop="47dp"
             android:background="@drawable/room_control_tv_control_digital_bg" >
 
             <Button
@@ -80,7 +82,7 @@
     <LinearLayout
         android:id="@+id/ll_digital"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/room_control_behind_indicator"
         android:orientation="vertical"
         android:visibility="gone" >
@@ -109,7 +111,8 @@
 
         <RelativeLayout
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content" >
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp" >
 
             <Button
                 style="@style/room_control_round_button"
@@ -131,7 +134,8 @@
 
         <RelativeLayout
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content" >
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp" >
 
             <Button
                 style="@style/room_control_round_button"
@@ -153,7 +157,8 @@
 
         <RelativeLayout
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content" >
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp" >
 
             <Button
                 style="@style/room_control_round_button"

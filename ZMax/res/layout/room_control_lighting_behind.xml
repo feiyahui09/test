@@ -2,8 +2,9 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:paddingBottom="12dp"
+    android:paddingBottom="10dp"
     android:paddingLeft="15dp"
+    android:paddingTop="5dp"
     android:paddingRight="15dp" >
 
     <include layout="@layout/room_control_behind_indicator" />
@@ -14,16 +15,16 @@
         android:layout_below="@+id/room_control_behind_indicator"
         android:background="@drawable/room_control_lighting_content_bg"
         android:orientation="vertical"
-        android:paddingBottom="22dp"
+        android:paddingBottom="20dp"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
-        android:paddingTop="20dp" >
+        android:paddingTop="18dp" >
 
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="20dp"
+            android:layout_marginBottom="15dp"
             android:gravity="center"
             android:text="灯光控制"
             android:textColor="#716c65"
@@ -38,7 +39,7 @@
         <ImageView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="17dp"
+            android:layout_marginBottom="10dp"
             android:layout_marginTop="17dp"
             android:background="@drawable/room_control_lighting_control_divider" />
 

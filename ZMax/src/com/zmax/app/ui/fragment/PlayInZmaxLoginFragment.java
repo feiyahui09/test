@@ -14,6 +14,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.zmax.app.R;
+import com.zmax.app.model.Login;
+import com.zmax.app.task.LoginPlayZmaxTask;
 import com.zmax.app.ui.MainActivity;
 
 public class PlayInZmaxLoginFragment extends Fragment {
@@ -21,6 +23,7 @@ public class PlayInZmaxLoginFragment extends Fragment {
 	private View view;
 	private Button btn_login;
 	private Spinner sp_hotels;
+	private LoginPlayZmaxTask loginPlayZmaxTask;
 	
 	public PlayInZmaxLoginFragment() {
 		this(R.color.white);
@@ -38,15 +41,33 @@ public class PlayInZmaxLoginFragment extends Fragment {
 			
 			@Override
 			public void onClick(View v) {
-				// ((MainActivity) getActivity()).switchContent(new
-				// PlayInZmaxFragment((PlayZmaxLogoutCallback) getActivity()));
-				((MainActivity) getActivity()).switchContent(new PlayInZmaxFragment());
+				goPlayZmax();
 			}
 		});
 		
 		sp_hotels = (Spinner) view.findViewById(R.id.sp_hotels);
 		fromHotelsSpinner(sp_hotels);
 		return view;
+	}
+	
+	@Override
+	public void onActivityCreated(Bundle savedInstanceState) {
+		// TODO Auto-generated method stub
+		super.onActivityCreated(savedInstanceState);
+		
+	}
+	
+	private void goPlayZmax() {
+		loginPlayZmaxTask = new LoginPlayZmaxTask(getActivity(), new LoginPlayZmaxTask.TaskCallBack() {
+			@Override
+			public void onCallBack(Login loginResult) {
+				if (loginResult != null && loginResult.status == 200) {
+					((MainActivity) getActivity()).switchContent(new PlayInZmaxFragment(loginResult));
+				}
+			}
+		});
+		loginPlayZmaxTask.execute();
+		
 	}
 	
 	private void fromHotelsSpinner(Spinner spinner) {

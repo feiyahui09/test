@@ -141,6 +141,7 @@ public class RoomControlLightingFragment extends Fragment {
 		tv_mode.setText("灯光控制");
 		tv_mode_detail = ((TextView) view.findViewById(R.id.tv_mode_detail));
 		tv_mode_detail.setVisibility(View.VISIBLE);
+		tv_mode_detail.setText("当前灯光模式：明亮模式");
 		return view;
 	}
 	
@@ -158,7 +159,7 @@ public class RoomControlLightingFragment extends Fragment {
 		return view;
 	}
 	
-	private int curMode = 0;
+	private int modeNum = 0;
 	public static String[] mode_names = { "明亮模式", "电视模式", "阅读模式", "睡眠模式" };
 	public static int[] mode_imgs = { R.drawable.room_control_lighting_bright_mode, R.drawable.room_control_lighting_tv_mode,
 			R.drawable.room_control_lighting_reading_mode, R.drawable.room_control_lighting_sleep_mode };
@@ -168,14 +169,15 @@ public class RoomControlLightingFragment extends Fragment {
 		@Override
 		public void onClick(View v) {
 			if (v.getId() == R.id.ib_previous) {
-				curMode = Math.abs((--curMode) % 4);
+				int curMode = Math.abs((--modeNum) % 4);
 				tv_mode_hint.setText(mode_names[curMode]);
+				tv_mode_detail.setText("当前灯光模式：" + mode_names[curMode]);
 				iv_img.setImageResource(mode_imgs[curMode]);
 			}
 			else if (v.getId() == R.id.ib_next) {
-				if (curMode == 3) return;
-				curMode = Math.abs((++curMode) % 4);
+				int curMode = Math.abs((++modeNum) % 4);
 				tv_mode_hint.setText(mode_names[curMode]);
+				tv_mode_detail.setText("当前灯光模式：" + mode_names[curMode]);
 				iv_img.setImageResource(mode_imgs[curMode]);
 			}
 		}

@@ -107,8 +107,8 @@
 
     <style name="room_control_round_button">
         <item name="android:gravity">center</item>
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">52dp</item>
+        <item name="android:layout_height">80dp</item>
         <item name="android:textColor">@color/room_control_tv_model_text_color_sel</item>
         <item name="android:textSize">24sp</item>
         <item name="android:background">@drawable/room_control_tv_control_round_btn_sel</item>
