@@ -178,6 +178,7 @@ public class CustomHttpClient {
 			// 设置一些基本参数
 			HttpProtocolParams.setVersion(params, HttpVersion.HTTP_1_1);
 			HttpProtocolParams.setContentCharset(params, CHARSET_UTF8);
+			HttpProtocolParams.setHttpElementCharset(params, CHARSET_UTF8);
 			HttpProtocolParams.setUseExpectContinue(params, true);
 			HttpProtocolParams.setUserAgent(params, "Mozilla/5.0(Linux;U;Android 2.2.1;en-us;Nexus One Build.FRG83) "
 					+ "AppleWebKit/553.1(KHTML,like Gecko) Version/4.0 Mobile Safari/533.1");
