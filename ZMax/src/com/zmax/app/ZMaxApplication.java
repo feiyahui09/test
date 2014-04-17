@@ -8,6 +8,7 @@ import java.lang.Thread.UncaughtExceptionHandler;
 import android.app.Application;
 import android.content.Context;
 import android.graphics.Bitmap.CompressFormat;
+import android.os.Handler;
 import cn.sharesdk.framework.ShareSDK;
 
 import com.baidu.mapapi.BMapManager;
@@ -17,6 +18,7 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
+import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 import com.zmax.app.utils.Constant;
 import com.zmax.app.utils.FileUtils;
 import com.zmax.app.utils.Log;
@@ -62,9 +64,9 @@ public class ZMaxApplication extends Application {
 	
 	private void initImageLoader() {
 		ImageLoaderConfiguration config;
-		DisplayImageOptions options = new DisplayImageOptions.Builder().cacheInMemory() // true
-				.cacheOnDisc() // true
-				.build();
+		DisplayImageOptions options = new DisplayImageOptions.Builder().cacheInMemory().cacheOnDisc().delayBeforeLoading(100)
+				.displayer(new FadeInBitmapDisplayer(650)).showImageOnLoading(R.drawable.default_loading_img)
+				.showImageForEmptyUri(R.drawable.default_loading_fail_img).showImageOnFail(R.drawable.default_loading_fail_img).build();
 		config = new ImageLoaderConfiguration.Builder(this).threadPriority(Thread.NORM_PRIORITY - 2).denyCacheImageMultipleSizesInMemory()
 				.discCacheExtraOptions(480, 800, CompressFormat.PNG, 90, null).discCacheFileNameGenerator(new Md5FileNameGenerator())
 				.tasksProcessingOrder(QueueProcessingType.LIFO).discCache(new UnlimitedDiscCache(FileUtils.getSdcardDir()))

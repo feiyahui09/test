@@ -8,8 +8,8 @@
         android:id="@+id/iv_img"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:background="@drawable/default_loading_img"
-        android:scaleType="centerCrop" >
+        android:scaleType="fitXY"
+       >
     </ImageView>
 
     <ImageView
@@ -27,7 +27,5 @@
         android:text="zmax酒店"
         android:textColor="@color/hotel_list_tile"
         android:textSize="18sp" />
-
-     
 
 </RelativeLayout>
