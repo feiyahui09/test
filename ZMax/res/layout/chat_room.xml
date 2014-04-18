@@ -1,12 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
     android:background="@drawable/default_bg"
     android:gravity="center_horizontal"
     android:orientation="vertical" >
 
+    <include layout="@layout/detail_header" >
+    </include>
+
+    <ListView
+        android:id="@+id/list_view"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/rl_edit"
+        android:layout_below="@+id/above_content_header"
+        android:background="@android:color/transparent"
+        android:cacheColorHint="#0000"
+        android:divider="@null"
+        android:listSelector="@android:color/transparent"
+        android:scrollbars="none" >
+    </ListView>
+
     <RelativeLayout
+        android:id="@+id/rl_edit"
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:layout_alignParentBottom="true" >
@@ -56,8 +73,5 @@
             android:layout_marginRight="8dp"
             android:background="@drawable/chat_send_btn_sel" />
     </RelativeLayout>
-
-    <include layout="@layout/detail_header" >
-    </include>
 
 </RelativeLayout>

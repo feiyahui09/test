@@ -56,7 +56,7 @@
             android:label="@string/app_name"
             android:theme="@android:style/Theme.NoTitleBar" >
         </activity>
-        <activity android:name="com.zmax.app.chat.ChatTest" >
+        <activity android:name="com.zmax.app.chat.ChatRoomActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -73,7 +73,6 @@
         <activity android:name="com.zmax.app.ui.RoomControlActivity" />
         <activity android:name="com.zmax.app.ui.OrderFillActivity" />
         <activity android:name="com.zmax.app.ui.WelcomeActivity" />
-        <activity android:name="com.zmax.app.ui.ChatRoomActivity" />
         <activity android:name="com.zmax.app.map.RoutePlanDemo" />
         <activity android:name="com.zmax.app.ui.FeedBackActivity" />
         <activity android:name="com.zmax.app.ui.DocumentsActivity" />

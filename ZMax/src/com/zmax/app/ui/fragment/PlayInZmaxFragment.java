@@ -16,9 +16,9 @@ import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
 
 import com.zmax.app.R;
+import com.zmax.app.chat.ChatRoomActivity;
 import com.zmax.app.model.Login;
 import com.zmax.app.ui.ActsInHotelActivity;
-import com.zmax.app.ui.ChatRoomActivity;
 import com.zmax.app.ui.MainActivity;
 import com.zmax.app.ui.RoomControlActivity;
 import com.zmax.app.utils.Constant;
