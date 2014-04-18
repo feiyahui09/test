@@ -55,6 +55,8 @@
             android:name="com.zmax.app.ui.MainActivity"
             android:label="@string/app_name"
             android:theme="@android:style/Theme.NoTitleBar" >
+        </activity>
+        <activity android:name="com.zmax.app.chat.ChatTest" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
