@@ -1,12 +1,16 @@
 package com.zmax.app.chat;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
-import android.app.AlertDialog;
+import org.json.JSONObject;
+
 import android.content.Context;
-import android.content.DialogInterface;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -18,7 +22,11 @@ import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
 
+import com.netease.pomelo.DataCallBack;
+import com.netease.pomelo.DataListener;
 import com.zmax.app.R;
+import com.zmax.app.chat.ChatHelper.ConnectorEntryCallback;
+import com.zmax.app.chat.ChatHelper.OnChatCallBack;
 import com.zmax.app.ui.base.BaseActivity;
 
 public class ChatRoomActivity extends BaseActivity implements OnClickListener {
@@ -29,6 +37,20 @@ public class ChatRoomActivity extends BaseActivity implements OnClickListener {
 	private EditText et_edit;
 	private ListView lv_chat;
 	private ChatListAdapter adapter;
+	private ChatHelper chatHelper;
+	private DataCallBack connectorEntertyCallBack;
+	private DataListener onChatCallBack;
+	private Handler handler = new Handler();
+	private Runnable sendRunnable = new Runnable() {
+		
+		@Override
+		public void run() {
+			String str = "你是猴子请来的逗比么？？            " + new SimpleDateFormat("hhmmss").format(new Date());
+			chatHelper.send(str);
+			
+			handler.postDelayed(this, 6000);
+		}
+	};
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -37,6 +59,42 @@ public class ChatRoomActivity extends BaseActivity implements OnClickListener {
 		setContentView(R.layout.chat_room);
 		init();
 		initHeader();
+		initChatPomelo();
+	}
+	
+	private void initChatPomelo() {
+		chatHelper = new ChatHelper();
+		try {
+			chatHelper.init(this, "192.168.10.42", 3014, "2", "token2", "红孩儿", "女", null, new ConnectorEntryCallback() {
+				
+				@Override
+				public void onConnect(final JSONObject msg) {
+					handler.post(new Runnable() {
+						@Override
+						public void run() {
+							Toast.makeText(mContext, "欢迎进入聊天室，当前登录信息：、\n" + msg.toString(), 2233).show();
+						}
+					});
+					handler.postDelayed(sendRunnable, 4000);
+				}
+			}, new OnChatCallBack() {
+				@Override
+				public void onChat(JSONObject msg) {
+					show(msg.toString());
+				}
+			});
+			// chatHelper.init(this, "192.168.10.42", 3014, "2", "token2", "逗比",
+			// "男", null, connectorEntertyCallBack, onChatCallBack);
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Override
+	public void onDestroy() {
+		super.onDestroy();
+		if (chatHelper != null) chatHelper.disConnect();
 	}
 	
 	private void init() {
@@ -57,7 +115,7 @@ public class ChatRoomActivity extends BaseActivity implements OnClickListener {
 		btn_send.setOnClickListener(this);
 		
 		lv_chat = (ListView) findViewById(R.id.list_view);
-		adapter = new ChatListAdapter(mContext, getMyData());
+		adapter = new ChatListAdapter(mContext);
 		lv_chat.setAdapter(adapter);
 		
 	}
@@ -81,30 +139,39 @@ public class ChatRoomActivity extends BaseActivity implements OnClickListener {
 		});
 	}
 	
+	private void show(String content) {
+		
+		adapter.addItem(new Message(ChatListAdapter.MSG_TYPE[new Random().nextInt(ChatListAdapter.MSG_TYPE.length)], content + " \n"
+				+ new Date()));
+	}
+	
 	@Override
 	public void onClick(View v) {
 		
 		switch (v.getId()) {
 			case R.id.iv_pic:
-				new AlertDialog.Builder(mContext).setTitle("title")
-						.setItems(R.array.pic_dialog_items, new DialogInterface.OnClickListener() {
-							
-							@Override
-							public void onClick(DialogInterface dialog, int which) {
-								if (which == 0) {
-									
-								}
-								else if (which == 1) {
-									
-								}
-							}
-						}).show();
+				adapter.addItems(getMyData());
+				// new AlertDialog.Builder(mContext).setTitle("title")
+				// .setItems(R.array.pic_dialog_items, new
+				// DialogInterface.OnClickListener() {
+				//
+				// @Override
+				// public void onClick(DialogInterface dialog, int which) {
+				// if (which == 0) {
+				//
+				// }
+				// else if (which == 1) {
+				//
+				// }
+				// }
+				// }).show();
 				break;
 			case R.id.iv_emotion:
+				
 				break;
 			
 			case R.id.btn_send:
-				
+				show("hi？");
 				break;
 			
 			default:

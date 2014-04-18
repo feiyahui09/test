@@ -4,9 +4,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.Context;
-import android.os.Handler;
 
 import com.netease.pomelo.DataCallBack;
+import com.netease.pomelo.DataEvent;
 import com.netease.pomelo.DataListener;
 import com.netease.pomelo.PomeloClient;
 import com.zmax.app.utils.Log;
@@ -15,7 +15,6 @@ public class ChatHelper {
 	
 	private PomeloClient client;
 	private String name, gender, uid;
-	private Handler handler;
 	
 	public interface GateEntryCallBack {
 		public void onGateEnterSuccess();
@@ -24,14 +23,22 @@ public class ChatHelper {
 		
 	}
 	
+	public interface ConnectorEntryCallback {
+		
+		public void onConnect(JSONObject msg);
+	}
+	
+	public interface OnChatCallBack {
+		public void onChat(JSONObject msg);
+	}
+	
 	public void init(Context context, String serverIP, int serverPort, String uid, final String authToken, String name, String gender,
-			final GateEntryCallBack gateEntryCallBack, final DataCallBack connectorEntertyCallBack, final DataListener onChatCallBack)
-			throws JSONException {
+			final GateEntryCallBack gateEntryCallBack, final ConnectorEntryCallback connectorEntryCallback,
+			final OnChatCallBack onChatCallBack) throws JSONException {
 		this.name = name;
 		this.gender = gender;
 		this.uid = uid;
 		
-		handler = new Handler(context.getMainLooper());
 		client = new PomeloClient(serverIP, serverPort);
 		Log.i("gate.queryEntry ");
 		client.init();
@@ -47,11 +54,24 @@ public class ChatHelper {
 					Log.i("connector.enter ");
 					client.init();
 					// 真正分配到个服务器，
-					client.request("connector.entryHandler.enter", new JSONObject().put("auth_token", authToken), connectorEntertyCallBack);
-					client.on("onChat", onChatCallBack);
+					client.request("connector.entryHandler.enter", new JSONObject().put("auth_token", authToken), new DataCallBack() {
+						public void responseData(JSONObject msg) {
+							// handle data here
+							Log.i("connector.enter:response : " + msg.toString());
+							connectorEntryCallback.onConnect(msg);
+						}
+					});
+					client.on("onChat", new DataListener() {
+						public void receiveData(DataEvent event) {
+							JSONObject msg = event.getMessage();
+							Log.i("onChat: " + msg.toString());
+							onChatCallBack.onChat(msg);
+							
+						}
+					});
 				}
-				catch (JSONException e) {
-					gateEntryCallBack.onGateEnterFailed();
+				catch (Exception e) {
+					if (gateEntryCallBack != null) gateEntryCallBack.onGateEnterFailed();
 					e.printStackTrace();
 				}
 				

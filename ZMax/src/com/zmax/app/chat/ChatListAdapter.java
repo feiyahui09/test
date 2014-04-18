@@ -25,32 +25,31 @@ public class ChatListAdapter extends BaseAdapter {
 	public static final String KEY = "key";
 	public static final String VALUE = "value";
 	
-	public static final int VALUE_TIME_TIP = 0;// 7种不同的布局
-	public static final int VALUE_LEFT_TEXT = 1;
-	public static final int VALUE_LEFT_IMAGE = 2;
-	public static final int VALUE_LEFT_AUDIO = 3;
-	public static final int VALUE_RIGHT_TEXT = 4;
-	public static final int VALUE_RIGHT_IMAGE = 5;
-	public static final int VALUE_RIGHT_AUDIO = 6;
+//	public static final int VALUE_TIME_TIP = 0;// 7种不同的布局
+	public static final int VALUE_LEFT_TEXT = 0;
+	public static final int VALUE_LEFT_IMAGE = 1;
+	public static final int VALUE_RIGHT_TEXT = 2;
+	public static final int VALUE_RIGHT_IMAGE = 3;
+	public static final int[] MSG_TYPE = { VALUE_LEFT_TEXT, VALUE_LEFT_IMAGE, VALUE_RIGHT_TEXT, VALUE_RIGHT_IMAGE };
 	private LayoutInflater mInflater;
 	
 	private Context context;
 	private List<Message> myList = new ArrayList<Message>();
 	
-	public ChatListAdapter(Context context, List<Message> myList) {
+	public ChatListAdapter(Context context) {
 		
 		this.context = context;
-		this.myList = myList;
 		
 		mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		
-		for (Message msg : myList) {
-			
-			Log.d("myList:", msg.getType() + "");
-		}
 	}
 	
-	public void addItem(  Message item) {
+	public void addItems(List<Message> list) {
+		myList.addAll(list);
+		notifyDataSetChanged();
+	}
+	
+	public void addItem(Message item) {
 		myList.add(item);
 		notifyDataSetChanged();
 	}
@@ -140,7 +139,7 @@ public class ChatListAdapter extends BaseAdapter {
 	 * */
 	@Override
 	public int getViewTypeCount() {
-		return 7;
+		return MSG_TYPE.length;
 	}
 	
 	class ViewHolder {
