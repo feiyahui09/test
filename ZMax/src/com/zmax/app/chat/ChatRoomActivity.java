@@ -48,7 +48,6 @@ public class ChatRoomActivity extends BaseActivity implements OnClickListener {
 	// private String userid = "2";
 	// private String userToken = "token2";
 	// private String userGender = "女";
-	//
 	private String userName = "逗比";
 	private String userid = "1";
 	private String userToken = "sdtoken1";
@@ -124,7 +123,7 @@ public class ChatRoomActivity extends BaseActivity implements OnClickListener {
 	}
 	
 	private void initChatPomelo() {
-		chatHelper = new ChatHelper();
+		chatHelper = ChatHelper.getHelper();
 		try {
 			chatHelper.init(this, "192.168.10.46", 3014, userid, userToken, userName, userGender, null, new ConnectorEntryCallback() {
 				

@@ -13,7 +13,7 @@ import com.netease.pomelo.PomeloClient;
 import com.zmax.app.utils.Log;
 
 public class ChatHelper {
-	
+	static ChatHelper helper;
 	private PomeloClient client;
 	private String name, gender, uid;
 	
@@ -34,6 +34,13 @@ public class ChatHelper {
 		
 		public void onChat(JSONObject msg);
 		
+	}
+	
+	public static ChatHelper getHelper() {
+		if (helper == null) {
+			helper = new ChatHelper();
+		}
+		return helper;
 	}
 	
 	public void init(Context context, String serverIP, int serverPort, String uid, final String authToken, String name, String gender,
