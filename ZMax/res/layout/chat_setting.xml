@@ -4,18 +4,22 @@
     android:layout_height="match_parent"
     android:background="@drawable/default_bg"
     android:gravity="center_horizontal"
-    android:orientation="vertical"
-    android:paddingLeft="13dp"
-    android:paddingRight="13dp"
-    android:paddingTop="23dp" >
+    android:orientation="vertical" >
+
+    <include layout="@layout/detail_header" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="13dp"
+        android:layout_marginRight="13dp"
+        android:layout_marginTop="23dp"
         android:background="@drawable/playzmax_login_bg"
         android:gravity="center_horizontal"
         android:orientation="vertical"
         android:paddingBottom="15dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
         android:paddingTop="15dp" >
 
         <ImageView
@@ -26,24 +30,61 @@
             android:background="@drawable/playzmax_login_logo" />
 
         <EditText
-            android:id="@+id/et_room_number"
+            android:id="@+id/et_nick_name"
             style="@style/playzmax_login_edittext"
+             android:textCursorDrawable="@null"
             android:layout_marginTop="8dp"
             android:hint="昵称" />
+
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:orientation="horizontal" >
+
+            <RadioButton
+                android:id="@+id/btn_man"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/chat_setting_feman_btn_sel"
+                android:gravity="center"
+                android:text="男"
+                android:textColor="@color/chat_setting_text_color_sel"
+                android:textSize="14sp" />
+
+            <RadioButton
+                android:id="@+id/btn_feman"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/chat_setting_man_btn_sel"
+                android:gravity="center"
+                android:text="女"
+                android:textColor="@color/chat_setting_text_color_sel"
+                android:textSize="14sp" />
+        </RadioGroup>
 
         <Button
             android:id="@+id/btn_login"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="25dp"
-            android:background="@drawable/playzmax_login_btn_sel" />
+            android:layout_marginTop="55dp"
+            android:background="@drawable/playzmax_login_btn_sel"
+            android:text="开始聊天"
+            android:textColor="#434343"
+            android:textSize="14sp" />
     </LinearLayout>
 
-    <ImageView
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="33dp"
-        android:background="@drawable/playzmax_login_bottom_logo_bg" />
+        android:layout_marginBottom="24dp"
+        android:gravity="center"
+        android:text="简单填写下，就可以畅爽的聊天啦！"
+        android:textColor="#434343"
+        android:textSize="14sp" />
 
 </LinearLayout>

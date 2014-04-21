@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/default_bg"
+    android:orientation="vertical"
+    android:paddingTop="32dp" >
+
+    <include layout="@layout/detail_header" />
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:id="@+id/tv_clear_info"
+            style="@style/setting_btn"
+            android:layout_toLeftOf="@+id/btn_clear"
+            android:text="清空聊天记录(0.13M)" />
+
+        <ImageView
+            android:id="@+id/btn_clear"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/btn_clear"
+            android:background="@drawable/chat_setting_ver_divider" />
+
+        <Button
+            android:id="@+id/btn_clear"
+            style="@style/setting_btn"
+            android:layout_width="wrap_content"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/chat_more_clear_btn_sel" />
+    </RelativeLayout>
+
+    <ImageView
+        style="@style/setting_divider"
+        android:background="@drawable/chat_setting_divider" />
+
+    <Button
+        android:id="@+id/btn_about"
+        style="@style/setting_btn"
+        android:text="关于聊天室" />
+
+    <ImageView
+        style="@style/setting_divider"
+        android:background="@drawable/chat_setting_divider" />
+
+    <ImageView
+        style="@style/setting_divider"
+        android:layout_marginTop="200dp"
+        android:background="@drawable/chat_setting_divider" />
+
+    <Button
+        android:id="@+id/btn_quit"
+        style="@style/setting_btn"
+        android:text="退出聊天室" />
+
+    <ImageView
+        style="@style/setting_divider"
+        android:layout_marginTop="200dp"
+        android:background="@drawable/chat_setting_divider" />
+
+</LinearLayout>

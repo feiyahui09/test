@@ -50,7 +50,7 @@ public class ChatRoomActivity extends BaseActivity implements OnClickListener {
 	// private String userGender = "女";
 	private String userName = "逗比";
 	private String userid = "1";
-	private String userToken = "sdtoken1";
+	private String userToken = "token1";
 	private String userGender = "男";
 	//
 	private Handler handler = new Handler();
@@ -90,6 +90,7 @@ public class ChatRoomActivity extends BaseActivity implements OnClickListener {
 		btn_Back = (Button) findViewById(R.id.btn_back);
 		btn_Share = (Button) findViewById(R.id.btn_share);
 		btn_Share.setVisibility(View.VISIBLE);
+		btn_Share.setBackgroundResource(R.drawable.chat_setting_btn_bg);
 		iv_pic = (ImageView) findViewById(R.id.iv_pic);
 		iv_emotion = (ImageView) findViewById(R.id.iv_emotion);
 		btn_send = (Button) findViewById(R.id.btn_send);
@@ -121,11 +122,12 @@ public class ChatRoomActivity extends BaseActivity implements OnClickListener {
 		lv_chat.setAdapter(adapter);
 		
 	}
-	
+//	192.168.0.69
+//	192.168.10.46
 	private void initChatPomelo() {
 		chatHelper = ChatHelper.getHelper();
 		try {
-			chatHelper.init(this, "192.168.10.46", 3014, userid, userToken, userName, userGender, null, new ConnectorEntryCallback() {
+			chatHelper.init(this, "192.168.0.69", 3014, userid, userToken, userName, userGender, null, new ConnectorEntryCallback() {
 				
 				@Override
 				public void onConnect(final JSONObject body) {
@@ -142,7 +144,7 @@ public class ChatRoomActivity extends BaseActivity implements OnClickListener {
 					isError = body.optBoolean("error");
 					
 					if (!isError) {
-						// handler.postDelayed(sendRunnable, 4000);
+						  handler.postDelayed(sendRunnable, 4000);
 						handler.post(new Runnable() {
 							@Override
 							public void run() {

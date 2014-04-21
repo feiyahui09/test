@@ -35,27 +35,33 @@
             android:id="@+id/et_room_number"
             style="@style/playzmax_login_edittext"
             android:layout_marginTop="8dp"
-            android:hint="房间号" />
+            android:hint="房间号"
+            android:textCursorDrawable="@null" />
 
         <EditText
             android:id="@+id/et_namecard"
             style="@style/playzmax_login_edittext"
             android:layout_marginTop="8dp"
-            android:hint="身份证号后四位" />
+            android:hint="身份证号后四位"
+            android:textCursorDrawable="@null" />
 
         <EditText
             android:id="@+id/et_password"
             style="@style/playzmax_login_edittext"
             android:layout_marginTop="8dp"
             android:hint="密码"
-            android:password="true" />
+            android:password="true"
+            android:textCursorDrawable="@null" />
 
         <Button
             android:id="@+id/btn_login"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="25dp"
-            android:background="@drawable/playzmax_login_btn_sel" />
+            android:background="@drawable/playzmax_login_btn_sel"
+            android:text="酒店授权"
+            android:textColor="#434343"
+            android:textSize="14sp" />
     </LinearLayout>
 
     <ImageView
