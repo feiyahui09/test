@@ -46,12 +46,14 @@ public class MainActivity extends BaseSlidingFragmentActivity {
 					switchContent(new ActListFragment());
 					Toast.makeText(mContext, "   " + result.province + cityStr, 2222).show();
 				}
-				else if (!PhoneUtil.isNetworkOk(mContext)) {
-					switchContent(new NetErrorFragment());
-					return;
-				}
+//				else if (!PhoneUtil.isNetworkOk(mContext)) {
+//					switchContent(new NetErrorFragment());
+//					return;
+//				}
 				else {
 					// 显示默认列表
+					Toast.makeText(mContext, "城市定位失败！   " , 2222).show();
+
 				}
 			}
 		});
