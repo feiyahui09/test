@@ -42,15 +42,15 @@ public class ChatRoomActivity extends BaseActivity implements OnClickListener {
 	private ChatHelper chatHelper;
 	private DataCallBack connectorEntertyCallBack;
 	private DataListener onChatCallBack;
-	 private String userName = "红孩儿";
-	 private String userid = "2";
-	 private String userToken = "token2";
-	 private String userGender = "女";
+//	 private String userName = "红孩儿";
+//	 private String userid = "2";
+//	 private String userToken = "token2";
+//	 private String userGender = "女";
 	//
-//	private String userName = "逗比";
-//	private String userid = "1";
-//	private String userToken = "token1";
-//	private String userGender = "男";
+	private String userName = "逗比";
+	private String userid = "1";
+	private String userToken = "token1";
+	private String userGender = "男";
 	
 	private Handler handler = new Handler();
 	private Runnable sendRunnable = new Runnable() {
