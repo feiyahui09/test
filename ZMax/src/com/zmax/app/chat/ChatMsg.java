@@ -11,11 +11,8 @@ public class ChatMsg implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@DatabaseField
-	public String timestamp; // extra added
-	@DatabaseField
 	public String content;
 	@DatabaseField
-	public String gender;
-	@DatabaseField
-	public String name;
+	public String createdAt; // 2014-04-21 11:31:41
+	
 }

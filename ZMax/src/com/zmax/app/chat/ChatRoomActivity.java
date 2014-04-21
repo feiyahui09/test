@@ -28,6 +28,7 @@ import com.zmax.app.R;
 import com.zmax.app.chat.ChatHelper.ConnectorEntryCallback;
 import com.zmax.app.chat.ChatHelper.OnChatCallBack;
 import com.zmax.app.ui.base.BaseActivity;
+import com.zmax.app.utils.JsonMapperUtils;
 import com.zmax.app.utils.Log;
 
 public class ChatRoomActivity extends BaseActivity implements OnClickListener {
@@ -41,15 +42,35 @@ public class ChatRoomActivity extends BaseActivity implements OnClickListener {
 	private ChatHelper chatHelper;
 	private DataCallBack connectorEntertyCallBack;
 	private DataListener onChatCallBack;
+//	private String userName = "红孩儿";
+//	private String userid = "2";
+//	private String userToken = "token2";
+//	private String userGender = "女";
+	
+	 private String userName="逗比";
+	 private String userid="1";
+	 private String userToken="token1";
+	 private String userGender = "男";
+	
 	private Handler handler = new Handler();
 	private Runnable sendRunnable = new Runnable() {
 		
 		@Override
 		public void run() {
-			String str = "你是猴子请来的逗比么？？            " + new SimpleDateFormat("hhmmss").format(new Date());
-			chatHelper.send(str);
+			String str;
+			if (userid.equals("2"))
+				str = "你是猴子请来的逗比么     " + new Date();
+			else
+				str = "我是逗比        " + new Date();
 			
-			handler.postDelayed(this, 6000);
+			chatHelper.send(str, new DataCallBack() {
+				public void responseData(JSONObject msg) {
+					// handle data here
+					Log.i("send: response  " + msg.toString());
+				}
+			});
+			
+			handler.postDelayed(this, 16000);
 		}
 	};
 	
@@ -66,7 +87,7 @@ public class ChatRoomActivity extends BaseActivity implements OnClickListener {
 	private void initChatPomelo() {
 		chatHelper = new ChatHelper();
 		try {
-			chatHelper.init(this, "192.168.10.42", 3014, "2", "token2", "红孩儿", "女", null, new ConnectorEntryCallback() {
+			chatHelper.init(this, "192.168.10.46", 3014, userid, userToken, userName, userGender, null, new ConnectorEntryCallback() {
 				
 				@Override
 				public void onConnect(final JSONObject msg) {
@@ -80,8 +101,18 @@ public class ChatRoomActivity extends BaseActivity implements OnClickListener {
 				}
 			}, new OnChatCallBack() {
 				@Override
-				public void onChat(JSONObject msg) {
-					show(msg.toString());
+				public void onChat(final JSONObject msg) {
+					handler.post(new Runnable() {
+						
+						@Override
+						public void run() {
+							ChatBody chatBody = JsonMapperUtils.toObject(msg.optString("body"), ChatBody.class);
+							if (chatBody.from.equals(userName))
+								show(chatBody.msg.content, ChatListAdapter.VALUE_RIGHT_TEXT, chatBody.from);
+							else
+								show(chatBody.msg.content, ChatListAdapter.VALUE_LEFT_TEXT, chatBody.from);
+						}
+					});
 				}
 			});
 			// chatHelper.init(this, "192.168.10.42", 3014, "2", "token2", "逗比",
@@ -140,10 +171,20 @@ public class ChatRoomActivity extends BaseActivity implements OnClickListener {
 		});
 	}
 	
-	private void show(String content) {
+	private void show(String content, int type, String name) {
 		
+		// adapter.addItem(new Message(ChatListAdapter.MSG_TYPE[new
+		// Random().nextInt(ChatListAdapter.MSG_TYPE.length)], content + " \n"
+		// + new Date()));
+		adapter.addItem(new Message(type, content + " \n" + new SimpleDateFormat("HH:mm:ss").format(new Date()), name));
+		lv_chat.setSelection(lv_chat.getCount() - 1);
+		Log.d("@@adapter:" + adapter.getCount());
+		Log.d("@@lv_chat:" + lv_chat.getCount());
+	}
+	
+	private void show(String content) {
 		adapter.addItem(new Message(ChatListAdapter.MSG_TYPE[new Random().nextInt(ChatListAdapter.MSG_TYPE.length)], content + " \n"
-				+ new Date()));
+				+ new Date(), " null name"));
 		lv_chat.setSelection(lv_chat.getCount() - 1);
 		Log.d("@@adapter:" + adapter.getCount());
 		Log.d("@@lv_chat:" + lv_chat.getCount());
@@ -179,7 +220,14 @@ public class ChatRoomActivity extends BaseActivity implements OnClickListener {
 				break;
 			
 			case R.id.btn_send:
-				show("hi？");
+				chatHelper.send("我新增新家",new DataCallBack() {
+					
+					@Override
+					public void responseData(JSONObject arg0) {
+						Log.i(""+arg0.toString());
+					}
+				});
+//				show("hi？");
 				break;
 			
 			default:
@@ -215,7 +263,7 @@ public class ChatRoomActivity extends BaseActivity implements OnClickListener {
 		msg.setType(ChatListAdapter.VALUE_RIGHT_IMAGE);
 		msg.setValue("2012-12-23 下午2:25");
 		msgList.add(msg);
-//		
+		//
 		msg = new Message();
 		msg.setType(ChatListAdapter.VALUE_RIGHT_TEXT);
 		msg.setValue("就要圣诞了，有什么安排没有？");
@@ -225,37 +273,38 @@ public class ChatRoomActivity extends BaseActivity implements OnClickListener {
 		msg.setType(ChatListAdapter.VALUE_LEFT_TEXT);
 		msg.setValue("没有啊，你呢？");
 		msgList.add(msg);
-//		
-//		msg = new Message();
-//		msg.setType(ChatListAdapter.VALUE_TIME_TIP);
-//		msg.setValue("2012-12-23 下午3:25");
-//		msgList.add(msg);
-//		
-//		msg = new Message();
-//		msg.setType(ChatListAdapter.VALUE_LEFT_TEXT);
-//		msg.setValue("7min");
-//		msgList.add(msg);
-//		
-//		msg = new Message();
-//		msg.setType(ChatListAdapter.VALUE_RIGHT_TEXT);
-//		msg.setValue("高帅富有三宝 木耳 跑车 和名表，" + "黑木耳有三宝 美瞳 备胎 黑丝脚 ，穷矮挫有三宝 AV 手纸 射得早 ，女神有三宝 干嘛 呵呵 去洗澡 ，宅男有三宝 Dota 基友 破电脑 "
-//				+ "女屌丝有三宝 虎背 熊腰 眼睛小 ， 女屌丝还有三宝 饼脸 花痴 卖萌照");
-//		msgList.add(msg);
-//		
-//		msg = new Message();
-//		msg.setType(ChatListAdapter.VALUE_LEFT_TEXT);
-//		msg.setValue("碉堡了");
-//		msgList.add(msg);
-//		
-//		msg = new Message();
-//		msg.setType(ChatListAdapter.VALUE_LEFT_TEXT);
-//		msg.setValue("7min");
-//		msgList.add(msg);
-//		
-//		msg = new Message();
-//		msg.setType(ChatListAdapter.VALUE_RIGHT_IMAGE);
-//		msg.setValue("7min");
-//		msgList.add(msg);
+		//
+		// msg = new Message();
+		// msg.setType(ChatListAdapter.VALUE_TIME_TIP);
+		// msg.setValue("2012-12-23 下午3:25");
+		// msgList.add(msg);
+		//
+		// msg = new Message();
+		// msg.setType(ChatListAdapter.VALUE_LEFT_TEXT);
+		// msg.setValue("7min");
+		// msgList.add(msg);
+		//
+		// msg = new Message();
+		// msg.setType(ChatListAdapter.VALUE_RIGHT_TEXT);
+		// msg.setValue("高帅富有三宝 木耳 跑车 和名表，" +
+		// "黑木耳有三宝 美瞳 备胎 黑丝脚 ，穷矮挫有三宝 AV 手纸 射得早 ，女神有三宝 干嘛 呵呵 去洗澡 ，宅男有三宝 Dota 基友 破电脑 "
+		// + "女屌丝有三宝 虎背 熊腰 眼睛小 ， 女屌丝还有三宝 饼脸 花痴 卖萌照");
+		// msgList.add(msg);
+		//
+		// msg = new Message();
+		// msg.setType(ChatListAdapter.VALUE_LEFT_TEXT);
+		// msg.setValue("碉堡了");
+		// msgList.add(msg);
+		//
+		// msg = new Message();
+		// msg.setType(ChatListAdapter.VALUE_LEFT_TEXT);
+		// msg.setValue("7min");
+		// msgList.add(msg);
+		//
+		// msg = new Message();
+		// msg.setType(ChatListAdapter.VALUE_RIGHT_IMAGE);
+		// msg.setValue("7min");
+		// msgList.add(msg);
 		
 		return msgList;
 		

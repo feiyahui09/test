@@ -1,8 +1,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-     >
+    android:layout_height="match_parent" >
 
     <ImageView
         android:id="@+id/iv_icon"
@@ -11,20 +10,34 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_margin="5dip"
-        android:src="@drawable/chat_profile_ask"
-         />
-    
-    <Button 
-        android:id="@+id/btn_left_text"
+        android:src="@drawable/chat_profile_ask" />
+
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_toRightOf="@+id/iv_icon"
-        android:layout_marginTop="5dip"
-        android:layout_marginBottom="5dip"
-        android:textColor="#404040"
-        android:textSize="16dip"
-        android:gravity="center"
-        android:background="@drawable/chat_list_item_left_bg"
-        />
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/tv_left_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dip"
+            android:layout_marginTop="5dip"
+            android:gravity="center"
+            android:textColor="#4c4c4c"
+            android:textSize="12sp" />
+
+        <Button
+            android:id="@+id/btn_left_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dip"
+            android:layout_marginTop="5dip"
+            android:background="@drawable/chat_list_item_left_bg"
+            android:gravity="center"
+            android:textColor="#000000"
+            android:textSize="18sp" />
+    </LinearLayout>
 
 </RelativeLayout>

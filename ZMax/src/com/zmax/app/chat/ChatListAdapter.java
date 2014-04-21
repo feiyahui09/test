@@ -32,9 +32,9 @@ public class ChatListAdapter extends BaseAdapter {
 	public static final int VALUE_RIGHT_TEXT = 3;
 	public static final int VALUE_RIGHT_IMAGE = 4;
 	public static final int[] MSG_TYPE = { VALUE_TIME_TIP, VALUE_LEFT_TEXT, VALUE_LEFT_IMAGE, VALUE_RIGHT_TEXT, VALUE_RIGHT_IMAGE };
-	public static final int[] MSG_TYPE_ID = { R.id.value_time_tip ,  R.id.value_left_text,  R.id.value_left_image,
- R.id.value_right_text,  R.id.value_right_image };
-
+	public static final int[] MSG_TYPE_ID = { R.id.value_time_tip, R.id.value_left_text, R.id.value_left_image, R.id.value_right_text,
+			R.id.value_right_image };
+	
 	private LayoutInflater mInflater;
 	
 	private Context context;
@@ -95,6 +95,8 @@ public class ChatListAdapter extends BaseAdapter {
 					holder.ivLeftIcon = (ImageView) convertView.findViewById(R.id.iv_icon);
 					holder.btnLeftText = (Button) convertView.findViewById(R.id.btn_left_text);
 					holder.btnLeftText.setText(msg.getValue());
+					holder.tvLeftName = (TextView) convertView.findViewById(R.id.tv_left_name);
+					holder.tvLeftName.setText(msg.getName());
 					break;
 				
 				case VALUE_LEFT_IMAGE:
@@ -110,6 +112,8 @@ public class ChatListAdapter extends BaseAdapter {
 					holder.ivRightIcon = (ImageView) convertView.findViewById(R.id.iv_icon);
 					holder.btnRightText = (Button) convertView.findViewById(R.id.btn_right_text);
 					holder.btnRightText.setText(msg.getValue());
+					holder.tvRightName = (TextView) convertView.findViewById(R.id.tv_right_name);
+					holder.tvRightName.setText(msg.getName());
 					break;
 				
 				case VALUE_RIGHT_IMAGE:
@@ -159,10 +163,13 @@ public class ChatListAdapter extends BaseAdapter {
 		private ImageView ivLeftIcon;// 左边的头像
 		private Button btnLeftText;// 左边的文本
 		private ImageView ivLeftImage;// 左边的图像
+		private TextView tvLeftName;//
 		
 		private ImageView ivRightIcon;// 右边的头像
 		private Button btnRightText;// 右边的文本
 		private ImageView ivRightImage;// 右边的图像
+		private TextView tvRightName;//
+		
 	}
 	
 }
