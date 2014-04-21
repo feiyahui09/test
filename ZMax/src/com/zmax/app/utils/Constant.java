@@ -22,8 +22,8 @@ public class Constant {
 	public static final boolean LOG_SDCARD_ENABLE = false; // 是否打印日志在SDcard上，正式发版前记得设置为false
 	public static final String LOG_FILE_NAME = "com.zmax.app" + "_log.txt"; // 根据包名改变日志文件名字
 	
-	public static final String ZMAX_URL = "http://zmax.bestapp.us/api/v1/"; // 正式环境
-	// public static String FANCY_URL = "http://125.88.74.85/service/request";
+	//public static final String ZMAX_URL = "http://zmax.bestapp.us/api/v1/"; // 正式环境
+	public static String ZMAX_URL = "http://zmax_test.bestapp.us/api/v1/";
 	// //测试环境
 	// public static String FANCY_URL =
 	// "http://220.181.187.155/service/request"; //预发布环境
@@ -60,11 +60,11 @@ public class Constant {
 		public static final String DATE_KEY = "act_date_key";
 		public static final String CITY_KEY = "act_city_key";
 		
-	
-		
 	}
-		public static final int PER_NUM_GET_ACTLIST = 5;
-		public static final int PER_NUM_GET_HOTELLIST=20;
+	
+	public static final int PER_NUM_GET_ACTLIST = 5;
+	public static final int PER_NUM_GET_HOTELLIST = 20;
+	
 	public static class SPFKEY {
 		
 		public static final String CITY_LOCATION_KEY = "city_location_key";
