@@ -33,6 +33,7 @@ import com.zmax.app.R;
 import com.zmax.app.model.Update;
 import com.zmax.app.net.HttpUtils;
 import com.zmax.app.task.CheckUpdateTask;
+import com.zmax.app.ui.AboutActivity;
 import com.zmax.app.ui.DocumentsActivity;
 import com.zmax.app.ui.FeedBackActivity;
 import com.zmax.app.ui.WelcomeActivity;
@@ -111,7 +112,8 @@ public class SettingFragment extends Fragment implements OnClickListener {
 				startActivity(intent);
 				break;
 			case R.id.btn_about:
-				
+				intent.setClass(getActivity(), AboutActivity.class);
+				startActivity(intent);
 				break;
 			
 			default:

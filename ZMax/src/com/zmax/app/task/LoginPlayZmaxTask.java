@@ -2,9 +2,12 @@ package com.zmax.app.task;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.widget.Toast;
 
+import com.zmax.app.R;
 import com.zmax.app.model.Login;
 import com.zmax.app.net.NetAccessor;
+import com.zmax.app.net.NetWorkHelper;
 
 public class LoginPlayZmaxTask extends AsyncTask<String, Void, Login> {
 	private Context context;
@@ -20,6 +23,8 @@ public class LoginPlayZmaxTask extends AsyncTask<String, Void, Login> {
 	@Override
 	protected void onPreExecute() {
 		super.onPreExecute();
+		if (!NetWorkHelper.checkNetState(context))
+			Toast.makeText(context, context.getResources().getString(R.string.httpProblem), 300).show();
 	}
 	
 	@Override

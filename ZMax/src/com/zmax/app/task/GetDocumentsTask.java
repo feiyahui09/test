@@ -2,9 +2,12 @@ package com.zmax.app.task;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.widget.Toast;
 
+import com.zmax.app.R;
 import com.zmax.app.model.Documents;
 import com.zmax.app.net.NetAccessor;
+import com.zmax.app.net.NetWorkHelper;
 
 public class GetDocumentsTask extends AsyncTask<String, Void, Documents> {
 	private Context context;
@@ -21,6 +24,8 @@ public class GetDocumentsTask extends AsyncTask<String, Void, Documents> {
 	protected void onPreExecute() {
 		// TODO Auto-generated method stub
 		super.onPreExecute();
+		if (!NetWorkHelper.checkNetState(context))
+			Toast.makeText(context, context.getResources().getString(R.string.httpProblem), 300).show();
 	}
 	
 	@Override

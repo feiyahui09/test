@@ -46,10 +46,10 @@ public class DocumentsActivity extends BaseActivity {
 		initHeader();
 		
 		old = JsonMapperUtils.toObject(DefaultShared.getString(spf_key, ""), Documents.class);
-		if (!NetWorkHelper.checkNetState(this)) {
-			if (old != null) initData(old);
-			return;
-		}
+//		if (!NetWorkHelper.checkNetState(this)) {
+//			if (old != null) initData(old);
+//			return;
+//		}
 		getDocumentsTask = new GetDocumentsTask(this, new GetDocumentsTask.TaskCallBack() {
 			
 			@Override
