@@ -8,7 +8,9 @@ import java.util.Random;
 
 import org.json.JSONObject;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.KeyEvent;
@@ -42,31 +44,32 @@ public class ChatRoomActivity extends BaseActivity implements OnClickListener {
 	private ChatHelper chatHelper;
 	private DataCallBack connectorEntertyCallBack;
 	private DataListener onChatCallBack;
-//	 private String userName = "红孩儿";
-//	 private String userid = "2";
-//	 private String userToken = "token2";
-//	 private String userGender = "女";
+	// private String userName = "红孩儿";
+	// private String userid = "2";
+	// private String userToken = "token2";
+	// private String userGender = "女";
 	//
 	private String userName = "逗比";
 	private String userid = "1";
-	private String userToken = "token1";
+	private String userToken = "sdtoken1";
 	private String userGender = "男";
-	
+	//
 	private Handler handler = new Handler();
 	private Runnable sendRunnable = new Runnable() {
 		
 		@Override
 		public void run() {
-			String str;
+			final String str;
 			if (userid.equals("2"))
-				str = "你是猴子请来的逗比么     "  ;
+				str = "自动广播：你是猴子请来的逗比么     ";
 			else
-				str = "我是逗比        " ;
+				str = "自动广播：我是逗比        ";
 			
 			chatHelper.send(str, new DataCallBack() {
 				public void responseData(JSONObject msg) {
 					// handle data here
 					Log.i("send: response  " + msg.toString());
+					
 				}
 			});
 			
@@ -80,8 +83,44 @@ public class ChatRoomActivity extends BaseActivity implements OnClickListener {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.chat_room);
 		init();
-		initHeader();
 		initChatPomelo();
+	}
+	
+	private void init() {
+		mContext = this;
+		btn_Back = (Button) findViewById(R.id.btn_back);
+		btn_Share = (Button) findViewById(R.id.btn_share);
+		btn_Share.setVisibility(View.VISIBLE);
+		iv_pic = (ImageView) findViewById(R.id.iv_pic);
+		iv_emotion = (ImageView) findViewById(R.id.iv_emotion);
+		btn_send = (Button) findViewById(R.id.btn_send);
+		
+		iv_pic.setOnClickListener(this);
+		iv_emotion.setOnClickListener(this);
+		btn_send.setOnClickListener(this);
+		btn_Share.setOnClickListener(this);
+		btn_Back.setOnClickListener(this);
+		
+		et_edit = (EditText) findViewById(R.id.et_edit);
+		et_edit.setOnEditorActionListener(new OnEditorActionListener() {
+			@Override
+			public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+				chatHelper.send(et_edit.getText().toString(), new DataCallBack() {
+					@Override
+					public void responseData(JSONObject arg0) {
+						et_edit.clearComposingText();
+						et_edit.setText("");
+						Log.i("" + arg0.toString());
+					}
+				});
+				return false;
+			}
+		});
+		
+		lv_chat = (ListView) findViewById(R.id.list_view);
+		adapter = new ChatListAdapter(mContext);
+		lv_chat.setAdapter(adapter);
+		
 	}
 	
 	private void initChatPomelo() {
@@ -90,14 +129,38 @@ public class ChatRoomActivity extends BaseActivity implements OnClickListener {
 			chatHelper.init(this, "192.168.10.46", 3014, userid, userToken, userName, userGender, null, new ConnectorEntryCallback() {
 				
 				@Override
-				public void onConnect(final JSONObject msg) {
-					handler.post(new Runnable() {
-						@Override
-						public void run() {
-							Toast.makeText(mContext, "欢迎进入聊天室，当前登录信息：、\n" + msg.toString(), 2233).show();
-						}
-					});
-					handler.postDelayed(sendRunnable, 4000);
+				public void onConnect(final JSONObject body) {
+					
+					// final JSONObject body = msg.optJSONObject("body");
+					if (body == null) {
+						Toast.makeText(mContext, "错误，请稍后再试!", 2233).show();
+						return;
+					}
+					int code = 200;
+					boolean isError;
+					code = body.optInt("code", 200);
+					final String message = body.optString("message");
+					isError = body.optBoolean("error");
+					
+					if (!isError) {
+						// handler.postDelayed(sendRunnable, 4000);
+						handler.post(new Runnable() {
+							@Override
+							public void run() {
+								Toast.makeText(mContext, "欢迎进入聊天室，当前登录信息：、\n" + body.toString(), 2233).show();
+							}
+						});
+					}
+					else {
+						handler.post(new Runnable() {
+							@Override
+							public void run() {
+								Toast.makeText(mContext, message, 2233).show();
+							}
+						});
+						chatHelper.disConnect();
+					}
+					
 				}
 			}, new OnChatCallBack() {
 				@Override
@@ -115,8 +178,6 @@ public class ChatRoomActivity extends BaseActivity implements OnClickListener {
 					});
 				}
 			});
-			// chatHelper.init(this, "192.168.10.42", 3014, "2", "token2", "逗比",
-			// "男", null, connectorEntertyCallBack, onChatCallBack);
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -124,51 +185,47 @@ public class ChatRoomActivity extends BaseActivity implements OnClickListener {
 	}
 	
 	@Override
-	public void onDestroy() {
-		super.onDestroy();
-		if (chatHelper != null) chatHelper.disConnect();
-	}
-	
-	private void init() {
-		mContext = this;
-		iv_pic = (ImageView) findViewById(R.id.iv_pic);
-		iv_emotion = (ImageView) findViewById(R.id.iv_emotion);
-		btn_send = (Button) findViewById(R.id.btn_send);
-		et_edit = (EditText) findViewById(R.id.et_edit);
-		et_edit.setOnEditorActionListener(new OnEditorActionListener() {
-			@Override
-			public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-				Toast.makeText(mContext, String.valueOf(actionId), Toast.LENGTH_SHORT).show();
-				return false;
-			}
-		});
-		iv_pic.setOnClickListener(this);
-		iv_emotion.setOnClickListener(this);
-		btn_send.setOnClickListener(this);
+	public void onClick(View v) {
 		
-		lv_chat = (ListView) findViewById(R.id.list_view);
-		adapter = new ChatListAdapter(mContext);
-		lv_chat.setAdapter(adapter);
-		
-	}
-	
-	private void initHeader() {
-		btn_Back = (Button) findViewById(R.id.btn_back);
-		btn_Share = (Button) findViewById(R.id.btn_share);
-		btn_Share.setVisibility(View.VISIBLE);
-		
-		btn_Back.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				finish();
-			}
-		});
-		btn_Share.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
+		switch (v.getId()) {
+			case R.id.btn_send:
+				chatHelper.send(et_edit.getText().toString(), new DataCallBack() {
+					@Override
+					public void responseData(JSONObject arg0) {
+						et_edit.clearComposingText();
+						et_edit.setText("");
+						Log.i("" + arg0.toString());
+					}
+				});
+				break;
+			case R.id.iv_pic:
+				new AlertDialog.Builder(mContext).setTitle("title")
+						.setItems(R.array.pic_dialog_items, new DialogInterface.OnClickListener() {
+							
+							@Override
+							public void onClick(DialogInterface dialog, int which) {
+								if (which == 0) {
+									
+								}
+								else if (which == 1) {
+									
+								}
+							}
+						}).show();
+				break;
+			case R.id.iv_emotion:
 				
-			}
-		});
+				break;
+			
+			case R.id.btn_back:
+				finish();
+				break;
+			case R.id.btn_share:
+				
+				break;
+			default:
+				break;
+		}
 	}
 	
 	private void show(String content, int type, String name) {
@@ -191,48 +248,9 @@ public class ChatRoomActivity extends BaseActivity implements OnClickListener {
 	}
 	
 	@Override
-	public void onClick(View v) {
-		
-		switch (v.getId()) {
-			case R.id.iv_pic:
-				adapter.addItems(getMyData());
-				Log.d("@@adapter:" + adapter.getCount());
-				Log.d("@@lv_chat:" + lv_chat.getCount());
-				
-				lv_chat.setSelection(lv_chat.getCount() - 1);
-				// new AlertDialog.Builder(mContext).setTitle("title")
-				// .setItems(R.array.pic_dialog_items, new
-				// DialogInterface.OnClickListener() {
-				//
-				// @Override
-				// public void onClick(DialogInterface dialog, int which) {
-				// if (which == 0) {
-				//
-				// }
-				// else if (which == 1) {
-				//
-				// }
-				// }
-				// }).show();
-				break;
-			case R.id.iv_emotion:
-				
-				break;
-			
-			case R.id.btn_send:
-				chatHelper.send("我新增新家", new DataCallBack() {
-					
-					@Override
-					public void responseData(JSONObject arg0) {
-						Log.i("" + arg0.toString());
-					}
-				});
-				// show("hi？  ",ChatListAdapter.VALUE_LEFT_TEXT,"test name");
-				break;
-			
-			default:
-				break;
-		}
+	public void onDestroy() {
+		super.onDestroy();
+		if (chatHelper != null) chatHelper.disConnect();
 	}
 	
 	private List<Message> getMyData() {

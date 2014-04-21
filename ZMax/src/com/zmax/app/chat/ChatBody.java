@@ -23,4 +23,10 @@ public class ChatBody implements Serializable {
 	@DatabaseField
 	public String content;
 	
+//	// 错误返回如下
+//	@DatabaseField
+//	public String message;
+//	@DatabaseField
+//	public boolean error;
+	
 }

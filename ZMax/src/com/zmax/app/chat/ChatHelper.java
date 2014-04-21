@@ -4,6 +4,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.Context;
+import android.text.TextUtils;
 
 import com.netease.pomelo.DataCallBack;
 import com.netease.pomelo.DataEvent;
@@ -17,6 +18,7 @@ public class ChatHelper {
 	private String name, gender, uid;
 	
 	public interface GateEntryCallBack {
+		
 		public void onGateEnterSuccess();
 		
 		public void onGateEnterFailed();
@@ -29,7 +31,9 @@ public class ChatHelper {
 	}
 	
 	public interface OnChatCallBack {
+		
 		public void onChat(JSONObject msg);
+		
 	}
 	
 	public void init(Context context, String serverIP, int serverPort, String uid, final String authToken, String name, String gender,
@@ -40,11 +44,10 @@ public class ChatHelper {
 		this.uid = uid;
 		
 		client = new PomeloClient(serverIP, serverPort);
-		Log.i("gate.queryEntry ");
+		Log.i("gate.queryEntry");
 		client.init();
 		// 负债均衡
 		client.request("gate.gateHandler.queryEntry", new JSONObject().put("uid", uid), new DataCallBack() {
-			
 			@Override
 			public void responseData(JSONObject msg) {
 				Log.i("gate:response: " + msg.toString());
@@ -96,7 +99,7 @@ public class ChatHelper {
 	public void send(String content) {
 		try {
 			Log.i("");
-			client.request("chat.chatHandler.send", new JSONObject().put("content", content).put("name", name).put("gender", gender));
+			client.inform("chat.chatHandler.send", new JSONObject().put("content", content).put("name", name).put("gender", gender));
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -105,6 +108,7 @@ public class ChatHelper {
 	}
 	
 	public void send(String content, DataCallBack sendCallBack) {
+		if (TextUtils.isEmpty(content)) return;
 		try {
 			Log.i("");
 			client.request("chat.chatHandler.send", new JSONObject().put("content", content).put("name", name).put("gender", gender),
