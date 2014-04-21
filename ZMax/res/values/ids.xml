@@ -3,5 +3,11 @@
 
     <item name="item_odd" type="id"/>
     <item name="item_even" type="id"/>
+    <!-- chat msg type -->
+    <item name="value_time_tip" type="id"/>
+    <item name="value_left_text" type="id"/>
+    <item name="value_left_image" type="id"/>
+    <item name="value_right_text" type="id"/>
+    <item name="value_right_image" type="id"/>
 
 </resources>

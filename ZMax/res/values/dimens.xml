@@ -76,5 +76,7 @@
     <!-- playzmax -->
 
     <dimen name="playzmax_login_padding_left">25dp</dimen>
+  <!-- chat  -->
 
+    <dimen name="chat_list_profile_size">48dp</dimen>
 </resources>

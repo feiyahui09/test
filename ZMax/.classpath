@@ -6,10 +6,11 @@
 	<classpathentry exported="true" kind="lib" path="libs/universal-image-loader-1.9.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="libs/baidumapapi_v2_4_0.jar"/>
 	<classpathentry exported="true" kind="lib" path="libs/locSDK_3.1.jar"/>
-	<classpathentry kind="lib" path="libs/jackson-core-asl-1.8.1.jar"/>
-	<classpathentry kind="lib" path="libs/jackson-mapper-asl-1.8.1.jar"/>
-	<classpathentry kind="lib" path="libs/ormlite-android-4.40.jar"/>
-	<classpathentry kind="lib" path="libs/ormlite-core-4.40.jar"/>
+	<classpathentry exported="true" kind="lib" path="libs/jackson-core-asl-1.8.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="libs/jackson-mapper-asl-1.8.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="libs/ormlite-android-4.40.jar"/>
+	<classpathentry exported="true" kind="lib" path="libs/ormlite-core-4.40.jar"/>
+	<classpathentry exported="true" kind="lib" path="libs/pomelo-android-client.jar"/>
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.DEPENDENCIES"/>
 	<classpathentry kind="src" path="gen"/>
 	<classpathentry kind="output" path="bin/classes"/>
