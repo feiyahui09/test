@@ -42,15 +42,15 @@ public class ChatRoomActivity extends BaseActivity implements OnClickListener {
 	private ChatHelper chatHelper;
 	private DataCallBack connectorEntertyCallBack;
 	private DataListener onChatCallBack;
-//	private String userName = "红孩儿";
-//	private String userid = "2";
-//	private String userToken = "token2";
-//	private String userGender = "女";
-	
-	 private String userName="逗比";
-	 private String userid="1";
-	 private String userToken="token1";
-	 private String userGender = "男";
+	 private String userName = "红孩儿";
+	 private String userid = "2";
+	 private String userToken = "token2";
+	 private String userGender = "女";
+	//
+//	private String userName = "逗比";
+//	private String userid = "1";
+//	private String userToken = "token1";
+//	private String userGender = "男";
 	
 	private Handler handler = new Handler();
 	private Runnable sendRunnable = new Runnable() {
@@ -59,9 +59,9 @@ public class ChatRoomActivity extends BaseActivity implements OnClickListener {
 		public void run() {
 			String str;
 			if (userid.equals("2"))
-				str = "你是猴子请来的逗比么     " + new Date();
+				str = "你是猴子请来的逗比么     "  ;
 			else
-				str = "我是逗比        " + new Date();
+				str = "我是逗比        " ;
 			
 			chatHelper.send(str, new DataCallBack() {
 				public void responseData(JSONObject msg) {
@@ -220,14 +220,14 @@ public class ChatRoomActivity extends BaseActivity implements OnClickListener {
 				break;
 			
 			case R.id.btn_send:
-				chatHelper.send("我新增新家",new DataCallBack() {
+				chatHelper.send("我新增新家", new DataCallBack() {
 					
 					@Override
 					public void responseData(JSONObject arg0) {
-						Log.i(""+arg0.toString());
+						Log.i("" + arg0.toString());
 					}
 				});
-//				show("hi？");
+				// show("hi？  ",ChatListAdapter.VALUE_LEFT_TEXT,"test name");
 				break;
 			
 			default:

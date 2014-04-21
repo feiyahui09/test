@@ -87,16 +87,13 @@ public class ChatListAdapter extends BaseAdapter {
 				case VALUE_TIME_TIP:
 					convertView = mInflater.inflate(R.layout.chat_list_item_time_tip, null);
 					holder.tvTimeTip = (TextView) convertView.findViewById(R.id.tv_time_tip);
-					holder.tvTimeTip.setText(msg.getValue());
 					break;
 				case VALUE_LEFT_TEXT:
 					
 					convertView = mInflater.inflate(R.layout.chat_list_item_left_text, null);
 					holder.ivLeftIcon = (ImageView) convertView.findViewById(R.id.iv_icon);
 					holder.btnLeftText = (Button) convertView.findViewById(R.id.btn_left_text);
-					holder.btnLeftText.setText(msg.getValue());
 					holder.tvLeftName = (TextView) convertView.findViewById(R.id.tv_left_name);
-					holder.tvLeftName.setText(msg.getName());
 					break;
 				
 				case VALUE_LEFT_IMAGE:
@@ -111,9 +108,7 @@ public class ChatListAdapter extends BaseAdapter {
 					convertView = mInflater.inflate(R.layout.chat_list_item_right_text, null);
 					holder.ivRightIcon = (ImageView) convertView.findViewById(R.id.iv_icon);
 					holder.btnRightText = (Button) convertView.findViewById(R.id.btn_right_text);
-					holder.btnRightText.setText(msg.getValue());
 					holder.tvRightName = (TextView) convertView.findViewById(R.id.tv_right_name);
-					holder.tvRightName.setText(msg.getName());
 					break;
 				
 				case VALUE_RIGHT_IMAGE:
@@ -131,6 +126,35 @@ public class ChatListAdapter extends BaseAdapter {
 		}
 		else {
 			holder = (ViewHolder) convertView.getTag();
+		}
+		
+		switch (type) {
+		
+			case VALUE_TIME_TIP:
+				holder.tvTimeTip.setText(msg.getValue());
+				break;
+			case VALUE_LEFT_TEXT:
+				
+				holder.btnLeftText.setText(msg.getValue());
+				holder.tvLeftName.setText(msg.getName());
+				break;
+			
+			case VALUE_LEFT_IMAGE:
+				
+				// holder.ivLeftImage.setImageResource(R.drawable.test);
+				break;
+			case VALUE_RIGHT_TEXT:
+				
+				holder.btnRightText.setText(msg.getValue());
+				holder.tvRightName.setText(msg.getName());
+				break;
+			
+			case VALUE_RIGHT_IMAGE:
+				// holder.ivRightImage.setImageResource(R.drawable.test);
+				break;
+			
+			default:
+				break;
 		}
 		return convertView;
 	}
