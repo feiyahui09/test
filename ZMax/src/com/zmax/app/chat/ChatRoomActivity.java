@@ -28,6 +28,7 @@ import com.zmax.app.R;
 import com.zmax.app.chat.ChatHelper.ConnectorEntryCallback;
 import com.zmax.app.chat.ChatHelper.OnChatCallBack;
 import com.zmax.app.ui.base.BaseActivity;
+import com.zmax.app.utils.Log;
 
 public class ChatRoomActivity extends BaseActivity implements OnClickListener {
 	private Context mContext;
@@ -143,6 +144,9 @@ public class ChatRoomActivity extends BaseActivity implements OnClickListener {
 		
 		adapter.addItem(new Message(ChatListAdapter.MSG_TYPE[new Random().nextInt(ChatListAdapter.MSG_TYPE.length)], content + " \n"
 				+ new Date()));
+		lv_chat.setSelection(lv_chat.getCount() - 1);
+		Log.d("@@adapter:" + adapter.getCount());
+		Log.d("@@lv_chat:" + lv_chat.getCount());
 	}
 	
 	@Override
@@ -151,6 +155,10 @@ public class ChatRoomActivity extends BaseActivity implements OnClickListener {
 		switch (v.getId()) {
 			case R.id.iv_pic:
 				adapter.addItems(getMyData());
+				Log.d("@@adapter:" + adapter.getCount());
+				Log.d("@@lv_chat:" + lv_chat.getCount());
+				
+				lv_chat.setSelection(lv_chat.getCount() - 1);
 				// new AlertDialog.Builder(mContext).setTitle("title")
 				// .setItems(R.array.pic_dialog_items, new
 				// DialogInterface.OnClickListener() {
@@ -189,7 +197,7 @@ public class ChatRoomActivity extends BaseActivity implements OnClickListener {
 		msgList.add(msg);
 		
 		msg = new Message();
-		msg.setType(ChatListAdapter.VALUE_RIGHT_TEXT);
+		msg.setType(ChatListAdapter.VALUE_TIME_TIP);
 		msg.setValue("2012-12-23 下午2:23");
 		msgList.add(msg);
 		
@@ -199,15 +207,15 @@ public class ChatRoomActivity extends BaseActivity implements OnClickListener {
 		msgList.add(msg);
 		
 		msg = new Message();
-		msg.setType(ChatListAdapter.VALUE_LEFT_TEXT);
+		msg.setType(ChatListAdapter.VALUE_LEFT_IMAGE);
 		msg.setValue("好吧，这次听你的了。");
 		msgList.add(msg);
 		
 		msg = new Message();
-		msg.setType(ChatListAdapter.VALUE_RIGHT_TEXT);
+		msg.setType(ChatListAdapter.VALUE_RIGHT_IMAGE);
 		msg.setValue("2012-12-23 下午2:25");
 		msgList.add(msg);
-		
+//		
 		msg = new Message();
 		msg.setType(ChatListAdapter.VALUE_RIGHT_TEXT);
 		msg.setValue("就要圣诞了，有什么安排没有？");
@@ -217,37 +225,37 @@ public class ChatRoomActivity extends BaseActivity implements OnClickListener {
 		msg.setType(ChatListAdapter.VALUE_LEFT_TEXT);
 		msg.setValue("没有啊，你呢？");
 		msgList.add(msg);
-		
-		msg = new Message();
-		msg.setType(ChatListAdapter.VALUE_LEFT_TEXT);
-		msg.setValue("2012-12-23 下午3:25");
-		msgList.add(msg);
-		
-		msg = new Message();
-		msg.setType(ChatListAdapter.VALUE_LEFT_TEXT);
-		msg.setValue("7min");
-		msgList.add(msg);
-		
-		msg = new Message();
-		msg.setType(ChatListAdapter.VALUE_RIGHT_TEXT);
-		msg.setValue("高帅富有三宝 木耳 跑车 和名表，" + "黑木耳有三宝 美瞳 备胎 黑丝脚 ，穷矮挫有三宝 AV 手纸 射得早 ，女神有三宝 干嘛 呵呵 去洗澡 ，宅男有三宝 Dota 基友 破电脑 "
-				+ "女屌丝有三宝 虎背 熊腰 眼睛小 ， 女屌丝还有三宝 饼脸 花痴 卖萌照");
-		msgList.add(msg);
-		
-		msg = new Message();
-		msg.setType(ChatListAdapter.VALUE_LEFT_TEXT);
-		msg.setValue("碉堡了");
-		msgList.add(msg);
-		
-		msg = new Message();
-		msg.setType(ChatListAdapter.VALUE_LEFT_TEXT);
-		msg.setValue("7min");
-		msgList.add(msg);
-		
-		msg = new Message();
-		msg.setType(ChatListAdapter.VALUE_RIGHT_IMAGE);
-		msg.setValue("7min");
-		msgList.add(msg);
+//		
+//		msg = new Message();
+//		msg.setType(ChatListAdapter.VALUE_TIME_TIP);
+//		msg.setValue("2012-12-23 下午3:25");
+//		msgList.add(msg);
+//		
+//		msg = new Message();
+//		msg.setType(ChatListAdapter.VALUE_LEFT_TEXT);
+//		msg.setValue("7min");
+//		msgList.add(msg);
+//		
+//		msg = new Message();
+//		msg.setType(ChatListAdapter.VALUE_RIGHT_TEXT);
+//		msg.setValue("高帅富有三宝 木耳 跑车 和名表，" + "黑木耳有三宝 美瞳 备胎 黑丝脚 ，穷矮挫有三宝 AV 手纸 射得早 ，女神有三宝 干嘛 呵呵 去洗澡 ，宅男有三宝 Dota 基友 破电脑 "
+//				+ "女屌丝有三宝 虎背 熊腰 眼睛小 ， 女屌丝还有三宝 饼脸 花痴 卖萌照");
+//		msgList.add(msg);
+//		
+//		msg = new Message();
+//		msg.setType(ChatListAdapter.VALUE_LEFT_TEXT);
+//		msg.setValue("碉堡了");
+//		msgList.add(msg);
+//		
+//		msg = new Message();
+//		msg.setType(ChatListAdapter.VALUE_LEFT_TEXT);
+//		msg.setValue("7min");
+//		msgList.add(msg);
+//		
+//		msg = new Message();
+//		msg.setType(ChatListAdapter.VALUE_RIGHT_IMAGE);
+//		msg.setValue("7min");
+//		msgList.add(msg);
 		
 		return msgList;
 		

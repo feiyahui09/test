@@ -2,6 +2,7 @@ package com.zmax.app.chat;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import android.content.Context;
 import android.util.Log;
@@ -25,12 +26,15 @@ public class ChatListAdapter extends BaseAdapter {
 	public static final String KEY = "key";
 	public static final String VALUE = "value";
 	
-//	public static final int VALUE_TIME_TIP = 0;// 7种不同的布局
-	public static final int VALUE_LEFT_TEXT = 0;
-	public static final int VALUE_LEFT_IMAGE = 1;
-	public static final int VALUE_RIGHT_TEXT = 2;
-	public static final int VALUE_RIGHT_IMAGE = 3;
-	public static final int[] MSG_TYPE = { VALUE_LEFT_TEXT, VALUE_LEFT_IMAGE, VALUE_RIGHT_TEXT, VALUE_RIGHT_IMAGE };
+	public static final int VALUE_TIME_TIP = 0;// 7种不同的布局
+	public static final int VALUE_LEFT_TEXT = 1;
+	public static final int VALUE_LEFT_IMAGE = 2;
+	public static final int VALUE_RIGHT_TEXT = 3;
+	public static final int VALUE_RIGHT_IMAGE = 4;
+	public static final int[] MSG_TYPE = { VALUE_TIME_TIP, VALUE_LEFT_TEXT, VALUE_LEFT_IMAGE, VALUE_RIGHT_TEXT, VALUE_RIGHT_IMAGE };
+	public static final int[] MSG_TYPE_ID = { R.id.value_time_tip ,  R.id.value_left_text,  R.id.value_left_image,
+ R.id.value_right_text,  R.id.value_right_image };
+
 	private LayoutInflater mInflater;
 	
 	private Context context;
@@ -39,13 +43,13 @@ public class ChatListAdapter extends BaseAdapter {
 	public ChatListAdapter(Context context) {
 		
 		this.context = context;
-		
 		mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		
 	}
 	
 	public void addItems(List<Message> list) {
 		myList.addAll(list);
+		
 		notifyDataSetChanged();
 	}
 	
@@ -79,6 +83,12 @@ public class ChatListAdapter extends BaseAdapter {
 			
 			holder = new ViewHolder();
 			switch (type) {
+			
+				case VALUE_TIME_TIP:
+					convertView = mInflater.inflate(R.layout.chat_list_item_time_tip, null);
+					holder.tvTimeTip = (TextView) convertView.findViewById(R.id.tv_time_tip);
+					holder.tvTimeTip.setText(msg.getValue());
+					break;
 				case VALUE_LEFT_TEXT:
 					
 					convertView = mInflater.inflate(R.layout.chat_list_item_left_text, null);

@@ -8,9 +8,6 @@ import com.j256.ormlite.table.DatabaseTable;
 @DatabaseTable(tableName = "act")
 public class Act implements Serializable {
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	
 	@DatabaseField
