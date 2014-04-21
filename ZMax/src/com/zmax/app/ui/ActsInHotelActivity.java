@@ -5,6 +5,7 @@ import java.util.List;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -93,8 +94,8 @@ public class ActsInHotelActivity extends BaseActivity implements IXListViewListe
 				}
 			}
 		});
-		int hotelId = getIntent().getIntExtra(Constant.Acts.HOTEL_ID_KEY, -1);
-		if (hotelId >= 0) getActListTask.execute(String.valueOf(hotelId), String.valueOf(page), "5");
+		String hotelId = getIntent().getStringExtra(Constant.Acts.HOTEL_ID_KEY);
+		if (!TextUtils.isEmpty(hotelId)) getActListTask.execute(String.valueOf(hotelId), String.valueOf(page), "5");
 	}
 	
 	@Override
