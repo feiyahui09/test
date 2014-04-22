@@ -22,7 +22,9 @@
             android:id="@+id/tv_left_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="left|center_vertical"
             android:layout_marginBottom="5dip"
+            android:layout_marginLeft="15dp"
             android:layout_marginTop="5dip"
             android:gravity="center"
             android:textColor="#4c4c4c"
@@ -32,10 +34,10 @@
             android:id="@+id/btn_left_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="left|center_vertical"
             android:layout_marginBottom="5dip"
-            android:layout_marginTop="5dip"
             android:background="@drawable/chat_list_item_left_bg"
-            android:gravity="center"
+            android:gravity="left|center_vertical"
             android:textColor="#000000"
             android:textSize="18sp" />
     </LinearLayout>

@@ -44,25 +44,29 @@ public class ChatRoomActivity extends BaseActivity implements OnClickListener {
 	private ListView lv_chat;
 	private ChatListAdapter adapter;
 	private ChatHelper chatHelper;
-	// private String userName = "红孩儿";
-	// private String userid = "2";
-	// private String userToken = "token2";
-	// private String userGender = "女";
+//	 private String userName = "红孩儿";
+//	 private String userid = "2";
+//	 private String userToken = "token2";
+//	 private String rid = "123";
+//	 private String userGender = "女";
 	
 	// private String userName = "逗比";
 	// private String userid = "1";
+	// private String rid = "123";
 	// private String userToken = "token1";
 	// private String userGender = "男";
 	
-	// private String userName = "围观淡定哥";
-	// private String userid = "5";
-	// private String userToken = "token5";
-	// private String userGender = "男";
-	
-	private String userName = "沉默哥";
-	private String userid = "4";
-	private String userToken = "token4";
+	private String userName = "围观淡定哥";
+	private String userid = "5";
+	private String rid = "123";
+	private String userToken = "token5";
 	private String userGender = "男";
+	
+	// private String userName = "沉默哥";
+	// private String userid = "4";
+	// private String rid = "123";
+	// private String userToken = "token4";
+	// private String userGender = "男";
 	private Runnable sendRunnable = new Runnable() {
 		
 		@Override
@@ -144,7 +148,7 @@ public class ChatRoomActivity extends BaseActivity implements OnClickListener {
 	private void initChatPomelo() {
 		chatHelper = ChatHelper.getHelper();
 		try {
-			chatHelper.init(this, "192.168.10.46", 3014, userid, userToken, userName, userGender, clientCallback, ioCallback);
+			chatHelper.init(this, "192.168.10.46", 3014, userid, rid, userToken, userName, userGender, clientCallback, ioCallback);
 		}
 		catch (Exception e) {
 			e.printStackTrace();

@@ -17,7 +17,7 @@ import com.zmax.app.utils.Log;
 public class ChatHelper {
 	static ChatHelper helper;
 	private PomeloClient client;
-	private String name, gender, uid;
+	private String name, gender, uid, rid;
 	
 	ClientCallback clientCallback;
 	IOCallback ioCallback;
@@ -29,11 +29,12 @@ public class ChatHelper {
 		return helper;
 	}
 	
-	public void init(Context context, String serverIP, int serverPort, String uid, final String authToken, String name, String gender,
-			final ClientCallback clientCallback, final IOCallback ioCallback) throws JSONException {
+	public void init(Context context, String serverIP, int serverPort, String uid, String rid, final String authToken, String name,
+			String gender, final ClientCallback clientCallback, final IOCallback ioCallback) throws JSONException {
 		this.name = name;
 		this.gender = gender;
 		this.uid = uid;
+		this.rid = rid;
 		this.ioCallback = ioCallback;
 		this.clientCallback = clientCallback;
 		
@@ -41,44 +42,46 @@ public class ChatHelper {
 		Log.i("gate.queryEntry");
 		client.init(ioCallback, clientCallback);
 		// 负债均衡
-		client.request("gate.gateHandler.queryEntry", new JSONObject().put("uid", uid), new DataCallBack() {
-			@Override
-			public void responseData(JSONObject msg) {
-				Log.i("gate:response: " + msg.toString());
-				client.disconnect();
-				if (clientCallback != null) clientCallback.onGateEnter(msg);
-				
-				try {
-					client = new PomeloClient(msg.getString("host"), msg.getInt("port"));
-					Log.i("connector.enter ");
-					client.init(ioCallback, clientCallback);
-					// 真正分配到个服务器，
-					client.request("connector.entryHandler.enter", new JSONObject().put("auth_token", authToken), new DataCallBack() {
-						public void responseData(JSONObject msg) {
-							// handle data here
-							Log.i("connector.enter:response : " + msg.toString());
-							if (clientCallback != null) clientCallback.onConnectorEnter(msg);
+		client.request("gate.gateHandler.queryEntry", new JSONObject().put("uid", uid).put("rid", rid),
+				new DataCallBack() {
+					@Override
+					public void responseData(JSONObject msg) {
+						Log.i("gate:response: " + msg.toString());
+						client.disconnect();
+						if (clientCallback != null) clientCallback.onGateEnter(msg);
+						
+						try {
+							client = new PomeloClient(msg.getString("host"), msg.getInt("port"));
+							Log.i("connector.enter ");
+							client.init(ioCallback, clientCallback);
+							// 真正分配到个服务器，
+							client.request("connector.entryHandler.enter", new JSONObject().put("auth_token", authToken),
+									new DataCallBack() {
+										public void responseData(JSONObject msg) {
+											// handle data here
+											Log.i("connector.enter:response : " + msg.toString());
+											if (clientCallback != null) clientCallback.onConnectorEnter(msg);
+										}
+									});
+							client.on("onChat", new DataListener() {
+								public void receiveData(DataEvent event) {
+									JSONObject msg = event.getMessage();
+									Log.i("onChat: " + msg.toString());
+									if (clientCallback != null) {
+										clientCallback.onChat(msg.optString("body"));
+										
+									}
+								}
+							});
 						}
-					});
-					client.on("onChat", new DataListener() {
-						public void receiveData(DataEvent event) {
-							JSONObject msg = event.getMessage();
-							Log.i("onChat: " + msg.toString());
-							if (clientCallback != null) {
-								clientCallback.onChat(msg.optString("body"));
-								
-							}
+						catch (Exception e) {
+							if (clientCallback != null) clientCallback.onEnterFailed(e);
+							e.printStackTrace();
 						}
-					});
-				}
-				catch (Exception e) {
-					if (clientCallback != null) clientCallback.onEnterFailed(e);
-					e.printStackTrace();
-				}
-				
-			}
-			
-		});
+						
+					}
+					
+				});
 	}
 	
 	public void disConnect() {
