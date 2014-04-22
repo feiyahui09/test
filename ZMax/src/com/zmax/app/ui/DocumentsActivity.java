@@ -60,7 +60,9 @@ public class DocumentsActivity extends BaseActivity {
 					DefaultShared.putString(spf_key, JsonMapperUtils.toJson(document));
 				}
 				else {
-					if (old != null) initData(old);
+					if (old != null)
+						initData(old);
+					else if (document != null) Utility.toastFailedResult(context, document.message);
 				}
 			}
 			
