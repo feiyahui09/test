@@ -10,6 +10,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
@@ -24,6 +25,7 @@ public class BaseActivity extends Activity {
 	
 	protected AlertDialog mAlertDialog;
 	protected AsyncTask mRunningTask;
+	protected Handler handler = new Handler();
 	
 	/******************************** 【Activity LifeCycle For Debug】 *******************************************/
 	@Override
@@ -79,6 +81,10 @@ public class BaseActivity extends Activity {
 		
 		Intent itn = Intent.createChooser(intent, "分享");
 		startActivity(itn);
+	}
+	
+	protected void post() {
+		
 	}
 	
 	/******************************** 【Activity LifeCycle For Debug】 *******************************************/
@@ -152,6 +158,13 @@ public class BaseActivity extends Activity {
 	protected AlertDialog showAlertDialog(int pTitelResID, String pMessage, DialogInterface.OnClickListener pOkClickListener) {
 		String title = getResources().getString(pTitelResID);
 		return showAlertDialog(title, pMessage, pOkClickListener, null, null);
+	}
+	
+	protected AlertDialog showAlertOKDialog(String title, String pMessage, DialogInterface.OnClickListener pOkClickListener) {
+		if (mAlertDialog != null) mAlertDialog.dismiss();
+		mAlertDialog = new AlertDialog.Builder(this).setTitle(title).setMessage(pMessage)
+				.setPositiveButton(android.R.string.ok, pOkClickListener).show();
+		return mAlertDialog;
 	}
 	
 	protected AlertDialog showAlertDialog(String pTitle, String pMessage, DialogInterface.OnClickListener pOkClickListener,

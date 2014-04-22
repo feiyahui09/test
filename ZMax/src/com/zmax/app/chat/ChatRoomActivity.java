@@ -1,5 +1,9 @@
 package com.zmax.app.chat;
 
+import io.socket.IOAcknowledge;
+import io.socket.IOCallback;
+import io.socket.SocketIOException;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -25,11 +29,8 @@ import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
 
-import com.netease.pomelo.DataCallBack;
-import com.netease.pomelo.DataListener;
 import com.zmax.app.R;
-import com.zmax.app.chat.ChatHelper.ConnectorEntryCallback;
-import com.zmax.app.chat.ChatHelper.OnChatCallBack;
+import com.zmax.app.chat.promelo.DataCallBack;
 import com.zmax.app.ui.base.BaseActivity;
 import com.zmax.app.utils.JsonMapperUtils;
 import com.zmax.app.utils.Log;
@@ -43,18 +44,25 @@ public class ChatRoomActivity extends BaseActivity implements OnClickListener {
 	private ListView lv_chat;
 	private ChatListAdapter adapter;
 	private ChatHelper chatHelper;
-	private DataCallBack connectorEntertyCallBack;
-	private DataListener onChatCallBack;
-	 private String userName = "红孩儿";
-	 private String userid = "2";
-	 private String userToken = "token2";
-	 private String userGender = "女";
-//	private String userName = "逗比";
-//	private String userid = "1";
-//	private String userToken = "token1";
-//	private String userGender = "男";
-	//
-	private Handler handler = new Handler();
+	// private String userName = "红孩儿";
+	// private String userid = "2";
+	// private String userToken = "token2";
+	// private String userGender = "女";
+	
+	// private String userName = "逗比";
+	// private String userid = "1";
+	// private String userToken = "token1";
+	// private String userGender = "男";
+	
+	// private String userName = "围观淡定哥";
+	// private String userid = "5";
+	// private String userToken = "token5";
+	// private String userGender = "男";
+	
+	private String userName = "沉默哥";
+	private String userid = "4";
+	private String userToken = "token4";
+	private String userGender = "男";
 	private Runnable sendRunnable = new Runnable() {
 		
 		@Override
@@ -136,58 +144,7 @@ public class ChatRoomActivity extends BaseActivity implements OnClickListener {
 	private void initChatPomelo() {
 		chatHelper = ChatHelper.getHelper();
 		try {
-			chatHelper.init(this, "192.168.10.46", 3014, userid, userToken, userName, userGender, null, new ConnectorEntryCallback() {
-				
-				@Override
-				public void onConnect(final JSONObject body) {
-					
-					// final JSONObject body = msg.optJSONObject("body");
-					if (body == null) {
-						Toast.makeText(mContext, "错误，请稍后再试!", 2233).show();
-						return;
-					}
-					int code = 200;
-					boolean isError;
-					code = body.optInt("code", 200);
-					final String message = body.optString("message");
-					isError = body.optBoolean("error");
-					
-					if (!isError) {
-						handler.postDelayed(sendRunnable, 4000);
-						handler.post(new Runnable() {
-							@Override
-							public void run() {
-								Toast.makeText(mContext, "欢迎进入聊天室，当前登录信息：、\n" + body.toString(), 2233).show();
-							}
-						});
-					}
-					else {
-						handler.post(new Runnable() {
-							@Override
-							public void run() {
-								Toast.makeText(mContext, message, 2233).show();
-							}
-						});
-						chatHelper.disConnect();
-					}
-					
-				}
-			}, new OnChatCallBack() {
-				@Override
-				public void onChat(final JSONObject msg) {
-					handler.post(new Runnable() {
-						
-						@Override
-						public void run() {
-							ChatBody chatBody = JsonMapperUtils.toObject(msg.optString("body"), ChatBody.class);
-							if (chatBody.from.equals(userName))
-								show(chatBody.msg.content, ChatListAdapter.VALUE_RIGHT_TEXT, chatBody.from);
-							else
-								show(chatBody.msg.content, ChatListAdapter.VALUE_LEFT_TEXT, chatBody.from);
-						}
-					});
-				}
-			});
+			chatHelper.init(this, "192.168.10.46", 3014, userid, userToken, userName, userGender, clientCallback, ioCallback);
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -345,5 +302,152 @@ public class ChatRoomActivity extends BaseActivity implements OnClickListener {
 		return msgList;
 		
 	}
+	
+	private ClientCallback clientCallback = new ClientCallback() {
+		
+		@Override
+		public void onSendFailed(Exception e) {
+			
+			handler.post(new Runnable() {
+				@Override
+				public void run() {
+					showAlertOKDialog("!!!", "发送信息失败！", new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							// finish();
+						}
+					});
+				}
+			});
+			
+		}
+		
+		@Override
+		public void onGateEnter(JSONObject msg) {
+			handler.post(new Runnable() {
+				@Override
+				public void run() {
+					showShortToast("已连接聊天室，正在为您转入对应聊天房间！");
+				}
+			});
+		}
+		
+		@Override
+		public void onEnterFailed(Exception e) {
+			showAlertOKDialog("!!!", "连接错误！请稍后再试", new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					finish();
+				}
+			});
+			
+		}
+		
+		@Override
+		public void onConnectorEnter(final JSONObject body) {
+			
+			if (body == null) {
+				Toast.makeText(mContext, "错误，请稍后再试!", 2233).show();
+				return;
+			}
+			int code = 200;
+			boolean isError;
+			code = body.optInt("code", 200);
+			final String message = body.optString("message");
+			isError = body.optBoolean("error");
+			
+			if (!isError) {
+				handler.postDelayed(sendRunnable, 4000);
+				handler.post(new Runnable() {
+					@Override
+					public void run() {
+						Toast.makeText(mContext, "欢迎进入聊天室，当前登录信息：、\n" + body.toString(), 2233).show();
+					}
+				});
+			}
+			else {
+				handler.post(new Runnable() {
+					@Override
+					public void run() {
+						Toast.makeText(mContext, message, 2233).show();
+					}
+				});
+				chatHelper.disConnect();
+			}
+		}
+		
+		@Override
+		public void onChat(final String msg) {
+			handler.post(new Runnable() {
+				@Override
+				public void run() {
+					ChatBody chatBody = JsonMapperUtils.toObject(msg, ChatBody.class);
+					if (chatBody.from.equals(userName))
+						show(chatBody.msg.content, ChatListAdapter.VALUE_RIGHT_TEXT, chatBody.from);
+					else
+						show(chatBody.msg.content, ChatListAdapter.VALUE_LEFT_TEXT, chatBody.from);
+				}
+			});
+		}
+		
+		@Override
+		public void onForbidden(final String msg) {
+			handler.post(new Runnable() {
+				@Override
+				public void run() {
+					Toast.makeText(mContext, msg, 2233).show();
+				}
+			});
+		}
+	};
+	
+	/**
+	 * 这里用于处理socket timeout 的情况
+	 */
+	private IOCallback ioCallback = new IOCallback() {
+		
+		@Override
+		public void onMessage(JSONObject arg0, IOAcknowledge arg1) {
+			// TODO Auto-generated method stub
+			
+		}
+		
+		@Override
+		public void onMessage(String arg0, IOAcknowledge arg1) {
+			// TODO Auto-generated method stub
+			
+		}
+		
+		@Override
+		public void onError(SocketIOException arg0) {
+			handler.post(new Runnable() {
+				@Override
+				public void run() {
+					showAlertOKDialog("!!!", "与聊天室连接超时！", new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							// finish();
+						}
+					});
+				}
+			});
+		}
+		
+		@Override
+		public void onDisconnect() {
+		}
+		
+		@Override
+		public void onConnect() {
+			// TODO Auto-generated method stub
+			
+		}
+		
+		@Override
+		public void on(String arg0, IOAcknowledge arg1, Object... arg2) {
+			// TODO Auto-generated method stub
+			
+		}
+	};
 	
 }

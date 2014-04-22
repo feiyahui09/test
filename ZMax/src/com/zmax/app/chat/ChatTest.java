@@ -12,13 +12,11 @@ import org.json.JSONObject;
 import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
-import android.view.MotionEvent;
 
-import com.netease.pomelo.DataCallBack;
-import com.netease.pomelo.DataEvent;
-import com.netease.pomelo.DataListener;
-import com.netease.pomelo.PomeloClient;
-import com.zmax.app.model.Act;
+import com.zmax.app.chat.promelo.DataCallBack;
+import com.zmax.app.chat.promelo.DataEvent;
+import com.zmax.app.chat.promelo.DataListener;
+import com.zmax.app.chat.promelo.PomeloClient;
 import com.zmax.app.utils.Log;
 
 public class ChatTest extends Activity {
@@ -103,7 +101,7 @@ public class ChatTest extends Activity {
 		client = new PomeloClient("192.168.10.42", 3014);// first
 		// client = new PomeloClient("192.168.10.42", 2014);//doc
 		Log.i("gate.queryEntry ");
-		client.init();
+		client.init(null,null);
 		// 负债均衡
 		client.request("gate.gateHandler.queryEntry", new JSONObject().put("uid", "2"), new DataCallBack() {
 			
@@ -114,7 +112,7 @@ public class ChatTest extends Activity {
 				try {
 					client = new PomeloClient(msg.getString("host"), msg.getInt("port"));
 					Log.i("connector.enter ");
-					client.init();
+					client.init(null,null);
 					// 真正分配到个服务器，
 					client.request("connector.entryHandler.enter", new JSONObject().put("auth_token", "token2"), new DataCallBack() {
 						public void responseData(JSONObject msg) {
