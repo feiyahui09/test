@@ -26,6 +26,7 @@ import com.zmax.app.ui.base.BaseActivity;
 import com.zmax.app.utils.Constant;
 import com.zmax.app.utils.DefaultShared;
 import com.zmax.app.utils.JsonMapperUtils;
+import com.zmax.app.utils.Utility;
 
 public class DocumentsActivity extends BaseActivity {
 	
@@ -46,27 +47,20 @@ public class DocumentsActivity extends BaseActivity {
 		initHeader();
 		
 		old = JsonMapperUtils.toObject(DefaultShared.getString(spf_key, ""), Documents.class);
-//		if (!NetWorkHelper.checkNetState(this)) {
-//			if (old != null) initData(old);
-//			return;
-//		}
+		if (!NetWorkHelper.checkNetState(this)) {
+			Utility.toastNetworkFailed(this);
+		}
 		getDocumentsTask = new GetDocumentsTask(this, new GetDocumentsTask.TaskCallBack() {
 			
 			@Override
 			public void onCallBack(Documents document) {
 				
-				if (document != null) {
-					if (document.status == 200) {
-						initData(document);
-						DefaultShared.putString(spf_key, JsonMapperUtils.toJson(document));
-					}
-					else if (document.status == 304) {
-						if (old != null) initData(old);
-					}
-					else {
-						if (old != null) initData(old);
-						Toast.makeText(context, document.message, 333).show();
-					}
+				if (document != null && document.status == 200) {
+					initData(document);
+					DefaultShared.putString(spf_key, JsonMapperUtils.toJson(document));
+				}
+				else {
+					if (old != null) initData(old);
 				}
 			}
 			

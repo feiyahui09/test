@@ -32,6 +32,7 @@ import android.widget.Toast;
 import com.zmax.app.R;
 import com.zmax.app.model.Update;
 import com.zmax.app.net.HttpUtils;
+import com.zmax.app.net.NetWorkHelper;
 import com.zmax.app.task.CheckUpdateTask;
 import com.zmax.app.ui.AboutActivity;
 import com.zmax.app.ui.DocumentsActivity;
@@ -39,6 +40,7 @@ import com.zmax.app.ui.FeedBackActivity;
 import com.zmax.app.ui.WelcomeActivity;
 import com.zmax.app.utils.Constant;
 import com.zmax.app.utils.Log;
+import com.zmax.app.utils.Utility;
 
 public class SettingFragment extends Fragment implements OnClickListener {
 	
@@ -123,10 +125,16 @@ public class SettingFragment extends Fragment implements OnClickListener {
 	}
 	
 	private void checkUpdate() {
+		if (!NetWorkHelper.checkNetState(getActivity())) {
+			Utility.toastNetworkFailed(getActivity());
+			return;
+			
+		}
 		checkUpdateTask = new CheckUpdateTask(getActivity(), new CheckUpdateTask.TaskCallBack() {
 			
 			@Override
 			public void onCallBack(final Update result) {
+				if (getActivity() == null) return;
 				if (result == null) return;
 				if (result.status == 200) {
 					new AlertDialog.Builder(getActivity()).setTitle("升级").setMessage(result.description)
@@ -151,7 +159,7 @@ public class SettingFragment extends Fragment implements OnClickListener {
 					Toast.makeText(getActivity(), result.message, 300).show();
 				}
 				else {
-					
+					Toast.makeText(getActivity(), result.message, 300).show();
 				}
 			}
 		});

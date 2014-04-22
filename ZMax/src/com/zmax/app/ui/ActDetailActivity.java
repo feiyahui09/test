@@ -20,6 +20,7 @@ import com.zmax.app.R;
 import com.zmax.app.adapter.ActDetailAdapter;
 import com.zmax.app.model.ActDetail;
 import com.zmax.app.model.ActDetailContent;
+import com.zmax.app.net.NetWorkHelper;
 import com.zmax.app.task.GetActDetailTask;
 import com.zmax.app.ui.base.BaseFragmentActivity;
 import com.zmax.app.ui.fragment.ActDetailFirstFragment;
@@ -28,6 +29,7 @@ import com.zmax.app.ui.fragment.ActDetailThirdFragment;
 import com.zmax.app.utils.Constant;
 import com.zmax.app.utils.ShareUtils;
 import com.zmax.app.utils.StackBlurManager;
+import com.zmax.app.utils.Utility;
 
 public class ActDetailActivity extends BaseFragmentActivity {
 	
@@ -95,6 +97,10 @@ public class ActDetailActivity extends BaseFragmentActivity {
 				
 			}
 		});
+		if (!NetWorkHelper.checkNetState(this)) {
+			Utility.toastNetworkFailed(this);
+			return;
+		}
 		
 		getActDetailTask = new GetActDetailTask(this, new GetActDetailTask.TaskCallBack() {
 			
@@ -147,6 +153,8 @@ public class ActDetailActivity extends BaseFragmentActivity {
 						}
 					});
 				}
+				else
+					Utility.toastFailedResult(ActDetailActivity.this);
 				
 			}
 		});

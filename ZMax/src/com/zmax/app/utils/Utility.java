@@ -6,7 +6,9 @@ import java.util.Random;
 
 import org.codehaus.jackson.map.ser.ToStringSerializer;
 
+import com.zmax.app.R;
 import com.zmax.app.ZMaxApplication;
+import com.zmax.app.net.NetWorkHelper;
 import com.zmax.app.task.GetActListTask;
 
 import android.content.Context;
@@ -32,18 +34,20 @@ public class Utility {
 		return random.nextInt(range);
 	}
 	
-//	public static void toastResult(int status) {
-//		String toastStr = "";
-//		switch (status) {
-//			case 304:
-//				toastStr="";
-//				break;
-//			
-//			default:
-//				break;
-//				
-//				Toast.makeText(ZMaxApplication.getInstance(), toastStr, 333).show();
-//		}
-//	}
+	public static void toastFailedResult(Context context) {
+		Toast.makeText(context, "获取信息失败，请稍后再试！", 500).show();
+	}
+	
+	public static void toastFailedResult(Context context, String msg) {
+		Toast.makeText(context, msg, 500).show();
+	}
+	
+	public static void toastNetworkFailed(Context context) {
+		Toast.makeText(context, context.getResources().getString(R.string.httpProblem), 300).show();
+	}
+	
+	public static void toastNoMoreResult(Context context) {
+		Toast.makeText(context, "没有更多了！", 500).show();
+	}
 	
 }

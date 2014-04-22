@@ -16,10 +16,12 @@ import com.zmax.app.R;
 import com.zmax.app.adapter.ActListAdapter;
 import com.zmax.app.model.Act;
 import com.zmax.app.model.ActList;
+import com.zmax.app.net.NetWorkHelper;
 import com.zmax.app.task.GetActListInHotelTask;
 import com.zmax.app.task.GetActListTask;
 import com.zmax.app.ui.base.BaseActivity;
 import com.zmax.app.utils.Constant;
+import com.zmax.app.utils.Utility;
 import com.zmax.app.widget.XListView;
 import com.zmax.app.widget.XListView.IXListViewListener;
 
@@ -75,6 +77,10 @@ public class ActsInHotelActivity extends BaseActivity implements IXListViewListe
 	}
 	
 	private void getActList(int page) {
+		if (!NetWorkHelper.checkNetState(this)) {
+			Utility.toastNetworkFailed(mContext);
+			return;
+		}
 		
 		getActListTask = new GetActListInHotelTask(this, new GetActListInHotelTask.TaskCallBack() {
 			
@@ -92,6 +98,8 @@ public class ActsInHotelActivity extends BaseActivity implements IXListViewListe
 						listview.onLoads();
 					}
 				}
+				else
+					Utility.toastFailedResult(mContext);
 			}
 		});
 		String hotelId = getIntent().getStringExtra(Constant.Acts.HOTEL_ID_KEY);

@@ -46,14 +46,18 @@ public class MainActivity extends BaseSlidingFragmentActivity {
 					switchContent(new ActListFragment());
 					Toast.makeText(mContext, "   " + result.province + cityStr, 2222).show();
 				}
-//				else if (!PhoneUtil.isNetworkOk(mContext)) {
-//					switchContent(new NetErrorFragment());
-//					return;
-//				}
+				// else if (!PhoneUtil.isNetworkOk(mContext)) {
+				// switchContent(new NetErrorFragment());
+				// return;
+				// }
 				else {
+					
+					Constant.CUR_CITY = "武汉";
+					DefaultShared.putString(Constant.SPFKEY.CITY_LOCATION_KEY, "武汉");
+					switchContent(new ActListFragment());
 					// 显示默认列表
-					Toast.makeText(mContext, "城市定位失败！   " , 2222).show();
-
+					Toast.makeText(mContext, "城市定位失败！   为您显示默认城武汉市信息！", 2222).show();
+					
 				}
 			}
 		});

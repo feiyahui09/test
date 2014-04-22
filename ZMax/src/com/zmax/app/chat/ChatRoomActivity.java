@@ -11,6 +11,7 @@ import org.json.JSONObject;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.KeyEvent;
@@ -44,14 +45,14 @@ public class ChatRoomActivity extends BaseActivity implements OnClickListener {
 	private ChatHelper chatHelper;
 	private DataCallBack connectorEntertyCallBack;
 	private DataListener onChatCallBack;
-	// private String userName = "红孩儿";
-	// private String userid = "2";
-	// private String userToken = "token2";
-	// private String userGender = "女";
-	private String userName = "逗比";
-	private String userid = "1";
-	private String userToken = "token1";
-	private String userGender = "男";
+	 private String userName = "红孩儿";
+	 private String userid = "2";
+	 private String userToken = "token2";
+	 private String userGender = "女";
+//	private String userName = "逗比";
+//	private String userid = "1";
+//	private String userToken = "token1";
+//	private String userGender = "男";
 	//
 	private Handler handler = new Handler();
 	private Runnable sendRunnable = new Runnable() {
@@ -90,7 +91,7 @@ public class ChatRoomActivity extends BaseActivity implements OnClickListener {
 		btn_Back = (Button) findViewById(R.id.btn_back);
 		btn_Share = (Button) findViewById(R.id.btn_share);
 		btn_Share.setVisibility(View.VISIBLE);
-		btn_Share.setBackgroundResource(R.drawable.chat_setting_btn_bg);
+		btn_Share.setBackgroundResource(R.drawable.chat_more_menu_sel);
 		iv_pic = (ImageView) findViewById(R.id.iv_pic);
 		iv_emotion = (ImageView) findViewById(R.id.iv_emotion);
 		btn_send = (Button) findViewById(R.id.btn_send);
@@ -107,10 +108,17 @@ public class ChatRoomActivity extends BaseActivity implements OnClickListener {
 			public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
 				chatHelper.send(et_edit.getText().toString(), new DataCallBack() {
 					@Override
-					public void responseData(JSONObject arg0) {
-						et_edit.clearComposingText();
-						et_edit.setText("");
-						Log.i("" + arg0.toString());
+					public void responseData(final JSONObject arg0) {
+						handler.post(new Runnable() {
+							
+							@Override
+							public void run() {
+								et_edit.clearComposingText();
+								et_edit.setText("");
+								Log.i("" + arg0.toString());
+							}
+						});
+						
 					}
 				});
 				return false;
@@ -122,12 +130,13 @@ public class ChatRoomActivity extends BaseActivity implements OnClickListener {
 		lv_chat.setAdapter(adapter);
 		
 	}
-//	192.168.0.69
-//	192.168.10.46
+	
+	// 192.168.0.69 //
+	// 192.168.10.46 //old
 	private void initChatPomelo() {
 		chatHelper = ChatHelper.getHelper();
 		try {
-			chatHelper.init(this, "192.168.0.69", 3014, userid, userToken, userName, userGender, null, new ConnectorEntryCallback() {
+			chatHelper.init(this, "192.168.10.46", 3014, userid, userToken, userName, userGender, null, new ConnectorEntryCallback() {
 				
 				@Override
 				public void onConnect(final JSONObject body) {
@@ -144,7 +153,7 @@ public class ChatRoomActivity extends BaseActivity implements OnClickListener {
 					isError = body.optBoolean("error");
 					
 					if (!isError) {
-						  handler.postDelayed(sendRunnable, 4000);
+						handler.postDelayed(sendRunnable, 4000);
 						handler.post(new Runnable() {
 							@Override
 							public void run() {
@@ -192,10 +201,17 @@ public class ChatRoomActivity extends BaseActivity implements OnClickListener {
 			case R.id.btn_send:
 				chatHelper.send(et_edit.getText().toString(), new DataCallBack() {
 					@Override
-					public void responseData(JSONObject arg0) {
-						et_edit.clearComposingText();
-						et_edit.setText("");
-						Log.i("" + arg0.toString());
+					public void responseData(final JSONObject arg0) {
+						handler.post(new Runnable() {
+							
+							@Override
+							public void run() {
+								et_edit.clearComposingText();
+								et_edit.setText("");
+								Log.i("" + arg0.toString());
+							}
+						});
+						
 					}
 				});
 				break;
@@ -222,6 +238,7 @@ public class ChatRoomActivity extends BaseActivity implements OnClickListener {
 				finish();
 				break;
 			case R.id.btn_share:
+				startActivity(new Intent(mContext, ChatMoreActivity.class));
 				
 				break;
 			default:

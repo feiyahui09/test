@@ -23,8 +23,7 @@ public class LoginPlayZmaxTask extends AsyncTask<String, Void, Login> {
 	@Override
 	protected void onPreExecute() {
 		super.onPreExecute();
-		if (!NetWorkHelper.checkNetState(context))
-			Toast.makeText(context, context.getResources().getString(R.string.httpProblem), 300).show();
+		
 	}
 	
 	@Override

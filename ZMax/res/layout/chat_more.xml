@@ -3,8 +3,7 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/default_bg"
-    android:orientation="vertical"
-    android:paddingTop="32dp" >
+    android:orientation="vertical" >
 
     <include layout="@layout/detail_header" />
 
@@ -55,11 +54,12 @@
     <Button
         android:id="@+id/btn_quit"
         style="@style/setting_btn"
-        android:text="退出聊天室" />
+        android:text="退出聊天室"
+        android:textColor="#ed2e2e"
+        android:textSize="18sp" />
 
     <ImageView
         style="@style/setting_divider"
-        android:layout_marginTop="200dp"
         android:background="@drawable/chat_setting_divider" />
 
 </LinearLayout>

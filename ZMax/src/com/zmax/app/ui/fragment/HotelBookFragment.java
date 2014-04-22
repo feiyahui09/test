@@ -31,11 +31,13 @@ import com.zmax.app.db.DBAccessor;
 import com.zmax.app.manage.DataManage;
 import com.zmax.app.model.Hotel;
 import com.zmax.app.model.HotelList;
+import com.zmax.app.net.NetWorkHelper;
 import com.zmax.app.task.GetHotelListTask;
 import com.zmax.app.ui.HotelDetailActivity;
 import com.zmax.app.ui.base.BaseSlidingFragmentActivity.HotelBookVisivleCallback;
 import com.zmax.app.utils.Constant;
 import com.zmax.app.utils.DateTimeUtils;
+import com.zmax.app.utils.Utility;
 import com.zmax.app.widget.VerticalViewPager;
 import com.zmax.app.widget.VerticalViewPager.OnPageChangeListener;
 
@@ -85,6 +87,7 @@ public class HotelBookFragment extends Fragment implements OnPageChangeListener,
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
+		
 		getHotelListTask = new GetHotelListTask(getActivity(), new GetHotelListTask.TaskCallBack() {
 			
 			@Override
@@ -94,9 +97,17 @@ public class HotelBookFragment extends Fragment implements OnPageChangeListener,
 					initData(hotelList.hotels, upcomingHotelList.hotels);
 					saveHotel(hotelList.hotels, false);
 					saveHotel(upcomingHotelList.hotels, true);
+					if (hotelList.hotels == null || hotelList.hotels.isEmpty()) Utility.toastNoMoreResult(getActivity());
 				}
 				else {
 					initData(DataManage.getIndexHotellist4DB(false), DataManage.getIndexHotellist4DB(true));
+					if (!NetWorkHelper.checkNetState(getActivity())) {
+						Utility.toastNetworkFailed(getActivity());
+					}
+					else if (hotelList != null)
+						Utility.toastFailedResult(getActivity(), hotelList.message);
+					else
+						Utility.toastFailedResult(getActivity());
 				}
 			}
 		});

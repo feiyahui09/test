@@ -12,11 +12,14 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.zmax.app.R;
 import com.zmax.app.model.Login;
+import com.zmax.app.net.NetWorkHelper;
 import com.zmax.app.task.LoginPlayZmaxTask;
 import com.zmax.app.ui.MainActivity;
+import com.zmax.app.utils.Utility;
 
 public class PlayInZmaxLoginFragment extends Fragment {
 	
@@ -58,12 +61,19 @@ public class PlayInZmaxLoginFragment extends Fragment {
 	}
 	
 	private void goPlayZmax() {
+		if (!NetWorkHelper.checkNetState(getActivity())) {
+			Utility.toastNetworkFailed(getActivity());
+			return;
+		}
+		
 		loginPlayZmaxTask = new LoginPlayZmaxTask(getActivity(), new LoginPlayZmaxTask.TaskCallBack() {
 			@Override
 			public void onCallBack(Login loginResult) {
 				if (loginResult != null && loginResult.status == 200) {
 					((MainActivity) getActivity()).switchContent(new PlayInZmaxFragment(loginResult));
 				}
+				else
+					Utility.toastFailedResult(getActivity());
 			}
 		});
 		loginPlayZmaxTask.execute();
@@ -94,7 +104,7 @@ public class PlayInZmaxLoginFragment extends Fragment {
 		
 	}
 	
-	private static final String[] mStrings = { "选择入住酒店", "Mercury", "Venus", "Earth", "Mars", "Jupiter", "Saturn", "Uranus", "Neptune" };
+	private static final String[] mStrings = { "选择入住酒店", "武汉光谷店", "广州珠江新城店", "北京王府井店" };
 	
 	@Override
 	public void onSaveInstanceState(Bundle outState) {

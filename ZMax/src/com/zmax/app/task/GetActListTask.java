@@ -8,6 +8,7 @@ import com.zmax.app.R;
 import com.zmax.app.model.ActList;
 import com.zmax.app.net.NetAccessor;
 import com.zmax.app.net.NetWorkHelper;
+import com.zmax.app.utils.Utility;
 
 public class GetActListTask extends AsyncTask<String, Void, ActList> {
 	private Context context;
@@ -23,8 +24,6 @@ public class GetActListTask extends AsyncTask<String, Void, ActList> {
 	protected void onPreExecute() {
 		// TODO Auto-generated method stub
 		super.onPreExecute();
-		if (!NetWorkHelper.checkNetState(context))
-			Toast.makeText(context, context.getResources().getString(R.string.httpProblem), 300).show();
 	}
 	
 	@Override

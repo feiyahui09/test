@@ -22,7 +22,7 @@ public class ChatMoreActivity extends BaseActivity {
 	private RadioButton btn_man, btn_feman;
 	private Context mContext;
 	private EditText et_nick_name;
-	private Button btn_Back;
+	private Button btn_Back, btn_quit;
 	private TextView tv_title;
 	
 	private class ResponseReceiver extends BroadcastReceiver {
@@ -50,6 +50,14 @@ public class ChatMoreActivity extends BaseActivity {
 		btn_Back = (Button) findViewById(R.id.btn_back);
 		
 		btn_Back.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				finish();
+			}
+		});
+		btn_quit = (Button) findViewById(R.id.btn_quit);
+		
+		btn_quit.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				finish();

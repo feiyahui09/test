@@ -32,9 +32,11 @@
         <EditText
             android:id="@+id/et_nick_name"
             style="@style/playzmax_login_edittext"
-             android:textCursorDrawable="@null"
+            android:layout_width="fill_parent"
             android:layout_marginTop="8dp"
-            android:hint="昵称" />
+            android:hint="昵称"
+            android:textColor="#434343"
+            android:textCursorDrawable="@null" />
 
         <RadioGroup
             android:layout_width="match_parent"
@@ -49,6 +51,8 @@
                 android:layout_marginRight="10dp"
                 android:layout_weight="1"
                 android:background="@drawable/chat_setting_feman_btn_sel"
+                android:button="@null"
+                android:checked="true"
                 android:gravity="center"
                 android:text="男"
                 android:textColor="@color/chat_setting_text_color_sel"
@@ -61,6 +65,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_weight="1"
                 android:background="@drawable/chat_setting_man_btn_sel"
+                android:button="@null"
                 android:gravity="center"
                 android:text="女"
                 android:textColor="@color/chat_setting_text_color_sel"
@@ -81,7 +86,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"
+        android:layout_marginTop="55dp"
         android:gravity="center"
         android:text="简单填写下，就可以畅爽的聊天啦！"
         android:textColor="#434343"

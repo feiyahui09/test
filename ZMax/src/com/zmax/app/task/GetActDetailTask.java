@@ -23,8 +23,6 @@ public class GetActDetailTask extends AsyncTask<String, Void, ActDetail> {
 	protected void onPreExecute() {
 		// TODO Auto-generated method stub
 		super.onPreExecute();
-		if (!NetWorkHelper.checkNetState(context))
-			Toast.makeText(context, context.getResources().getString(R.string.httpProblem), 300).show();
 	}
 	
 	@Override

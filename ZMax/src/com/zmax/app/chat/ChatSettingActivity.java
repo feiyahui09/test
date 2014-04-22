@@ -22,7 +22,7 @@ public class ChatSettingActivity extends BaseActivity {
 	private RadioButton btn_man, btn_feman;
 	private Context mContext;
 	private EditText et_nick_name;
-	private Button btn_Back, btn_Share;
+	private Button btn_Back, btn_Share, btn_login;
 	private TextView tv_title;
 	
 	private class ResponseReceiver extends BroadcastReceiver {
@@ -58,7 +58,7 @@ public class ChatSettingActivity extends BaseActivity {
 		
 		btn_Share = (Button) findViewById(R.id.btn_share);
 		btn_Share.setVisibility(View.VISIBLE);
-		btn_Share.setBackgroundResource(R.drawable.chat_setting_btn_bg);
+		btn_Share.setBackgroundResource(R.drawable.chat_more_menu_sel);
 		btn_Share.setOnClickListener(new OnClickListener() {
 			
 			@Override
@@ -67,6 +67,14 @@ public class ChatSettingActivity extends BaseActivity {
 			}
 		});
 		
+		btn_login = (Button) findViewById(R.id.btn_login);
+		btn_login.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				startActivity(new Intent(mContext, ChatRoomActivity.class));
+				
+			}
+		});
 	}
 	
 }

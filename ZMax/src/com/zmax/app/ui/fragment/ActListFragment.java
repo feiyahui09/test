@@ -16,10 +16,12 @@ import com.zmax.app.adapter.ActListAdapter;
 import com.zmax.app.manage.DataManage;
 import com.zmax.app.model.Act;
 import com.zmax.app.model.ActList;
+import com.zmax.app.net.NetWorkHelper;
 import com.zmax.app.task.GetActListTask;
 import com.zmax.app.ui.ActDetailActivity;
 import com.zmax.app.utils.Constant;
 import com.zmax.app.utils.Log;
+import com.zmax.app.utils.Utility;
 import com.zmax.app.widget.XListView;
 import com.zmax.app.widget.XListView.IXListViewListener;
 
@@ -118,7 +120,9 @@ public class ActListFragment extends Fragment implements IXListViewListener, OnI
 			
 			@Override
 			public void onCallBack(ActList result) {
-				if (getActivity() == null) return;
+				if (getActivity() == null) {
+					return;
+				}
 				if (result != null && result.status == 200) {
 					final List<Act> actList = result.events;
 					if (curPage == 1) {
@@ -134,11 +138,22 @@ public class ActListFragment extends Fragment implements IXListViewListener, OnI
 						adapter.appendToList(actList);
 						listview.onLoad();
 						curPage++;
-					}else 
+					}
+					else {
+						Utility.toastNoMoreResult(getActivity());
 						listview.onLoads();
+					}
 				}
 				else {
 					if (curPage == 1) adapter.appendToList(DataManage.getIndexActlist4DB());
+					
+					if (!NetWorkHelper.checkNetState(getActivity())) {
+						Utility.toastNetworkFailed(getActivity());
+					}
+					else if (result != null)
+						Utility.toastFailedResult(getActivity(), result.message);
+					else
+						Utility.toastFailedResult(getActivity());
 					listview.onLoads();
 				}
 			}
