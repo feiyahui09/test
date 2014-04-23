@@ -44,11 +44,15 @@ public class ChatRoomActivity extends BaseActivity implements OnClickListener {
 	private ListView lv_chat;
 	private ChatListAdapter adapter;
 	private ChatHelper chatHelper;
-//	 private String userName = "红孩儿";
-//	 private String userid = "2";
-//	 private String userToken = "token2";
-//	 private String rid = "123";
-//	 private String userGender = "女";
+	private static final long CHAT_MUTE_DURATION = 40 * 1000;// default 10 mins
+	private static long last_chat_time = 0;
+	
+	private static int count = 0;
+	// private String userName = "红孩儿";
+	// private String userid = "2";
+	// private String userToken = "token2";
+	// private String rid = "123";
+	// private String userGender = "女";
 	
 	// private String userName = "逗比";
 	// private String userid = "1";
@@ -72,6 +76,11 @@ public class ChatRoomActivity extends BaseActivity implements OnClickListener {
 		@Override
 		public void run() {
 			final String str;
+			
+			// count++;
+			// if (count > 4 && count < 8)
+			// ;
+			// else {
 			if (userid.equals("2"))
 				str = "自动广播：你是猴子请来的逗比么     ";
 			else
@@ -84,7 +93,7 @@ public class ChatRoomActivity extends BaseActivity implements OnClickListener {
 					
 				}
 			});
-			
+			// }
 			handler.postDelayed(this, 16000);
 		}
 	};
@@ -148,7 +157,7 @@ public class ChatRoomActivity extends BaseActivity implements OnClickListener {
 	private void initChatPomelo() {
 		chatHelper = ChatHelper.getHelper();
 		try {
-			chatHelper.init(this, "192.168.10.46", 3014, userid, rid, userToken, userName, userGender, clientCallback, ioCallback);
+			chatHelper.init(this, "192.168.0.69", 3014, userid, rid, userToken, userName, userGender, clientCallback, ioCallback);
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -207,6 +216,12 @@ public class ChatRoomActivity extends BaseActivity implements OnClickListener {
 		}
 	}
 	
+	private void showTimeTip(Date time) {
+		
+		adapter.addItem(new Message(ChatListAdapter.VALUE_TIME_TIP, new SimpleDateFormat("HH:mm").format(time), null));
+		lv_chat.setSelection(lv_chat.getCount() - 1);
+	}
+	
 	private void show(String content, int type, String name) {
 		
 		// adapter.addItem(new Message(ChatListAdapter.MSG_TYPE[new
@@ -214,16 +229,12 @@ public class ChatRoomActivity extends BaseActivity implements OnClickListener {
 		// + new Date()));
 		adapter.addItem(new Message(type, content + " \n" + new SimpleDateFormat("HH:mm:ss").format(new Date()), name));
 		lv_chat.setSelection(lv_chat.getCount() - 1);
-		Log.d("@@adapter:" + adapter.getCount());
-		Log.d("@@lv_chat:" + lv_chat.getCount());
 	}
 	
 	private void show(String content) {
 		adapter.addItem(new Message(ChatListAdapter.MSG_TYPE[new Random().nextInt(ChatListAdapter.MSG_TYPE.length)], content + " \n"
 				+ new Date(), " null name"));
 		lv_chat.setSelection(lv_chat.getCount() - 1);
-		Log.d("@@adapter:" + adapter.getCount());
-		Log.d("@@lv_chat:" + lv_chat.getCount());
 	}
 	
 	@Override
@@ -385,6 +396,15 @@ public class ChatRoomActivity extends BaseActivity implements OnClickListener {
 			handler.post(new Runnable() {
 				@Override
 				public void run() {
+					/**
+					 * 聊天没有聊天信息时，时间显示则以第一个发言人时间，隔10分钟没有人再次发言，时间显示则以下个发言时间
+					 * 聊天室连续发言，则不需要显示每个用户发言时间
+					 */
+					if (System.currentTimeMillis() > last_chat_time + CHAT_MUTE_DURATION) {
+						showTimeTip(new Date());
+					}
+					last_chat_time = System.currentTimeMillis();
+					
 					ChatBody chatBody = JsonMapperUtils.toObject(msg, ChatBody.class);
 					if (chatBody.from.equals(userName))
 						show(chatBody.msg.content, ChatListAdapter.VALUE_RIGHT_TEXT, chatBody.from);
