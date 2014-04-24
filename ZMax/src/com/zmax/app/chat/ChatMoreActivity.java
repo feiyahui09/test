@@ -1,9 +1,7 @@
 package com.zmax.app.chat;
 
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -11,28 +9,18 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.zmax.app.R;
-import com.zmax.app.manage.SendFeedbackService;
 import com.zmax.app.ui.base.BaseActivity;
 import com.zmax.app.utils.Constant;
+import com.zmax.app.utils.DefaultShared;
 
 public class ChatMoreActivity extends BaseActivity {
 	private RadioButton btn_man, btn_feman;
 	private Context mContext;
 	private EditText et_nick_name;
-	private Button btn_Back, btn_quit;
-	private TextView tv_title;
-	
-	private class ResponseReceiver extends BroadcastReceiver {
-		
-		@Override
-		public void onReceive(Context context, Intent intent) {
-			finish();
-		}
-		
-	}
+	private Button btn_Back, btn_quit, btn_edit_name;
+	private TextView tv_title, tv_name;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -63,6 +51,24 @@ public class ChatMoreActivity extends BaseActivity {
 				finish();
 			}
 		});
+		
+		tv_name = (TextView) findViewById(R.id.tv_name);
+		btn_edit_name = (Button) findViewById(R.id.btn_edit_name);
+		btn_edit_name.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				startActivity(new Intent(mContext, ChatSettingActivity.class));
+			}
+		});
+		
+	}
+	
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		tv_name.setText(DefaultShared.getString(Constant.Chat.SELF_NAME, ""));
 		
 	}
 	

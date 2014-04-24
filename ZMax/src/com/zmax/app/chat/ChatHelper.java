@@ -42,46 +42,49 @@ public class ChatHelper {
 		Log.i("gate.queryEntry");
 		client.init(ioCallback, clientCallback);
 		// 负债均衡
-		client.request("gate.gateHandler.queryEntry", new JSONObject().put("uid", uid).put("rid", rid),
-				new DataCallBack() {
-					@Override
-					public void responseData(JSONObject msg) {
-						Log.i("gate:response: " + msg.toString());
-						client.disconnect();
-						if (clientCallback != null) clientCallback.onGateEnter(msg);
-						
-						try {
-							client = new PomeloClient(msg.getString("host"), msg.getInt("port"));
-							Log.i("connector.enter ");
-							client.init(ioCallback, clientCallback);
-							// 真正分配到个服务器，
-							client.request("connector.entryHandler.enter", new JSONObject().put("auth_token", authToken),
-									new DataCallBack() {
-										public void responseData(JSONObject msg) {
-											// handle data here
-											Log.i("connector.enter:response : " + msg.toString());
-											if (clientCallback != null) clientCallback.onConnectorEnter(msg);
-										}
-									});
-							client.on("onChat", new DataListener() {
-								public void receiveData(DataEvent event) {
-									JSONObject msg = event.getMessage();
-									Log.i("onChat: " + msg.toString());
-									if (clientCallback != null) {
-										clientCallback.onChat(msg.optString("body"));
-										
-									}
-								}
-							});
+		client.request("gate.gateHandler.queryEntry", new JSONObject().put("uid", uid).put("rid", rid), new DataCallBack() {
+			@Override
+			public void responseData(JSONObject msg) {
+				Log.i("gate:response: " + msg.toString());
+				client.disconnect();
+				if (clientCallback != null) clientCallback.onGateEnter(msg);
+				
+				try {
+					client = new PomeloClient(msg.getString("host"), msg.getInt("port"));
+					Log.i("connector.enter ");
+					client.init(ioCallback, clientCallback);
+					// 真正分配到个服务器，
+					client.request("connector.entryHandler.enter", new JSONObject().put("auth_token", authToken), new DataCallBack() {
+						public void responseData(JSONObject msg) {
+							// handle data here
+							Log.i("connector.enter:response : " + msg.toString());
+							if (clientCallback != null) clientCallback.onConnectorEnter(msg);
 						}
-						catch (Exception e) {
-							if (clientCallback != null) clientCallback.onEnterFailed(e);
-							e.printStackTrace();
+					});
+					client.on("onChat", new DataListener() {
+						public void receiveData(DataEvent event) {
+							JSONObject msg = event.getMessage();
+							Log.i("onChat: " + msg.toString());
+							if (clientCallback != null) {
+								clientCallback.onChat(msg.optString("body"));
+								
+							}
 						}
-						
-					}
-					
-				});
+					});
+				}
+				catch (Exception e) {
+					if (clientCallback != null) clientCallback.onEnterFailed(e);
+					e.printStackTrace();
+				}
+				
+			}
+			
+		});
+	}
+	
+	public void modifyInfo(String name, String gender) {
+		this.name = name;
+		this.gender = gender;
 	}
 	
 	public void disConnect() {

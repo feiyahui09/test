@@ -26,7 +26,7 @@ public class FeedBackActivity extends BaseActivity {
 		
 		@Override
 		public void onReceive(Context context, Intent intent) {
-			finish();
+			if (!isFinishing()) finish();
 		}
 		
 	}

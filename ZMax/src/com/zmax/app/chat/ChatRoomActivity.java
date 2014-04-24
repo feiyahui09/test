@@ -18,6 +18,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -32,8 +33,11 @@ import android.widget.Toast;
 import com.zmax.app.R;
 import com.zmax.app.chat.promelo.DataCallBack;
 import com.zmax.app.ui.base.BaseActivity;
+import com.zmax.app.utils.Constant;
+import com.zmax.app.utils.DefaultShared;
 import com.zmax.app.utils.JsonMapperUtils;
 import com.zmax.app.utils.Log;
+import com.zmax.app.utils.Utility;
 
 public class ChatRoomActivity extends BaseActivity implements OnClickListener {
 	private Context mContext;
@@ -48,11 +52,14 @@ public class ChatRoomActivity extends BaseActivity implements OnClickListener {
 	private static long last_chat_time = 0;
 	
 	private static int count = 0;
-	// private String userName = "红孩儿";
-	// private String userid = "2";
-	// private String userToken = "token2";
-	// private String rid = "123";
-	// private String userGender = "女";
+	private static String self_user_name = "围观淡定哥";
+	private static String self_user_gender = "男";
+	
+	 private String userName = "红孩儿";
+	 private String userid = "2";
+	 private String userToken = "token2";
+	 private String rid = "123";
+	 private String userGender = "女";
 	
 	// private String userName = "逗比";
 	// private String userid = "1";
@@ -60,11 +67,11 @@ public class ChatRoomActivity extends BaseActivity implements OnClickListener {
 	// private String userToken = "token1";
 	// private String userGender = "男";
 	
-	private String userName = "围观淡定哥";
-	private String userid = "5";
-	private String rid = "123";
-	private String userToken = "token5";
-	private String userGender = "男";
+//	private String userName = "围观淡定哥";
+//	private String userid = "5";
+//	private String rid = "123";
+//	private String userToken = "token5";
+//	private String userGender = "男";
 	
 	// private String userName = "沉默哥";
 	// private String userid = "4";
@@ -152,6 +159,33 @@ public class ChatRoomActivity extends BaseActivity implements OnClickListener {
 		
 	}
 	
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		String gender = DefaultShared.getString(Constant.Chat.SELF_GENDER, "");
+		String name = DefaultShared.getString(Constant.Chat.SELF_NAME, "");
+		if (TextUtils.isEmpty(gender) || TextUtils.isEmpty(name)) {
+			return;
+		}
+		self_user_gender = gender;
+		self_user_name = name;
+		
+		// 修改发送的用户信息
+		if (chatHelper != null) chatHelper.modifyInfo(self_user_name, self_user_gender);
+		// 修改名字性别后，刷新原有聊天列表
+		if (adapter != null && adapter.getCount() > 0) {
+			for (ChatMsg message : adapter.getMsgList()) {
+				if (message.type == ChatListAdapter.VALUE_RIGHT_TEXT || message.type == ChatListAdapter.VALUE_RIGHT_IMAGE) {
+					message.gender = self_user_gender;
+					message.from = self_user_name;
+				}
+			}
+			adapter.notifyDataSetChanged();
+		}
+		
+	}
+	
 	// 192.168.0.69 //
 	// 192.168.10.46 //old
 	private void initChatPomelo() {
@@ -169,6 +203,10 @@ public class ChatRoomActivity extends BaseActivity implements OnClickListener {
 		
 		switch (v.getId()) {
 			case R.id.btn_send:
+				if (Utility.isETNull(et_edit)) {
+					Toast.makeText(mContext, "输入内容不能为空哦！", 500).show();
+					return;
+				}
 				chatHelper.send(et_edit.getText().toString(), new DataCallBack() {
 					@Override
 					public void responseData(final JSONObject arg0) {
@@ -216,24 +254,11 @@ public class ChatRoomActivity extends BaseActivity implements OnClickListener {
 		}
 	}
 	
-	private void showTimeTip(Date time) {
-		
-		adapter.addItem(new Message(ChatListAdapter.VALUE_TIME_TIP, new SimpleDateFormat("HH:mm").format(time), null));
-		lv_chat.setSelection(lv_chat.getCount() - 1);
-	}
-	
-	private void show(String content, int type, String name) {
-		
-		// adapter.addItem(new Message(ChatListAdapter.MSG_TYPE[new
-		// Random().nextInt(ChatListAdapter.MSG_TYPE.length)], content + " \n"
-		// + new Date()));
-		adapter.addItem(new Message(type, content + " \n" + new SimpleDateFormat("HH:mm:ss").format(new Date()), name));
-		lv_chat.setSelection(lv_chat.getCount() - 1);
-	}
-	
-	private void show(String content) {
-		adapter.addItem(new Message(ChatListAdapter.MSG_TYPE[new Random().nextInt(ChatListAdapter.MSG_TYPE.length)], content + " \n"
-				+ new Date(), " null name"));
+	private void show(ChatMsg chatMsg) {
+		adapter.addItem(chatMsg);
+		/**
+		 * 做一个 下方有新消息的提示
+		 */
 		lv_chat.setSelection(lv_chat.getCount() - 1);
 	}
 	
@@ -241,6 +266,7 @@ public class ChatRoomActivity extends BaseActivity implements OnClickListener {
 	public void onDestroy() {
 		super.onDestroy();
 		if (chatHelper != null) chatHelper.disConnect();
+		handler.removeCallbacks(sendRunnable);
 	}
 	
 	private List<Message> getMyData() {
@@ -401,15 +427,22 @@ public class ChatRoomActivity extends BaseActivity implements OnClickListener {
 					 * 聊天室连续发言，则不需要显示每个用户发言时间
 					 */
 					if (System.currentTimeMillis() > last_chat_time + CHAT_MUTE_DURATION) {
-						showTimeTip(new Date());
+						ChatMsg chatMsg = new ChatMsg();
+						chatMsg.tipTime = new SimpleDateFormat("HH:mm").format(new Date());
+						show(chatMsg);
 					}
 					last_chat_time = System.currentTimeMillis();
 					
-					ChatBody chatBody = JsonMapperUtils.toObject(msg, ChatBody.class);
-					if (chatBody.from.equals(userName))
-						show(chatBody.msg.content, ChatListAdapter.VALUE_RIGHT_TEXT, chatBody.from);
-					else
-						show(chatBody.msg.content, ChatListAdapter.VALUE_LEFT_TEXT, chatBody.from);
+					ChatMsg chatMsg = JsonMapperUtils.toObject(msg, ChatMsg.class);
+					
+					if (self_user_name.equals(chatMsg.from)) {
+						chatMsg.type = ChatListAdapter.VALUE_RIGHT_TEXT;
+						show(chatMsg);
+					}
+					else {
+						chatMsg.type = ChatListAdapter.VALUE_LEFT_TEXT;
+						show(chatMsg);
+					}
 				}
 			});
 		}

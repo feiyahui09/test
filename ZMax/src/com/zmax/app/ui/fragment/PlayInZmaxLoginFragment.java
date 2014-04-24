@@ -69,6 +69,7 @@ public class PlayInZmaxLoginFragment extends Fragment {
 		loginPlayZmaxTask = new LoginPlayZmaxTask(getActivity(), new LoginPlayZmaxTask.TaskCallBack() {
 			@Override
 			public void onCallBack(Login loginResult) {
+				if (getActivity() == null) return;
 				if (loginResult != null && loginResult.status == 200) {
 					((MainActivity) getActivity()).switchContent(new PlayInZmaxFragment(loginResult));
 				}

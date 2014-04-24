@@ -108,6 +108,15 @@ public class NetAccessor {
 		return update;
 	}
 	
+	public static void testPost(Context context) {
+		
+		HttpUtils.postByHttpClient(context, Constant.ZMAX_URL + "devices/scenes", new BasicNameValuePair("time", "asd"),
+				new BasicNameValuePair("devices_and_opera[]", "asd"), new BasicNameValuePair("devices_and_opera[]", "asd"),
+				new BasicNameValuePair("user_id", "asd"), new BasicNameValuePair("room_id", "asd"), new BasicNameValuePair("hotel_id",
+						"asd"));
+		
+	}
+	
 	/**
 	 * get opened hotels
 	 * 

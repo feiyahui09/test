@@ -1,11 +1,10 @@
 package com.zmax.app.chat;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.zmax.app.R;
+import com.zmax.app.utils.DateTimeUtils;
 
 /**
  * 想比较原来的多了getItemViewType和getViewTypeCount这两个方法，原来循环使用layout布局，起到了优化的作用
@@ -38,7 +38,7 @@ public class ChatListAdapter extends BaseAdapter {
 	private LayoutInflater mInflater;
 	
 	private Context context;
-	private List<Message> myList = new ArrayList<Message>();
+	private List<ChatMsg> myList = new ArrayList<ChatMsg>();
 	
 	public ChatListAdapter(Context context) {
 		
@@ -47,13 +47,13 @@ public class ChatListAdapter extends BaseAdapter {
 		
 	}
 	
-	public void addItems(List<Message> list) {
+	public void addItems(List<ChatMsg> list) {
 		myList.addAll(list);
 		
 		notifyDataSetChanged();
 	}
 	
-	public void addItem(Message item) {
+	public void addItem(ChatMsg item) {
 		myList.add(item);
 		notifyDataSetChanged();
 	}
@@ -73,10 +73,14 @@ public class ChatListAdapter extends BaseAdapter {
 		return arg0;
 	}
 	
+	public List<ChatMsg> getMsgList() {
+		return myList;
+	}
+	
 	@Override
 	public View getView(int position, View convertView, ViewGroup arg2) {
 		
-		Message msg = myList.get(position);
+		ChatMsg chatMsg = myList.get(position);
 		int type = getItemViewType(position);
 		ViewHolder holder = null;
 		if (convertView == null) {
@@ -131,24 +135,24 @@ public class ChatListAdapter extends BaseAdapter {
 		switch (type) {
 		
 			case VALUE_TIME_TIP:
-				holder.tvTimeTip.setText(msg.getValue());
+				holder.tvTimeTip.setText(chatMsg.tipTime);
 				break;
 			case VALUE_LEFT_TEXT:
+				holder.btnLeftText.setText(chatMsg.msg.content);
+				holder.tvLeftName.setText(chatMsg.from);
+				holder.ivLeftIcon.setImageResource(chatMsg.gender.equals("女") ? R.drawable.chat_female_icon : R.drawable.chat_male_icon);
 				
-				holder.btnLeftText.setText(msg.getValue());
-				holder.tvLeftName.setText(msg.getName());
 				break;
-			
 			case VALUE_LEFT_IMAGE:
 				
 				// holder.ivLeftImage.setImageResource(R.drawable.test);
 				break;
 			case VALUE_RIGHT_TEXT:
+				holder.btnRightText.setText(chatMsg.msg.content);
+				holder.tvRightName.setText(chatMsg.from);
+				holder.ivRightIcon.setImageResource(chatMsg.gender.equals("女") ? R.drawable.chat_female_icon : R.drawable.chat_male_icon);
 				
-				holder.btnRightText.setText(msg.getValue());
-				holder.tvRightName.setText(msg.getName());
 				break;
-			
 			case VALUE_RIGHT_IMAGE:
 				// holder.ivRightImage.setImageResource(R.drawable.test);
 				break;
@@ -166,8 +170,8 @@ public class ChatListAdapter extends BaseAdapter {
 	@Override
 	public int getItemViewType(int position) {
 		
-		Message msg = myList.get(position);
-		int type = msg.getType();
+		ChatMsg msg = myList.get(position);
+		int type = msg.type;
 		return type;
 	}
 	

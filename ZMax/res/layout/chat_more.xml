@@ -12,8 +12,41 @@
         android:layout_height="wrap_content" >
 
         <TextView
+            android:id="@+id/tv_name"
+            style="@style/setting_btn"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/btn_edit_name"
+            android:text="Dante"
+            android:textColor="#17abc1"
+            android:textSize="18sp" />
+
+        <ImageView
+            android:id="@+id/btn_clear"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_centerVertical="true"
+            android:layout_marginBottom="9dp"
+            android:layout_marginTop="9dp"
+            android:layout_toLeftOf="@+id/btn_edit_name"
+            android:background="@drawable/chat_setting_ver_divider" />
+
+        <Button
+            android:id="@+id/btn_edit_name"
+            style="@style/setting_btn"
+            android:layout_width="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/chat_edit_name_btn_sel" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" >
+
+        <TextView
             android:id="@+id/tv_clear_info"
             style="@style/setting_btn"
+            android:layout_centerVertical="true"
             android:layout_toLeftOf="@+id/btn_clear"
             android:text="清空聊天记录(0.13M)" />
 
@@ -22,6 +55,8 @@
             android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:layout_centerVertical="true"
+            android:layout_marginBottom="9dp"
+            android:layout_marginTop="9dp"
             android:layout_toLeftOf="@+id/btn_clear"
             android:background="@drawable/chat_setting_ver_divider" />
 
@@ -30,6 +65,7 @@
             style="@style/setting_btn"
             android:layout_width="wrap_content"
             android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
             android:background="@drawable/chat_more_clear_btn_sel" />
     </RelativeLayout>
 

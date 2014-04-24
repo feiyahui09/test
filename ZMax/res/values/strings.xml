@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <string-array name="gender">
+        <item>女</item>
+        <item>男</item>
+    </string-array>
+
     <string name="app_name">zmax</string>
     <string name="app_name_en">ZMAX HOTEL</string>
     <string name="action_settings">Settings</string>

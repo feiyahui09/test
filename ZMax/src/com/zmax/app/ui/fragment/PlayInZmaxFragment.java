@@ -17,7 +17,7 @@ import android.widget.TextView;
 
 import com.zmax.app.R;
 import com.zmax.app.chat.ChatRoomActivity;
-import com.zmax.app.chat.ChatSettingActivity;
+import com.zmax.app.chat.ChatIndexActivity;
 import com.zmax.app.model.Login;
 import com.zmax.app.ui.ActsInHotelActivity;
 import com.zmax.app.ui.MainActivity;
@@ -152,7 +152,7 @@ public class PlayInZmaxFragment extends Fragment implements OnClickListener {
 				startActivity(intent);
 				break;
 			case R.id.btn_chat:
-				intent.setClass(getActivity(), ChatSettingActivity.class);
+				intent.setClass(getActivity(), ChatIndexActivity.class);
 				startActivity(intent);
 				break;
 			case R.id.btn_room:

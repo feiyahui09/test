@@ -14,6 +14,9 @@ import com.zmax.app.task.GetActListTask;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.text.TextUtils;
+import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class Utility {
@@ -23,6 +26,11 @@ public class Utility {
 		intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		context.startActivity(intent);
 		
+	}
+	
+	public static boolean isETNull(EditText editText) {
+		if (TextUtils.isEmpty(editText.getText().toString().trim())) return true;
+		return false;
 	}
 	
 	public static String getDate() {
