@@ -72,6 +72,7 @@ public class ZMaxApplication extends Application {
 				.tasksProcessingOrder(QueueProcessingType.LIFO).discCache(new UnlimitedDiscCache(FileUtils.getSdcardDir()))
 				.discCacheSize(4 * 1024 * 1024).discCacheFileCount(100).defaultDisplayImageOptions(options).build();
 		ImageLoader.getInstance().init(config);
+		com.nostra13.universalimageloader.utils.L.disableLogging();
 	}
 	
 	/**

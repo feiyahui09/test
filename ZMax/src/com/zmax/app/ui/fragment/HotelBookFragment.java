@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
@@ -34,6 +35,7 @@ import com.zmax.app.model.HotelList;
 import com.zmax.app.net.NetWorkHelper;
 import com.zmax.app.task.GetHotelListTask;
 import com.zmax.app.ui.HotelDetailActivity;
+import com.zmax.app.ui.WebViewActivity;
 import com.zmax.app.ui.base.BaseSlidingFragmentActivity.HotelBookVisivleCallback;
 import com.zmax.app.utils.Constant;
 import com.zmax.app.utils.DateTimeUtils;
@@ -216,12 +218,16 @@ public class HotelBookFragment extends Fragment implements OnPageChangeListener,
 		List<View> mList = new ArrayList<View>();
 		
 		for (int i = 0; i < hotelList.size(); i++) {
-			Hotel hotel = hotelList.get(i);
+			final Hotel hotel = hotelList.get(i);
 			View view = inflater.inflate(R.layout.hotel_book_list_item, null);
 			view.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					getActivity().startActivity(new Intent(getActivity(), HotelDetailActivity.class));
+					Intent intent = new Intent(getActivity(), WebViewActivity.class);
+					intent.setAction(Constant.WAP.ACTION_HOTEL);
+					intent.putExtra(Constant.WAP.HOTEL_ID_KEY, hotel.pms_hotel_id);
+					startActivity(intent);
+					
 				}
 			});
 			((TextView) view.findViewById(R.id.tv_title)).setText("" + hotel.name);

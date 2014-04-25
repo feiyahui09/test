@@ -23,7 +23,7 @@ public class Constant {
 	public static final String LOG_FILE_NAME = "com.zmax.app" + "_log.txt"; // 根据包名改变日志文件名字
 	
 	public static final String ZMAX_URL = "http://zmax.bestapp.us/api/v1/"; // 正式环境
-//	 public static String ZMAX_URL = "http://zmaxtest.bestapp.us/api/v1/";
+	// public static String ZMAX_URL = "http://zmaxtest.bestapp.us/api/v1/";
 	// //测试环境
 	// public static String FANCY_URL =
 	// "http://220.181.187.155/service/request"; //预发布环境
@@ -61,12 +61,14 @@ public class Constant {
 		public static final String CITY_KEY = "act_city_key";
 		
 	}
+	
 	public static class Chat {
 		
 		public static final String SELF_NAME = "self_name";
 		public static final String SELF_GENDER = "self_gender";
 		
 	}
+	
 	public static final int PER_NUM_GET_ACTLIST = 5;
 	public static final int PER_NUM_GET_HOTELLIST = 20;
 	
@@ -75,8 +77,21 @@ public class Constant {
 		public static final String CITY_LOCATION_KEY = "city_location_key";
 		public static final String INDEX_ACTLIST_KEY = "index_actlist_key";
 		public static final String INDEX_ACTLIST_PAGENUM_KEY = "index_actlist_pagenum_key";
-		
 		public static final String INDEX_HOTELLIST_KEY = "index_hotellist_key";
+		
+	}
+	
+	public static class WAP {
+		
+		public static final String URL_HOTEL = "http://m.7daysinn.cn/innIndex";
+		public static final String WAP_TYPE_KEY = "wap_type_key";
+		/**
+		 * http://m.7daysinn.cn/#view=login2 --- error----provided;
+		 */
+		public static final String URL_MENBER = "http://m.7daysinn.cn/index#view=home";
+		public static final String ACTION_HOTEL = "action_hotel";
+		public static final String ACTION_MENBER = "action_menber";
+		public static final String HOTEL_ID_KEY = "hotel_id_key";
 		
 	}
 	

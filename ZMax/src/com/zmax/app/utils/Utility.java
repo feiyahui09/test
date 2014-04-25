@@ -15,6 +15,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.text.TextUtils;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -56,6 +58,41 @@ public class Utility {
 	
 	public static void toastNoMoreResult(Context context) {
 		Toast.makeText(context, "没有更多了！", 500).show();
+	}
+	
+	/**
+	 * 
+	 * 获取webviewClient对象
+	 * 
+	 * @return
+	 */
+	public static WebViewClient getWebViewClient() {
+		return new WebViewClient() {
+			@Override
+			public boolean shouldOverrideUrlLoading(WebView view, String url) {
+				// openBrowser(view.getContext(), url);
+				view.loadUrl(url);
+				return false;
+			}
+		};
+	}
+	
+	/**
+	 * 打开浏览器
+	 * 
+	 * @param context
+	 * @param url
+	 */
+	public static void openBrowser(Context context, String url) {
+		try {
+			Uri uri = Uri.parse(url);
+			Intent it = new Intent(Intent.ACTION_VIEW, uri);
+			context.startActivity(it);
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			Toast.makeText(context, "无法浏览此网页", 500).show();
+		}
 	}
 	
 }

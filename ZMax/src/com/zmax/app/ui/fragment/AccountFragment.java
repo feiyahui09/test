@@ -6,17 +6,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.zmax.app.R;
+import com.zmax.app.utils.Constant;
+import com.zmax.app.utils.Utility;
+import com.zmax.app.widget.HTML5WebView;
 
-public class AccountFragment extends Fragment implements OnClickListener {
+public class AccountFragment extends Fragment {
 	
-	private Button btn_confirm;
-	private EditText et_account, et_password;
-	private TextView tv_forget_pw, tv_regist;
+	private HTML5WebView wv_content;
 	
 	public AccountFragment() {
 		this(R.color.white);
@@ -28,19 +30,16 @@ public class AccountFragment extends Fragment implements OnClickListener {
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		View view = inflater.inflate(R.layout.account_login, null);
-		btn_confirm = (Button) view.findViewById(R.id.btn_confirm);
-		btn_confirm.setOnClickListener(this);
-		et_account = (EditText) view.findViewById(R.id.et_account);
-		et_account.setOnClickListener(this);
-		et_password = (EditText) view.findViewById(R.id.et_password);
-		et_password.setOnClickListener(this);
-		tv_forget_pw = (TextView) view.findViewById(R.id.tv_forget_pw);
-		tv_forget_pw.setOnClickListener(this);
-		tv_regist = (TextView) view.findViewById(R.id.tv_regist);
-		tv_regist.setOnClickListener(this);
+		wv_content = new HTML5WebView(getActivity());
+		return wv_content.getLayout();
+	}
+	
+	@Override
+	public void onActivityCreated(Bundle savedInstanceState) {
+		// TODO Auto-generated method stub
+		super.onActivityCreated(savedInstanceState);
+		wv_content.loadUrl(Constant.WAP.URL_MENBER);
 		
-		return view;
 	}
 	
 	@Override
@@ -48,29 +47,4 @@ public class AccountFragment extends Fragment implements OnClickListener {
 		super.onSaveInstanceState(outState);
 	}
 	
-	@Override
-	public void onClick(View v) {
-		switch (v.getId()) {
-		
-			case R.id.tv_regist:
-				
-				break;
-			case R.id.tv_forget_pw:
-				
-				break;
-			case R.id.et_password:
-				
-				break;
-			case R.id.et_account:
-				
-				break;
-			case R.id.btn_confirm:
-				
-				break;
-			
-			default:
-				break;
-		}
-		
-	}
 }
