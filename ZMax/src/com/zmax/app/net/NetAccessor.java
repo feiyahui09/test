@@ -8,11 +8,14 @@ import android.text.TextUtils;
 
 import com.zmax.app.model.ActDetail;
 import com.zmax.app.model.ActList;
+import com.zmax.app.model.AirCondition;
 import com.zmax.app.model.CityLocation;
 import com.zmax.app.model.Documents;
 import com.zmax.app.model.FeeBack;
 import com.zmax.app.model.HotelList;
+import com.zmax.app.model.Light;
 import com.zmax.app.model.Login;
+import com.zmax.app.model.Television;
 import com.zmax.app.model.Update;
 import com.zmax.app.utils.Constant;
 import com.zmax.app.utils.JsonMapperUtils;
@@ -224,39 +227,139 @@ public class NetAccessor {
 		}
 		return login;
 	}
-	/*
-	 * 上报广告Log （01月新版）
+	
+	/**
 	 * 
 	 * @param context
-	 * 
-	 * @param logs
-	 * 
+	 * @param pattern
+	 *            bright/tv/read/sleep
 	 * @return
-	 * 
-	 * @throws Exception
 	 */
-	/*
-	 * public static String uploadV2AdvertLogs(Context context, List<AdvertLog>
-	 * advertLogList ) throws Exception{ Log.v( "****" + new
-	 * Timestamp(System.currentTimeMillis()) + " start uploadV2AdvertLogs " +
-	 * "****"); String jsonString = null; try{ // AdvertLogs logs = new
-	 * AdvertLogs(); // logs.array.addAll(advertLogList); JSONObject params =
-	 * new JSONObject(); JSONObject data = new JSONObject(); data.put("dt",
-	 * "madvert_report"); data.put("logs", Util.logsToJson(advertLogList));
-	 * params.put("data", data); params.put("cmd", "upload madvert report");
-	 * params.put("cmdtype", "");
-	 * 
-	 * jsonString = HttpUtil.sendRequest(context,FANCY_URL, "POST",
-	 * params.toString()); Log.d(
-	 * "uploadV2AdvertLogs()  responeString -->"+jsonString); if
-	 * (!TextUtils.isEmpty(jsonString)) { JSONObject result = new
-	 * JSONObject(jsonString); if (result.has("rcd") && result.optInt("rcd") ==
-	 * 0) { return jsonString; } }
-	 * 
-	 * }catch(Exception e){ Log.e(
-	 * " NetAccessor uploadV2AdvertLogs Exception :"+e.toString()); throw e;
-	 * }finally{ Log.v( "****" + new Timestamp(System.currentTimeMillis()) +
-	 * " end uploadV2AdvertLogs ****"); } return null; }
-	 */
+	public static int setLight(Context context, String pattern) {
+		int status = 0;
+		try {
+			String jsonString = HttpUtils.postByHttpClient(context, Constant.ZMAX_URL + "devices/light", new BasicNameValuePair("pattern",
+					pattern));
+			if (!TextUtils.isEmpty(jsonString)) {
+				JSONObject jsonObject = new JSONObject(jsonString);
+				Log.d("  responeString -->\n" + jsonString);
+				status = jsonObject.getInt("status");
+			}
+		}
+		catch (Exception e) {
+			Log.e("  Exception :" + e.toString());
+			e.printStackTrace();
+		}
+		return status;
+	}
 	
+	/**
+	 * 
+	 * @param context
+	 * @param push_button
+	 *            开关：on， 确定：sub，频道加：chu，频道减：chd，声音加：volu，声音减：vold，数字0～9:
+	 *            0～9，静音：sil，av/tv转换：at
+	 * @return
+	 */
+	public static int setTelevision(Context context, String push_button) {
+		int status = 0;
+		try {
+			String jsonString = HttpUtils.postByHttpClient(context, Constant.ZMAX_URL + "devices/television", new BasicNameValuePair(
+					"push_button", push_button));
+			if (!TextUtils.isEmpty(jsonString)) {
+				JSONObject jsonObject = new JSONObject(jsonString);
+				Log.d("  responeString -->\n" + jsonString);
+				status = jsonObject.getInt("status");
+			}
+		}
+		catch (Exception e) {
+			Log.e("  Exception :" + e.toString());
+			e.printStackTrace();
+		}
+		return status;
+	}
+	
+	/**
+	 * 
+	 * @param context
+	 * @param opera_type
+	 * @param opera_data
+	 *            控制温度：opera_type ： temperature， opera_data： 5～35
+	 *            控制模式：opera_type ： schema，
+	 *            opera_data：（col：制冷、hot：制热、nat：通风/睡眠；）
+	 *            控制阀门： opera_type ： on_off， opera_data： 0，1
+	 *            控制风机模式：opera_type ： air_blower， opera_data： (
+	 *            low：低速、mid：中速、hig：高速、auto：自动；)
+	 *            控制开关机：opera_type ： status， opera_data： 0，1
+	 * @return
+	 */
+	public static int setAirCondition(Context context, String opera_type, String opera_data) {
+		int status = 0;
+		try {
+			String jsonString = HttpUtils.postByHttpClient(context, Constant.ZMAX_URL + "devices/air_condiction", new BasicNameValuePair(
+					"opera_type", opera_type), new BasicNameValuePair("opera_data", opera_data));
+			if (!TextUtils.isEmpty(jsonString)) {
+				JSONObject jsonObject = new JSONObject(jsonString);
+				Log.d("  responeString -->\n" + jsonString);
+				status = jsonObject.getInt("status");
+			}
+		}
+		catch (Exception e) {
+			Log.e("  Exception :" + e.toString());
+			e.printStackTrace();
+		}
+		return status;
+	}
+	
+	public static AirCondition getAirCondition(Context context) {
+		AirCondition airCondition = null;
+		try {
+			String jsonString = HttpUtils.getByHttpClient(context, Constant.ZMAX_URL + "devices/air_condiction");
+			Log.d("  responeString -->\n" + jsonString);
+			if (!TextUtils.isEmpty(jsonString)) {
+				airCondition = JsonMapperUtils.toObject(jsonString, AirCondition.class);
+			}
+		}
+		catch (Exception e) {
+			Log.e("   Exception :" + e.toString());
+			e.printStackTrace();
+		}
+		return airCondition;
+		
+	}
+	
+	public static Television getTelevision(Context context) {
+		Television airCondition = null;
+		try {
+			String jsonString = HttpUtils.getByHttpClient(context, Constant.ZMAX_URL + "devices/television");
+			Log.d("  responeString -->\n" + jsonString);
+			if (!TextUtils.isEmpty(jsonString)) {
+				airCondition = JsonMapperUtils.toObject(jsonString, Television.class);
+			}
+		}
+		catch (Exception e) {
+			Log.e("   Exception :" + e.toString());
+			e.printStackTrace();
+		}
+		return airCondition;
+		
+	}
+	
+	@Deprecated
+	public static Light getLight(Context context) {
+		Light airCondition = null;
+		try {
+			String jsonString = HttpUtils.getByHttpClient(context, Constant.ZMAX_URL + "devices/light");
+			Log.d("  responeString -->\n" + jsonString);
+			if (!TextUtils.isEmpty(jsonString)) {
+				airCondition = JsonMapperUtils.toObject(jsonString, Light.class);
+			}
+		}
+		catch (Exception e) {
+			Log.e("   Exception :" + e.toString());
+			e.printStackTrace();
+		}
+		return airCondition;
+		
+	}
 }
