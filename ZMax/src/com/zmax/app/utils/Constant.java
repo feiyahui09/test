@@ -84,11 +84,8 @@ public class Constant {
 	public static class WAP {
 		
 		public static final String URL_HOTEL = "http://m.7daysinn.cn/innIndex";
+		public static final String URL_MENBER = "http://m.7daysinn.cn/member/myinfo";
 		public static final String WAP_TYPE_KEY = "wap_type_key";
-		/**
-		 * http://m.7daysinn.cn/#view=login2 --- error----provided;
-		 */
-		public static final String URL_MENBER = "http://m.7daysinn.cn/index#view=home";
 		public static final String ACTION_HOTEL = "action_hotel";
 		public static final String ACTION_MENBER = "action_menber";
 		public static final String HOTEL_ID_KEY = "hotel_id_key";

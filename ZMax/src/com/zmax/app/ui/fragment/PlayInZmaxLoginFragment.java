@@ -1,5 +1,11 @@
 package com.zmax.app.ui.fragment;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -12,9 +18,10 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.zmax.app.R;
+import com.zmax.app.db.DBAccessor;
+import com.zmax.app.model.Hotel;
 import com.zmax.app.model.Login;
 import com.zmax.app.net.NetWorkHelper;
 import com.zmax.app.task.LoginPlayZmaxTask;
@@ -27,6 +34,7 @@ public class PlayInZmaxLoginFragment extends Fragment {
 	private Button btn_login;
 	private Spinner sp_hotels;
 	private LoginPlayZmaxTask loginPlayZmaxTask;
+	private String selected_pms_hotel_id;
 	
 	public PlayInZmaxLoginFragment() {
 		this(R.color.white);
@@ -49,7 +57,6 @@ public class PlayInZmaxLoginFragment extends Fragment {
 		});
 		
 		sp_hotels = (Spinner) view.findViewById(R.id.sp_hotels);
-		fromHotelsSpinner(sp_hotels);
 		return view;
 	}
 	
@@ -57,7 +64,7 @@ public class PlayInZmaxLoginFragment extends Fragment {
 	public void onActivityCreated(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onActivityCreated(savedInstanceState);
-		
+		fromHotelsSpinner(sp_hotels);
 	}
 	
 	private void goPlayZmax() {
@@ -82,30 +89,43 @@ public class PlayInZmaxLoginFragment extends Fragment {
 	}
 	
 	private void fromHotelsSpinner(Spinner spinner) {
-		
-		final ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), R.layout.playzmax_login_spinner_item, mStrings);
+		final List<Hotel> hotels = getHotels();
+		if (hotels == null || hotels.isEmpty()) return;
+		final ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), R.layout.playzmax_login_spinner_item,
+				getHotelNames(hotels));
 		adapter.setDropDownViewResource(R.layout.playzmax_login_dropdown_spinner_item);
-		
 		spinner.setOnItemSelectedListener(new OnItemSelectedListener() {
-			
 			@Override
 			public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 				if (position != 0) ((TextView) view).setText("" + adapter.getItem(position));
-				
+				selected_pms_hotel_id = hotels.get(position).name;
 			}
 			
 			@Override
 			public void onNothingSelected(AdapterView<?> parent) {
 				((TextView) view).setText("选择入住酒店");
-				
 			}
 		});
-		
 		spinner.setAdapter(adapter);
-		
 	}
 	
-	private static final String[] mStrings = { "选择入住酒店", "武汉光谷店", "广州珠江新城店", "北京王府井店" };
+	private static final List<String> mStrings = Arrays.asList("选择入住酒店", "武汉光谷店", "广州珠江新城店", "北京王府井店");
+	
+	private List<Hotel> getHotels() {
+		List<Hotel> hotels = null;
+		Map<String, Object> fieldValues = new HashMap<String, Object>();
+		fieldValues.put("isUpcoming", false);
+		hotels = DBAccessor.queryAll(Hotel.class, fieldValues);
+		return hotels;
+	}
+	
+	private List<String> getHotelNames(List<Hotel> hotels) {
+		List<String> strings = new ArrayList<String>();
+		for (Hotel hotel : hotels) {
+			strings.add(hotel.name);
+		}
+		return strings;
+	}
 	
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
