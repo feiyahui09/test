@@ -7,7 +7,7 @@
         android:id="@+id/iv_img"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-               android:scaleType="fitXY" >
+        android:scaleType="fitXY" >
     </ImageView>
 
     <RelativeLayout
@@ -20,10 +20,10 @@
 
         <TextView
             android:id="@+id/tv_name"
-            android:layout_width="155dp"
+            android:layout_width="190dp"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="40dp"
+            android:layout_marginLeft="37dp"
             android:ellipsize="end"
             android:gravity="center"
             android:singleLine="true"
@@ -33,12 +33,13 @@
 
         <TextView
             android:id="@+id/tv_city"
-            android:layout_width="60dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="36dp"
             android:gravity="center"
+            android:maxWidth="70dp"
             android:text="武汉"
             android:textColor="#ffffff"
             android:textSize="12sp" />
