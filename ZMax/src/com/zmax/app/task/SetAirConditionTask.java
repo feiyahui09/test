@@ -2,14 +2,11 @@ package com.zmax.app.task;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import android.widget.Toast;
 
-import com.zmax.app.R;
-import com.zmax.app.model.Login;
+import com.zmax.app.model.AirCondition;
 import com.zmax.app.net.NetAccessor;
-import com.zmax.app.net.NetWorkHelper;
 
-public class SetAirConditionTask extends AsyncTask<String, Void, Integer> {
+public class SetAirConditionTask extends AsyncTask<String, Void, AirCondition> {
 	private Context context;
 	private TaskCallBack callBack;
 	
@@ -22,22 +19,20 @@ public class SetAirConditionTask extends AsyncTask<String, Void, Integer> {
 	@Override
 	protected void onPreExecute() {
 		super.onPreExecute();
-		
 	}
 	
 	@Override
-	protected Integer doInBackground(String... params) {
-		Integer loginResult = Integer.valueOf(NetAccessor.setAirCondition(context, params[0], params[1]));
-		return loginResult;
+	protected AirCondition doInBackground(String... params) {
+		return NetAccessor.setAirCondition(context, params[0], params[1]);
 	}
 	
 	@Override
-	protected void onPostExecute(Integer result) {
+	protected void onPostExecute(AirCondition result) {
 		super.onPostExecute(result);
 		callBack.onCallBack(result);
 	}
 	
 	public interface TaskCallBack {
-		public void onCallBack(Integer result);
+		public void onCallBack(AirCondition result);
 	}
 }

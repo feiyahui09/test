@@ -17,9 +17,14 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.zmax.app.R;
 import com.zmax.app.adapter.RoomControlAdapter;
+import com.zmax.app.model.Light;
+import com.zmax.app.model.Television;
+import com.zmax.app.task.SetLightTask;
+import com.zmax.app.task.SetTelevisionTask;
 import com.zmax.app.ui.RoomControlActivity.PageChangedCallback;
 import com.zmax.app.ui.RoomControlActivity.VerticalChangedCallback;
 import com.zmax.app.widget.VerticalViewPager;
@@ -36,8 +41,6 @@ public class RoomControlLightingFragment extends Fragment {
 	
 	private VerticalChangedCallback callback;
 	
-	private PageChangedCallback pageChangedCallback;
-	
 	/* above views */
 	private ImageView big_icon;
 	private TextView tv_mode, tv_mode_detail;
@@ -49,14 +52,18 @@ public class RoomControlLightingFragment extends Fragment {
 	private ImageButton ib_previous, ib_next;
 	private Button btn_apply;
 	
+	private SetLightTask task;
+	
+	private Light light = null;
+	
 	public RoomControlLightingFragment(VerticalChangedCallback callback) {
 		this.callback = callback;
 		setRetainInstance(true);
 	}
 	
-	public RoomControlLightingFragment(VerticalChangedCallback callback, PageChangedCallback pageChangedCallback) {
+	public RoomControlLightingFragment(VerticalChangedCallback callback, Light light) {
 		this.callback = callback;
-		this.pageChangedCallback = pageChangedCallback;
+		this.light = light;
 		setRetainInstance(true);
 	}
 	
@@ -155,31 +162,61 @@ public class RoomControlLightingFragment extends Fragment {
 		ib_next = ((ImageButton) view.findViewById(R.id.ib_next));
 		ib_previous.setOnClickListener(ImgClickListener);
 		ib_next.setOnClickListener(ImgClickListener);
-		
+		btn_apply = (Button) view.findViewById(R.id.btn_apply);
+		btn_apply.setOnClickListener(ImgClickListener);
 		return view;
 	}
 	
-	private int modeNum = 0;
+	private int curMode = 0;
+	private int operaMode = 0;
 	public static String[] mode_names = { "明亮模式", "电视模式", "阅读模式", "睡眠模式" };
 	public static int[] mode_imgs = { R.drawable.room_control_lighting_bright_mode, R.drawable.room_control_lighting_tv_mode,
 			R.drawable.room_control_lighting_reading_mode, R.drawable.room_control_lighting_sleep_mode };
+	
+	public static String[] mode_patterns = { "bright", "tv", "read", "sleep" };
 	
 	private OnClickListener ImgClickListener = new OnClickListener() {
 		
 		@Override
 		public void onClick(View v) {
 			if (v.getId() == R.id.ib_previous) {
-				int curMode = Math.abs((--modeNum) % 4);
-				tv_mode_hint.setText(mode_names[curMode]);
-				tv_mode_detail.setText("当前灯光模式：" + mode_names[curMode]);
-				iv_img.setImageResource(mode_imgs[curMode]);
+				operaMode = (curMode - 1 + 4) % 4;
+				tv_mode_hint.setText(mode_names[operaMode]);
+				tv_mode_detail.setText("当前灯光模式：" + mode_names[operaMode]);
+				iv_img.setImageResource(mode_imgs[operaMode]);
 			}
 			else if (v.getId() == R.id.ib_next) {
-				int curMode = Math.abs((++modeNum) % 4);
-				tv_mode_hint.setText(mode_names[curMode]);
-				tv_mode_detail.setText("当前灯光模式：" + mode_names[curMode]);
-				iv_img.setImageResource(mode_imgs[curMode]);
+				operaMode = (curMode + 1) % 4;
+				tv_mode_hint.setText(mode_names[operaMode]);
+				tv_mode_detail.setText("当前灯光模式：" + mode_names[operaMode]);
+				iv_img.setImageResource(mode_imgs[operaMode]);
+			}
+			else if (v.getId() == R.id.btn_apply) {
+				set(mode_patterns[operaMode]);
 			}
 		}
 	};
+	
+	private void set(String pattern) {
+		
+		task = new SetLightTask(getActivity(), new SetLightTask.TaskCallBack() {
+			@Override
+			public void onCallBack(Light result) {
+				if (getActivity() == null) {
+					return;
+				}
+				if (result == null) {
+					Toast.makeText(getActivity(), getActivity().getString(R.string.unkownError), 400).show();
+				}
+				else if (result.status == 200) {
+					curMode = operaMode;
+				}
+				else {
+					Toast.makeText(getActivity(), result.message, 400).show();
+				}
+				// if(result.intValue()!=200)
+			}
+		});
+		task.execute(pattern);
+	}
 }

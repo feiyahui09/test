@@ -235,22 +235,21 @@ public class NetAccessor {
 	 *            bright/tv/read/sleep
 	 * @return
 	 */
-	public static int setLight(Context context, String pattern) {
-		int status = 0;
+	public static Light setLight(Context context, String pattern) {
+		Light light = null;
 		try {
 			String jsonString = HttpUtils.postByHttpClient(context, Constant.ZMAX_URL + "devices/light", new BasicNameValuePair("pattern",
 					pattern));
+			Log.d("  responeString -->\n" + jsonString);
 			if (!TextUtils.isEmpty(jsonString)) {
-				JSONObject jsonObject = new JSONObject(jsonString);
-				Log.d("  responeString -->\n" + jsonString);
-				status = jsonObject.getInt("status");
+				light = JsonMapperUtils.toObject(jsonString, Light.class);
 			}
 		}
 		catch (Exception e) {
 			Log.e("  Exception :" + e.toString());
 			e.printStackTrace();
 		}
-		return status;
+		return light;
 	}
 	
 	/**
@@ -261,22 +260,21 @@ public class NetAccessor {
 	 *            0～9，静音：sil，av/tv转换：at
 	 * @return
 	 */
-	public static int setTelevision(Context context, String push_button) {
-		int status = 0;
+	public static Television setTelevision(Context context, String push_button) {
+		Television television = null;
 		try {
 			String jsonString = HttpUtils.postByHttpClient(context, Constant.ZMAX_URL + "devices/television", new BasicNameValuePair(
 					"push_button", push_button));
+			Log.d("  responeString -->\n" + jsonString);
 			if (!TextUtils.isEmpty(jsonString)) {
-				JSONObject jsonObject = new JSONObject(jsonString);
-				Log.d("  responeString -->\n" + jsonString);
-				status = jsonObject.getInt("status");
+				television = JsonMapperUtils.toObject(jsonString, Television.class);
 			}
 		}
 		catch (Exception e) {
 			Log.e("  Exception :" + e.toString());
 			e.printStackTrace();
 		}
-		return status;
+		return television;
 	}
 	
 	/**
@@ -293,31 +291,35 @@ public class NetAccessor {
 	 *            控制开关机：opera_type ： status， opera_data： 0，1
 	 * @return
 	 */
-	public static int setAirCondition(Context context, String opera_type, String opera_data) {
-		int status = 0;
+	public static AirCondition setAirCondition(Context context, String opera_type, String opera_data) {
+		AirCondition airCondition = null;
 		try {
 			String jsonString = HttpUtils.postByHttpClient(context, Constant.ZMAX_URL + "devices/air_condiction", new BasicNameValuePair(
 					"opera_type", opera_type), new BasicNameValuePair("opera_data", opera_data));
+			Log.d("  responeString -->\n" + jsonString);
 			if (!TextUtils.isEmpty(jsonString)) {
-				JSONObject jsonObject = new JSONObject(jsonString);
-				Log.d("  responeString -->\n" + jsonString);
-				status = jsonObject.getInt("status");
+				airCondition = JsonMapperUtils.toObject(jsonString, AirCondition.class);
 			}
 		}
 		catch (Exception e) {
 			Log.e("  Exception :" + e.toString());
 			e.printStackTrace();
 		}
-		return status;
+		return airCondition;
 	}
 	
 	public static AirCondition getAirCondition(Context context) {
 		AirCondition airCondition = null;
 		try {
+			airCondition = new AirCondition();
 			String jsonString = HttpUtils.getByHttpClient(context, Constant.ZMAX_URL + "devices/air_condiction");
 			Log.d("  responeString -->\n" + jsonString);
 			if (!TextUtils.isEmpty(jsonString)) {
-				airCondition = JsonMapperUtils.toObject(jsonString, AirCondition.class);
+				JSONObject jsonObject = new JSONObject(jsonString);
+				if (jsonObject.has("air_conditioning"))
+					airCondition = JsonMapperUtils.toObject(jsonObject.optString("air_conditioning"), AirCondition.class);
+				airCondition.respone_status = jsonObject.optInt("status");
+				airCondition.message = jsonObject.optString("message");
 			}
 		}
 		catch (Exception e) {
@@ -329,19 +331,24 @@ public class NetAccessor {
 	}
 	
 	public static Television getTelevision(Context context) {
-		Television airCondition = null;
+		Television television = null;
 		try {
+			television = new Television();
 			String jsonString = HttpUtils.getByHttpClient(context, Constant.ZMAX_URL + "devices/television");
 			Log.d("  responeString -->\n" + jsonString);
 			if (!TextUtils.isEmpty(jsonString)) {
-				airCondition = JsonMapperUtils.toObject(jsonString, Television.class);
+				JSONObject jsonObject = new JSONObject(jsonString);
+				if (jsonObject.has("television"))
+					television = JsonMapperUtils.toObject(jsonObject.optString("television"), Television.class);
+				television.respone_status = jsonObject.optInt("status");
+				television.message = jsonObject.optString("message");
 			}
 		}
 		catch (Exception e) {
 			Log.e("   Exception :" + e.toString());
 			e.printStackTrace();
 		}
-		return airCondition;
+		return television;
 		
 	}
 	

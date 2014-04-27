@@ -1,5 +1,9 @@
 package com.zmax.app.ui;
 
+import java.util.List;
+
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.View;
@@ -8,9 +12,17 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.zmax.app.R;
 import com.zmax.app.adapter.ActDetailAdapter;
+import com.zmax.app.model.AirCondition;
+import com.zmax.app.model.BaseModel;
+import com.zmax.app.model.RoomStatus;
+import com.zmax.app.model.Television;
+import com.zmax.app.net.NetAccessor;
+import com.zmax.app.net.NetWorkHelper;
+import com.zmax.app.task.GetRoomStatusTask;
 import com.zmax.app.ui.base.BaseFragmentActivity;
 import com.zmax.app.ui.fragment.RoomControlAirConditionFragment;
 import com.zmax.app.ui.fragment.RoomControlCurtainFragment;
@@ -36,11 +48,15 @@ public class RoomControlActivity extends BaseFragmentActivity {
 	private TextView tv_title;
 	private SmartViewPager pager;
 	private ActDetailAdapter adapter;
+	private Context mContext;
 	private VerticalChangedCallback callback;
 	private PageChangedCallback pageChangedCallback;
 	public static boolean isCurAbove = true;
 	private ImageView iv_right, iv_left;
 	private int curPageIndex = 0;
+	
+	private GetRoomStatusTask getRoomStatusTask;
+	private ProgressDialog progressDialog;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -49,10 +65,33 @@ public class RoomControlActivity extends BaseFragmentActivity {
 		setContentView(R.layout.room_control);
 		initHeader();
 		init();
-		initData();
+		progressDialog = new ProgressDialog(this);
+		progressDialog.setTitle("提示");
+		progressDialog.setMessage("正在更新房间控制信息中！");
+		progressDialog.show();
+		getRoomStatusTask = new GetRoomStatusTask(this, new GetRoomStatusTask.TaskCallBack() {
+			@Override
+			public void onCallBack(RoomStatus result) {
+				if (progressDialog != null && progressDialog.isShowing()) progressDialog.cancel();
+				if (result == null) {
+					if (NetWorkHelper.checkNetState(mContext))
+						Toast.makeText(mContext, mContext.getString(R.string.httpProblem), 450).show();
+					else
+						Toast.makeText(mContext, mContext.getString(R.string.unkownError), 450).show();
+				}
+				else if (result.status != 200)
+					Toast.makeText(mContext, result.message, 450).show();
+				else {
+					initData(result);
+				}
+				
+			}
+		});
+		getRoomStatusTask.execute();
 	}
 	
 	private void init() {
+		mContext = this;
 		iv_right = (ImageView) findViewById(R.id.iv_right);
 		iv_left = (ImageView) findViewById(R.id.iv_left);
 		iv_right.setVisibility(View.VISIBLE);
@@ -76,7 +115,7 @@ public class RoomControlActivity extends BaseFragmentActivity {
 		adapter = new ActDetailAdapter(this);
 		pager.setAdapter(adapter);
 		// retained buffer size 6
-		pager.setOffscreenPageLimit(6);
+		pager.setOffscreenPageLimit(3);
 		pager.setOnPageChangeListener(new OnPageChangeListener() {
 			
 			@Override
@@ -124,12 +163,14 @@ public class RoomControlActivity extends BaseFragmentActivity {
 		};
 	}
 	
-	private void initData() {
-		adapter.addTab(new RoomControlLightingFragment(callback));
-		adapter.addTab(new RoomControlAirConditionFragment(callback));
-		adapter.addTab(new RoomControlTVFragment(callback));
+	private void initData(RoomStatus result) {
+		
+		adapter.addTab(new RoomControlLightingFragment(callback, result.light));
+		adapter.addTab(new RoomControlAirConditionFragment(callback, result.airCondition));
+		adapter.addTab(new RoomControlTVFragment(callback, result.television));
 		// adapter.addTab(new RoomControlCurtainFragment(callback));
 		// adapter.addTab(new RoomControlWakeUpFragment(callback));
+		adapter.notifyDataSetChanged();
 		pager.setCurrentItem(0);
 	}
 	

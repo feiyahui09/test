@@ -24,6 +24,7 @@
     <string name="httpError">连接失败</string>
     <string name="httpisNull">没有网络</string>
     <string name="httpProblem">网络不给力，请稍后再试！</string>
+    <string name="unkownError">出错了，请稍后再试！</string>
 
     <!-- 分享 -->
     <string name="share_title">share_content</string>

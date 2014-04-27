@@ -32,10 +32,10 @@
                 android:text="1" />
 
             <Button
-                android:id="@+id/btn_av"
+                android:id="@+id/btn_at"
                 style="@style/room_control_round_button"
                 android:layout_centerInParent="true"
-                android:text="HDMI"
+                android:text="TV/AV"
                 android:textColor="#a6a6a6"
                 android:textSize="16sp" />
 
@@ -64,9 +64,8 @@
             <Button
                 android:id="@+id/btn_chd"
                 style="@style/room_control_digital_button"
-                android:layout_alignBaseline="@+id/button1"
-                android:layout_alignBottom="@+id/button1"
                 android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
                 android:text="CH-" />
 
             <Button

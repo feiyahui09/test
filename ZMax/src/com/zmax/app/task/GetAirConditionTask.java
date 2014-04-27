@@ -24,8 +24,7 @@ public class GetAirConditionTask extends AsyncTask<String, Void, AirCondition> {
 	
 	@Override
 	protected AirCondition doInBackground(String... params) {
-		AirCondition actList = NetAccessor.getAirCondition(context);
-		return actList;
+		return NetAccessor.getAirCondition(context);
 	}
 	
 	@Override

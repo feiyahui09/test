@@ -8,18 +8,21 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.view.animation.AlphaAnimation;
-import android.view.animation.Animation;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.zmax.app.R;
 import com.zmax.app.adapter.RoomControlAdapter;
+import com.zmax.app.model.Television;
+import com.zmax.app.task.SetTelevisionTask;
 import com.zmax.app.ui.RoomControlActivity.PageChangedCallback;
 import com.zmax.app.ui.RoomControlActivity.VerticalChangedCallback;
 import com.zmax.app.widget.VerticalViewPager;
@@ -27,27 +30,26 @@ import com.zmax.app.widget.VerticalViewPager;
 public class RoomControlTVFragment extends Fragment {
 	
 	protected View view;
-	
 	private VerticalViewPager vpager;
-	
 	private RoomControlAdapter adapter;
-	
 	private VerticalChangedCallback callback;
-	
 	private PageChangedCallback pageChangedCallback;
-	/**
-	 * above views
-	 */
-	private ImageView iv;
+	private SetTelevisionTask task;
 	
+	private Television television;
+	private boolean isEnable;
+	
+	/**
+	 * behind views
+	 */
 	public RoomControlTVFragment(VerticalChangedCallback callback) {
 		this.callback = callback;
 		setRetainInstance(true);
 	}
 	
-	public RoomControlTVFragment(VerticalChangedCallback callback, PageChangedCallback pageChangedCallback) {
+	public RoomControlTVFragment(VerticalChangedCallback callback, Television television) {
 		this.callback = callback;
-		this.pageChangedCallback = pageChangedCallback;
+		this.television = television;
 		setRetainInstance(true);
 	}
 	
@@ -57,20 +59,16 @@ public class RoomControlTVFragment extends Fragment {
 		vpager = (VerticalViewPager) view.findViewById(R.id.vpager);
 		adapter = new RoomControlAdapter(getActivity(), null);
 		vpager.setAdapter(adapter);
-		
 		adapter.addViews(getTVView(getActivity(), inflater));
-		
 		vpager.setOnPageChangeListener(new VerticalViewPager.OnPageChangeListener() {
 			
 			@Override
 			public void onPageSelected(int position) {
 				if (callback != null) {
-					
 					callback.onCallBack(position == 0 ? true : false);
 				}
 				
 			}
-			
 			@Override
 			public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 				// TODO Auto-generated method stub
@@ -83,8 +81,13 @@ public class RoomControlTVFragment extends Fragment {
 				
 			}
 		});
-		
 		return view;
+	}
+	
+	private void initData() {
+		
+		if (television == null) return;
+		isEnable = television.status == 1 ? true : false;
 	}
 	
 	@Override
@@ -107,7 +110,7 @@ public class RoomControlTVFragment extends Fragment {
 		}
 	}
 	
-	public static List<View> getTVView(final FragmentActivity fragmentActivity, LayoutInflater inflater) {
+	public List<View> getTVView(final FragmentActivity fragmentActivity, LayoutInflater inflater) {
 		
 		List<View> mList = new ArrayList<View>();
 		mList.add(getAbove(inflater));
@@ -116,7 +119,7 @@ public class RoomControlTVFragment extends Fragment {
 		return mList;
 	}
 	
-	private static View getAbove(LayoutInflater inflater) {
+	private View getAbove(LayoutInflater inflater) {
 		final View view = inflater.inflate(R.layout.room_control_above, null);
 		ImageView big_icon = ((ImageView) view.findViewById(R.id.iv_big_logo));
 		big_icon.setImageResource(R.drawable.room_control_above_tv);
@@ -128,18 +131,57 @@ public class RoomControlTVFragment extends Fragment {
 		return view;
 	}
 	
-	private static View getTVBehind(LayoutInflater inflater) {
+	private View getTVBehind(LayoutInflater inflater) {
 		final LinearLayout ll_digital, ll_orient;
 		RadioGroup rg_model;
-		RadioButton rb_orient;
+		RadioButton rb_orient, rb_digital;
 		final View view = inflater.inflate(R.layout.room_control_tv_behind, null);
+		View ib_on, btn_at, btn_volu, btn_chd, btn_vold, btn_chu, btn_no_0, btn_no_1, btn_no_2, btn_no_3, btn_no_4, btn_no_5, btn_no_6, btn_no_7, btn_no_8, btn_no_9;
+		CheckBox cb_sil;
 		
+		cb_sil = (CheckBox) view.findViewById(R.id.cb_sil);
 		ll_digital = (LinearLayout) view.findViewById(R.id.ll_digital);
 		ll_orient = (LinearLayout) view.findViewById(R.id.ll_orient);
 		rg_model = ((RadioGroup) view.findViewById(R.id.rg_model));
 		rb_orient = ((RadioButton) view.findViewById(R.id.rb_orient));
+		rb_digital = ((RadioButton) view.findViewById(R.id.rb_digital));
 		
-		rg_model.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+		ib_on = view.findViewById(R.id.ib_on);
+		btn_at = view.findViewById(R.id.btn_at);
+		btn_volu = view.findViewById(R.id.btn_volu);
+		btn_chd = view.findViewById(R.id.btn_chd);
+		btn_vold = view.findViewById(R.id.btn_vold);
+		btn_chu = view.findViewById(R.id.btn_chu);
+		btn_no_0 = view.findViewById(R.id.btn_no_0);
+		btn_no_1 = view.findViewById(R.id.btn_no_1);
+		btn_no_2 = view.findViewById(R.id.btn_no_2);
+		btn_no_3 = view.findViewById(R.id.btn_no_3);
+		btn_no_4 = view.findViewById(R.id.btn_no_4);
+		btn_no_5 = view.findViewById(R.id.btn_no_5);
+		btn_no_6 = view.findViewById(R.id.btn_no_6);
+		btn_no_7 = view.findViewById(R.id.btn_no_7);
+		btn_no_8 = view.findViewById(R.id.btn_no_8);
+		btn_no_9 = view.findViewById(R.id.btn_no_9);
+		
+		ib_on.setOnClickListener(onClickListener);
+		btn_at.setOnClickListener(onClickListener);
+		btn_volu.setOnClickListener(onClickListener);
+		btn_chd.setOnClickListener(onClickListener);
+		btn_vold.setOnClickListener(onClickListener);
+		btn_chu.setOnClickListener(onClickListener);
+		btn_no_0.setOnClickListener(onClickListener);
+		btn_no_1.setOnClickListener(onClickListener);
+		btn_no_2.setOnClickListener(onClickListener);
+		btn_no_3.setOnClickListener(onClickListener);
+		btn_no_4.setOnClickListener(onClickListener);
+		btn_no_5.setOnClickListener(onClickListener);
+		btn_no_6.setOnClickListener(onClickListener);
+		btn_no_7.setOnClickListener(onClickListener);
+		btn_no_8.setOnClickListener(onClickListener);
+		btn_no_9.setOnClickListener(onClickListener);
+		cb_sil.setOnClickListener(onClickListener);
+		
+		rg_model.setOnCheckedChangeListener(new android.widget.RadioGroup.OnCheckedChangeListener() {
 			@Override
 			public void onCheckedChanged(RadioGroup group, int checkedId) {
 				if (checkedId == R.id.rb_digital) {
@@ -152,18 +194,95 @@ public class RoomControlTVFragment extends Fragment {
 				}
 			}
 		});
-		
 		rb_orient.setChecked(true);
+//		initData();
 		return view;
 	}
 	
-	private void setTvAnimation(TextView textView) {
+	OnClickListener onClickListener = new OnClickListener() {
 		
-		Animation ani = new AlphaAnimation(0f, 1f);
-		ani.setDuration(1500);
-		ani.setRepeatMode(Animation.REVERSE);
-		ani.setRepeatCount(Animation.INFINITE);
-		textView.startAnimation(ani);
+		@Override
+		public void onClick(View v) {
+			switch (v.getId()) {
+				case R.id.ib_on:
+					set("on");
+					break;
+				case R.id.btn_at:
+					set("at");
+					break;
+				case R.id.btn_volu:
+					set("volu");
+					break;
+				case R.id.btn_vold:
+					set("vold");
+					break;
+				case R.id.btn_chd:
+					set("chd");
+					break;
+				case R.id.btn_chu:
+					set("chu");
+					break;
+				case R.id.btn_no_0:
+					set("0");
+					break;
+				case R.id.btn_no_1:
+					set("1");
+					break;
+				case R.id.btn_no_2:
+					set("2");
+					break;
+				case R.id.btn_no_3:
+					set("3");
+					break;
+				case R.id.btn_no_4:
+					set("4");
+					break;
+				case R.id.btn_no_5:
+					set("5");
+					break;
+				case R.id.btn_no_6:
+					set("6");
+					break;
+				case R.id.btn_no_7:
+					set("7");
+					break;
+				case R.id.btn_no_8:
+					set("8");
+					break;
+				case R.id.btn_no_9:
+					set("9");
+					break;
+				case R.id.cb_sil:
+					set("sil");
+					break;
+				default:
+					break;
+			}
+		}
+	};
+	
+	private void set(String push_button) {
+		if (!isEnable) return;
+		task = new SetTelevisionTask(getActivity(), new SetTelevisionTask.TaskCallBack() {
+			@Override
+			public void onCallBack(Television result) {
+				
+				if (getActivity() == null) {
+					return;
+				}
+				if (result == null) {
+					Toast.makeText(getActivity(), getActivity().getString(R.string.unkownError), 400).show();
+				}
+				else if (result.status == 200) {
+					
+				}
+				else {
+					Toast.makeText(getActivity(), result.message, 400).show();
+				}
+				// if(result.intValue()!=200)
+			}
+		});
+		task.execute(push_button);
 	}
 	
 }

@@ -28,23 +28,23 @@
             android:paddingRight="15dp" >
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="60dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
                 android:orientation="vertical" >
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:gravity="center"
+                    android:layout_marginLeft="10dp"
                     android:text="风速"
                     android:textColor="#929292"
                     android:textSize="12sp" />
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:id="@+id/tv_air_blower"
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:drawableLeft="@drawable/room_control_air_control_wind_icon"
                     android:gravity="center"
@@ -54,7 +54,7 @@
             </LinearLayout>
 
             <TextView
-                android:id="@+id/tv_room_control_air_temperature"
+                android:id="@+id/tv_temperature"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
@@ -64,23 +64,23 @@
                 android:textSize="60sp" />
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="60dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:orientation="vertical" >
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:gravity="center"
+                    android:layout_marginLeft="10dp"
                     android:text="模式"
                     android:textColor="#929292"
                     android:textSize="12sp" />
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:id="@+id/tv_schema"
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:drawableLeft="@drawable/room_control_air_control_wind_icon"
                     android:gravity="center"
@@ -104,7 +104,7 @@
                 android:src="@drawable/room_control_air_control_power_activited" />
 
             <Button
-          	    android:id="@+id/btn_air_blower"
+                android:id="@+id/btn_schema"
                 style="@style/room_control_round_button"
                 android:layout_alignParentRight="true"
                 android:text="模式"

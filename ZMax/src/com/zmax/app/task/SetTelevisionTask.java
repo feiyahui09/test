@@ -6,10 +6,11 @@ import android.widget.Toast;
 
 import com.zmax.app.R;
 import com.zmax.app.model.Login;
+import com.zmax.app.model.Television;
 import com.zmax.app.net.NetAccessor;
 import com.zmax.app.net.NetWorkHelper;
 
-public class SetTelevisionTask extends AsyncTask<String, Void, Integer> {
+public class SetTelevisionTask extends AsyncTask<String, Void, Television> {
 	private Context context;
 	private TaskCallBack callBack;
 	
@@ -26,18 +27,17 @@ public class SetTelevisionTask extends AsyncTask<String, Void, Integer> {
 	}
 	
 	@Override
-	protected Integer doInBackground(String... params) {
-		Integer loginResult = Integer.valueOf(NetAccessor.setTelevision(context, params[0]));
-		return loginResult;
+	protected Television doInBackground(String... params) {
+		return NetAccessor.setTelevision(context, params[0]);
 	}
 	
 	@Override
-	protected void onPostExecute(Integer result) {
+	protected void onPostExecute(Television result) {
 		super.onPostExecute(result);
 		callBack.onCallBack(result);
 	}
 	
 	public interface TaskCallBack {
-		public void onCallBack(Integer result);
+		public void onCallBack(Television result);
 	}
 }

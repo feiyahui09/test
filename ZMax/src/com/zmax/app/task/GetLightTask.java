@@ -25,8 +25,7 @@ public class GetLightTask extends AsyncTask<String, Void, Light> {
 	
 	@Override
 	protected Light doInBackground(String... params) {
-		Light result = NetAccessor.getLight(context);
-		return result;
+		return NetAccessor.getLight(context);
 	}
 	
 	@Override

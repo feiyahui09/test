@@ -17,10 +17,19 @@ import java.io.Serializable;
  */
 public class AirCondition implements Serializable {
 	private static final long serialVersionUID = 1L;
-	public int status;
 	public int room_temperature;
 	public int setting_temperature;
 	public String schema;
 	public int on_off;
 	public String air_blower;
+	/**
+	 * //代表开关
+	 */
+	public int status;
+	
+	/**
+	 * 配合后台，把原来status改为respone_status
+	 */
+	public int respone_status;
+	public String message;
 }
