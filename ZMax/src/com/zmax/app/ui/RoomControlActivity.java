@@ -67,6 +67,7 @@ public class RoomControlActivity extends BaseFragmentActivity {
 		init();
 		progressDialog = new ProgressDialog(this);
 		progressDialog.setTitle("提示");
+		progressDialog.setCancelable(false);
 		progressDialog.setMessage("正在更新房间控制信息中！");
 		progressDialog.show();
 		getRoomStatusTask = new GetRoomStatusTask(this, new GetRoomStatusTask.TaskCallBack() {
@@ -74,13 +75,13 @@ public class RoomControlActivity extends BaseFragmentActivity {
 			public void onCallBack(RoomStatus result) {
 				if (progressDialog != null && progressDialog.isShowing()) progressDialog.cancel();
 				if (result == null) {
-					if (NetWorkHelper.checkNetState(mContext))
+					if (!NetWorkHelper.checkNetState(mContext))
 						Toast.makeText(mContext, mContext.getString(R.string.httpProblem), 450).show();
 					else
 						Toast.makeText(mContext, mContext.getString(R.string.unkownError), 450).show();
 				}
 				else if (result.status != 200)
-					Toast.makeText(mContext, result.message, 450).show();
+					Toast.makeText(mContext, "" + result.message, 450).show();
 				else {
 					initData(result);
 				}

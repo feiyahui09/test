@@ -36,12 +36,14 @@ public class GetRoomStatusTask extends AsyncTask<String, Void, RoomStatus> {
 					&& result.airCondition.respone_status == 200 && result.television != null && result.television.respone_status == 200)) {
 				result.status = 200;
 			}
-			else
+			else {
+				result.status = result.light.status;
 				result.message = result.light.message;// result.light可能为空，但没关系，后面有处理
-				
+			}
 		}
 		catch (Exception e) {
-			// TODO: handle exception
+			result = null;
+			e.printStackTrace();
 		}
 		return result;
 	}

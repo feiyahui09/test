@@ -55,6 +55,11 @@
             android:name="com.zmax.app.ui.MainActivity"
             android:label="@string/app_name"
             android:theme="@android:style/Theme.NoTitleBar" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name="com.zmax.app.chat.ChatRoomActivity"
@@ -74,11 +79,6 @@
         <activity android:name="com.zmax.app.ui.AboutActivity" />
         <activity android:name="com.zmax.app.ui.ActsInHotelActivity" />
         <activity android:name="com.zmax.app.ui.RoomControlActivity" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name="com.zmax.app.ui.OrderFillActivity" />
         <activity android:name="com.zmax.app.ui.WelcomeActivity" />

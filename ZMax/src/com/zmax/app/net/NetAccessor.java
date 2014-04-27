@@ -50,6 +50,7 @@ public class NetAccessor {
 			}
 		}
 		catch (Exception e) {
+			cityLocation = null;
 			Log.e(" getCityLoacationByIp Exception :" + e.toString());
 			e.printStackTrace();
 			
@@ -69,6 +70,7 @@ public class NetAccessor {
 			}
 		}
 		catch (Exception e) {
+			actList = null;
 			Log.e("   Exception :" + e.toString());
 			e.printStackTrace();
 		}
@@ -86,6 +88,7 @@ public class NetAccessor {
 			}
 		}
 		catch (Exception e) {
+			actList = null;
 			Log.e("   Exception :" + e.toString());
 			e.printStackTrace();
 		}
@@ -105,6 +108,7 @@ public class NetAccessor {
 			}
 		}
 		catch (Exception e) {
+			update = null;
 			Log.e("   Exception :" + e.toString());
 			e.printStackTrace();
 		}
@@ -140,6 +144,7 @@ public class NetAccessor {
 			}
 		}
 		catch (Exception e) {
+			hotelList = null;
 			Log.e("   Exception :" + e.toString());
 			e.printStackTrace();
 		}
@@ -157,6 +162,7 @@ public class NetAccessor {
 			}
 		}
 		catch (Exception e) {
+			hotelList = null;
 			Log.e("   Exception :" + e.toString());
 			e.printStackTrace();
 		}
@@ -174,6 +180,7 @@ public class NetAccessor {
 			}
 		}
 		catch (Exception e) {
+			actDetail = null;
 			Log.e("   Exception :" + e.toString());
 			e.printStackTrace();
 		}
@@ -192,6 +199,7 @@ public class NetAccessor {
 			}
 		}
 		catch (Exception e) {
+			documents = null;
 			Log.e("   Exception :" + e.toString());
 			e.printStackTrace();
 		}
@@ -208,6 +216,7 @@ public class NetAccessor {
 			feeBack = JsonMapperUtils.toObject(jsonString, FeeBack.class);
 		}
 		catch (Exception e) {
+			feeBack = null;
 			Log.e("  Exception :" + e.toString());
 			e.printStackTrace();
 		}
@@ -222,6 +231,7 @@ public class NetAccessor {
 			login = JsonMapperUtils.toObject(jsonString, Login.class);
 		}
 		catch (Exception e) {
+			login = null;
 			Log.e("  Exception :" + e.toString());
 			e.printStackTrace();
 		}
@@ -246,6 +256,7 @@ public class NetAccessor {
 			}
 		}
 		catch (Exception e) {
+			light = null;
 			Log.e("  Exception :" + e.toString());
 			e.printStackTrace();
 		}
@@ -271,6 +282,7 @@ public class NetAccessor {
 			}
 		}
 		catch (Exception e) {
+			television = null;
 			Log.e("  Exception :" + e.toString());
 			e.printStackTrace();
 		}
@@ -302,6 +314,7 @@ public class NetAccessor {
 			}
 		}
 		catch (Exception e) {
+			airCondition = null;
 			Log.e("  Exception :" + e.toString());
 			e.printStackTrace();
 		}
@@ -323,6 +336,7 @@ public class NetAccessor {
 			}
 		}
 		catch (Exception e) {
+			airCondition = null;
 			Log.e("   Exception :" + e.toString());
 			e.printStackTrace();
 		}
@@ -345,6 +359,7 @@ public class NetAccessor {
 			}
 		}
 		catch (Exception e) {
+			television = null;
 			Log.e("   Exception :" + e.toString());
 			e.printStackTrace();
 		}
@@ -352,7 +367,6 @@ public class NetAccessor {
 		
 	}
 	
-	@Deprecated
 	public static Light getLight(Context context) {
 		Light airCondition = null;
 		try {
@@ -363,6 +377,7 @@ public class NetAccessor {
 			}
 		}
 		catch (Exception e) {
+			airCondition = null;
 			Log.e("   Exception :" + e.toString());
 			e.printStackTrace();
 		}

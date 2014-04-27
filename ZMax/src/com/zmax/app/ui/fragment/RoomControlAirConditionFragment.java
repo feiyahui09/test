@@ -328,6 +328,7 @@ public class RoomControlAirConditionFragment extends Fragment {
 	
 	private void onStatusChanged(int isOpen) {
 		cur_status = isOpen;
+		opera_status=isOpen;
 		if (isOpen == 1) {
 			tv_temperature.setVisibility(View.VISIBLE);
 			tv_schema.setVisibility(View.VISIBLE);

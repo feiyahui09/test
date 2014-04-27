@@ -149,6 +149,15 @@ public class RoomControlLightingFragment extends Fragment {
 		tv_mode_detail = ((TextView) view.findViewById(R.id.tv_mode_detail));
 		tv_mode_detail.setVisibility(View.VISIBLE);
 		tv_mode_detail.setText("当前灯光模式：明亮模式");
+		if (light != null) {
+			for (int i = 0; i < mode_patterns.length; i++) {
+				if (light.pattern.equals(mode_patterns[i])) {
+					tv_mode_detail.setText(String.format("当前灯光模式：%s", mode_names[i]));
+					operaMode = i;
+					curMode = i;
+				}
+			}
+		}
 		return view;
 	}
 	
@@ -164,6 +173,15 @@ public class RoomControlLightingFragment extends Fragment {
 		ib_next.setOnClickListener(ImgClickListener);
 		btn_apply = (Button) view.findViewById(R.id.btn_apply);
 		btn_apply.setOnClickListener(ImgClickListener);
+		
+		if (light != null) {
+			for (int i = 0; i < mode_patterns.length; i++) {
+				if (light.pattern.equals(mode_patterns[i])) {
+					iv_img.setImageResource(mode_imgs[i]);
+					tv_mode_hint.setText(mode_names[i]);
+				}
+			}
+		}
 		return view;
 	}
 	
@@ -180,13 +198,13 @@ public class RoomControlLightingFragment extends Fragment {
 		@Override
 		public void onClick(View v) {
 			if (v.getId() == R.id.ib_previous) {
-				operaMode = (curMode - 1 + 4) % 4;
+				operaMode = (operaMode - 1 + 4) % 4;
 				tv_mode_hint.setText(mode_names[operaMode]);
 				tv_mode_detail.setText("当前灯光模式：" + mode_names[operaMode]);
 				iv_img.setImageResource(mode_imgs[operaMode]);
 			}
 			else if (v.getId() == R.id.ib_next) {
-				operaMode = (curMode + 1) % 4;
+				operaMode = (operaMode + 1) % 4;
 				tv_mode_hint.setText(mode_names[operaMode]);
 				tv_mode_detail.setText("当前灯光模式：" + mode_names[operaMode]);
 				iv_img.setImageResource(mode_imgs[operaMode]);
@@ -198,7 +216,6 @@ public class RoomControlLightingFragment extends Fragment {
 	};
 	
 	private void set(String pattern) {
-		
 		task = new SetLightTask(getActivity(), new SetLightTask.TaskCallBack() {
 			@Override
 			public void onCallBack(Light result) {
