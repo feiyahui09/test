@@ -3,9 +3,12 @@ package com.zmax.app.ui.fragment;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -18,13 +21,17 @@ import android.widget.TextView;
 import com.zmax.app.R;
 import com.zmax.app.chat.ChatRoomActivity;
 import com.zmax.app.chat.ChatIndexActivity;
+import com.zmax.app.model.BaseModel;
 import com.zmax.app.model.Login;
+import com.zmax.app.net.NetWorkHelper;
+import com.zmax.app.task.ModifyChatUserInfoTask;
 import com.zmax.app.ui.ActsInHotelActivity;
 import com.zmax.app.ui.MainActivity;
 import com.zmax.app.ui.RoomControlActivity;
 import com.zmax.app.utils.Constant;
 import com.zmax.app.utils.DateTimeUtils;
 import com.zmax.app.utils.Log;
+import com.zmax.app.utils.Utility;
 
 public class PlayInZmaxFragment extends Fragment implements OnClickListener {
 	
@@ -34,6 +41,10 @@ public class PlayInZmaxFragment extends Fragment implements OnClickListener {
 	private TextView tv_start_day, tv_start_week_day, tv_start_month, tv_end_day, tv_end_week_day, tv_end_month;
 	private TextView tv_nick_name, tv_hotel, tv_room_num;
 	private Login login;
+	private ProgressDialog progressDialog;
+	private ModifyChatUserInfoTask modifyChatUserInfoTask;
+	
+	private boolean isNameDup = false;
 	
 	public PlayInZmaxFragment(Login login) {
 		this.login = login;
@@ -88,7 +99,7 @@ public class PlayInZmaxFragment extends Fragment implements OnClickListener {
 		tv_room_num.setText(login.room_num + "房");
 		
 		String startStr = login.start_time, endStr = login.end_time;
-		 //String startStr = "20140416164431", endStr ="20140417164431";
+		// String startStr = "20140416164431", endStr ="20140417164431";
 		
 		tv_start_day.setText(startStr.substring(6, 8));
 		tv_start_month.setText(startStr.substring(4, 6));
@@ -127,6 +138,8 @@ public class PlayInZmaxFragment extends Fragment implements OnClickListener {
 		// TODO Auto-generated method stub
 		super.onActivityCreated(savedInstanceState);
 		((MainActivity) getActivity()).showLogoutView();
+		// vertifyDup(getActivity(), login.user_id + "", login.gender + "",
+		// login.nick_name, false);
 	}
 	
 	@Override
@@ -152,9 +165,15 @@ public class PlayInZmaxFragment extends Fragment implements OnClickListener {
 				startActivity(intent);
 				break;
 			case R.id.btn_chat:
-				intent.setClass(getActivity(), ChatIndexActivity.class);
-				startActivity(intent);
-				break;
+				if (TextUtils.isEmpty(login.nick_name)) {
+					intent.putExtra(Constant.Chat.SELF_ID, login.user_id);
+					intent.setClass(getActivity(), ChatIndexActivity.class);
+					startActivity(intent);
+				}
+				else
+					// vertifyDup(getActivity(), login.user_id + "",
+					// login.gender + "", login.nick_name, true);
+					break;
 			case R.id.btn_room:
 				intent.setClass(getActivity(), RoomControlActivity.class);
 				startActivity(intent);
@@ -163,5 +182,45 @@ public class PlayInZmaxFragment extends Fragment implements OnClickListener {
 			default:
 				break;
 		}
+	}
+	
+	private void vertifyDup(final Context context, String user_id, String gender, String nick_name, final boolean isShowProgress) {
+		progressDialog = new ProgressDialog(context);
+		progressDialog.setTitle("提示");
+		progressDialog.setCancelable(false);
+		progressDialog.setMessage("正在更新房间控制信息中！");
+		if (isShowProgress) progressDialog.show();
+		modifyChatUserInfoTask = new ModifyChatUserInfoTask(context, new ModifyChatUserInfoTask.TaskCallBack() {
+			@Override
+			public void onCallBack(BaseModel result) {
+				isNameDup = true;
+				if (progressDialog != null && progressDialog.isShowing()) progressDialog.cancel();
+				if (getActivity() == null) return;
+				if (result == null) {
+					if (NetWorkHelper.checkNetState(context)) {
+						// Utility.toastNetworkFailed(context);
+					}
+					else {
+						// Utility.toastFailedResult(context);
+					}
+				}
+				else if (result.status == 200) {
+					isNameDup = false;
+					if (isShowProgress) {
+						Intent intent = new Intent();
+						intent.putExtra(Constant.Chat.SELF_ID, login.user_id);
+						intent.setClass(getActivity(), ChatIndexActivity.class);
+						startActivity(intent);
+					}
+				}
+				else if (result.status == 404) {
+					// Utility.toastFailedResult(context, result.message);
+				}
+				else {
+					// Utility.toastFailedResult(context, result.message);
+				}
+			}
+		});
+		modifyChatUserInfoTask.execute(user_id, gender, nick_name);
 	}
 }

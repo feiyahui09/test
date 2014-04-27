@@ -151,7 +151,7 @@ public class ActListFragment extends Fragment implements IXListViewListener, OnI
 						Utility.toastNetworkFailed(getActivity());
 					}
 					else if (result != null)
-						Utility.toastFailedResult(getActivity(), result.message);
+						Utility.toastResult(getActivity(), result.message);
 					else
 						Utility.toastFailedResult(getActivity());
 					listview.onLoads();

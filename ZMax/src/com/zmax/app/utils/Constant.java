@@ -22,8 +22,8 @@ public class Constant {
 	public static final boolean LOG_SDCARD_ENABLE = false; // 是否打印日志在SDcard上，正式发版前记得设置为false
 	public static final String LOG_FILE_NAME = "com.zmax.app" + "_log.txt"; // 根据包名改变日志文件名字
 	
-	public static final String ZMAX_URL = "http://zmax.bestapp.us/api/v1/"; // 正式环境
-	// public static String ZMAX_URL = "http://zmaxtest.bestapp.us/api/v1/";
+		//public static final String ZMAX_URL = "http://zmax.bestapp.us/api/v1/"; // 正式环境
+ public static String ZMAX_URL = "http://zmaxtest.bestapp.us/api/v1/";
 	// //测试环境
 	// public static String FANCY_URL =
 	// "http://220.181.187.155/service/request"; //预发布环境
@@ -63,7 +63,8 @@ public class Constant {
 	}
 	
 	public static class Chat {
-		
+		public static final String SELF_ID= "self_id";
+
 		public static final String SELF_NAME = "self_name";
 		public static final String SELF_GENDER = "self_gender";
 		

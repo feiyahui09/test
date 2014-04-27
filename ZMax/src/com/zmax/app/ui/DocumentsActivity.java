@@ -62,7 +62,7 @@ public class DocumentsActivity extends BaseActivity {
 				else {
 					if (old != null)
 						initData(old);
-					else if (document != null) Utility.toastFailedResult(context, document.message);
+					else if (document != null) Utility.toastResult(context, document.message);
 				}
 			}
 			

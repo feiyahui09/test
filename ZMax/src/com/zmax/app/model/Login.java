@@ -12,7 +12,7 @@ public class Login implements Serializable {
 	 */
 	public int status;
 	public String message;
-	public String nick_name;
+
 	public String id_number;
 	public String hotel_location;
 	public String hotel_name;
@@ -22,4 +22,7 @@ public class Login implements Serializable {
 	public String end_time;
 	public String auth_token;
 	
+	public int user_id;
+	public int gender;
+	public String nick_name;
 }

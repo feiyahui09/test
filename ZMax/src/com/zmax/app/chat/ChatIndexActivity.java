@@ -1,5 +1,6 @@
 package com.zmax.app.chat;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,6 +15,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.zmax.app.R;
+import com.zmax.app.model.BaseModel;
+import com.zmax.app.net.NetWorkHelper;
+import com.zmax.app.task.ModifyChatUserInfoTask;
 import com.zmax.app.ui.base.BaseActivity;
 import com.zmax.app.utils.Constant;
 import com.zmax.app.utils.DefaultShared;
@@ -29,6 +33,9 @@ public class ChatIndexActivity extends BaseActivity {
 	
 	private String gender = "男";
 	private String name;
+	private int user_id;
+	private ProgressDialog progressDialog;
+	private ModifyChatUserInfoTask modifyChatUserInfoTask;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -40,6 +47,11 @@ public class ChatIndexActivity extends BaseActivity {
 	
 	private void init() {
 		mContext = this;
+		if (getIntent().getIntExtra(Constant.Chat.SELF_ID, -1) < 0) {
+			finish();
+			return;
+		}
+		user_id = getIntent().getIntExtra(Constant.Chat.SELF_ID, -1);
 		et_nick_name = (EditText) findViewById(R.id.et_nick_name);
 		et_nick_name.setText(DefaultShared.getString(Constant.Chat.SELF_NAME, ""));
 		tv_title = (TextView) findViewById(R.id.tv_title);
@@ -73,9 +85,7 @@ public class ChatIndexActivity extends BaseActivity {
 					return;
 				}
 				name = et_nick_name.getText().toString().trim();
-				saveSelfInfo();
-				startActivity(new Intent(mContext, ChatRoomActivity.class));
-				
+				goVertify(mContext, user_id + "", gender, name);
 			}
 		});
 		
@@ -114,4 +124,39 @@ public class ChatIndexActivity extends BaseActivity {
 		
 	}
 	
+	private void goVertify(final Context context, String user_id, String gender, String nick_name) {
+		progressDialog = new ProgressDialog(context);
+		progressDialog.setTitle("提示");
+		progressDialog.setCancelable(false);
+		progressDialog.setMessage("正在检查昵称是否被使用！");
+		progressDialog.show();
+		modifyChatUserInfoTask = new ModifyChatUserInfoTask(context, new ModifyChatUserInfoTask.TaskCallBack() {
+			@Override
+			public void onCallBack(BaseModel result) {
+				if (progressDialog != null && progressDialog.isShowing()) progressDialog.cancel();
+				if (result == null) {
+					if (NetWorkHelper.checkNetState(context))
+						Utility.toastNetworkFailed(context);
+					else
+						Utility.toastFailedResult(context);
+				}
+				else if (result.status != 200) {
+					Utility.toastResult(context, result.message);
+				}
+				else {
+					Utility.toastResult(mContext, "恭喜！你可以使用该昵称！");
+					saveSelfInfo();
+					handler.postDelayed(new Runnable() {
+						
+						@Override
+						public void run() {
+							startActivity(new Intent(mContext, ChatRoomActivity.class));
+						}
+					}, 500);
+					
+				}
+			}
+		});
+		modifyChatUserInfoTask.execute(user_id, gender, nick_name);
+	}
 }

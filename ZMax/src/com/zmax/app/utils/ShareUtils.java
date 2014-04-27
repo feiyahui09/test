@@ -8,6 +8,8 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
 import android.graphics.BitmapFactory;
+import android.os.Handler;
+import android.widget.Toast;
 import cn.sharesdk.framework.Platform;
 import cn.sharesdk.framework.PlatformActionListener;
 import cn.sharesdk.onekeyshare.OnekeyShare;
@@ -17,6 +19,8 @@ import com.zmax.app.R;
 public class ShareUtils {
 	
 	private String TEST_IMAGE = "";
+	private Context context;
+	private Handler handler;
 	
 	// 使用快捷分享完成分享（请务必仔细阅读位于SDK解压目录下Docs文件夹中OnekeyShare类的JavaDoc）
 	/**
@@ -35,6 +39,8 @@ public class ShareUtils {
 	 * 3、在配置文件中配置，本例子里面的assets/ShareSDK.conf,
 	 */
 	public void showShare(Context context, boolean silent, String platform) {
+		this.context = context;
+		this.handler = new Handler(context.getMainLooper());
 		initPic(context);
 		try {
 			Thread.sleep(122);
@@ -107,15 +113,33 @@ public class ShareUtils {
 		public void onComplete(Platform plat, int action, HashMap<String, Object> res) {
 			System.out.println(res.toString());
 			// 在这里添加分享成功的处理代码
+			handler.post(new Runnable() {
+				@Override
+				public void run() {
+					Utility.toastResult(context, "分享成功！");
+				}
+			});
 		}
 		
 		public void onError(Platform plat, int action, Throwable t) {
+			handler.post(new Runnable() {
+				@Override
+				public void run() {
+					Utility.toastResult(context, "分享失败！");
+				}
+			});
 			t.printStackTrace();
 			Log.e(t.getMessage());
 		}
 		
 		public void onCancel(Platform plat, int action) {
 			// 在这里添加取消分享的处理代码
+			handler.post(new Runnable() {
+				@Override
+				public void run() {
+					Utility.toastResult(context, "已分享取消！");
+				}
+			});
 		}
 		
 	}

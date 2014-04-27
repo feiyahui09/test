@@ -1,7 +1,5 @@
 package com.zmax.app.ui;
 
-import java.util.List;
-
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
@@ -16,19 +14,13 @@ import android.widget.Toast;
 
 import com.zmax.app.R;
 import com.zmax.app.adapter.ActDetailAdapter;
-import com.zmax.app.model.AirCondition;
-import com.zmax.app.model.BaseModel;
 import com.zmax.app.model.RoomStatus;
-import com.zmax.app.model.Television;
-import com.zmax.app.net.NetAccessor;
 import com.zmax.app.net.NetWorkHelper;
 import com.zmax.app.task.GetRoomStatusTask;
 import com.zmax.app.ui.base.BaseFragmentActivity;
 import com.zmax.app.ui.fragment.RoomControlAirConditionFragment;
-import com.zmax.app.ui.fragment.RoomControlCurtainFragment;
 import com.zmax.app.ui.fragment.RoomControlLightingFragment;
 import com.zmax.app.ui.fragment.RoomControlTVFragment;
-import com.zmax.app.ui.fragment.RoomControlWakeUpFragment;
 import com.zmax.app.widget.SmartViewPager;
 
 public class RoomControlActivity extends BaseFragmentActivity {

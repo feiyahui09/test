@@ -9,6 +9,7 @@ import android.text.TextUtils;
 import com.zmax.app.model.ActDetail;
 import com.zmax.app.model.ActList;
 import com.zmax.app.model.AirCondition;
+import com.zmax.app.model.BaseModel;
 import com.zmax.app.model.CityLocation;
 import com.zmax.app.model.Documents;
 import com.zmax.app.model.FeeBack;
@@ -113,6 +114,24 @@ public class NetAccessor {
 			e.printStackTrace();
 		}
 		return update;
+	}
+	
+	public static BaseModel vetfityNameDup(Context context,  String user_id,  String gender, String nick_name) {
+		BaseModel result = null;
+		try {
+			String jsonString = HttpUtils.getByHttpClient(context, Constant.ZMAX_URL + "chat/user_info", new BasicNameValuePair("user_id",
+					user_id + ""), new BasicNameValuePair("gender", gender + ""), new BasicNameValuePair("nick_name", nick_name));
+			Log.d("  responeString -->\n" + jsonString);
+			if (!TextUtils.isEmpty(jsonString)) {
+				result = JsonMapperUtils.toObject(jsonString, BaseModel.class);
+			}
+		}
+		catch (Exception e) {
+			result = null;
+			Log.e("   Exception :" + e.toString());
+			e.printStackTrace();
+		}
+		return result;
 	}
 	
 	public static void testPost(Context context) {

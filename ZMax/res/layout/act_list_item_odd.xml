@@ -19,12 +19,11 @@
 
         <TextView
             android:id="@+id/tv_name"
-            android:layout_width="wrap_content"
+            android:layout_width="164dp"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="81dp"
+            android:layout_marginLeft="38dp"
             android:ellipsize="end"
-            android:gravity="center"
             android:singleLine="true"
             android:text="拳击 阿萨达速度asd"
             android:textColor="#43c1ee"
@@ -32,11 +31,12 @@
 
         <TextView
             android:id="@+id/tv_city"
-            android:layout_width="wrap_content"
+            android:layout_width="65dp"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="47dp"
+            android:layout_marginLeft="1dp"
             android:gravity="center"
             android:text="武汉"
             android:textColor="#ffffff"

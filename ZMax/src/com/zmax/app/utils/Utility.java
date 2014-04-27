@@ -48,7 +48,7 @@ public class Utility {
 		Toast.makeText(context, "获取信息失败，请稍后再试！", 500).show();
 	}
 	
-	public static void toastFailedResult(Context context, String msg) {
+	public static void toastResult(Context context, String msg) {
 		Toast.makeText(context, msg, 500).show();
 	}
 	

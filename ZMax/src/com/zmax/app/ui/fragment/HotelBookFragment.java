@@ -107,7 +107,7 @@ public class HotelBookFragment extends Fragment implements OnPageChangeListener,
 						Utility.toastNetworkFailed(getActivity());
 					}
 					else if (hotelList != null)
-						Utility.toastFailedResult(getActivity(), hotelList.message);
+						Utility.toastResult(getActivity(), hotelList.message);
 					else
 						Utility.toastFailedResult(getActivity());
 				}
