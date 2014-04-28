@@ -142,8 +142,8 @@ public class SettingFragment extends Fragment implements OnClickListener {
 					progressDialog.setTitle("提示");
 					progressDialog.setMessage("正在更新房间控制信息中！");
 //					progressDialog.show();
-					new AlertDialog.Builder(getActivity()).setTitle("升级").setMessage(result.description)
-							.setPositiveButton("去升级", new DialogInterface.OnClickListener() {
+					new AlertDialog.Builder(getActivity()).setTitle("提示").setMessage(result.description)
+							.setPositiveButton("立即更新", new DialogInterface.OnClickListener() {
 								@Override
 								public void onClick(DialogInterface dialog, int which) {
 									dialog.dismiss();
@@ -151,7 +151,7 @@ public class SettingFragment extends Fragment implements OnClickListener {
 									// goUpdate("http://immomo.com/download/momo.apk");
 									
 								}
-							}).setNegativeButton("暂不升级", new DialogInterface.OnClickListener() {
+							}).setNegativeButton("暂不更新", new DialogInterface.OnClickListener() {
 								
 								@Override
 								public void onClick(DialogInterface dialog, int which) {

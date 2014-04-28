@@ -39,6 +39,10 @@
             android:background="@drawable/chat_edit_name_btn_sel" />
     </RelativeLayout>
 
+    <ImageView
+        style="@style/setting_divider"
+        android:background="@drawable/chat_setting_divider" />
+
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content" >

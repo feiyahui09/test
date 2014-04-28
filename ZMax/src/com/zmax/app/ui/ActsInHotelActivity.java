@@ -102,6 +102,7 @@ public class ActsInHotelActivity extends BaseActivity implements IXListViewListe
 						listview.onLoad();
 					}
 					else if (actList != null && actList.isEmpty()) {
+						Utility.toastNoMoreResult(mContext);
 						listview.onLoads();
 					}
 				}

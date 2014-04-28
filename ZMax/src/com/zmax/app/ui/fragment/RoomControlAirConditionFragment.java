@@ -2,6 +2,7 @@ package com.zmax.app.ui.fragment;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 import org.codehaus.jackson.map.ser.ScalarSerializerBase;
@@ -25,6 +26,8 @@ import com.zmax.app.model.AirCondition;
 import com.zmax.app.task.SetAirConditionTask;
 import com.zmax.app.ui.RoomControlActivity.PageChangedCallback;
 import com.zmax.app.ui.RoomControlActivity.VerticalChangedCallback;
+import com.zmax.app.utils.Log;
+import com.zmax.app.utils.Utility;
 import com.zmax.app.widget.VerticalViewPager;
 
 public class RoomControlAirConditionFragment extends Fragment {
@@ -310,7 +313,15 @@ public class RoomControlAirConditionFragment extends Fragment {
 			opera_data = opera_air_blower;
 		}
 		else if (opera_type.equals("temperature")) {
-			opera_data = opera_temperature + "";
+			// Log.e("================" + new Date() + "============");
+			// Log.e("opera_temperature  " + opera_temperature);
+			// Log.e("cur_temperature  " + cur_temperature);
+			if (opera_temperature < 16 || opera_temperature > 30) {
+				Utility.toastResult(getActivity(), "请设置16~30℃范围的的温度！");
+				return;
+			}
+			else
+				opera_data = opera_temperature + "";
 		}
 		else if (opera_type.equals("schema")) {
 			opera_data = opera_schema;
@@ -318,6 +329,7 @@ public class RoomControlAirConditionFragment extends Fragment {
 		else if (opera_type.equals("status")) {
 			opera_data = cur_status + "";
 		}
+		
 		task.execute(opera_type, opera_data);
 	}
 	
@@ -328,7 +340,7 @@ public class RoomControlAirConditionFragment extends Fragment {
 	
 	private void onStatusChanged(int isOpen) {
 		cur_status = isOpen;
-		opera_status=isOpen;
+		opera_status = isOpen;
 		if (isOpen == 1) {
 			tv_temperature.setVisibility(View.VISIBLE);
 			tv_schema.setVisibility(View.VISIBLE);

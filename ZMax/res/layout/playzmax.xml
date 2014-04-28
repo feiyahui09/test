@@ -149,7 +149,7 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="50dp"
-        android:text="Zmax酒店欢迎您的到来，祝您假期愉快！"
+        android:text="ZMAX酒店欢迎您的到来，祝您假期愉快！"
         android:textColor="#666666"
         android:textSize="14sp" />
 

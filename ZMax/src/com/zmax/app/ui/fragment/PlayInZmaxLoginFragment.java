@@ -74,10 +74,13 @@ public class PlayInZmaxLoginFragment extends Fragment {
 					Utility.toastResult(getActivity(), "房间号不能为空哦！");
 				else if (Utility.isETNull(et_namecard))
 					Utility.toastResult(getActivity(), "身份证号码不能为空哦！");
-				else if (Utility.isETNull(et_password)) Utility.toastResult(getActivity(), "密码不能为空哦！");
-				
-				goPlayZmax(selected_pms_hotel_id, et_room_number.getText().toString().trim(), et_namecard.getText().toString().trim(),
-						et_password.getText().toString().trim());
+				else if (Utility.isETNull(et_password))
+					Utility.toastResult(getActivity(), "密码不能为空哦！");
+				else if (et_namecard.getText().toString().trim().length() != 4)
+					Utility.toastResult(getActivity(), "请填入身份证后四位！");
+				else
+					goPlayZmax(selected_pms_hotel_id, et_room_number.getText().toString().trim(), et_namecard.getText().toString().trim(),
+							et_password.getText().toString().trim());
 			}
 		});
 		sp_hotels = (Spinner) view.findViewById(R.id.sp_hotels);

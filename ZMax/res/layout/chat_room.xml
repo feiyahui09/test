@@ -22,11 +22,17 @@
         android:scrollbars="vertical" >
     </ListView>
 
+    <ImageView
+        style="@style/setting_divider"
+        android:layout_above="@+id/rl_edit" />
+
     <RelativeLayout
         android:id="@+id/rl_edit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true" >
+        android:layout_alignParentBottom="true"
+        android:paddingBottom="5dp"
+        android:paddingTop="5dp" >
 
         <ImageView
             android:id="@+id/iv_pic"
@@ -36,7 +42,8 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
-            android:background="@drawable/chat_pic" />
+            android:background="@drawable/chat_pic"
+            android:minHeight="26dp" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -44,14 +51,17 @@
             android:layout_centerVertical="true"
             android:layout_toLeftOf="@+id/btn_send"
             android:layout_toRightOf="@+id/iv_pic"
-            android:background="@android:color/white" >
+            android:background="@android:color/white"
+            android:minHeight="32dp" >
 
             <EditText
                 android:id="@+id/et_edit"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
                 android:layout_toLeftOf="@+id/iv_emotion"
                 android:background="@android:color/white"
+                android:gravity="left|center_vertical"
                 android:imeOptions="actionSend"
                 android:maxLines="8"
                 android:textColor="#000000"
@@ -72,7 +82,7 @@
         <Button
             android:id="@+id/btn_send"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="34dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginLeft="8dp"
