@@ -119,7 +119,7 @@ public class NetAccessor {
 	public static BaseModel vetfityNameDup(Context context,  String user_id,  String gender, String nick_name) {
 		BaseModel result = null;
 		try {
-			String jsonString = HttpUtils.getByHttpClient(context, Constant.ZMAX_URL + "chat/user_info", new BasicNameValuePair("user_id",
+			String jsonString = HttpUtils.postByHttpClient(context, Constant.ZMAX_URL + "chat/user_info", new BasicNameValuePair("user_id",
 					user_id + ""), new BasicNameValuePair("gender", gender + ""), new BasicNameValuePair("nick_name", nick_name));
 			Log.d("  responeString -->\n" + jsonString);
 			if (!TextUtils.isEmpty(jsonString)) {

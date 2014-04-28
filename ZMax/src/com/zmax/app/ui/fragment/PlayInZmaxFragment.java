@@ -30,6 +30,7 @@ import com.zmax.app.ui.MainActivity;
 import com.zmax.app.ui.RoomControlActivity;
 import com.zmax.app.utils.Constant;
 import com.zmax.app.utils.DateTimeUtils;
+import com.zmax.app.utils.DefaultShared;
 import com.zmax.app.utils.Log;
 import com.zmax.app.utils.Utility;
 
@@ -165,15 +166,19 @@ public class PlayInZmaxFragment extends Fragment implements OnClickListener {
 				startActivity(intent);
 				break;
 			case R.id.btn_chat:
-				if (TextUtils.isEmpty(login.nick_name)) {
-					intent.putExtra(Constant.Chat.SELF_ID, login.user_id);
+				if (TextUtils.isEmpty(login.nick_name)||TextUtils.isEmpty(login.auth_token)) {
 					intent.setClass(getActivity(), ChatIndexActivity.class);
 					startActivity(intent);
 				}
-				else
+				else {
 					// vertifyDup(getActivity(), login.user_id + "",
 					// login.gender + "", login.nick_name, true);
-					break;
+					// saveSelfInfo(login.user_id, login.gender == 1 ? "男" :
+					// "女", login.nick_name);
+					intent.setClass(getActivity(), ChatRoomActivity.class);
+					startActivity(intent);
+				}
+				break;
 			case R.id.btn_room:
 				intent.setClass(getActivity(), RoomControlActivity.class);
 				startActivity(intent);
@@ -184,11 +189,19 @@ public class PlayInZmaxFragment extends Fragment implements OnClickListener {
 		}
 	}
 	
+	private void saveSelfInfo(int user_id, String gender, String name) {
+		DefaultShared.putInt(Constant.Chat.SELF_ID, user_id);
+		DefaultShared.putString(Constant.Chat.SELF_GENDER, gender);
+		DefaultShared.putString(Constant.Chat.SELF_NAME, name);
+		
+	}
+	
+	// 验证已保存的名字是否有重复
 	private void vertifyDup(final Context context, String user_id, String gender, String nick_name, final boolean isShowProgress) {
 		progressDialog = new ProgressDialog(context);
 		progressDialog.setTitle("提示");
 		progressDialog.setCancelable(false);
-		progressDialog.setMessage("正在更新房间控制信息中！");
+		progressDialog.setMessage("正在验证用户信息中！");
 		if (isShowProgress) progressDialog.show();
 		modifyChatUserInfoTask = new ModifyChatUserInfoTask(context, new ModifyChatUserInfoTask.TaskCallBack() {
 			@Override
@@ -198,26 +211,25 @@ public class PlayInZmaxFragment extends Fragment implements OnClickListener {
 				if (getActivity() == null) return;
 				if (result == null) {
 					if (NetWorkHelper.checkNetState(context)) {
-						// Utility.toastNetworkFailed(context);
+						Utility.toastNetworkFailed(context);
 					}
 					else {
-						// Utility.toastFailedResult(context);
+						Utility.toastFailedResult(context);
 					}
 				}
 				else if (result.status == 200) {
 					isNameDup = false;
 					if (isShowProgress) {
 						Intent intent = new Intent();
-						intent.putExtra(Constant.Chat.SELF_ID, login.user_id);
 						intent.setClass(getActivity(), ChatIndexActivity.class);
 						startActivity(intent);
 					}
 				}
 				else if (result.status == 404) {
-					// Utility.toastFailedResult(context, result.message);
+					Utility.toastResult(context, result.message);
 				}
 				else {
-					// Utility.toastFailedResult(context, result.message);
+					Utility.toastResult(context, result.message);
 				}
 			}
 		});

@@ -7,6 +7,7 @@ import java.util.Map;
 
 import android.content.Intent;
 import android.support.v4.app.FragmentActivity;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -15,6 +16,7 @@ import android.widget.SimpleAdapter;
 
 import com.zmax.app.R;
 import com.zmax.app.model.Act;
+import com.zmax.app.model.Login;
 import com.zmax.app.ui.HotelDetailActivity;
 
 public class Constant {
@@ -61,6 +63,7 @@ public class Constant {
 	}
 	
 	public static class Chat {
+		
 		public static final String SELF_ID = "self_id";
 		
 		public static final String SELF_NAME = "self_name";
@@ -69,10 +72,10 @@ public class Constant {
 	}
 	
 	public static final int PER_NUM_GET_ACTLIST = 5;
-	public static final int PER_NUM_GET_HOTELLIST = 20;
+	public static final int PER_NUM_GET_HOTELLIST = 40;
 	
 	public static class SPFKEY {
-		
+		public static final String LOGIN_INFO_KEY = "login_info_key";
 		public static final String CITY_LOCATION_KEY = "city_location_key";
 		public static final String INDEX_ACTLIST_KEY = "index_actlist_key";
 		public static final String INDEX_ACTLIST_PAGENUM_KEY = "index_actlist_pagenum_key";
@@ -89,6 +92,33 @@ public class Constant {
 		public static final String ACTION_MENBER = "action_menber";
 		public static final String HOTEL_ID_KEY = "hotel_id_key";
 		
+	}
+	
+	private static Login login;
+	
+	public static void saveLogin(Login loginResult) {
+		Constant.login = loginResult;
+		String jsonStr = JsonMapperUtils.toJson(loginResult);
+		DefaultShared.putString(Constant.SPFKEY.LOGIN_INFO_KEY, jsonStr);
+	}
+	
+	public static void modifyLogin(int _gender, String _nick_name) {
+		if (Constant.login == null) return;
+		Constant.login.gender = _gender;
+		Constant.login.nick_name = _nick_name;
+		String jsonStr = JsonMapperUtils.toJson(Constant.login);
+		DefaultShared.putString(Constant.SPFKEY.LOGIN_INFO_KEY, jsonStr);
+	}
+	
+	public static Login getLogin() {
+		if (Constant.login != null) return Constant.login;
+		String jsonStr = DefaultShared.getString(Constant.SPFKEY.LOGIN_INFO_KEY, "");
+		Login login = null;
+		if (!TextUtils.isEmpty(jsonStr)) {
+			login = JsonMapperUtils.toObject(jsonStr, Login.class);
+			Constant.login = login;
+		}
+		return login;
 	}
 	
 	public static List<Object> getFalseDataObject(boolean bo) {

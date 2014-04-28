@@ -10,6 +10,8 @@ import android.widget.LinearLayout;
 
 import com.zmax.app.R;
 import com.zmax.app.ui.MainActivity;
+import com.zmax.app.utils.Constant;
+import com.zmax.app.utils.Utility;
 
 public class MoreMenuFragment extends Fragment implements OnClickListener {
 	private LinearLayout ll_menu_index, ll_menu_playzmax, ll_menu_myaccount, ll_menu_setting;
@@ -19,8 +21,9 @@ public class MoreMenuFragment extends Fragment implements OnClickListener {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setRetainInstance(true);
-
+		
 	}
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View v = inflater.inflate(R.layout.bedind_menu_list, null);
@@ -41,10 +44,15 @@ public class MoreMenuFragment extends Fragment implements OnClickListener {
 		Fragment newContent = null;
 		switch (v.getId()) {
 			case R.id.ll_menu_index:
-				newContent = new ActListFragment( );
+				newContent = new ActListFragment();
 				break;
 			case R.id.ll_menu_playzmax:
-				newContent = new PlayInZmaxLoginFragment(R.color.green);
+				if (Constant.getLogin() == null) {
+					newContent = new PlayInZmaxLoginFragment( );
+				}
+				else {
+					newContent = new PlayInZmaxFragment(Constant.getLogin());
+				}
 				break;
 			case R.id.ll_menu_myaccount:
 				newContent = new AccountFragment(R.color.blue);

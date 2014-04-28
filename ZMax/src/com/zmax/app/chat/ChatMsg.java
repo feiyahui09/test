@@ -13,7 +13,7 @@ public class ChatMsg implements Serializable {
 	@DatabaseField
 	public String target;
 	@DatabaseField
-	public String gender;
+	public int  gender;
 	@DatabaseField
 	public String from;
 	@DatabaseField

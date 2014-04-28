@@ -140,7 +140,7 @@ public class ChatListAdapter extends BaseAdapter {
 			case VALUE_LEFT_TEXT:
 				holder.btnLeftText.setText(chatMsg.msg.content);
 				holder.tvLeftName.setText(chatMsg.from);
-				holder.ivLeftIcon.setImageResource(chatMsg.gender.equals("女") ? R.drawable.chat_female_icon : R.drawable.chat_male_icon);
+				holder.ivLeftIcon.setImageResource(chatMsg.gender == 0 ? R.drawable.chat_female_icon : R.drawable.chat_male_icon);
 				
 				break;
 			case VALUE_LEFT_IMAGE:
@@ -150,7 +150,7 @@ public class ChatListAdapter extends BaseAdapter {
 			case VALUE_RIGHT_TEXT:
 				holder.btnRightText.setText(chatMsg.msg.content);
 				holder.tvRightName.setText(chatMsg.from);
-				holder.ivRightIcon.setImageResource(chatMsg.gender.equals("女") ? R.drawable.chat_female_icon : R.drawable.chat_male_icon);
+				holder.ivRightIcon.setImageResource(chatMsg.gender == 0 ? R.drawable.chat_female_icon : R.drawable.chat_male_icon);
 				
 				break;
 			case VALUE_RIGHT_IMAGE:

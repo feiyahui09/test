@@ -53,31 +53,31 @@ public class ChatRoomActivity extends BaseActivity implements OnClickListener {
 	
 	private static int count = 0;
 	private static String self_user_name = "围观淡定哥";
-	private static String self_user_gender = "男";
+	private static int  self_user_gender = 1;
 	
-	 private String userName = "红孩儿";
-	 private String userid = "2";
-	 private String userToken = "token2";
-	 private String rid = "123";
-	 private String userGender = "女";
+	// private String userName = "红孩儿";
+	// private String userid = "2";
+	// private String userToken = "token2";
+	// private String rid = "123";
+	// private int userGender = 0;
 	
 	// private String userName = "逗比";
 	// private String userid = "1";
 	// private String rid = "123";
 	// private String userToken = "token1";
-	// private String userGender = "男";
+	// private int userGender = 1;
 	
-//	private String userName = "围观淡定哥";
-//	private String userid = "5";
-//	private String rid = "123";
-//	private String userToken = "token5";
-//	private String userGender = "男";
+	private String userName = "围观淡定哥";
+	private String userid = "5";
+	private String rid = "123";
+	private String userToken = "token5";
+	private int  userGender = 1;
 	
 	// private String userName = "沉默哥";
 	// private String userid = "4";
 	// private String rid = "123";
 	// private String userToken = "token4";
-	// private String userGender = "男";
+	// private int userGender = 0;
 	private Runnable sendRunnable = new Runnable() {
 		
 		@Override
@@ -163,12 +163,15 @@ public class ChatRoomActivity extends BaseActivity implements OnClickListener {
 	protected void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
-		String gender = DefaultShared.getString(Constant.Chat.SELF_GENDER, "");
-		String name = DefaultShared.getString(Constant.Chat.SELF_NAME, "");
-		if (TextUtils.isEmpty(gender) || TextUtils.isEmpty(name)) {
+		// int user_id=DefaultShared.getInt(Constant.Chat.SELF_ID, 0);
+		// String gender = DefaultShared.getString(Constant.Chat.SELF_GENDER,
+		// "");
+		// String name = DefaultShared.getString(Constant.Chat.SELF_NAME, "");
+		String name = Constant.getLogin().nick_name;
+		if (TextUtils.isEmpty(name)) {
 			return;
 		}
-		self_user_gender = gender;
+		self_user_gender =  Constant.getLogin().gender;
 		self_user_name = name;
 		
 		// 修改发送的用户信息
@@ -186,7 +189,7 @@ public class ChatRoomActivity extends BaseActivity implements OnClickListener {
 		
 	}
 	
-	// 192.168.0.69 //
+	// 192.168.0.69 //测试环境
 	// 192.168.10.46 //old
 	private void initChatPomelo() {
 		chatHelper = ChatHelper.getHelper();

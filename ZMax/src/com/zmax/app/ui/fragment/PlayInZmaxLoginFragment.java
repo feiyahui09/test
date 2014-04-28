@@ -31,6 +31,8 @@ import com.zmax.app.task.GetHotelListTask;
 import com.zmax.app.task.LoginPlayZmaxTask;
 import com.zmax.app.ui.MainActivity;
 import com.zmax.app.utils.Constant;
+import com.zmax.app.utils.DefaultShared;
+import com.zmax.app.utils.JsonMapperUtils;
 import com.zmax.app.utils.Utility;
 
 public class PlayInZmaxLoginFragment extends Fragment {
@@ -75,7 +77,6 @@ public class PlayInZmaxLoginFragment extends Fragment {
 		if (hotels != null && !hotels.isEmpty()) {
 			sp_hotels.setEnabled(true);
 			fromHotelsSpinner(hotels);
-			;
 		}
 		else {
 			sp_hotels.setEnabled(false);
@@ -108,12 +109,12 @@ public class PlayInZmaxLoginFragment extends Fragment {
 			Utility.toastNetworkFailed(getActivity());
 			return;
 		}
-		
 		loginPlayZmaxTask = new LoginPlayZmaxTask(getActivity(), new LoginPlayZmaxTask.TaskCallBack() {
 			@Override
 			public void onCallBack(Login loginResult) {
 				if (getActivity() == null) return;
 				if (loginResult != null && loginResult.status == 200) {
+					Constant.saveLogin(loginResult);
 					((MainActivity) getActivity()).switchContent(new PlayInZmaxFragment(loginResult));
 				}
 				else

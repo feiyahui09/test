@@ -31,9 +31,8 @@ public class ChatIndexActivity extends BaseActivity {
 	private RadioGroup rg_gender;
 	private RadioButton btn_feman, btn_man;
 	
-	private String gender = "男";
+	private int gender = 1;
 	private String name;
-	private int user_id;
 	private ProgressDialog progressDialog;
 	private ModifyChatUserInfoTask modifyChatUserInfoTask;
 	
@@ -47,11 +46,12 @@ public class ChatIndexActivity extends BaseActivity {
 	
 	private void init() {
 		mContext = this;
-		if (getIntent().getIntExtra(Constant.Chat.SELF_ID, -1) < 0) {
+		if (Constant.getLogin() == null) {
+			Utility.toastFailedResult(mContext);
 			finish();
 			return;
 		}
-		user_id = getIntent().getIntExtra(Constant.Chat.SELF_ID, -1);
+		// user_id = getIntent().getIntExtra(Constant.Chat.SELF_ID, -1);
 		et_nick_name = (EditText) findViewById(R.id.et_nick_name);
 		et_nick_name.setText(DefaultShared.getString(Constant.Chat.SELF_NAME, ""));
 		tv_title = (TextView) findViewById(R.id.tv_title);
@@ -85,7 +85,7 @@ public class ChatIndexActivity extends BaseActivity {
 					return;
 				}
 				name = et_nick_name.getText().toString().trim();
-				goVertify(mContext, user_id + "", gender, name);
+				goVertify(mContext, Constant.getLogin().user_id + "", gender, name);
 			}
 		});
 		
@@ -97,10 +97,10 @@ public class ChatIndexActivity extends BaseActivity {
 			@Override
 			public void onCheckedChanged(RadioGroup group, int checkedId) {
 				if (checkedId == R.id.btn_feman) {
-					gender = "女";
+					gender = 0;
 				}
 				else {
-					gender = "男";
+					gender = 1;
 				}
 			}
 		});
@@ -118,13 +118,14 @@ public class ChatIndexActivity extends BaseActivity {
 			btn_feman.setChecked(true);
 	}
 	
+	@Deprecated
 	private void saveSelfInfo() {
-		DefaultShared.putString(Constant.Chat.SELF_GENDER, gender);
+		DefaultShared.putInt(Constant.Chat.SELF_GENDER, gender);
 		DefaultShared.putString(Constant.Chat.SELF_NAME, name);
 		
 	}
 	
-	private void goVertify(final Context context, String user_id, String gender, String nick_name) {
+	private void goVertify(final Context context, String _user_id, final int _gender, final String _nick_name) {
 		progressDialog = new ProgressDialog(context);
 		progressDialog.setTitle("提示");
 		progressDialog.setCancelable(false);
@@ -145,18 +146,17 @@ public class ChatIndexActivity extends BaseActivity {
 				}
 				else {
 					Utility.toastResult(mContext, "恭喜！你可以使用该昵称！");
-					saveSelfInfo();
+					// saveSelfInfo();
+					Constant.modifyLogin(_gender, _nick_name);
 					handler.postDelayed(new Runnable() {
-						
 						@Override
 						public void run() {
 							startActivity(new Intent(mContext, ChatRoomActivity.class));
 						}
 					}, 500);
-					
 				}
 			}
 		});
-		modifyChatUserInfoTask.execute(user_id, gender, nick_name);
+		modifyChatUserInfoTask.execute(Constant.getLogin().user_id+"", _gender + "", _nick_name);
 	}
 }

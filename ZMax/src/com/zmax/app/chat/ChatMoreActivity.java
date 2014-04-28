@@ -55,20 +55,18 @@ public class ChatMoreActivity extends BaseActivity {
 		tv_name = (TextView) findViewById(R.id.tv_name);
 		btn_edit_name = (Button) findViewById(R.id.btn_edit_name);
 		btn_edit_name.setOnClickListener(new OnClickListener() {
-			
 			@Override
 			public void onClick(View v) {
 				startActivity(new Intent(mContext, ChatSettingActivity.class));
 			}
 		});
-		
 	}
 	
 	@Override
 	protected void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
-		tv_name.setText(DefaultShared.getString(Constant.Chat.SELF_NAME, ""));
+		tv_name.setText(Constant.getLogin().nick_name);
 		
 	}
 	

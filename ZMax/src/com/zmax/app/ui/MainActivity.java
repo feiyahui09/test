@@ -76,17 +76,17 @@ public class MainActivity extends BaseSlidingFragmentActivity {
 	public void showLogoutView() {
 		btn_share.setVisibility(View.VISIBLE);
 		btn_share.setOnClickListener(new OnClickListener() {
-			
 			@Override
 			public void onClick(View v) {
+				Constant.saveLogin(null);
 				switchContent(new PlayInZmaxLoginFragment());
 			}
 		});
-		
 	}
 	
 	public void hideLogoutView() {
 		btn_share.setVisibility(View.GONE);
+		
 	}
 	
 	int backPressCount = 0;

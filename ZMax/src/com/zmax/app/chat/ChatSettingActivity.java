@@ -65,7 +65,10 @@ public class ChatSettingActivity extends BaseActivity {
 					Toast.makeText(mContext, "昵称不能为空哦！", 400).show();
 					return;
 				}
-				saveSelfInfo();
+				name = tv_name.getText().toString().trim();
+				gender = tv_gender.getText().toString().trim();
+				
+				Constant.modifyLogin(gender.equals("女") ? 0 : 1, name);
 				Toast.makeText(mContext, "修改个人信息成功！！", 400).show();
 				finish();
 				
@@ -115,8 +118,9 @@ public class ChatSettingActivity extends BaseActivity {
 	protected void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
-		tv_name.setText(DefaultShared.getString(Constant.Chat.SELF_NAME, ""));
-		tv_gender.setText(DefaultShared.getString(Constant.Chat.SELF_GENDER, ""));
+		tv_name.setText(Constant.getLogin().nick_name);
+		tv_gender.setText(Constant.getLogin().gender == 1 ? "男" : "女");
+		
 	}
 	
 	@Override
@@ -156,6 +160,7 @@ public class ChatSettingActivity extends BaseActivity {
 		
 	}
 	
+	@Deprecated
 	private void saveSelfInfo() {
 		name = tv_name.getText().toString().trim();
 		gender = tv_gender.getText().toString().trim();

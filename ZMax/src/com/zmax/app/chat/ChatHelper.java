@@ -17,8 +17,8 @@ import com.zmax.app.utils.Log;
 public class ChatHelper {
 	static ChatHelper helper;
 	private PomeloClient client;
-	private String name, gender, uid, rid;
-	
+	private String name, uid, rid;
+	int gender;
 	ClientCallback clientCallback;
 	IOCallback ioCallback;
 	
@@ -30,7 +30,7 @@ public class ChatHelper {
 	}
 	
 	public void init(Context context, String serverIP, int serverPort, String uid, String rid, final String authToken, String name,
-			String gender, final ClientCallback clientCallback, final IOCallback ioCallback) throws JSONException {
+			int gender, final ClientCallback clientCallback, final IOCallback ioCallback) throws JSONException {
 		this.name = name;
 		this.gender = gender;
 		this.uid = uid;
@@ -82,7 +82,7 @@ public class ChatHelper {
 		});
 	}
 	
-	public void modifyInfo(String name, String gender) {
+	public void modifyInfo(String name, int gender) {
 		this.name = name;
 		this.gender = gender;
 	}

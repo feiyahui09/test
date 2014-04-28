@@ -8,6 +8,7 @@ import org.codehaus.jackson.map.ser.ToStringSerializer;
 
 import com.zmax.app.R;
 import com.zmax.app.ZMaxApplication;
+import com.zmax.app.model.Login;
 import com.zmax.app.net.NetWorkHelper;
 import com.zmax.app.task.GetActListTask;
 
@@ -94,5 +95,6 @@ public class Utility {
 			Toast.makeText(context, "无法浏览此网页", 500).show();
 		}
 	}
+	
 	
 }
