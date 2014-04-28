@@ -75,7 +75,7 @@ public class ShareUtils {
 		// oks.setDialogMode();
 		
 		// 去除注释，在自动授权时可以禁用SSO方式
-		// oks.disableSSOWhenAuthorize();
+		oks.disableSSOWhenAuthorize();
 		
 		// 去除注释，则快捷分享的操作结果将通过OneKeyShareCallback回调
 		oks.setCallback(new OneKeyShareCallback());

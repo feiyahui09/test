@@ -163,15 +163,18 @@ public class ActListFragment extends Fragment implements IXListViewListener, OnI
 	
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-		Act act = (Act) adapter.getItem(position - 1);
-		
-		Intent intent = new Intent();
-		intent.setClass(getActivity(), ActDetailActivity.class);
-		intent.putExtra(Constant.Acts.ID_KEY, act.id);
-		intent.putExtra(Constant.Acts.CITY_KEY, act.cities);
-		intent.putExtra(Constant.Acts.DATE_KEY, act.duration);
-		getActivity().startActivity(intent);
-		
+		try {
+			Act act = (Act) adapter.getItem(position - 1);
+			Intent intent = new Intent();
+			intent.setClass(getActivity(), ActDetailActivity.class);
+			intent.putExtra(Constant.Acts.ID_KEY, act.id);
+			intent.putExtra(Constant.Acts.CITY_KEY, act.cities);
+			intent.putExtra(Constant.Acts.DATE_KEY, act.duration);
+			getActivity().startActivity(intent);
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 }

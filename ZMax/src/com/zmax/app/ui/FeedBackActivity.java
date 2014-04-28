@@ -32,7 +32,13 @@ public class FeedBackActivity extends BaseActivity {
 		
 		@Override
 		public void onReceive(Context context, Intent intent) {
-			if (!isFinishing()) finish();
+			try {
+				if (!isFinishing()) finish();
+			}
+			catch (Exception e) {
+				e.printStackTrace();
+			}
+			
 		}
 		
 	}
