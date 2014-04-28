@@ -103,7 +103,11 @@ public class PlayInZmaxLoginFragment extends Fragment {
 					if (hotelList != null && hotelList.status == 200) {
 						fromHotelsSpinner(hotelList.hotels);
 						saveHotel(hotelList.hotels, false);
-						if (hotelList.hotels == null || hotelList.hotels.isEmpty()) Utility.toastResult(getActivity(), "没有已开业酒店可选！");
+						if (hotelList.hotels == null || hotelList.hotels.isEmpty()) {
+							Utility.toastResult(getActivity(), "没有已开业酒店可选！");
+							sp_hotels.setEnabled(false);
+						}
+						
 					}
 					else {
 						if (!NetWorkHelper.checkNetState(getActivity())) {

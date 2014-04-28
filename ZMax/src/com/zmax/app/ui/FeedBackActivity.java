@@ -74,7 +74,7 @@ public class FeedBackActivity extends BaseActivity {
 		btn_Back = (Button) findViewById(R.id.btn_back);
 		btn_share = (Button) findViewById(R.id.btn_share);
 		tv_title = (TextView) findViewById(R.id.tv_title);
-		tv_title.setText("意见反馈");
+		tv_title.setText("建议与反馈");
 		tv_advise.addTextChangedListener(new TextWatcher() {
 			
 			@Override
