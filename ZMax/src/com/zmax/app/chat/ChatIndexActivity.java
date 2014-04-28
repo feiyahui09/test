@@ -81,7 +81,7 @@ public class ChatIndexActivity extends BaseActivity {
 			@Override
 			public void onClick(View v) {
 				if (Utility.isETNull(et_nick_name)) {
-					Toast.makeText(mContext, "昵称不能为空哦！", 500).show();
+					Utility.toastResult(mContext, "昵称不能为空哦！");
 					return;
 				}
 				name = et_nick_name.getText().toString().trim();

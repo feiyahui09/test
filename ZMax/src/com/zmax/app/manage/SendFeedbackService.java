@@ -35,6 +35,7 @@ public class SendFeedbackService extends IntentService {
 				
 				@Override
 				public void run() {
+					
 					Toast.makeText(SendFeedbackService.this, "" + feeBack.message, 300).show();
 				}
 			}, 100);

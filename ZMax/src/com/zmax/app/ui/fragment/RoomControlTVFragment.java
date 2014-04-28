@@ -25,6 +25,7 @@ import com.zmax.app.model.Television;
 import com.zmax.app.task.SetTelevisionTask;
 import com.zmax.app.ui.RoomControlActivity.PageChangedCallback;
 import com.zmax.app.ui.RoomControlActivity.VerticalChangedCallback;
+import com.zmax.app.utils.Utility;
 import com.zmax.app.widget.VerticalViewPager;
 
 public class RoomControlTVFragment extends Fragment {
@@ -270,14 +271,13 @@ public class RoomControlTVFragment extends Fragment {
 				if (getActivity() == null) {
 					return;
 				}
-				if (result == null) {
-					Toast.makeText(getActivity(), getActivity().getString(R.string.unkownError), 400).show();
+				if (result == null) {	Utility.toastResult(getActivity(), getActivity().getString(R.string.unkownError));
 				}
 				else if (result.status == 200) {
 					
 				}
 				else {
-					Toast.makeText(getActivity(), result.message, 400).show();
+					Utility.toastResult(getActivity(),  result.message);
 				}
 				// if(result.intValue()!=200)
 			}

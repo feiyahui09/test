@@ -46,19 +46,32 @@ public class Utility {
 	}
 	
 	public static void toastFailedResult(Context context) {
-		Toast.makeText(context, "获取信息失败，请稍后再试！", 500).show();
+		showToast(context, "获取信息失败，请稍后再试！");
 	}
 	
 	public static void toastResult(Context context, String msg) {
-		Toast.makeText(context, msg, 500).show();
+		showToast(context, msg);
 	}
 	
 	public static void toastNetworkFailed(Context context) {
-		Toast.makeText(context, context.getResources().getString(R.string.httpProblem), 300).show();
+		showToast(context, context.getResources().getString(R.string.httpProblem));
 	}
 	
 	public static void toastNoMoreResult(Context context) {
-		Toast.makeText(context, "没有更多了！", 500).show();
+		showToast(context, "没有更多了！");
+	}
+	
+	private static Toast mToast;
+	
+	public static void showToast(Context context, String text) {
+		if (mToast == null) {
+			mToast = Toast.makeText(context, text, Toast.LENGTH_SHORT);
+		}
+		else {
+			mToast.setText(text);
+			mToast.setDuration(Toast.LENGTH_SHORT);
+		}
+		mToast.show();
 	}
 	
 	/**
@@ -95,6 +108,5 @@ public class Utility {
 			Toast.makeText(context, "无法浏览此网页", 500).show();
 		}
 	}
-	
 	
 }

@@ -62,14 +62,14 @@ public class ChatSettingActivity extends BaseActivity {
 			@Override
 			public void onClick(View v) {
 				if (TextUtils.isEmpty(tv_name.getText().toString().trim())) {
-					Toast.makeText(mContext, "昵称不能为空哦！", 400).show();
+	Utility.toastResult(mContext, "昵称不能为空哦！");
 					return;
 				}
 				name = tv_name.getText().toString().trim();
 				gender = tv_gender.getText().toString().trim();
 				
 				Constant.modifyLogin(gender.equals("女") ? 0 : 1, name);
-				Toast.makeText(mContext, "修改个人信息成功！！", 400).show();
+				Utility.toastResult(mContext, "修改个人信息成功！！");
 				finish();
 				
 			}

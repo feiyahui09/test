@@ -209,7 +209,7 @@ public class ChatRoomActivity extends BaseActivity implements OnClickListener {
 		switch (v.getId()) {
 			case R.id.btn_send:
 				if (Utility.isETNull(et_edit)) {
-					Toast.makeText(mContext, "输入内容不能为空哦！", 500).show();
+					Utility.toastResult(mContext, "输入内容不能为空哦！");
 					return;
 				}
 				chatHelper.send(et_edit.getText().toString(), new DataCallBack() {
@@ -388,7 +388,7 @@ public class ChatRoomActivity extends BaseActivity implements OnClickListener {
 		public void onConnectorEnter(final JSONObject body) {
 			
 			if (body == null) {
-				Toast.makeText(mContext, "错误，请稍后再试!", 2233).show();
+				Utility.toastResult(mContext, getString(R.string.unkownError));
 				return;
 			}
 			int code = 200;
@@ -402,7 +402,7 @@ public class ChatRoomActivity extends BaseActivity implements OnClickListener {
 				handler.post(new Runnable() {
 					@Override
 					public void run() {
-						Toast.makeText(mContext, "欢迎进入聊天室，当前登录信息：、\n" + body.toString(), 2233).show();
+						Utility.toastResult(mContext, "欢迎进入聊天室，当前登录信息：、\n" + body.toString());
 					}
 				});
 			}
@@ -410,7 +410,8 @@ public class ChatRoomActivity extends BaseActivity implements OnClickListener {
 				handler.post(new Runnable() {
 					@Override
 					public void run() {
-						Toast.makeText(mContext, message, 2233).show();
+						Utility.toastResult(mContext, message);
+						
 					}
 				});
 				chatHelper.disConnect();
@@ -452,7 +453,7 @@ public class ChatRoomActivity extends BaseActivity implements OnClickListener {
 			handler.post(new Runnable() {
 				@Override
 				public void run() {
-					Toast.makeText(mContext, msg, 2233).show();
+					 	Utility.toastResult(mContext, msg);
 				}
 			});
 		}

@@ -20,6 +20,7 @@ import com.zmax.app.R;
 import com.zmax.app.manage.SendFeedbackService;
 import com.zmax.app.ui.base.BaseActivity;
 import com.zmax.app.utils.Constant;
+import com.zmax.app.utils.Utility;
 
 public class FeedBackActivity extends BaseActivity {
 	private Button btn_Back, btn_share;
@@ -126,9 +127,9 @@ public class FeedBackActivity extends BaseActivity {
 	
 	private void vertify() {
 		if (tv_advise.getText().toString().trim().isEmpty())
-			Toast.makeText(mContext, "反馈意见不能为空", 300).show();
+			Utility.toastResult(mContext, "反馈意见不能为空");
 		else if (tv_contacts.getText().toString().trim().isEmpty())
-			Toast.makeText(mContext, "联系方式不能为空", 300).show();
+			Utility.toastResult(mContext, "联系方式不能为空");
 		else {
 			sendFeedback();
 		}

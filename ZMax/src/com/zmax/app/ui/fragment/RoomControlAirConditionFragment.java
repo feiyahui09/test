@@ -282,7 +282,7 @@ public class RoomControlAirConditionFragment extends Fragment {
 					return;
 				}
 				if (result == null) {
-					Toast.makeText(getActivity(), getActivity().getString(R.string.unkownError), 400).show();
+					Utility.toastResult(getActivity(), getActivity().getString(R.string.unkownError));
 				}
 				else if (result.status == 200) {
 					if (opera_type.equals("air_blower")) {
@@ -303,7 +303,8 @@ public class RoomControlAirConditionFragment extends Fragment {
 					}
 				}
 				else {
-					Toast.makeText(getActivity(), result.message, 400).show();
+					Utility.toastResult(getActivity(), result.message);
+ 		
 				}
 			}
 		});

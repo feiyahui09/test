@@ -27,6 +27,7 @@ import com.zmax.app.task.SetLightTask;
 import com.zmax.app.task.SetTelevisionTask;
 import com.zmax.app.ui.RoomControlActivity.PageChangedCallback;
 import com.zmax.app.ui.RoomControlActivity.VerticalChangedCallback;
+import com.zmax.app.utils.Utility;
 import com.zmax.app.widget.VerticalViewPager;
 
 public class RoomControlLightingFragment extends Fragment {
@@ -223,13 +224,14 @@ public class RoomControlLightingFragment extends Fragment {
 					return;
 				}
 				if (result == null) {
-					Toast.makeText(getActivity(), getActivity().getString(R.string.unkownError), 400).show();
+					Utility.toastResult(getActivity(), getActivity().getString(R.string.unkownError));
 				}
 				else if (result.status == 200) {
 					curMode = operaMode;
 				}
 				else {
-					Toast.makeText(getActivity(), result.message, 400).show();
+					Utility.toastResult(getActivity(), result.message);
+					
 				}
 				// if(result.intValue()!=200)
 			}
