@@ -72,7 +72,7 @@ public class Utility {
 			public boolean shouldOverrideUrlLoading(WebView view, String url) {
 				// openBrowser(view.getContext(), url);
 				view.loadUrl(url);
-				return false;
+				return true;
 			}
 		};
 	}

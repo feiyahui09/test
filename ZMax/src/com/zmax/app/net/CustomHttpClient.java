@@ -34,6 +34,7 @@ import org.apache.http.util.EntityUtils;
 import android.content.Context;
 
 import com.zmax.app.R;
+import com.zmax.app.utils.JsonMapperUtils;
 import com.zmax.app.utils.Log;
 
 public class CustomHttpClient {
@@ -64,6 +65,7 @@ public class CustomHttpClient {
 			UrlEncodedFormEntity urlEncoded = new UrlEncodedFormEntity(params, CHARSET_UTF8);
 			HttpPost httpPost = new HttpPost(url);
 			Log.d(url.toString());
+			Log.d(params.toString());
 			httpPost.setEntity(urlEncoded);
 			HttpClient client = getHttpClient(context);
 			HttpResponse response = client.execute(httpPost);
@@ -73,7 +75,7 @@ public class CustomHttpClient {
 				throw new RuntimeException("请求失败");
 			}
 			HttpEntity resEntity = response.getEntity();
-			return (resEntity == null) ? null : EntityUtils.toString(resEntity, CHARSET_UTF8);
+			return EntityUtils.toString(resEntity, CHARSET_UTF8);
 		}
 		catch (UnsupportedEncodingException e) {
 			Log.w(e.getMessage());
@@ -95,6 +97,7 @@ public class CustomHttpClient {
 	 * @param nameValuePairs
 	 * @return
 	 */
+	@Deprecated
 	public static String PostFromWebByHttpClient(Context context, String url, List<NameValuePair> params) {
 		try {
 			
@@ -108,7 +111,7 @@ public class CustomHttpClient {
 				throw new RuntimeException("请求失败");
 			}
 			HttpEntity resEntity = response.getEntity();
-			return (resEntity == null) ? null : EntityUtils.toString(resEntity, CHARSET_UTF8);
+			return EntityUtils.toString(resEntity);
 		}
 		catch (UnsupportedEncodingException e) {
 			Log.w(e.getMessage());

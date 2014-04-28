@@ -16,6 +16,7 @@ import com.zmax.app.ui.fragment.PlayInZmaxLoginFragment;
 import com.zmax.app.utils.Constant;
 import com.zmax.app.utils.DefaultShared;
 import com.zmax.app.utils.PhoneUtil;
+import com.zmax.app.utils.Utility;
 
 public class MainActivity extends BaseSlidingFragmentActivity {
 	private Context mContext;
@@ -88,4 +89,23 @@ public class MainActivity extends BaseSlidingFragmentActivity {
 		btn_share.setVisibility(View.GONE);
 	}
 	
+	int backPressCount = 0;
+	long last_press_time = 0;
+	static final long FINISH_DURATION_TIME = 1000 * 2;
+	
+	@Override
+	public void onBackPressed() {
+		// super.onBackPressed();
+		if (!getSlidingMenu().isSlidingEnabled()) return;
+		backPressCount++;
+		
+		if (System.currentTimeMillis() - last_press_time > FINISH_DURATION_TIME) {
+			last_press_time = System.currentTimeMillis();
+			backPressCount = 0;
+			Utility.toastResult(mContext, "再按一次，退出ZMAX ! ");
+		}
+		else if (backPressCount >= 1) {
+			finish();
+		}
+	}
 }

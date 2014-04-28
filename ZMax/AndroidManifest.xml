@@ -55,6 +55,11 @@
             android:name="com.zmax.app.ui.MainActivity"
             android:label="@string/app_name"
             android:theme="@android:style/Theme.NoTitleBar" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name="com.zmax.app.chat.ChatRoomActivity"
@@ -79,11 +84,6 @@
         <activity android:name="com.zmax.app.ui.WelcomeActivity" />
         <activity android:name="com.zmax.app.map.RoutePlanDemo" />
         <activity android:name="com.zmax.app.ui.FeedBackActivity" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name="com.zmax.app.ui.DocumentsActivity" />
 

@@ -21,7 +21,7 @@ public class HttpUtils {
 	public static String postByHttpClient(Context context, String strUrl, NameValuePair... nameValuePairs) {
 		return CustomHttpClient.PostFromWebByHttpClient(context, strUrl, nameValuePairs);
 	}
-	
+	@Deprecated
 	public static String postByHttpClient(Context context, String strUrl, List<NameValuePair> nameValuePairsList) {
 		return CustomHttpClient.PostFromWebByHttpClient(context, strUrl, nameValuePairsList);
 	}

@@ -23,6 +23,7 @@
             android:hint="在这里输入您的宝贵建议"
             android:padding="8dp"
             android:textColor="#4d4d4d"
+            android:textCursorDrawable="@null"
             android:textSize="16sp" />
 
         <TextView
@@ -49,6 +50,7 @@
         android:hint="输入手机号/QQ"
         android:paddingLeft="8dp"
         android:textColor="#4d4d4d"
+        android:textCursorDrawable="@null"
         android:textSize="16sp" />
 
 </LinearLayout>

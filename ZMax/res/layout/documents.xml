@@ -7,21 +7,15 @@
 
     <include layout="@layout/detail_header" />
 
-    <ScrollView
+    <WebView
+        android:id="@+id/wv_content"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:layout_marginLeft="14dp"
         android:layout_marginRight="14dp"
         android:layout_marginTop="16dp"
-        android:scrollbars="none" >
-
-        <TextView
-            android:id="@+id/tv_content"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="#595959"
-            android:textSize="12sp" />
-    </ScrollView>
+        android:textColor="#595959"
+        android:textSize="12sp" />
 
 </LinearLayout>

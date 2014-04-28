@@ -25,7 +25,7 @@ public class FeedBackActivity extends BaseActivity {
 	private Button btn_Back, btn_share;
 	private Context mContext;
 	private EditText tv_advise, tv_contacts;
-	private TextView tv_count;
+	private TextView tv_count, tv_title;
 	private ResponseReceiver receiver = new ResponseReceiver();
 	
 	private class ResponseReceiver extends BroadcastReceiver {
@@ -67,7 +67,8 @@ public class FeedBackActivity extends BaseActivity {
 		tv_count = (TextView) findViewById(R.id.tv_count);
 		btn_Back = (Button) findViewById(R.id.btn_back);
 		btn_share = (Button) findViewById(R.id.btn_share);
-		
+		tv_title = (TextView) findViewById(R.id.tv_title);
+		tv_title.setText("意见反馈");
 		tv_advise.addTextChangedListener(new TextWatcher() {
 			
 			@Override

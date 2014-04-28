@@ -10,6 +10,7 @@ import java.net.URL;
 import android.app.AlertDialog;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -137,6 +138,10 @@ public class SettingFragment extends Fragment implements OnClickListener {
 				if (getActivity() == null) return;
 				if (result == null) return;
 				if (result.status == 200) {
+					ProgressDialog	progressDialog = new ProgressDialog(getActivity());
+					progressDialog.setTitle("提示");
+					progressDialog.setMessage("正在更新房间控制信息中！");
+//					progressDialog.show();
 					new AlertDialog.Builder(getActivity()).setTitle("升级").setMessage(result.description)
 							.setPositiveButton("去升级", new DialogInterface.OnClickListener() {
 								@Override
