@@ -70,8 +70,8 @@ public class ChatRoomActivity extends BaseActivity implements OnClickListener {
 	// private int userGender = 1;
 	
 	// private String userName = "围观淡定哥";
-	private String userid = "5";
-	private String rid = "123";
+	// private String userid = "5";
+	// private String rid = "123";
 	// private String userToken = "token5";
 	// private int userGender = 1;
 	
@@ -90,7 +90,7 @@ public class ChatRoomActivity extends BaseActivity implements OnClickListener {
 			// if (count > 4 && count < 8)
 			// ;
 			// else {
-			if (userid.equals("2"))
+			if ("userid".equals("2"))
 				str = "自动广播：你是猴子请来的逗比么     ";
 			else
 				str = "自动广播：我是逗比        ";
@@ -195,8 +195,8 @@ public class ChatRoomActivity extends BaseActivity implements OnClickListener {
 	private void initChatPomelo() {
 		chatHelper = ChatHelper.getHelper();
 		try {
-			chatHelper.init(this, "192.168.0.69", 3014, Constant.getLogin().user_id, rid, Constant.getLogin().auth_token,
-					Constant.getLogin().nick_name, Constant.getLogin().gender, clientCallback, ioCallback);
+			chatHelper.init(this, "192.168.0.69", 3014, Constant.getLogin().user_id, Constant.getLogin().pms_hotel_id,
+					Constant.getLogin().auth_token, Constant.getLogin().nick_name, Constant.getLogin().gender, clientCallback, ioCallback);
 		}
 		catch (Exception e) {
 			e.printStackTrace();

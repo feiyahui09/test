@@ -43,6 +43,7 @@
             style="@style/playzmax_login_edittext"
             android:layout_marginTop="8dp"
             android:hint="身份证号后四位"
+            android:maxLength="4"
             android:textCursorDrawable="@null" />
 
         <EditText

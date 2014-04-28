@@ -116,7 +116,7 @@ public class NetAccessor {
 		return update;
 	}
 	
-	public static BaseModel vetfityNameDup(Context context,  String user_id,  String gender, String nick_name) {
+	public static BaseModel vetfityNameDup(Context context, String user_id, String gender, String nick_name) {
 		BaseModel result = null;
 		try {
 			String jsonString = HttpUtils.postByHttpClient(context, Constant.ZMAX_URL + "chat/user_info", new BasicNameValuePair("user_id",
@@ -242,10 +242,12 @@ public class NetAccessor {
 		return feeBack;
 	}
 	
-	public static Login loginPlayZMAX(Context context) {
+	public static Login loginPlayZMAX(Context context, String pms_hotel_id, String room_num, String id_number, String password) {
 		Login login = null;
 		try {
-			String jsonString = HttpUtils.postByHttpClient(context, Constant.ZMAX_URL + "users/login");
+			String jsonString = HttpUtils.postByHttpClient(context, Constant.ZMAX_URL + "users/login", new BasicNameValuePair(
+					"pms_hotel_id", pms_hotel_id), new BasicNameValuePair("room_num", room_num), new BasicNameValuePair("id_number",
+					id_number), new BasicNameValuePair("password", password));
 			Log.d("  responeString -->\n" + jsonString);
 			login = JsonMapperUtils.toObject(jsonString, Login.class);
 		}

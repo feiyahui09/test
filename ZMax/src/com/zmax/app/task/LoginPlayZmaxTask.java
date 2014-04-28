@@ -28,7 +28,7 @@ public class LoginPlayZmaxTask extends AsyncTask<String, Void, Login> {
 	
 	@Override
 	protected Login doInBackground(String... params) {
-		loginResult = NetAccessor.loginPlayZMAX(context);
+		loginResult = NetAccessor.loginPlayZMAX(context, params[0], params[1], params[2], params[3]);
 		return loginResult;
 	}
 	

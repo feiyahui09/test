@@ -17,8 +17,10 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.zmax.app.R;
 import com.zmax.app.db.DBAccessor;
@@ -46,6 +48,8 @@ public class PlayInZmaxLoginFragment extends Fragment {
 	private GetHotelListTask getHotelListTask;
 	private ProgressDialog progressDialog;
 	
+	private EditText et_room_number, et_namecard, et_password;
+	
 	public PlayInZmaxLoginFragment() {
 		this(R.color.white);
 		setRetainInstance(true);
@@ -58,11 +62,22 @@ public class PlayInZmaxLoginFragment extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		view = inflater.inflate(R.layout.playzmax_login, null);
 		btn_login = (Button) view.findViewById(R.id.btn_login);
+		et_room_number = (EditText) view.findViewById(R.id.et_room_number);
+		et_namecard = (EditText) view.findViewById(R.id.et_namecard);
+		et_password = (EditText) view.findViewById(R.id.et_password);
+		
 		btn_login.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
-				goPlayZmax();
+				if (Utility.isETNull(et_room_number))
+					Utility.toastResult(getActivity(), "房间号不能为空哦！");
+				else if (Utility.isETNull(et_namecard))
+					Utility.toastResult(getActivity(), "身份证号码不能为空哦！");
+				else if (Utility.isETNull(et_password)) Utility.toastResult(getActivity(), "密码不能为空哦！");
+				
+				goPlayZmax(selected_pms_hotel_id, et_room_number.getText().toString().trim(), et_namecard.getText().toString().trim(),
+						et_password.getText().toString().trim());
 			}
 		});
 		sp_hotels = (Spinner) view.findViewById(R.id.sp_hotels);
@@ -105,7 +120,7 @@ public class PlayInZmaxLoginFragment extends Fragment {
 		}
 	}
 	
-	private void goPlayZmax() {
+	private void goPlayZmax(String pms_hotel_id, String room_num, String id_number, String password) {
 		if (!NetWorkHelper.checkNetState(getActivity())) {
 			Utility.toastNetworkFailed(getActivity());
 			return;
@@ -114,16 +129,23 @@ public class PlayInZmaxLoginFragment extends Fragment {
 			@Override
 			public void onCallBack(Login loginResult) {
 				if (getActivity() == null) return;
+				
 				if (loginResult != null && loginResult.status == 200) {
-					loginResult = Constant.getFalseLogin(loginResult);
 					Constant.saveLogin(loginResult);
 					((MainActivity) getActivity()).switchContent(new PlayInZmaxFragment(loginResult));
 				}
-				else
-					Utility.toastFailedResult(getActivity());
+				else {
+					if (!NetWorkHelper.checkNetState(getActivity())) {
+						Utility.toastNetworkFailed(getActivity());
+					}
+					else if (loginResult != null)
+						Utility.toastResult(getActivity(), loginResult.message);
+					else
+						Utility.toastFailedResult(getActivity());
+				}
 			}
 		});
-		loginPlayZmaxTask.execute();
+		loginPlayZmaxTask.execute(pms_hotel_id, room_num, id_number, password);
 		
 	}
 	
@@ -136,7 +158,7 @@ public class PlayInZmaxLoginFragment extends Fragment {
 			@Override
 			public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 				if (position != 0) ((TextView) view).setText("" + adapter.getItem(position));
-				selected_pms_hotel_id = hotels.get(position).name;
+				selected_pms_hotel_id = hotels.get(position).pms_hotel_id;
 			}
 			
 			@Override
@@ -145,6 +167,7 @@ public class PlayInZmaxLoginFragment extends Fragment {
 			}
 		});
 		sp_hotels.setAdapter(adapter);
+		sp_hotels.setSelection(0);
 	}
 	
 	private static final List<String> mStrings = Arrays.asList("选择入住酒店", "武汉光谷店", "广州珠江新城店", "北京王府井店");
