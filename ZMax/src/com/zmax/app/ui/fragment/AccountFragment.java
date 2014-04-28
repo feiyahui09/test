@@ -39,6 +39,7 @@ public class AccountFragment extends Fragment {
 		// TODO Auto-generated method stub
 		super.onActivityCreated(savedInstanceState);
 		wv_content.loadUrl(Constant.WAP.URL_MENBER);
+		wv_content.requestFocus(View.FOCUS_DOWN);
 		
 	}
 	

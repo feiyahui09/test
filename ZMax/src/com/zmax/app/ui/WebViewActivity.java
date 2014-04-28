@@ -56,6 +56,7 @@ public class WebViewActivity extends BaseActivity {
 		pLayout.addView(getHeader());
 		pLayout.addView(wv_content.getLayout());
 		setContentView(pLayout);
+	
 	}
 	
 	private void initHotelDetal() {

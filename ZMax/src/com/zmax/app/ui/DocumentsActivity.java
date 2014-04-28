@@ -121,7 +121,7 @@ public class DocumentsActivity extends BaseActivity {
 		documents_content = document.content;
 		tv_title.setText("" + document.title);
 		// wv_content.getSettings().setDefaultFontSize(21);
-		wv_content.setFocusableInTouchMode(false);
+ 	wv_content.setFocusableInTouchMode(false);
 		wv_content.setFocusable(false);
 		  wv_content.setBackgroundColor(Color.parseColor("#00000000"));
 		wv_content.setWebViewClient(Utility.getWebViewClient());

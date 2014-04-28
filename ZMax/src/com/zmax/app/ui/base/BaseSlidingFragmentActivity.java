@@ -1,11 +1,14 @@
 package com.zmax.app.ui.base;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
@@ -113,6 +116,7 @@ public class BaseSlidingFragmentActivity extends SlidingFragmentActivity {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				toggle();
+				hideInput();
 			}
 		});
 		
@@ -125,6 +129,18 @@ public class BaseSlidingFragmentActivity extends SlidingFragmentActivity {
 				// toggle();
 			}
 		});
+		
+	}
+	
+	public void hideInput() {
+		
+		if (getCurrentFocus() != null) { // 是否存在焦点
+		
+			InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+			
+			inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+			
+		}
 		
 	}
 	
@@ -163,10 +179,6 @@ public class BaseSlidingFragmentActivity extends SlidingFragmentActivity {
 				// }
 			}
 		}, 50);
-		
-	}
-	
-	public void onBirdPressed(int pos) {
 		
 	}
 	
