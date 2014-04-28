@@ -152,11 +152,12 @@ public class ChatIndexActivity extends BaseActivity {
 						@Override
 						public void run() {
 							startActivity(new Intent(mContext, ChatRoomActivity.class));
+							finish();
 						}
 					}, 500);
 				}
 			}
 		});
-		modifyChatUserInfoTask.execute(Constant.getLogin().user_id+"", _gender + "", _nick_name);
+		modifyChatUserInfoTask.execute(Constant.getLogin().user_id + "", _gender + "", _nick_name);
 	}
 }

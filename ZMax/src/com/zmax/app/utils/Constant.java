@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import android.content.Intent;
 import android.support.v4.app.FragmentActivity;
@@ -117,6 +118,76 @@ public class Constant {
 		if (!TextUtils.isEmpty(jsonStr)) {
 			login = JsonMapperUtils.toObject(jsonStr, Login.class);
 			Constant.login = login;
+		}
+		return login;
+	}
+	
+	public static Login getFalseLogin(Login login) {
+		int i = new Random().nextInt(10);
+		switch (i) {
+			case 0:
+				login.auth_token = "token1";
+				login.user_id = 1;
+				login.gender = 1;
+				login.nick_name = "你是随机名称--用户1";
+				break;
+			case 1:
+				login.auth_token = "token1";
+				login.user_id = 1;
+				login.gender = 0;
+				login.nick_name = "你是随机名称--用户1";
+				break;
+			
+			case 2:
+				login.auth_token = "token2";
+				login.user_id = 2;
+				login.gender = 1;
+				login.nick_name = "你是随机名称--用户2";
+				break;
+			case 3:
+				login.auth_token = "token3";
+				login.user_id = 3;
+				login.gender = 0;
+				login.nick_name = "你是随机名称--用户3";
+				break;
+			case 4:
+				login.auth_token = "token4";
+				login.user_id = 4;
+				login.gender = 1;
+				login.nick_name = "你是随机名称--用户4";
+				break;
+			case 5:
+				login.auth_token = "token5";
+				login.user_id = 5;
+				login.gender = 0;
+				login.nick_name = "你是随机名称--用户5";
+				break;
+			case 6:
+				login.auth_token = "token6";
+				login.user_id = 6;
+				login.gender = 1;
+				login.nick_name = "你是随机名称--用户6";
+				break;
+			case 7:
+				login.auth_token = "token7";
+				login.user_id = 7;
+				login.gender = 0;
+				login.nick_name = "你是随机名称--用户7";
+				break;
+			case 8:
+				login.auth_token = "token8";
+				login.user_id = 8;
+				login.gender = 1;
+				login.nick_name = "你是随机名称--用户8";
+				break;
+			case 9:
+				login.auth_token = "token9";
+				login.user_id = 9;
+				login.gender = 1;
+				login.nick_name = "你是随机名称--用户9";
+				break;
+			default:
+				break;
 		}
 		return login;
 	}

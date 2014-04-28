@@ -9,6 +9,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
+import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 
@@ -29,6 +30,7 @@ public class ActsInHotelActivity extends BaseActivity implements IXListViewListe
 	private Context mContext;
 	private Button btn_Back;
 	protected XListView listview;
+	private TextView tv_title;
 	
 	private ActListAdapter adapter;
 	private GetActListInHotelTask getActListTask;
@@ -45,6 +47,8 @@ public class ActsInHotelActivity extends BaseActivity implements IXListViewListe
 	}
 	
 	private void init() {
+		tv_title = (TextView) findViewById(R.id.tv_title);
+		tv_title.setText("酒店附近的活动");
 		btn_Back = (Button) findViewById(R.id.btn_back);
 		btn_Back.setOnClickListener(new OnClickListener() {
 			@Override

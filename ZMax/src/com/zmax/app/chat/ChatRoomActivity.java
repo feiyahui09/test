@@ -48,12 +48,14 @@ public class ChatRoomActivity extends BaseActivity implements OnClickListener {
 	private ListView lv_chat;
 	private ChatListAdapter adapter;
 	private ChatHelper chatHelper;
-	private static final long CHAT_MUTE_DURATION = 40 * 1000;// default 10 mins
+	private TextView tv_title;
+	private static final long CHAT_MUTE_DURATION = 10 * 60 * 1000;// default 10
+																	// mins
 	private static long last_chat_time = 0;
 	
 	private static int count = 0;
 	private static String self_user_name = "围观淡定哥";
-	private static int  self_user_gender = 1;
+	private static int self_user_gender = 1;
 	
 	// private String userName = "红孩儿";
 	// private String userid = "2";
@@ -67,11 +69,11 @@ public class ChatRoomActivity extends BaseActivity implements OnClickListener {
 	// private String userToken = "token1";
 	// private int userGender = 1;
 	
-	private String userName = "围观淡定哥";
+	// private String userName = "围观淡定哥";
 	private String userid = "5";
 	private String rid = "123";
-	private String userToken = "token5";
-	private int  userGender = 1;
+	// private String userToken = "token5";
+	// private int userGender = 1;
 	
 	// private String userName = "沉默哥";
 	// private String userid = "4";
@@ -123,6 +125,7 @@ public class ChatRoomActivity extends BaseActivity implements OnClickListener {
 		iv_pic = (ImageView) findViewById(R.id.iv_pic);
 		iv_emotion = (ImageView) findViewById(R.id.iv_emotion);
 		btn_send = (Button) findViewById(R.id.btn_send);
+		tv_title = (TextView) findViewById(R.id.tv_title);
 		
 		iv_pic.setOnClickListener(this);
 		iv_emotion.setOnClickListener(this);
@@ -130,6 +133,7 @@ public class ChatRoomActivity extends BaseActivity implements OnClickListener {
 		btn_Share.setOnClickListener(this);
 		btn_Back.setOnClickListener(this);
 		
+		tv_title.setText("聊天室");
 		et_edit = (EditText) findViewById(R.id.et_edit);
 		et_edit.setOnEditorActionListener(new OnEditorActionListener() {
 			@Override
@@ -146,13 +150,11 @@ public class ChatRoomActivity extends BaseActivity implements OnClickListener {
 								Log.i("" + arg0.toString());
 							}
 						});
-						
 					}
 				});
 				return false;
 			}
 		});
-		
 		lv_chat = (ListView) findViewById(R.id.list_view);
 		adapter = new ChatListAdapter(mContext);
 		lv_chat.setAdapter(adapter);
@@ -171,7 +173,7 @@ public class ChatRoomActivity extends BaseActivity implements OnClickListener {
 		if (TextUtils.isEmpty(name)) {
 			return;
 		}
-		self_user_gender =  Constant.getLogin().gender;
+		self_user_gender = Constant.getLogin().gender;
 		self_user_name = name;
 		
 		// 修改发送的用户信息
@@ -186,7 +188,6 @@ public class ChatRoomActivity extends BaseActivity implements OnClickListener {
 			}
 			adapter.notifyDataSetChanged();
 		}
-		
 	}
 	
 	// 192.168.0.69 //测试环境
@@ -194,7 +195,8 @@ public class ChatRoomActivity extends BaseActivity implements OnClickListener {
 	private void initChatPomelo() {
 		chatHelper = ChatHelper.getHelper();
 		try {
-			chatHelper.init(this, "192.168.0.69", 3014, userid, rid, userToken, userName, userGender, clientCallback, ioCallback);
+			chatHelper.init(this, "192.168.0.69", 3014, Constant.getLogin().user_id, rid, Constant.getLogin().auth_token,
+					Constant.getLogin().nick_name, Constant.getLogin().gender, clientCallback, ioCallback);
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -214,7 +216,6 @@ public class ChatRoomActivity extends BaseActivity implements OnClickListener {
 					@Override
 					public void responseData(final JSONObject arg0) {
 						handler.post(new Runnable() {
-							
 							@Override
 							public void run() {
 								et_edit.clearComposingText();
@@ -222,21 +223,17 @@ public class ChatRoomActivity extends BaseActivity implements OnClickListener {
 								Log.i("" + arg0.toString());
 							}
 						});
-						
 					}
 				});
 				break;
 			case R.id.iv_pic:
 				new AlertDialog.Builder(mContext).setTitle("title")
 						.setItems(R.array.pic_dialog_items, new DialogInterface.OnClickListener() {
-							
 							@Override
 							public void onClick(DialogInterface dialog, int which) {
 								if (which == 0) {
-									
 								}
 								else if (which == 1) {
-									
 								}
 							}
 						}).show();
@@ -401,7 +398,7 @@ public class ChatRoomActivity extends BaseActivity implements OnClickListener {
 			isError = body.optBoolean("error");
 			
 			if (!isError) {
-				handler.postDelayed(sendRunnable, 4000);
+				// handler.postDelayed(sendRunnable, 4000);
 				handler.post(new Runnable() {
 					@Override
 					public void run() {

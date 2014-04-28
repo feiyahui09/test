@@ -33,6 +33,7 @@ import com.zmax.app.ui.MainActivity;
 import com.zmax.app.utils.Constant;
 import com.zmax.app.utils.DefaultShared;
 import com.zmax.app.utils.JsonMapperUtils;
+import com.zmax.app.utils.Log;
 import com.zmax.app.utils.Utility;
 
 public class PlayInZmaxLoginFragment extends Fragment {
@@ -47,10 +48,10 @@ public class PlayInZmaxLoginFragment extends Fragment {
 	
 	public PlayInZmaxLoginFragment() {
 		this(R.color.white);
+		setRetainInstance(true);
 	}
 	
 	public PlayInZmaxLoginFragment(int colorRes) {
-		setRetainInstance(true);
 	}
 	
 	@Override
@@ -64,7 +65,6 @@ public class PlayInZmaxLoginFragment extends Fragment {
 				goPlayZmax();
 			}
 		});
-		
 		sp_hotels = (Spinner) view.findViewById(R.id.sp_hotels);
 		return view;
 	}
@@ -73,6 +73,7 @@ public class PlayInZmaxLoginFragment extends Fragment {
 	public void onActivityCreated(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onActivityCreated(savedInstanceState);
+		
 		final List<Hotel> hotels = getHotels();
 		if (hotels != null && !hotels.isEmpty()) {
 			sp_hotels.setEnabled(true);
@@ -114,6 +115,7 @@ public class PlayInZmaxLoginFragment extends Fragment {
 			public void onCallBack(Login loginResult) {
 				if (getActivity() == null) return;
 				if (loginResult != null && loginResult.status == 200) {
+					loginResult = Constant.getFalseLogin(loginResult);
 					Constant.saveLogin(loginResult);
 					((MainActivity) getActivity()).switchContent(new PlayInZmaxFragment(loginResult));
 				}

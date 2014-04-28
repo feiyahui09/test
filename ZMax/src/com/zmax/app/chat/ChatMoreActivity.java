@@ -11,6 +11,7 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.zmax.app.R;
+import com.zmax.app.ui.MainActivity;
 import com.zmax.app.ui.base.BaseActivity;
 import com.zmax.app.utils.Constant;
 import com.zmax.app.utils.DefaultShared;
@@ -48,6 +49,7 @@ public class ChatMoreActivity extends BaseActivity {
 		btn_quit.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				startActivity(new Intent(mContext, MainActivity.class));
 				finish();
 			}
 		});

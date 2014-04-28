@@ -166,15 +166,13 @@ public class PlayInZmaxFragment extends Fragment implements OnClickListener {
 				startActivity(intent);
 				break;
 			case R.id.btn_chat:
-				if (TextUtils.isEmpty(login.nick_name)||TextUtils.isEmpty(login.auth_token)) {
+				if (TextUtils.isEmpty(login.nick_name) || TextUtils.isEmpty(login.auth_token)) {
 					intent.setClass(getActivity(), ChatIndexActivity.class);
 					startActivity(intent);
 				}
 				else {
 					// vertifyDup(getActivity(), login.user_id + "",
 					// login.gender + "", login.nick_name, true);
-					// saveSelfInfo(login.user_id, login.gender == 1 ? "男" :
-					// "女", login.nick_name);
 					intent.setClass(getActivity(), ChatRoomActivity.class);
 					startActivity(intent);
 				}
@@ -189,6 +187,7 @@ public class PlayInZmaxFragment extends Fragment implements OnClickListener {
 		}
 	}
 	
+	@Deprecated
 	private void saveSelfInfo(int user_id, String gender, String name) {
 		DefaultShared.putInt(Constant.Chat.SELF_ID, user_id);
 		DefaultShared.putString(Constant.Chat.SELF_GENDER, gender);
