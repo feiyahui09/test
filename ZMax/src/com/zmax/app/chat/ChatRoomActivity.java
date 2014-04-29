@@ -266,7 +266,7 @@ public class ChatRoomActivity extends BaseActivity implements OnClickListener {
 				// et_edit.requestFocus();
 				// et_edit.requestFocusFromTouch();
 				// imm.showSoftInput(et_edit, 0);//显示软键盘
-				showOrHideIMM();
+		 		showOrHideIMM();
 				break;
 			
 			case R.id.btn_back:
@@ -277,7 +277,7 @@ public class ChatRoomActivity extends BaseActivity implements OnClickListener {
 				
 				break;
 			case R.id.et_edit:
-				showIMM();
+				 showIMM();
 				break;
 			default:
 				break;

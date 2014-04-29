@@ -33,7 +33,7 @@ public class Log {
 	 * @return
 	 */
 	public static boolean isDebuggable() {
-		return BuildConfig.DEBUG && true;
+		return LOG_SDCARD_ENABLE;
 	}
 	
 	private static String createLog(String log) {
@@ -180,6 +180,7 @@ public class Log {
 	 */
 	public static void fileLog(String tag, String msg) {
 		if (!Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())) {
+			Log.e("Environment.getExternalStorageState()  !=MOUNTED     " + Environment.getExternalStorageState());
 			return;
 		}
 		try {
