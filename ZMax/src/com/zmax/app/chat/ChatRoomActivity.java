@@ -5,10 +5,7 @@ import io.socket.IOCallback;
 import io.socket.SocketIOException;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
-import java.util.Random;
 
 import org.json.JSONObject;
 
@@ -16,27 +13,33 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.os.Handler;
+import android.text.Spannable;
+import android.text.SpannableString;
 import android.text.TextUtils;
+import android.text.style.ImageSpan;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
-import android.widget.Toast;
 
 import com.zmax.app.R;
+import com.zmax.app.adapter.GridViewFaceAdapter;
 import com.zmax.app.chat.promelo.DataCallBack;
 import com.zmax.app.ui.base.BaseActivity;
 import com.zmax.app.utils.Constant;
-import com.zmax.app.utils.DefaultShared;
 import com.zmax.app.utils.JsonMapperUtils;
 import com.zmax.app.utils.Log;
+import com.zmax.app.utils.PhoneUtil;
 import com.zmax.app.utils.Utility;
 
 public class ChatRoomActivity extends BaseActivity implements OnClickListener {
@@ -93,7 +96,7 @@ public class ChatRoomActivity extends BaseActivity implements OnClickListener {
 			if ("userid".equals("2"))
 				str = "自动广播：你是猴子请来的逗比么     ";
 			else
-				str = "自动广播：我是逗比        ";
+				str = "[ffn],[单眼],[调皮],[嘟嘴],[愤怒],[哈哈],[害羞],[坏笑],[慌张],[惊讶],[开心到喊],[可爱],[酷],[困],[流汗],[魔鬼],[内年满面],[撇嘴],[气愤],[伤心],[生病],[失望],[叹气],[舔嘴],[微笑],[委屈],[喜欢],[笑着流汗],[憎],[皱眉]  ";
 			
 			chatHelper.send(str, new DataCallBack() {
 				public void responseData(JSONObject msg) {
@@ -103,7 +106,7 @@ public class ChatRoomActivity extends BaseActivity implements OnClickListener {
 				}
 			});
 			// }
-			handler.postDelayed(this, 16000);
+			handler.postDelayed(this, 21000);
 		}
 	};
 	
@@ -113,11 +116,14 @@ public class ChatRoomActivity extends BaseActivity implements OnClickListener {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.chat_room);
 		init();
+		initGridView();
 		initChatPomelo();
 	}
 	
 	private void init() {
 		mContext = this;
+		imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+		
 		btn_Back = (Button) findViewById(R.id.btn_back);
 		btn_Share = (Button) findViewById(R.id.btn_share);
 		btn_Share.setVisibility(View.VISIBLE);
@@ -155,11 +161,28 @@ public class ChatRoomActivity extends BaseActivity implements OnClickListener {
 				return false;
 			}
 		});
+		
+		// et_edit.setOnKeyListener(new View.OnKeyListener() {
+		// public boolean onKey(View v, int keyCode, KeyEvent event) {
+		// if (keyCode == KeyEvent.KEYCODE_BACK) {
+		// if (isIMMOrFaceShow) {
+		// isIMMOrFaceShow=true;
+		// et_edit.clearFocus();// 隐藏软键盘
+		// // et_edit.setVisibility(View.GONE);// 隐藏编辑框
+		// hideFace();// 隐藏表情
+		// return true;
+		// }
+		// }
+		// return false;
+		// }
+		// });
 		lv_chat = (ListView) findViewById(R.id.list_view);
 		adapter = new ChatListAdapter(mContext);
 		lv_chat.setAdapter(adapter);
 		
 	}
+	
+	boolean isIMMOrFaceShow = false;
 	
 	@Override
 	protected void onResume() {
@@ -239,7 +262,11 @@ public class ChatRoomActivity extends BaseActivity implements OnClickListener {
 						}).show();
 				break;
 			case R.id.iv_emotion:
-				
+				// et_edit.setVisibility(View.VISIBLE);
+				// et_edit.requestFocus();
+				// et_edit.requestFocusFromTouch();
+				// imm.showSoftInput(et_edit, 0);//显示软键盘
+				showOrHideIMM();
 				break;
 			
 			case R.id.btn_back:
@@ -248,6 +275,9 @@ public class ChatRoomActivity extends BaseActivity implements OnClickListener {
 			case R.id.btn_share:
 				startActivity(new Intent(mContext, ChatMoreActivity.class));
 				
+				break;
+			case R.id.et_edit:
+				showIMM();
 				break;
 			default:
 				break;
@@ -269,79 +299,70 @@ public class ChatRoomActivity extends BaseActivity implements OnClickListener {
 		handler.removeCallbacks(sendRunnable);
 	}
 	
-	private List<Message> getMyData() {
-		
-		List<Message> msgList = new ArrayList<Message>();
-		Message msg;
-		msg = new Message();
-		msg.setType(ChatListAdapter.VALUE_LEFT_TEXT);
-		msg.setValue("食堂真难吃啊");
-		msgList.add(msg);
-		
-		msg = new Message();
-		msg.setType(ChatListAdapter.VALUE_TIME_TIP);
-		msg.setValue("2012-12-23 下午2:23");
-		msgList.add(msg);
-		
-		msg = new Message();
-		msg.setType(ChatListAdapter.VALUE_RIGHT_TEXT);
-		msg.setValue("我就说食堂的饭难吃吧，你不相信！");
-		msgList.add(msg);
-		
-		msg = new Message();
-		msg.setType(ChatListAdapter.VALUE_LEFT_IMAGE);
-		msg.setValue("好吧，这次听你的了。");
-		msgList.add(msg);
-		
-		msg = new Message();
-		msg.setType(ChatListAdapter.VALUE_RIGHT_IMAGE);
-		msg.setValue("2012-12-23 下午2:25");
-		msgList.add(msg);
-		//
-		msg = new Message();
-		msg.setType(ChatListAdapter.VALUE_RIGHT_TEXT);
-		msg.setValue("就要圣诞了，有什么安排没有？");
-		msgList.add(msg);
-		
-		msg = new Message();
-		msg.setType(ChatListAdapter.VALUE_LEFT_TEXT);
-		msg.setValue("没有啊，你呢？");
-		msgList.add(msg);
-		//
-		// msg = new Message();
-		// msg.setType(ChatListAdapter.VALUE_TIME_TIP);
-		// msg.setValue("2012-12-23 下午3:25");
-		// msgList.add(msg);
-		//
-		// msg = new Message();
-		// msg.setType(ChatListAdapter.VALUE_LEFT_TEXT);
-		// msg.setValue("7min");
-		// msgList.add(msg);
-		//
-		// msg = new Message();
-		// msg.setType(ChatListAdapter.VALUE_RIGHT_TEXT);
-		// msg.setValue("高帅富有三宝 木耳 跑车 和名表，" +
-		// "黑木耳有三宝 美瞳 备胎 黑丝脚 ，穷矮挫有三宝 AV 手纸 射得早 ，女神有三宝 干嘛 呵呵 去洗澡 ，宅男有三宝 Dota 基友 破电脑 "
-		// + "女屌丝有三宝 虎背 熊腰 眼睛小 ， 女屌丝还有三宝 饼脸 花痴 卖萌照");
-		// msgList.add(msg);
-		//
-		// msg = new Message();
-		// msg.setType(ChatListAdapter.VALUE_LEFT_TEXT);
-		// msg.setValue("碉堡了");
-		// msgList.add(msg);
-		//
-		// msg = new Message();
-		// msg.setType(ChatListAdapter.VALUE_LEFT_TEXT);
-		// msg.setValue("7min");
-		// msgList.add(msg);
-		//
-		// msg = new Message();
-		// msg.setType(ChatListAdapter.VALUE_RIGHT_IMAGE);
-		// msg.setValue("7min");
-		// msgList.add(msg);
-		
-		return msgList;
-		
+	private InputMethodManager imm;
+	private GridView mGridView;
+	private GridViewFaceAdapter mGVFaceAdapter;
+	
+	// 初始化表情控件
+	private void initGridView() {
+		mGVFaceAdapter = new GridViewFaceAdapter(this);
+		mGridView = (GridView) findViewById(R.id.gv_emotions);
+		mGridView.setAdapter(mGVFaceAdapter);
+		mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				// 插入的表情
+				SpannableString ss = new SpannableString(view.getTag(R.id.emotion_string).toString());
+				Drawable d = getResources().getDrawable((int) mGVFaceAdapter.getItemId(position));
+				d.setBounds(0, 0, PhoneUtil.dip2px(mContext, Constant.Chat.EMOTION_DIMEN),
+						PhoneUtil.dip2px(mContext, Constant.Chat.EMOTION_DIMEN));// 设置表情图片的显示大小
+				ImageSpan span = new ImageSpan(d, ImageSpan.ALIGN_BOTTOM);
+				ss.setSpan(span, 0, view.getTag(R.id.emotion_string).toString().length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+				// 在光标所在处插入表情
+				et_edit.getText().insert(et_edit.getSelectionStart(), ss);
+			}
+		});
+	}
+	
+	private void showIMM() {
+		iv_emotion.setTag(1);
+		showOrHideIMM();
+	}
+	
+	private void showFace() {
+		iv_emotion.setImageResource(R.drawable.chat_keyboard);
+		iv_emotion.setTag(1);
+		mGridView.setVisibility(View.VISIBLE);
+	}
+	
+	private void hideFace() {
+		iv_emotion.setImageResource(R.drawable.chat_emotion);
+		iv_emotion.setTag(null);
+		mGridView.setVisibility(View.GONE);
+	}
+	
+	private void showOrHideIMM() {
+		if (iv_emotion.getTag() == null) {
+			// 显示表情
+			handler.postDelayed(new Runnable() {
+				@Override
+				public void run() {
+					showFace();
+				}
+			}, 120);
+			// 隐藏软键盘
+			imm.hideSoftInputFromWindow(et_edit.getWindowToken(), 0);
+		}
+		else {
+			// 显示软键盘
+			imm.showSoftInput(et_edit, 0);
+			// 隐藏表情
+			handler.postDelayed(new Runnable() {
+				@Override
+				public void run() {
+					hideFace();
+				}
+			}, 120);
+		}
 	}
 	
 	private ClientCallback clientCallback = new ClientCallback() {
@@ -453,7 +474,7 @@ public class ChatRoomActivity extends BaseActivity implements OnClickListener {
 			handler.post(new Runnable() {
 				@Override
 				public void run() {
-					 	Utility.toastResult(mContext, msg);
+					Utility.toastResult(mContext, msg);
 				}
 			});
 		}

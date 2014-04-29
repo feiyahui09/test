@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
+import android.text.SpannableString;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 
 import com.zmax.app.R;
 import com.zmax.app.utils.DateTimeUtils;
+import com.zmax.app.utils.EmotionUtils;
 
 /**
  * 想比较原来的多了getItemViewType和getViewTypeCount这两个方法，原来循环使用layout布局，起到了优化的作用
@@ -138,7 +140,12 @@ public class ChatListAdapter extends BaseAdapter {
 				holder.tvTimeTip.setText(chatMsg.tipTime);
 				break;
 			case VALUE_LEFT_TEXT:
-				holder.btnLeftText.setText(chatMsg.msg.content);
+				try {
+					holder.btnLeftText.setText(EmotionUtils.getSinaEmotionsString(SpannableString.valueOf(chatMsg.msg.content), context));
+				}
+				catch (Exception e) {
+					e.printStackTrace();
+				}
 				holder.tvLeftName.setText(chatMsg.from);
 				holder.ivLeftIcon.setImageResource(chatMsg.gender == 0 ? R.drawable.chat_female_icon : R.drawable.chat_male_icon);
 				
@@ -148,7 +155,12 @@ public class ChatListAdapter extends BaseAdapter {
 				// holder.ivLeftImage.setImageResource(R.drawable.test);
 				break;
 			case VALUE_RIGHT_TEXT:
-				holder.btnRightText.setText(chatMsg.msg.content);
+				try {
+					holder.btnRightText.setText(EmotionUtils.getSinaEmotionsString(SpannableString.valueOf(chatMsg.msg.content), context));
+				}
+				catch (Exception e) {
+					e.printStackTrace();
+				}
 				holder.tvRightName.setText(chatMsg.from);
 				holder.ivRightIcon.setImageResource(chatMsg.gender == 0 ? R.drawable.chat_female_icon : R.drawable.chat_male_icon);
 				

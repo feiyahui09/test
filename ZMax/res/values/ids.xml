@@ -10,4 +10,8 @@
     <item name="value_right_text" type="id"/>
     <item name="value_right_image" type="id"/>
 
+    <!-- chat emtion -->
+    <item name="emotion_drawable_position" type="id"/>
+    <item name="emotion_string" type="id"/>
+
 </resources>

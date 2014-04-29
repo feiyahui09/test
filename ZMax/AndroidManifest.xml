@@ -61,9 +61,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name="com.zmax.app.chat.ChatRoomActivity"
-            android:windowSoftInputMode="stateVisible|adjustResize" >
+        <activity android:name="com.zmax.app.chat.ChatRoomActivity" >
         </activity>
         <activity android:name="com.zmax.app.ui.ActDetailFlashActivity" />
         <activity android:name="com.zmax.app.ui.ActDetailActivity" />
@@ -83,7 +81,9 @@
         <activity android:name="com.zmax.app.ui.OrderFillActivity" />
         <activity android:name="com.zmax.app.ui.WelcomeActivity" />
         <activity android:name="com.zmax.app.map.RoutePlanDemo" />
-        <activity android:name="com.zmax.app.ui.FeedBackActivity" >
+        <activity
+            android:name="com.zmax.app.ui.FeedBackActivity"
+            android:windowSoftInputMode="stateVisible|adjustResize" >
         </activity>
         <activity android:name="com.zmax.app.ui.DocumentsActivity" />
 
