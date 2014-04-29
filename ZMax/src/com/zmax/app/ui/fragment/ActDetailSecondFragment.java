@@ -35,7 +35,6 @@ public class ActDetailSecondFragment extends Fragment implements OnItemClickList
 		listview = (ListView) view.findViewById(R.id.list_view);
 		adapter = new ActDescptionListAdapter(getActivity());
 		// listview.setOnItemClickListener(this);
-		
 		return view;
 	}
 	
@@ -51,9 +50,11 @@ public class ActDetailSecondFragment extends Fragment implements OnItemClickList
 	
 	@Override
 	public void onDataRefresh(ActDetailContent detailContent) {
-		if (detailContent == null) return;
+		if (detailContent == null || isInitialized) return;
+		isInitialized = true;
 		adapter.appendToList(detailContent.description_items);
 		listview.setAdapter(adapter);
 	}
 	
+	private boolean isInitialized = false;
 }

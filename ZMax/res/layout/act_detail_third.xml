@@ -118,14 +118,14 @@
                     android:gravity="center"
                     android:text="每天"
                     android:textColor="#333333"
-                    android:textSize="12sp" />
+                    android:textSize="12sp"
+                    android:visibility="gone" />
 
                 <TextView
                     android:id="@+id/tv_begin_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="5dp"
                     android:gravity="center"
                     android:text="18：00"
                     android:textColor="#333333"

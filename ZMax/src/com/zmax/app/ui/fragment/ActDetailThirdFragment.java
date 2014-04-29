@@ -33,12 +33,7 @@ public class ActDetailThirdFragment extends Fragment implements RefreshDataCallB
 	private List<ActDetailHotel> hotels;
 	
 	public ActDetailThirdFragment() {
-		this(R.color.white);
-		
-	}
-	
-	public ActDetailThirdFragment(int colorRes) {
-		// setRetainInstance(true);
+		setRetainInstance(true);
 	}
 	
 	@Override
@@ -72,12 +67,15 @@ public class ActDetailThirdFragment extends Fragment implements RefreshDataCallB
 		super.onSaveInstanceState(outState);
 	}
 	
+	private boolean isInitialized = false;
+	
 	@Override
 	public void onDataRefresh(ActDetailContent detailContent) {
-		if (detailContent == null) return;
+		if (detailContent == null || isInitialized) return;
+		isInitialized = true;
 		tv_begin_time.setText(detailContent.event_begin);
-//		ImageLoader.getInstance().displayImage("http://www.120ask.com/static/upload/clinic/index/big/201212/big_201212241738148789.jpg",
-//				iv_img);
+		// ImageLoader.getInstance().displayImage("http://www.120ask.com/static/upload/clinic/index/big/201212/big_201212241738148789.jpg",
+		// iv_img);
 		// 活动酒店列表显示
 		hotels = detailContent.hotels;
 		initHotels(hotels);

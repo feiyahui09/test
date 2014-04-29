@@ -76,7 +76,6 @@ public class ActDetailActivity extends BaseFragmentActivity {
 			
 			@Override
 			public void onPageSelected(int position) {
-				
 				curPosition = position;
 				Fragment fragment = adapter.getItem(position);
 				if (fragment instanceof RefreshDataCallBack) {

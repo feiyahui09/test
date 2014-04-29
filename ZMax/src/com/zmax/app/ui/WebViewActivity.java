@@ -1,5 +1,7 @@
 package com.zmax.app.ui;
 
+import java.util.Date;
+
 import android.content.Context;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -9,14 +11,17 @@ import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.zmax.app.R;
 import com.zmax.app.model.Documents;
 import com.zmax.app.ui.base.BaseActivity;
 import com.zmax.app.utils.Constant;
+import com.zmax.app.utils.Log;
 import com.zmax.app.utils.Utility;
 import com.zmax.app.widget.HTML5WebView;
 
@@ -32,7 +37,7 @@ public class WebViewActivity extends BaseActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		// setContentView(R.layout.webview);
+		// setContentView(R.layout.default_layout);
 		init();
 	}
 	
@@ -41,22 +46,21 @@ public class WebViewActivity extends BaseActivity {
 		LinearLayout pLayout = new LinearLayout(context);
 		LayoutParams layoutParams = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
 		pLayout.setLayoutParams(layoutParams);
+		pLayout.setBackgroundColor(getResources().getColor(R.color.white));
 		pLayout.setOrientation(LinearLayout.VERTICAL);
-		
 		wv_content = new HTML5WebView(this);
 		String action = getIntent().getAction();
-		
-		if (action.equals(Constant.WAP.ACTION_HOTEL)) {
-			initHotelDetal();
-		}
-		else if (action.equals(Constant.WAP.ACTION_MENBER)) {
-			initMember();
-		}
 		
 		pLayout.addView(getHeader());
 		pLayout.addView(wv_content.getLayout());
 		setContentView(pLayout);
-	
+	 
+		if (action.equals(Constant.WAP.ACTION_HOTEL)) {
+		 	initHotelDetal();
+		}
+		else if (action.equals(Constant.WAP.ACTION_MENBER)) {
+		 	initMember();
+		}
 	}
 	
 	private void initHotelDetal() {
