@@ -39,7 +39,13 @@ public class ChatHelper {
 		this.clientCallback = clientCallback;
 		
 		client = new PomeloClient(serverIP, serverPort);
+		Log.i("聊天室初始化");
 		Log.i("gate.queryEntry");
+		Log.i("serverIP：" + serverIP + "        serverPort:" + serverPort);
+		Log.i("uid：" + uid + "        rid" + rid);
+		Log.i("authToken:  " + authToken);
+		Log.i("name" + name + "        gender" + gender);
+		
 		client.init(ioCallback, clientCallback);
 		// 负债均衡
 		client.request("gate.gateHandler.queryEntry", new JSONObject().put("uid", uid).put("rid", rid), new DataCallBack() {
@@ -52,6 +58,7 @@ public class ChatHelper {
 				try {
 					client = new PomeloClient(msg.getString("host"), msg.getInt("port"));
 					Log.i("connector.enter ");
+					Log.i("real-serverIP：" + msg.getString("host") + "        serverPort:" + msg.getInt("port"));
 					client.init(ioCallback, clientCallback);
 					// 真正分配到个服务器，
 					client.request("connector.entryHandler.enter", new JSONObject().put("auth_token", authToken), new DataCallBack() {

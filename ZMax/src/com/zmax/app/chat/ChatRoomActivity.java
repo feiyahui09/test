@@ -60,39 +60,11 @@ public class ChatRoomActivity extends BaseActivity implements OnClickListener {
 	private static String self_user_name = "围观淡定哥";
 	private static int self_user_gender = 1;
 	
-	// private String userName = "红孩儿";
-	// private String userid = "2";
-	// private String userToken = "token2";
-	// private String rid = "123";
-	// private int userGender = 0;
-	
-	// private String userName = "逗比";
-	// private String userid = "1";
-	// private String rid = "123";
-	// private String userToken = "token1";
-	// private int userGender = 1;
-	
-	// private String userName = "围观淡定哥";
-	// private String userid = "5";
-	// private String rid = "123";
-	// private String userToken = "token5";
-	// private int userGender = 1;
-	
-	// private String userName = "沉默哥";
-	// private String userid = "4";
-	// private String rid = "123";
-	// private String userToken = "token4";
-	// private int userGender = 0;
 	private Runnable sendRunnable = new Runnable() {
 		
 		@Override
 		public void run() {
 			final String str;
-			
-			// count++;
-			// if (count > 4 && count < 8)
-			// ;
-			// else {
 			if ("userid".equals("2"))
 				str = "自动广播：你是猴子请来的逗比么     ";
 			else
@@ -102,10 +74,8 @@ public class ChatRoomActivity extends BaseActivity implements OnClickListener {
 				public void responseData(JSONObject msg) {
 					// handle data here
 					Log.i("send: response  " + msg.toString());
-					
 				}
 			});
-			// }
 			handler.postDelayed(this, 21000);
 		}
 	};
@@ -188,10 +158,6 @@ public class ChatRoomActivity extends BaseActivity implements OnClickListener {
 	protected void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
-		// int user_id=DefaultShared.getInt(Constant.Chat.SELF_ID, 0);
-		// String gender = DefaultShared.getString(Constant.Chat.SELF_GENDER,
-		// "");
-		// String name = DefaultShared.getString(Constant.Chat.SELF_NAME, "");
 		String name = Constant.getLogin().nick_name;
 		if (TextUtils.isEmpty(name)) {
 			return;
@@ -218,8 +184,9 @@ public class ChatRoomActivity extends BaseActivity implements OnClickListener {
 	private void initChatPomelo() {
 		chatHelper = ChatHelper.getHelper();
 		try {
-			chatHelper.init(this, "192.168.0.69", 3014, Constant.getLogin().user_id, Constant.getLogin().pms_hotel_id,
-					Constant.getLogin().auth_token, Constant.getLogin().nick_name, Constant.getLogin().gender, clientCallback, ioCallback);
+			chatHelper.init(this, Constant.Chat.CHAT_SERVER_IP, Constant.Chat.CHAT_SERVER_PORT, Constant.getLogin().user_id,
+					Constant.getLogin().pms_hotel_id, Constant.getLogin().auth_token, Constant.getLogin().nick_name,
+					Constant.getLogin().gender, clientCallback, ioCallback);
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -266,7 +233,7 @@ public class ChatRoomActivity extends BaseActivity implements OnClickListener {
 				// et_edit.requestFocus();
 				// et_edit.requestFocusFromTouch();
 				// imm.showSoftInput(et_edit, 0);//显示软键盘
-		 		showOrHideIMM();
+				showOrHideIMM();
 				break;
 			
 			case R.id.btn_back:
@@ -277,7 +244,7 @@ public class ChatRoomActivity extends BaseActivity implements OnClickListener {
 				
 				break;
 			case R.id.et_edit:
-				 showIMM();
+				showIMM();
 				break;
 			default:
 				break;
