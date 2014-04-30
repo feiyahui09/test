@@ -328,7 +328,7 @@ public class RoomControlAirConditionFragment extends Fragment {
 			opera_data = opera_schema;
 		}
 		else if (opera_type.equals("status")) {
-			opera_data = cur_status + "";
+			opera_data = opera_status + "";
 		}
 		
 		task.execute(opera_type, opera_data);
