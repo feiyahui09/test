@@ -1,12 +1,14 @@
 package com.zmax.app.ui.base;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
 import android.view.Window;
 
 import com.zmax.app.R;
 
 public class BaseFragmentActivity extends FragmentActivity {
+	protected Handler handler = new Handler();
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

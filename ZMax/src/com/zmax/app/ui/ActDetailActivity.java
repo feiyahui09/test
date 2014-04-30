@@ -5,6 +5,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
@@ -31,6 +32,8 @@ import com.zmax.app.utils.ShareUtils;
 import com.zmax.app.utils.StackBlurManager;
 import com.zmax.app.utils.Utility;
 
+import eu.inmite.android.lib.dialogs.ProgressDialogFragment;
+
 public class ActDetailActivity extends BaseFragmentActivity {
 	
 	private Button btn_Back, btn_Share;
@@ -41,6 +44,7 @@ public class ActDetailActivity extends BaseFragmentActivity {
 	private GetActDetailTask getActDetailTask;
 	private String city, date;
 	private LinearLayout ll_bg;
+	private DialogFragment progressDialog;
 	
 	private int curPosition = 0;
 	
@@ -100,11 +104,14 @@ public class ActDetailActivity extends BaseFragmentActivity {
 			Utility.toastNetworkFailed(this);
 			return;
 		}
-		
+		progressDialog = ProgressDialogFragment.createBuilder(this, getSupportFragmentManager()).setMessage("正在加载中...").setTitle("提示")
+				.setCancelable(true).show();
 		getActDetailTask = new GetActDetailTask(this, new GetActDetailTask.TaskCallBack() {
 			
 			@Override
 			public void onCallBack(ActDetail result) {
+				if (progressDialog != null && progressDialog.getActivity() != null) progressDialog.dismiss();
+				
 				if (result != null && result.status == 200 && result.event != null) {
 					detailContent = result.event;
 					Handler handler = new Handler();

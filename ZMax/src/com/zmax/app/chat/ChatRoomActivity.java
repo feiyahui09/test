@@ -15,6 +15,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentActivity;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.TextUtils;
@@ -36,13 +38,18 @@ import com.zmax.app.R;
 import com.zmax.app.adapter.GridViewFaceAdapter;
 import com.zmax.app.chat.promelo.DataCallBack;
 import com.zmax.app.ui.base.BaseActivity;
+import com.zmax.app.ui.base.BaseFragmentActivity;
 import com.zmax.app.utils.Constant;
 import com.zmax.app.utils.JsonMapperUtils;
 import com.zmax.app.utils.Log;
 import com.zmax.app.utils.PhoneUtil;
 import com.zmax.app.utils.Utility;
 
-public class ChatRoomActivity extends BaseActivity implements OnClickListener {
+import eu.inmite.android.lib.dialogs.ISimpleDialogListener;
+import eu.inmite.android.lib.dialogs.ProgressDialogFragment;
+import eu.inmite.android.lib.dialogs.SimpleDialogFragment;
+
+public class ChatRoomActivity extends BaseFragmentActivity implements OnClickListener, ISimpleDialogListener {
 	private Context mContext;
 	
 	private Button btn_Back, btn_Share, btn_send;
@@ -52,6 +59,8 @@ public class ChatRoomActivity extends BaseActivity implements OnClickListener {
 	private ChatListAdapter adapter;
 	private ChatHelper chatHelper;
 	private TextView tv_title;
+	private DialogFragment dialog;
+	
 	private static final long CHAT_MUTE_DURATION = 10 * 60 * 1000;// default 10
 																	// mins
 	private static long last_chat_time = 0;
@@ -182,6 +191,9 @@ public class ChatRoomActivity extends BaseActivity implements OnClickListener {
 	// 192.168.0.69 //测试环境
 	// 192.168.10.46 //old
 	private void initChatPomelo() {
+		
+		dialog = ProgressDialogFragment.createBuilder(this, getSupportFragmentManager()).setMessage("正在连接中...").setTitle("提示")
+				.setCancelable(true).show();
 		chatHelper = ChatHelper.getHelper();
 		try {
 			chatHelper.init(this, Constant.Chat.CHAT_SERVER_IP, Constant.Chat.CHAT_SERVER_PORT, Constant.getLogin().user_id,
@@ -340,12 +352,15 @@ public class ChatRoomActivity extends BaseActivity implements OnClickListener {
 			handler.post(new Runnable() {
 				@Override
 				public void run() {
-					showAlertOKDialog("!!!", "发送信息失败！", new DialogInterface.OnClickListener() {
-						@Override
-						public void onClick(DialogInterface dialog, int which) {
-							// finish();
-						}
-					});
+					// showAlertOKDialog("!!!", "发送信息失败！", new
+					// DialogInterface.OnClickListener() {
+					// @Override
+					// public void onClick(DialogInterface dialog, int which) {
+					// // finish();
+					// }
+					// });
+					dialog = SimpleDialogFragment.createBuilder(mContext, getSupportFragmentManager()).setPositiveButtonText("确定").setTitle("提示").setMessage("发送信息失败!")
+							.setRequestCode(TYPE_SEND_FAILED).show();
 				}
 			});
 			
@@ -356,26 +371,36 @@ public class ChatRoomActivity extends BaseActivity implements OnClickListener {
 			handler.post(new Runnable() {
 				@Override
 				public void run() {
-					showShortToast("已连接聊天室，正在为您转入对应聊天房间！");
+					// showShortToast("已连接聊天室，正在为您转入对应聊天房间！");
+					if (dialog != null && dialog.getActivity() != null) dialog.dismiss();
+					handler.post(new Runnable() {
+						@Override
+						public void run() {
+							Utility.toastResult(mContext, "欢迎进入聊天室!");
+						}
+					});
 				}
 			});
 		}
 		
 		@Override
 		public void onEnterFailed(Exception e) {
-			showAlertOKDialog("!!!", "连接错误！请稍后再试", new DialogInterface.OnClickListener() {
-				@Override
-				public void onClick(DialogInterface dialog, int which) {
-					finish();
-				}
-			});
-			
+			// showAlertOKDialog("!!!", "连接错误！请稍后再试", new
+			// DialogInterface.OnClickListener() {
+			// @Override
+			// public void onClick(DialogInterface dialog, int which) {
+			// finish();
+			// }
+			// });
+			dialog = SimpleDialogFragment.createBuilder(mContext, getSupportFragmentManager()).setPositiveButtonText("确定").setTitle("提示").setMessage("连接错误！请稍后再试!")
+					.setRequestCode(TYPE_CONNECT_FAILED).show();
 		}
 		
 		@Override
 		public void onConnectorEnter(final JSONObject body) {
 			
 			if (body == null) {
+				if (dialog != null && dialog.getActivity() != null) dialog.dismiss();
 				Utility.toastResult(mContext, getString(R.string.unkownError));
 				return;
 			}
@@ -387,19 +412,20 @@ public class ChatRoomActivity extends BaseActivity implements OnClickListener {
 			
 			if (!isError) {
 				// handler.postDelayed(sendRunnable, 4000);
-				handler.post(new Runnable() {
-					@Override
-					public void run() {
-						Utility.toastResult(mContext, "欢迎进入聊天室，当前登录信息：、\n" + body.toString());
-					}
-				});
+				// handler.post(new Runnable() {
+				// @Override
+				// public void run() {
+				// Utility.toastResult(mContext, "欢迎进入聊天室!");
+				// }
+				// });
 			}
 			else {
 				handler.post(new Runnable() {
 					@Override
 					public void run() {
-						Utility.toastResult(mContext, message);
-						
+						// Utility.toastResult(mContext, message);
+						dialog = SimpleDialogFragment.createBuilder(mContext, getSupportFragmentManager()).setTitle("提示")
+								.setMessage(message).setRequestCode(TYPE_CONNECTORENTER_ERROR).setPositiveButtonText("确定").show();
 					}
 				});
 				chatHelper.disConnect();
@@ -441,7 +467,9 @@ public class ChatRoomActivity extends BaseActivity implements OnClickListener {
 			handler.post(new Runnable() {
 				@Override
 				public void run() {
-					Utility.toastResult(mContext, msg);
+//					Utility.toastResult(mContext, msg);
+					dialog = SimpleDialogFragment.createBuilder(mContext, getSupportFragmentManager()).setPositiveButtonText("确定").setTitle("提示").setMessage(msg)
+							.setRequestCode(TYPE_FORBIDDEN).show();
 				}
 			});
 		}
@@ -469,12 +497,10 @@ public class ChatRoomActivity extends BaseActivity implements OnClickListener {
 			handler.post(new Runnable() {
 				@Override
 				public void run() {
-					showAlertOKDialog("!!!", "与聊天室连接超时！", new DialogInterface.OnClickListener() {
-						@Override
-						public void onClick(DialogInterface dialog, int which) {
-							// finish();
-						}
-					});
+					
+					dialog = SimpleDialogFragment.createBuilder(mContext, getSupportFragmentManager()).setTitle("提示")
+							.setMessage("与聊天室连接超时！").setPositiveButtonText("确定").setRequestCode(TYPE_SOCKET_TIME_OUT).show();
+					
 				}
 			});
 		}
@@ -495,5 +521,42 @@ public class ChatRoomActivity extends BaseActivity implements OnClickListener {
 			
 		}
 	};
+	
+	@Override
+	public void onNegativeButtonClicked(int arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	@Override
+	public void onPositiveButtonClicked(int arg0) {
+		switch (arg0) {
+			case TYPE_SOCKET_TIME_OUT:
+				finish();
+				break;
+			case TYPE_FORBIDDEN:
+				finish();
+				break;
+			case TYPE_CONNECTORENTER_ERROR:
+				finish();
+				break;
+			case TYPE_CONNECT_FAILED:
+				finish();
+				break;
+			case TYPE_SEND_FAILED:
+				// finish();
+				break;
+			default:
+				break;
+		}
+		
+	}
+	
+	static final int TYPE_SEND_FAILED = 5;
+	
+	static final int TYPE_FORBIDDEN = 2;
+	static final int TYPE_CONNECTORENTER_ERROR = 3;
+	static final int TYPE_SOCKET_TIME_OUT = 1;
+	static final int TYPE_CONNECT_FAILED = 4;
 	
 }

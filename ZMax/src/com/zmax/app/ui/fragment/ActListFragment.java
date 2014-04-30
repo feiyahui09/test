@@ -5,6 +5,7 @@ import java.util.List;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,6 +27,8 @@ import com.zmax.app.utils.Utility;
 import com.zmax.app.widget.XListView;
 import com.zmax.app.widget.XListView.IXListViewListener;
 
+import eu.inmite.android.lib.dialogs.ProgressDialogFragment;
+
 public class ActListFragment extends Fragment implements IXListViewListener, OnItemClickListener {
 	
 	protected XListView listview;
@@ -34,7 +37,7 @@ public class ActListFragment extends Fragment implements IXListViewListener, OnI
 	private ActListAdapter adapter;
 	private GetActListTask getActListTask;
 	private int curPage = 1;
-	private ProgressDialog progressDialog;
+	private DialogFragment progressDialog;
 	
 	public ActListFragment() {
 		setRetainInstance(true);
@@ -117,17 +120,14 @@ public class ActListFragment extends Fragment implements IXListViewListener, OnI
 	}
 	
 	private void getActList(int page) {
-		progressDialog = new ProgressDialog(getActivity());
-		progressDialog.setTitle("提示");
-		progressDialog.setCancelable(false);
-		progressDialog.setMessage("正在为您加载中...");
-		progressDialog.show();
+		progressDialog = ProgressDialogFragment.createBuilder(getActivity(), getFragmentManager()).setMessage("正在加载中...").setTitle("提示")
+				.setCancelable(true).show();
 		
 		getActListTask = new GetActListTask(getActivity(), new GetActListTask.TaskCallBack() {
 			
 			@Override
 			public void onCallBack(ActList result) {
-				if (progressDialog != null && progressDialog.isShowing()) progressDialog.cancel();
+				if (progressDialog != null && progressDialog.getActivity() != null) progressDialog.dismiss();
 				
 				if (getActivity() == null) {
 					return;

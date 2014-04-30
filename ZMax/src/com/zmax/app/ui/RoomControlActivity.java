@@ -3,6 +3,7 @@ package com.zmax.app.ui;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -22,6 +23,8 @@ import com.zmax.app.ui.fragment.RoomControlAirConditionFragment;
 import com.zmax.app.ui.fragment.RoomControlLightingFragment;
 import com.zmax.app.ui.fragment.RoomControlTVFragment;
 import com.zmax.app.widget.SmartViewPager;
+
+import eu.inmite.android.lib.dialogs.ProgressDialogFragment;
 
 public class RoomControlActivity extends BaseFragmentActivity {
 	
@@ -48,7 +51,7 @@ public class RoomControlActivity extends BaseFragmentActivity {
 	private int curPageIndex = 0;
 	
 	private GetRoomStatusTask getRoomStatusTask;
-	private ProgressDialog progressDialog;
+	private DialogFragment progressDialog;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -57,15 +60,12 @@ public class RoomControlActivity extends BaseFragmentActivity {
 		setContentView(R.layout.room_control);
 		initHeader();
 		init();
-		progressDialog = new ProgressDialog(this);
-		progressDialog.setTitle("提示");
-		progressDialog.setCancelable(false);
-		progressDialog.setMessage("正在更新房间控制信息中！");
-		progressDialog.show();
+		progressDialog = ProgressDialogFragment.createBuilder(this, getSupportFragmentManager()).setMessage("正在加载中...").setTitle("提示")
+				.setCancelable(true).show();
 		getRoomStatusTask = new GetRoomStatusTask(this, new GetRoomStatusTask.TaskCallBack() {
 			@Override
 			public void onCallBack(RoomStatus result) {
-				if (progressDialog != null && progressDialog.isShowing()) progressDialog.cancel();
+				if (progressDialog != null && progressDialog.getActivity() != null) progressDialog.dismiss();
 				if (result == null) {
 					if (!NetWorkHelper.checkNetState(mContext))
 						Toast.makeText(mContext, mContext.getString(R.string.httpProblem), 450).show();

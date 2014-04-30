@@ -1,8 +1,8 @@
 package com.zmax.app.ui;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -12,17 +12,20 @@ import com.zmax.app.model.CityLocation;
 import com.zmax.app.task.GetCityLocationTask;
 import com.zmax.app.ui.base.BaseSlidingFragmentActivity;
 import com.zmax.app.ui.fragment.ActListFragment;
-import com.zmax.app.ui.fragment.NetErrorFragment;
 import com.zmax.app.ui.fragment.PlayInZmaxLoginFragment;
 import com.zmax.app.utils.Constant;
 import com.zmax.app.utils.DefaultShared;
-import com.zmax.app.utils.PhoneUtil;
 import com.zmax.app.utils.Utility;
 
-public class MainActivity extends BaseSlidingFragmentActivity {
+import eu.inmite.android.lib.dialogs.ISimpleDialogCancelListener;
+import eu.inmite.android.lib.dialogs.ISimpleDialogListener;
+import eu.inmite.android.lib.dialogs.ProgressDialogFragment;
+
+public class MainActivity extends BaseSlidingFragmentActivity implements ISimpleDialogCancelListener, ISimpleDialogListener {
 	private Context mContext;
 	private GetCityLocationTask locationTask;
-	private ProgressDialog progressDialog;
+	private DialogFragment progressDialog;
+	public static final int REQUEST_PROGRESS = 1;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -37,16 +40,15 @@ public class MainActivity extends BaseSlidingFragmentActivity {
 	}
 	
 	private void initLocate() {
-		progressDialog = new ProgressDialog(this);
-		progressDialog.setTitle("提示");
-		progressDialog.setCancelable(false);
-		progressDialog.setMessage("正在定位中...");
-		progressDialog.show();
+		progressDialog = ProgressDialogFragment.createBuilder(this, getSupportFragmentManager()).setMessage("正在定位中...")
+				.setRequestCode(REQUEST_PROGRESS).setTitle("提示").setCancelable(true).show();
+		
 		locationTask = new GetCityLocationTask(this, new GetCityLocationTask.TaskCallBack() {
 			
 			@Override
 			public void onCallBack(CityLocation result) {
-				if (progressDialog != null && progressDialog.isShowing()) progressDialog.cancel();
+				if (progressDialog != null && progressDialog.getActivity() != null) progressDialog.dismiss();
+				
 				if (mContent instanceof ActListFragment) return;
 				if (result != null && !TextUtils.isEmpty(result.city) && !isFinishing()) {
 					String cityStr = result.city.replace("市", "");
@@ -79,7 +81,7 @@ public class MainActivity extends BaseSlidingFragmentActivity {
 		// TODO Auto-generated method stub
 		super.onPause();
 		if (locationTask != null) locationTask.cancel(true);
-		if (progressDialog != null && progressDialog.isShowing()) progressDialog.cancel();
+		if (progressDialog != null && progressDialog.getActivity() != null) progressDialog.dismiss();
 		
 	}
 	
@@ -117,5 +119,20 @@ public class MainActivity extends BaseSlidingFragmentActivity {
 		else if (backPressCount >= 1) {
 			finish();
 		}
+	}
+	
+	@Override
+	public void onCancelled(int arg0) {
+		
+	}
+	
+	@Override
+	public void onNegativeButtonClicked(int arg0) {
+		
+	}
+	
+	@Override
+	public void onPositiveButtonClicked(int arg0) {
+		
 	}
 }

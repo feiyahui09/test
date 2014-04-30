@@ -128,7 +128,7 @@ public class ChatIndexActivity extends BaseActivity {
 	private void goVertify(final Context context, String _user_id, final int _gender, final String _nick_name) {
 		progressDialog = new ProgressDialog(context);
 		progressDialog.setTitle("提示");
-		progressDialog.setCancelable(false);
+		progressDialog.setCancelable(true);
 		progressDialog.setMessage("正在检查昵称是否被使用！");
 		progressDialog.show();
 		modifyChatUserInfoTask = new ModifyChatUserInfoTask(context, new ModifyChatUserInfoTask.TaskCallBack() {
