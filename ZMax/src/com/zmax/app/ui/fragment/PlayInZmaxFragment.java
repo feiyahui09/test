@@ -138,7 +138,7 @@ public class PlayInZmaxFragment extends Fragment implements OnClickListener {
 	public void onActivityCreated(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onActivityCreated(savedInstanceState);
-		((MainActivity) getActivity()).showLogoutView();
+//		((MainActivity) getActivity()).showLogoutView();
 		// vertifyDup(getActivity(), login.user_id + "", login.gender + "",
 		// login.nick_name, false);
 	}
@@ -146,7 +146,7 @@ public class PlayInZmaxFragment extends Fragment implements OnClickListener {
 	@Override
 	public void onDestroyView() {
 		// if (callback != null) callback.onLogoutViewDestroy();
-		((MainActivity) getActivity()).hideLogoutView();
+//		((MainActivity) getActivity()).hideLogoutView(true);
 		super.onDestroyView();
 	}
 	

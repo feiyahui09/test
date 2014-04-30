@@ -16,6 +16,7 @@ import android.widget.RadioGroup.OnCheckedChangeListener;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.jeremyfeinstein.slidingmenu.lib.app.SlidingFragmentActivity;
 import com.zmax.app.R;
+import com.zmax.app.ui.MainActivity;
 import com.zmax.app.ui.fragment.ActListFragment;
 import com.zmax.app.ui.fragment.DefaultFragment;
 import com.zmax.app.ui.fragment.HotelBookFragment;
@@ -179,6 +180,7 @@ public class BaseSlidingFragmentActivity extends SlidingFragmentActivity {
 				// }
 			}
 		}, 50);
+		
 		
 	}
 	

@@ -1,17 +1,22 @@
 package com.zmax.app.ui;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Toast;
 
+import com.zmax.app.R;
 import com.zmax.app.model.CityLocation;
 import com.zmax.app.task.GetCityLocationTask;
 import com.zmax.app.ui.base.BaseSlidingFragmentActivity;
 import com.zmax.app.ui.fragment.ActListFragment;
+import com.zmax.app.ui.fragment.PlayInZmaxFragment;
 import com.zmax.app.ui.fragment.PlayInZmaxLoginFragment;
 import com.zmax.app.utils.Constant;
 import com.zmax.app.utils.DefaultShared;
@@ -87,6 +92,8 @@ public class MainActivity extends BaseSlidingFragmentActivity implements ISimple
 	
 	public void showLogoutView() {
 		btn_share.setVisibility(View.VISIBLE);
+		btn_share.setBackgroundResource(R.drawable.playzmax_quit_btn_sel);
+		
 		btn_share.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -96,9 +103,37 @@ public class MainActivity extends BaseSlidingFragmentActivity implements ISimple
 		});
 	}
 	
-	public void hideLogoutView() {
-		btn_share.setVisibility(View.GONE);
-		
+	public void hideLogoutView(boolean isGone) {
+		if (isGone) {
+			btn_share.setVisibility(View.GONE);
+			return;
+		}
+		btn_share.setVisibility(View.VISIBLE);
+		btn_share.setBackgroundResource(R.drawable.menu_guide_btn_sel);
+		btn_share.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent();
+				intent.setClass(mContext, DocumentsActivity.class);
+				intent.putExtra(Constant.Documents.DOCUMENTS_TYPE_KEY, Constant.Documents.GUIDE_TYPE);
+				startActivity(intent);
+			}
+		});
+	}
+	
+	@Override
+	public void switchContent(Fragment fragment) {
+		// TODO Auto-generated method stub
+		super.switchContent(fragment);
+		if (fragment instanceof PlayInZmaxLoginFragment) {
+			hideLogoutView(false);
+		}
+		else if (fragment instanceof PlayInZmaxFragment) {
+			showLogoutView();
+		}
+		else {
+			hideLogoutView(true);
+		}
 	}
 	
 	int backPressCount = 0;

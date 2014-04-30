@@ -47,7 +47,7 @@ public class PlayInZmaxLoginFragment extends Fragment {
 	private String selected_pms_hotel_id;
 	private GetHotelListTask getHotelListTask;
 	private ProgressDialog progressDialog;
-	
+	private Button btn_guide;
 	private EditText et_room_number, et_namecard, et_password;
 	
 	public PlayInZmaxLoginFragment() {
@@ -88,9 +88,18 @@ public class PlayInZmaxLoginFragment extends Fragment {
 	}
 	
 	@Override
+	public void onDestroyView() {
+		// TODO Auto-generated method stub
+		super.onDestroyView();
+//		((MainActivity) getActivity()).hideLogoutView(false);
+		
+	}
+	
+	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onActivityCreated(savedInstanceState);
+//		((MainActivity) getActivity()).hideLogoutView(true);
 		
 		final List<Hotel> hotels = getHotels();
 		if (hotels != null && !hotels.isEmpty()) {
