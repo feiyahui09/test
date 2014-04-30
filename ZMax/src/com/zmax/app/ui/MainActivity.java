@@ -1,5 +1,6 @@
 package com.zmax.app.ui;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -21,6 +22,7 @@ import com.zmax.app.utils.Utility;
 public class MainActivity extends BaseSlidingFragmentActivity {
 	private Context mContext;
 	private GetCityLocationTask locationTask;
+	private ProgressDialog progressDialog;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -35,10 +37,16 @@ public class MainActivity extends BaseSlidingFragmentActivity {
 	}
 	
 	private void initLocate() {
+		progressDialog = new ProgressDialog(this);
+		progressDialog.setTitle("提示");
+		progressDialog.setCancelable(false);
+		progressDialog.setMessage("正在定位中...");
+		progressDialog.show();
 		locationTask = new GetCityLocationTask(this, new GetCityLocationTask.TaskCallBack() {
 			
 			@Override
 			public void onCallBack(CityLocation result) {
+				if (progressDialog != null && progressDialog.isShowing()) progressDialog.cancel();
 				if (mContent instanceof ActListFragment) return;
 				if (result != null && !TextUtils.isEmpty(result.city) && !isFinishing()) {
 					String cityStr = result.city.replace("市", "");
@@ -71,6 +79,8 @@ public class MainActivity extends BaseSlidingFragmentActivity {
 		// TODO Auto-generated method stub
 		super.onPause();
 		if (locationTask != null) locationTask.cancel(true);
+		if (progressDialog != null && progressDialog.isShowing()) progressDialog.cancel();
+		
 	}
 	
 	public void showLogoutView() {

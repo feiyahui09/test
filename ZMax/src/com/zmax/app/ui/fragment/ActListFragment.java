@@ -2,6 +2,7 @@ package com.zmax.app.ui.fragment;
 
 import java.util.List;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -33,6 +34,7 @@ public class ActListFragment extends Fragment implements IXListViewListener, OnI
 	private ActListAdapter adapter;
 	private GetActListTask getActListTask;
 	private int curPage = 1;
+	private ProgressDialog progressDialog;
 	
 	public ActListFragment() {
 		setRetainInstance(true);
@@ -115,11 +117,18 @@ public class ActListFragment extends Fragment implements IXListViewListener, OnI
 	}
 	
 	private void getActList(int page) {
+		progressDialog = new ProgressDialog(getActivity());
+		progressDialog.setTitle("提示");
+		progressDialog.setCancelable(false);
+		progressDialog.setMessage("正在为您加载中...");
+		progressDialog.show();
 		
 		getActListTask = new GetActListTask(getActivity(), new GetActListTask.TaskCallBack() {
 			
 			@Override
 			public void onCallBack(ActList result) {
+				if (progressDialog != null && progressDialog.isShowing()) progressDialog.cancel();
+				
 				if (getActivity() == null) {
 					return;
 				}

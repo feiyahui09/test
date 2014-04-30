@@ -35,7 +35,7 @@
     <string name="menu_index">首页</string>
     <string name="menu_playzmax">玩转ZMAX</string>
     <string name="menu_myaccount">我的账户</string>
-    <string name="menu_setting">设置</string>
+    <string name="menu_setting">更多</string>
     <!-- hotel -->
 
     <string name="hotel_facility">酒店配套设施</string>

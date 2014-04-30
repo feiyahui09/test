@@ -125,7 +125,7 @@ public class ActListAdapter extends BaseAdapter {
 		ImageLoader.getInstance().displayImage(act.poster, holder.img_thu);
 		holder.tv_city.setText("" + act.cities);
 		act.duration = fromDateStr(act.start_date, act.end_date);
-		holder.tv_date.setText("" + act.duration);
+		holder.tv_date.setText("" + fromDateStrSimple(act.start_date, act.end_date));
 		holder.tv_name.setText("" + act.name);
 		return convertView;
 	}
@@ -153,10 +153,22 @@ public class ActListAdapter extends BaseAdapter {
 		ImageLoader.getInstance().displayImage(act.poster, holder.img_thu);
 		holder.tv_city.setText("" + act.cities);
 		act.duration = fromDateStr(act.start_date, act.end_date);
-		holder.tv_date.setText("" + act.duration);
+		holder.tv_date.setText("" + fromDateStrSimple(act.start_date, act.end_date));
 		holder.tv_name.setText("" + act.name);
 		
 		return convertView;
+	}
+	
+	private String fromDateStrSimple(String start_date, String end_dateString) {
+		String dateStr = "";
+		
+		start_date = DateTimeUtils.friendly_time(start_date);
+		end_dateString = DateTimeUtils.friendly_time(end_dateString);
+		if (TextUtils.equals(end_dateString, start_date))
+			dateStr = start_date;
+		else
+			dateStr = start_date + "起";
+		return dateStr;
 	}
 	
 	private String fromDateStr(String start_date, String end_dateString) {
@@ -167,7 +179,7 @@ public class ActListAdapter extends BaseAdapter {
 		if (TextUtils.equals(end_dateString, start_date))
 			dateStr = start_date;
 		else
-			dateStr = start_date + " 至 \n" + end_dateString;
+			dateStr = start_date +  " 至  " + end_dateString;
 		return dateStr;
 	}
 	

@@ -103,10 +103,10 @@ public class PlayInZmaxFragment extends Fragment implements OnClickListener {
 		// String startStr = "20140416164431", endStr ="20140417164431";
 		
 		tv_start_day.setText(startStr.substring(6, 8));
-		tv_start_month.setText(startStr.substring(4, 6));
+		tv_start_month.setText(startStr.substring(4, 6) + "月");
 		tv_start_week_day.setText(DateTimeUtils.getWeekOfDate(startStr));
 		tv_end_day.setText(endStr.substring(6, 8));
-		tv_end_month.setText(endStr.substring(4, 6));
+		tv_end_month.setText(endStr.substring(4, 6) + "月");
 		tv_end_week_day.setText(DateTimeUtils.getWeekOfDate(endStr));
 		
 		String curStr = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
@@ -192,7 +192,6 @@ public class PlayInZmaxFragment extends Fragment implements OnClickListener {
 		DefaultShared.putInt(Constant.Chat.SELF_ID, user_id);
 		DefaultShared.putString(Constant.Chat.SELF_GENDER, gender);
 		DefaultShared.putString(Constant.Chat.SELF_NAME, name);
-		
 	}
 	
 	// 验证已保存的名字是否有重复

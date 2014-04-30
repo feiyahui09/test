@@ -11,24 +11,21 @@
         android:layout_marginRight="@dimen/act_detail_margin_left"
         android:background="@drawable/act_detial_index_bg" >
 
-        <TextView
-            android:id="@+id/act_detail_title_hotel"
+        <ImageView
+            android:id="@+id/iv_act_detial_index_logo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="@dimen/act_detail_index_envelope_title_margin_bottom"
-            android:layout_marginTop="@dimen/act_detail_index_envelope_title_margin_top"
-            android:gravity="center"
-            android:text="ZMAX-HOTEL"
-            android:textColor="#000000"
-            android:textSize="14sp" />
+            android:layout_marginTop="90dp"
+            android:background="@drawable/act_detial_index_logo" />
 
         <TextView
             android:id="@+id/act_detail_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/act_detail_title_hotel"
-            android:layout_centerInParent="true"
+            android:layout_below="@+id/iv_act_detial_index_logo"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="16dp"
             android:gravity="center"
             android:text="活动邀请函"
             android:textColor="#000000"
@@ -39,9 +36,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/act_detail_title"
-            android:layout_centerInParent="true"
+            android:layout_centerHorizontal="true"
             android:layout_marginBottom="@dimen/act_detail_index_envelope_title_city_margin_bottom"
-            android:layout_marginTop="@dimen/act_detail_index_envelope_title_city_margin_top"
+            android:layout_marginTop="120dp"
             android:gravity="center"
             android:text="武汉"
             android:textColor="#595959"

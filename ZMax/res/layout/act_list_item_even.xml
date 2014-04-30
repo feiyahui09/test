@@ -20,27 +20,29 @@
 
         <TextView
             android:id="@+id/tv_name"
-            android:layout_width="190dp"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="37dp"
+            android:layout_marginRight="37dp"
             android:ellipsize="end"
             android:gravity="center"
             android:singleLine="true"
-            android:text="拳击 阿萨达速度asd"
+            android:text="拳击阿萨达速度拳击阿萨达速度"
             android:textColor="#43c1ee"
             android:textSize="14sp" />
 
         <TextView
             android:id="@+id/tv_city"
-            android:layout_width="wrap_content"
+            android:layout_width="60dp"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
+            android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="36dp"
+            android:layout_marginLeft="36dp"
             android:gravity="center"
-            android:maxWidth="70dp"
-            android:text="武汉"
+            android:lines="1"
+            android:singleLine="true"
+            android:text="拳击阿萨达速度拳击阿萨达速度"
             android:textColor="#ffffff"
             android:textSize="12sp" />
     </RelativeLayout>

@@ -30,7 +30,8 @@
         android:background="@drawable/about_click_us_ass_sel"
         android:gravity="center"
         android:textColor="@color/white"
-        android:textSize="20sp" >
+        android:textSize="20sp"
+        android:visibility="gone" >
     </Button>
 
     <TextView
