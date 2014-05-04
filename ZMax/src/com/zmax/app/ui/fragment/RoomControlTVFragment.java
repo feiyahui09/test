@@ -196,7 +196,7 @@ public class RoomControlTVFragment extends Fragment {
 			}
 		});
 		rb_orient.setChecked(true);
-//		initData();
+ 		initData();
 		return view;
 	}
 	

@@ -96,13 +96,14 @@ public class HotelBookFragment extends Fragment implements OnPageChangeListener,
 			public void onCallBack(HotelList hotelList, HotelList upcomingHotelList) {
 				if (getActivity() == null) return;
 				if (hotelList != null && hotelList.status == 200) {
-					initData(hotelList.hotels, upcomingHotelList.hotels);
-					saveHotel(hotelList.hotels, false);
-					saveHotel(upcomingHotelList.hotels, true);
-					if (hotelList.hotels == null || hotelList.hotels.isEmpty()) Utility.toastNoMoreResult(getActivity());
+					List<Hotel> _hotelList = hotelList.hotels;
+					List<Hotel> _upcomingHotelList = upcomingHotelList == null ? null : upcomingHotelList.hotels;
+					initData(_hotelList, _upcomingHotelList);
+					saveHotel(_hotelList, false);
+					saveHotel(_upcomingHotelList, true);
+					if (_hotelList == null || _hotelList.isEmpty()) Utility.toastNoMoreResult(getActivity());
 				}
 				else {
-					initData(DataManage.getIndexHotellist4DB(false), DataManage.getIndexHotellist4DB(true));
 					if (!NetWorkHelper.checkNetState(getActivity())) {
 						Utility.toastNetworkFailed(getActivity());
 					}
@@ -110,6 +111,7 @@ public class HotelBookFragment extends Fragment implements OnPageChangeListener,
 						Utility.toastResult(getActivity(), hotelList.message);
 					else
 						Utility.toastFailedResult(getActivity());
+					initData(DataManage.getIndexHotellist4DB(false), DataManage.getIndexHotellist4DB(true));
 				}
 			}
 		});

@@ -64,8 +64,9 @@ public class Utility {
 	private static Toast mToast;
 	
 	public static void showToast(Context context, String text) {
+		if(TextUtils.isEmpty(text))return ;
 		if (mToast == null) {
-			mToast = Toast.makeText(context, text, Toast.LENGTH_SHORT);
+			mToast = Toast.makeText(context, text+"", Toast.LENGTH_SHORT);
 		}
 		else {
 			mToast.setText(text);
