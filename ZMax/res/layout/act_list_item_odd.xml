@@ -22,7 +22,7 @@
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="38dp"
+            android:layout_marginLeft="41dp"
             android:ellipsize="end"
             android:singleLine="true"
             android:text="拳击阿萨达速度拳击阿萨达速度"

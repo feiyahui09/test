@@ -23,6 +23,7 @@ import android.widget.Toast;
 import com.zmax.app.R;
 import com.zmax.app.adapter.RoomControlAdapter;
 import com.zmax.app.model.AirCondition;
+import com.zmax.app.net.NetWorkHelper;
 import com.zmax.app.task.SetAirConditionTask;
 import com.zmax.app.ui.RoomControlActivity.PageChangedCallback;
 import com.zmax.app.ui.RoomControlActivity.VerticalChangedCallback;
@@ -282,6 +283,9 @@ public class RoomControlAirConditionFragment extends Fragment {
 					return;
 				}
 				if (result == null) {
+					if (!NetWorkHelper.checkNetState(getActivity()))
+						Toast.makeText(getActivity(), getActivity().getString(R.string.httpProblem), 450).show();
+					else
 					Utility.toastResult(getActivity(), getActivity().getString(R.string.unkownError));
 				}
 				else if (result.status == 200) {

@@ -359,8 +359,8 @@ public class ChatRoomActivity extends BaseFragmentActivity implements OnClickLis
 					// // finish();
 					// }
 					// });
-					dialog = SimpleDialogFragment.createBuilder(mContext, getSupportFragmentManager()).setPositiveButtonText("确定").setTitle("提示").setMessage("发送信息失败!")
-							.setRequestCode(TYPE_SEND_FAILED).show();
+					dialog = SimpleDialogFragment.createBuilder(mContext, getSupportFragmentManager()).setPositiveButtonText("确定")
+							.setTitle("提示").setMessage("发送信息失败!").setRequestCode(TYPE_SEND_FAILED).show();
 				}
 			});
 			
@@ -392,8 +392,8 @@ public class ChatRoomActivity extends BaseFragmentActivity implements OnClickLis
 			// finish();
 			// }
 			// });
-			dialog = SimpleDialogFragment.createBuilder(mContext, getSupportFragmentManager()).setPositiveButtonText("确定").setTitle("提示").setMessage("连接错误！请稍后再试!").setCancelable(false)
-					.setRequestCode(TYPE_CONNECT_FAILED).show();
+			dialog = SimpleDialogFragment.createBuilder(mContext, getSupportFragmentManager()).setPositiveButtonText("确定").setTitle("提示")
+					.setMessage("连接错误！请稍后再试!").setCancelable(false).setRequestCode(TYPE_CONNECT_FAILED).show();
 		}
 		
 		@Override
@@ -401,7 +401,11 @@ public class ChatRoomActivity extends BaseFragmentActivity implements OnClickLis
 			
 			if (body == null) {
 				if (dialog != null && dialog.getActivity() != null) dialog.dismiss();
-				Utility.toastResult(mContext, getString(R.string.unkownError));
+				dialog = SimpleDialogFragment.createBuilder(mContext, getSupportFragmentManager()).setPositiveButtonText("确定")
+						.setTitle("提示").setMessage(getString(R.string.unkownError)).setCancelable(false).setRequestCode(TYPE_UNKOWNERROR)
+						.show();
+				// Utility.toastResult(mContext,
+				// getString(R.string.unkownError));
 				return;
 			}
 			int code = 200;
@@ -424,8 +428,9 @@ public class ChatRoomActivity extends BaseFragmentActivity implements OnClickLis
 					@Override
 					public void run() {
 						// Utility.toastResult(mContext, message);
-						dialog = SimpleDialogFragment.createBuilder(mContext, getSupportFragmentManager()).setTitle("提示").setCancelable(false)
-								.setMessage(message).setRequestCode(TYPE_CONNECTORENTER_ERROR).setPositiveButtonText("确定").show();
+						dialog = SimpleDialogFragment.createBuilder(mContext, getSupportFragmentManager()).setTitle("提示")
+								.setCancelable(false).setMessage(message).setRequestCode(TYPE_CONNECTORENTER_ERROR)
+								.setPositiveButtonText("确定").show();
 					}
 				});
 				chatHelper.disConnect();
@@ -467,9 +472,9 @@ public class ChatRoomActivity extends BaseFragmentActivity implements OnClickLis
 			handler.post(new Runnable() {
 				@Override
 				public void run() {
-//					Utility.toastResult(mContext, msg);
-					dialog = SimpleDialogFragment.createBuilder(mContext, getSupportFragmentManager()).setPositiveButtonText("确定").setTitle("提示").setMessage(msg)
-							.setRequestCode(TYPE_FORBIDDEN).show();
+					// Utility.toastResult(mContext, msg);
+					dialog = SimpleDialogFragment.createBuilder(mContext, getSupportFragmentManager()).setPositiveButtonText("确定")
+							.setTitle("提示").setMessage(msg).setRequestCode(TYPE_FORBIDDEN).show();
 				}
 			});
 		}
@@ -540,6 +545,9 @@ public class ChatRoomActivity extends BaseFragmentActivity implements OnClickLis
 			case TYPE_CONNECTORENTER_ERROR:
 				finish();
 				break;
+			case TYPE_UNKOWNERROR:
+				finish();
+				break;
 			case TYPE_CONNECT_FAILED:
 				finish();
 				break;
@@ -553,7 +561,7 @@ public class ChatRoomActivity extends BaseFragmentActivity implements OnClickLis
 	}
 	
 	static final int TYPE_SEND_FAILED = 5;
-	
+	static final int TYPE_UNKOWNERROR = 6;
 	static final int TYPE_FORBIDDEN = 2;
 	static final int TYPE_CONNECTORENTER_ERROR = 3;
 	static final int TYPE_SOCKET_TIME_OUT = 1;

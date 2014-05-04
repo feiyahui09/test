@@ -22,6 +22,7 @@ import android.widget.Toast;
 import com.zmax.app.R;
 import com.zmax.app.adapter.RoomControlAdapter;
 import com.zmax.app.model.Television;
+import com.zmax.app.net.NetWorkHelper;
 import com.zmax.app.task.SetTelevisionTask;
 import com.zmax.app.ui.RoomControlActivity.PageChangedCallback;
 import com.zmax.app.ui.RoomControlActivity.VerticalChangedCallback;
@@ -70,6 +71,7 @@ public class RoomControlTVFragment extends Fragment {
 				}
 				
 			}
+			
 			@Override
 			public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 				// TODO Auto-generated method stub
@@ -196,7 +198,7 @@ public class RoomControlTVFragment extends Fragment {
 			}
 		});
 		rb_orient.setChecked(true);
- 		initData();
+		initData();
 		return view;
 	}
 	
@@ -271,13 +273,17 @@ public class RoomControlTVFragment extends Fragment {
 				if (getActivity() == null) {
 					return;
 				}
-				if (result == null) {	Utility.toastResult(getActivity(), getActivity().getString(R.string.unkownError));
+				if (result == null) {
+					if (!NetWorkHelper.checkNetState(getActivity()))
+						Toast.makeText(getActivity(), getActivity().getString(R.string.httpProblem), 450).show();
+					else
+						Utility.toastResult(getActivity(), getActivity().getString(R.string.unkownError));
 				}
 				else if (result.status == 200) {
 					
 				}
 				else {
-					Utility.toastResult(getActivity(),  result.message);
+					Utility.toastResult(getActivity(), result.message);
 				}
 				// if(result.intValue()!=200)
 			}

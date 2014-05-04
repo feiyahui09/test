@@ -23,6 +23,7 @@ import com.zmax.app.R;
 import com.zmax.app.adapter.RoomControlAdapter;
 import com.zmax.app.model.Light;
 import com.zmax.app.model.Television;
+import com.zmax.app.net.NetWorkHelper;
 import com.zmax.app.task.SetLightTask;
 import com.zmax.app.task.SetTelevisionTask;
 import com.zmax.app.ui.RoomControlActivity.PageChangedCallback;
@@ -224,7 +225,10 @@ public class RoomControlLightingFragment extends Fragment {
 					return;
 				}
 				if (result == null) {
-					Utility.toastResult(getActivity(), getActivity().getString(R.string.unkownError));
+					if (!NetWorkHelper.checkNetState(getActivity()))
+						Toast.makeText(getActivity(), getActivity().getString(R.string.httpProblem), 450).show();
+					else
+						Utility.toastResult(getActivity(), getActivity().getString(R.string.unkownError));
 				}
 				else if (result.status == 200) {
 					curMode = operaMode;
