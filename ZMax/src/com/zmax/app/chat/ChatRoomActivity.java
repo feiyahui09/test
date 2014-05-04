@@ -392,7 +392,7 @@ public class ChatRoomActivity extends BaseFragmentActivity implements OnClickLis
 			// finish();
 			// }
 			// });
-			dialog = SimpleDialogFragment.createBuilder(mContext, getSupportFragmentManager()).setPositiveButtonText("确定").setTitle("提示").setMessage("连接错误！请稍后再试!")
+			dialog = SimpleDialogFragment.createBuilder(mContext, getSupportFragmentManager()).setPositiveButtonText("确定").setTitle("提示").setMessage("连接错误！请稍后再试!").setCancelable(false)
 					.setRequestCode(TYPE_CONNECT_FAILED).show();
 		}
 		
@@ -424,7 +424,7 @@ public class ChatRoomActivity extends BaseFragmentActivity implements OnClickLis
 					@Override
 					public void run() {
 						// Utility.toastResult(mContext, message);
-						dialog = SimpleDialogFragment.createBuilder(mContext, getSupportFragmentManager()).setTitle("提示")
+						dialog = SimpleDialogFragment.createBuilder(mContext, getSupportFragmentManager()).setTitle("提示").setCancelable(false)
 								.setMessage(message).setRequestCode(TYPE_CONNECTORENTER_ERROR).setPositiveButtonText("确定").show();
 					}
 				});
@@ -498,7 +498,7 @@ public class ChatRoomActivity extends BaseFragmentActivity implements OnClickLis
 				@Override
 				public void run() {
 					
-					dialog = SimpleDialogFragment.createBuilder(mContext, getSupportFragmentManager()).setTitle("提示")
+					dialog = SimpleDialogFragment.createBuilder(mContext, getSupportFragmentManager()).setTitle("提示").setCancelable(false)
 							.setMessage("与聊天室连接超时！").setPositiveButtonText("确定").setRequestCode(TYPE_SOCKET_TIME_OUT).show();
 					
 				}
