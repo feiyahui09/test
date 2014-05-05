@@ -86,7 +86,7 @@ public class ActDetailActivity extends BaseFragmentActivity {
 		adapter.addTab(new ActDetailFirstFragment(city, date));
 		adapter.addTab(new ActDetailSecondFragment());
 		adapter.addTab(new ActDetailThirdFragment());
-		
+		pager.setOffscreenPageLimit(3);
 		pager.setOnPageChangeListener(new OnPageChangeListener() {
 			
 			@Override
