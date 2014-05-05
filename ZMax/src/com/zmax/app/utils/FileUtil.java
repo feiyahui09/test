@@ -19,7 +19,7 @@ import android.util.Log;
  * 文件操作工具包
  * 
  */
-public class FileUtils {
+public class FileUtil {
 	
 	/**
 	 * Get or cerate the directory for caching icom image files

@@ -74,7 +74,6 @@ public class ChatHelper {
 							Log.i("onChat: " + msg.toString());
 							if (clientCallback != null) {
 								clientCallback.onChat(msg.optString("body"));
-								
 							}
 						}
 					});
@@ -107,10 +106,11 @@ public class ChatHelper {
 		}
 	}
 	
-	public void send(String content) {
+	public void send(String content, boolean isImg) {
 		try {
 			Log.i("");
-			client.inform("chat.chatHandler.send", new JSONObject().put("content", content).put("name", name).put("gender", gender));
+			client.inform("chat.chatHandler.send",
+					new JSONObject().put("content", content).put("name", name).put("gender", gender).put("type", isImg ? "image" : "text"));
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -119,11 +119,12 @@ public class ChatHelper {
 		
 	}
 	
-	public void send(String content, DataCallBack sendCallBack) {
+	public void send(String content, DataCallBack sendCallBack, boolean isImg) {
 		if (TextUtils.isEmpty(content)) return;
 		try {
 			Log.i("");
-			client.request("chat.chatHandler.send", new JSONObject().put("content", content).put("name", name).put("gender", gender),
+			client.request("chat.chatHandler.send",
+					new JSONObject().put("content", content).put("name", name).put("gender", gender).put("type", isImg ? "image" : "text"),
 					sendCallBack);
 		}
 		catch (Exception e) {

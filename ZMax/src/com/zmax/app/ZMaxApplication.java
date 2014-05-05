@@ -20,7 +20,7 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 import com.zmax.app.utils.Constant;
-import com.zmax.app.utils.FileUtils;
+import com.zmax.app.utils.FileUtil;
 import com.zmax.app.utils.Log;
 
 public class ZMaxApplication extends Application {
@@ -69,7 +69,7 @@ public class ZMaxApplication extends Application {
 				.showImageForEmptyUri(R.drawable.default_loading_fail_img).showImageOnFail(R.drawable.default_loading_fail_img).build();
 		config = new ImageLoaderConfiguration.Builder(this).threadPriority(Thread.NORM_PRIORITY - 2).denyCacheImageMultipleSizesInMemory()
 				.discCacheExtraOptions(480, 800, CompressFormat.PNG, 90, null).discCacheFileNameGenerator(new Md5FileNameGenerator())
-				.tasksProcessingOrder(QueueProcessingType.LIFO).discCache(new UnlimitedDiscCache(FileUtils.getSdcardDir()))
+				.tasksProcessingOrder(QueueProcessingType.LIFO).discCache(new UnlimitedDiscCache(FileUtil.getSdcardDir()))
 				.discCacheSize(4 * 1024 * 1024).discCacheFileCount(100).defaultDisplayImageOptions(options).build();
 		ImageLoader.getInstance().init(config);
 		com.nostra13.universalimageloader.utils.L.disableLogging();

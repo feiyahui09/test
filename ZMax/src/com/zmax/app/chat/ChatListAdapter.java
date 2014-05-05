@@ -1,22 +1,30 @@
 package com.zmax.app.chat;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.graphics.drawable.BitmapDrawable;
 import android.text.SpannableString;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.WindowManager.LayoutParams;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.baidu.platform.comapi.map.a.r;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.zmax.app.R;
-import com.zmax.app.utils.DateTimeUtils;
 import com.zmax.app.utils.EmotionUtils;
+import com.zmax.app.utils.Log;
+import com.zmax.app.utils.PhoneUtil;
 
 /**
  * 想比较原来的多了getItemViewType和getViewTypeCount这两个方法，原来循环使用layout布局，起到了优化的作用
@@ -82,7 +90,7 @@ public class ChatListAdapter extends BaseAdapter {
 	@Override
 	public View getView(int position, View convertView, ViewGroup arg2) {
 		
-		ChatMsg chatMsg = myList.get(position);
+		final ChatMsg chatMsg = myList.get(position);
 		int type = getItemViewType(position);
 		ViewHolder holder = null;
 		if (convertView == null) {
@@ -107,7 +115,7 @@ public class ChatListAdapter extends BaseAdapter {
 					convertView = mInflater.inflate(R.layout.chat_list_item_left_iamge, null);
 					holder.ivLeftIcon = (ImageView) convertView.findViewById(R.id.iv_icon);
 					holder.ivLeftImage = (ImageView) convertView.findViewById(R.id.iv_left_image);
-					// holder.ivLeftImage.setImageResource(R.drawable.test);
+					holder.tvLeftName = (TextView) convertView.findViewById(R.id.tv_left_name);
 					break;
 				case VALUE_RIGHT_TEXT:
 					
@@ -121,6 +129,7 @@ public class ChatListAdapter extends BaseAdapter {
 					
 					convertView = mInflater.inflate(R.layout.chat_list_item_right_iamge, null);
 					holder.ivRightIcon = (ImageView) convertView.findViewById(R.id.iv_icon);
+					holder.tvRightName = (TextView) convertView.findViewById(R.id.tv_right_name);
 					holder.ivRightImage = (ImageView) convertView.findViewById(R.id.iv_right_image);
 					// holder.ivRightImage.setImageResource(R.drawable.test);
 					break;
@@ -151,8 +160,17 @@ public class ChatListAdapter extends BaseAdapter {
 				
 				break;
 			case VALUE_LEFT_IMAGE:
+				holder.tvLeftName.setText(chatMsg.from);
+				holder.ivLeftIcon.setImageResource(chatMsg.gender == 0 ? R.drawable.chat_female_icon : R.drawable.chat_male_icon);
+				ImageLoader.getInstance().displayImage(getShrinkImg(chatMsg.msg.content), holder.ivLeftImage,
+						new DisplayImageOptions.Builder().cacheInMemory().cacheOnDisc().build());
+				holder.ivRightImage.setOnClickListener(new OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						showImg(chatMsg.msg.content);
+					}
+				});
 				
-				// holder.ivLeftImage.setImageResource(R.drawable.test);
 				break;
 			case VALUE_RIGHT_TEXT:
 				try {
@@ -166,7 +184,16 @@ public class ChatListAdapter extends BaseAdapter {
 				
 				break;
 			case VALUE_RIGHT_IMAGE:
-				// holder.ivRightImage.setImageResource(R.drawable.test);
+				holder.tvRightName.setText(chatMsg.from);
+				holder.ivRightIcon.setImageResource(chatMsg.gender == 0 ? R.drawable.chat_female_icon : R.drawable.chat_male_icon);
+				ImageLoader.getInstance().displayImage(getShrinkImg(chatMsg.msg.content), holder.ivRightImage,
+						new DisplayImageOptions.Builder().cacheInMemory().cacheOnDisc().build());
+				holder.ivRightImage.setOnClickListener(new OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						showImg(chatMsg.msg.content);
+					}
+				});
 				break;
 			
 			default:
@@ -183,8 +210,26 @@ public class ChatListAdapter extends BaseAdapter {
 	public int getItemViewType(int position) {
 		
 		ChatMsg msg = myList.get(position);
-		int type = msg.type;
+		int type = msg.item_type;
 		return type;
+	}
+	
+	private String getShrinkImg(String img) {
+		
+		return img + "_s";
+		
+	}
+	
+	private void showImg(String path) {
+		ImageView imageView = (ImageView) ((Activity) context).getLayoutInflater().inflate(R.layout.chat_big_img, null);
+		imageView.setMinimumHeight(PhoneUtil.dip2px(context, 100));
+		imageView.setMinimumWidth(PhoneUtil.dip2px(context, 100));
+		
+		DisplayImageOptions displayImageOptions = new DisplayImageOptions.Builder().cacheInMemory().cacheOnDisc()
+				.showImageOnLoading(new BitmapDrawable(ImageLoader.getInstance().loadImageSync(getShrinkImg(path)))).build();
+		ImageLoader.getInstance().displayImage(path, imageView, displayImageOptions);
+		new AlertDialog.Builder(context).setView(imageView).show();
+		
 	}
 	
 	/**

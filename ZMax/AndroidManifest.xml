@@ -75,7 +75,8 @@
         <activity android:name="com.zmax.app.ui.HotelFacilityActivity" />
         <activity android:name="com.zmax.app.ui.HotelCommentActivity" />
         <activity android:name="com.zmax.app.ui.HotelDatePickActivity" />
-        <activity android:name="com.zmax.app.ui.AboutActivity" />
+        <activity android:name="com.zmax.app.ui.AboutActivity" >
+        </activity>
         <activity android:name="com.zmax.app.ui.ActsInHotelActivity" />
         <activity android:name="com.zmax.app.ui.RoomControlActivity" >
         </activity>

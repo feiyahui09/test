@@ -9,14 +9,12 @@ import java.util.Date;
 
 import org.json.JSONObject;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v4.app.DialogFragment;
-import android.support.v4.app.FragmentActivity;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.TextUtils;
@@ -37,7 +35,9 @@ import android.widget.TextView.OnEditorActionListener;
 import com.zmax.app.R;
 import com.zmax.app.adapter.GridViewFaceAdapter;
 import com.zmax.app.chat.promelo.DataCallBack;
-import com.zmax.app.ui.base.BaseActivity;
+import com.zmax.app.model.UploadResult;
+import com.zmax.app.net.NetWorkHelper;
+import com.zmax.app.task.UploadImgTask;
 import com.zmax.app.ui.base.BaseFragmentActivity;
 import com.zmax.app.utils.Constant;
 import com.zmax.app.utils.JsonMapperUtils;
@@ -60,34 +60,12 @@ public class ChatRoomActivity extends BaseFragmentActivity implements OnClickLis
 	private ChatHelper chatHelper;
 	private TextView tv_title;
 	private DialogFragment dialog;
+	UploadImgTask uploadImgTask;
 	
 	private static final long CHAT_MUTE_DURATION = 10 * 60 * 1000;// default 10
-																	// mins
 	private static long last_chat_time = 0;
-	
-	private static int count = 0;
 	private static String self_user_name = "围观淡定哥";
 	private static int self_user_gender = 1;
-	
-	private Runnable sendRunnable = new Runnable() {
-		
-		@Override
-		public void run() {
-			final String str;
-			if ("userid".equals("2"))
-				str = "自动广播：你是猴子请来的逗比么     ";
-			else
-				str = "[ffn],[单眼],[调皮],[嘟嘴],[愤怒],[哈哈],[害羞],[坏笑],[慌张],[惊讶],[开心到喊],[可爱],[酷],[困],[流汗],[魔鬼],[内年满面],[撇嘴],[气愤],[伤心],[生病],[失望],[叹气],[舔嘴],[微笑],[委屈],[喜欢],[笑着流汗],[憎],[皱眉]  ";
-			
-			chatHelper.send(str, new DataCallBack() {
-				public void responseData(JSONObject msg) {
-					// handle data here
-					Log.i("send: response  " + msg.toString());
-				}
-			});
-			handler.postDelayed(this, 21000);
-		}
-	};
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -136,7 +114,7 @@ public class ChatRoomActivity extends BaseFragmentActivity implements OnClickLis
 							}
 						});
 					}
-				});
+				}, false);
 				return false;
 			}
 		});
@@ -179,7 +157,7 @@ public class ChatRoomActivity extends BaseFragmentActivity implements OnClickLis
 		// 修改名字性别后，刷新原有聊天列表
 		if (adapter != null && adapter.getCount() > 0) {
 			for (ChatMsg message : adapter.getMsgList()) {
-				if (message.type == ChatListAdapter.VALUE_RIGHT_TEXT || message.type == ChatListAdapter.VALUE_RIGHT_IMAGE) {
+				if (message.item_type == ChatListAdapter.VALUE_RIGHT_TEXT || message.item_type == ChatListAdapter.VALUE_RIGHT_IMAGE) {
 					message.gender = self_user_gender;
 					message.from = self_user_name;
 				}
@@ -226,19 +204,54 @@ public class ChatRoomActivity extends BaseFragmentActivity implements OnClickLis
 							}
 						});
 					}
-				});
+				}, false);
 				break;
 			case R.id.iv_pic:
-				new AlertDialog.Builder(mContext).setTitle("title")
-						.setItems(R.array.pic_dialog_items, new DialogInterface.OnClickListener() {
-							@Override
-							public void onClick(DialogInterface dialog, int which) {
-								if (which == 0) {
+				
+				uploadImgTask = new UploadImgTask(mContext, new UploadImgTask.TaskCallBack() {
+					@Override
+					public void onCallBack(UploadResult result) {
+						if (result == null) {
+							if (!NetWorkHelper.checkNetState(mContext))
+								Utility.toastNetworkFailed(mContext);
+							else
+								Utility.toastFailedResult(mContext);
+						}
+						else if (result.status != 200) {
+							Utility.toastResult(mContext, result.message);
+						}
+						else {
+							Utility.toastResult(mContext, "ok .");
+							
+							chatHelper.send(result.image, new DataCallBack() {
+								@Override
+								public void responseData(final JSONObject arg0) {
+									handler.post(new Runnable() {
+										@Override
+										public void run() {
+											et_edit.clearComposingText();
+											et_edit.setText("");
+											Log.i("" + arg0.toString());
+										}
+									});
 								}
-								else if (which == 1) {
-								}
-							}
-						}).show();
+							}, true);
+						}
+					}
+				});
+				uploadImgTask.execute("sdcard/Download/p1.png");
+				
+				// new AlertDialog.Builder(mContext).setTitle("title")
+				// .setItems(R.array.pic_dialog_items, new
+				// DialogInterface.OnClickListener() {
+				// @Override
+				// public void onClick(DialogInterface dialog, int which) {
+				// if (which == 0) {
+				// }
+				// else if (which == 1) {
+				// }
+				// }
+				// }).show();
 				break;
 			case R.id.iv_emotion:
 				// et_edit.setVisibility(View.VISIBLE);
@@ -275,7 +288,6 @@ public class ChatRoomActivity extends BaseFragmentActivity implements OnClickLis
 	public void onDestroy() {
 		super.onDestroy();
 		if (chatHelper != null) chatHelper.disConnect();
-		handler.removeCallbacks(sendRunnable);
 	}
 	
 	private InputMethodManager imm;
@@ -352,18 +364,10 @@ public class ChatRoomActivity extends BaseFragmentActivity implements OnClickLis
 			handler.post(new Runnable() {
 				@Override
 				public void run() {
-					// showAlertOKDialog("!!!", "发送信息失败！", new
-					// DialogInterface.OnClickListener() {
-					// @Override
-					// public void onClick(DialogInterface dialog, int which) {
-					// // finish();
-					// }
-					// });
 					dialog = SimpleDialogFragment.createBuilder(mContext, getSupportFragmentManager()).setPositiveButtonText("确定")
 							.setTitle("提示").setMessage("发送信息失败!").setRequestCode(TYPE_SEND_FAILED).show();
 				}
 			});
-			
 		}
 		
 		@Override
@@ -385,13 +389,6 @@ public class ChatRoomActivity extends BaseFragmentActivity implements OnClickLis
 		
 		@Override
 		public void onEnterFailed(Exception e) {
-			// showAlertOKDialog("!!!", "连接错误！请稍后再试", new
-			// DialogInterface.OnClickListener() {
-			// @Override
-			// public void onClick(DialogInterface dialog, int which) {
-			// finish();
-			// }
-			// });
 			dialog = SimpleDialogFragment.createBuilder(mContext, getSupportFragmentManager()).setPositiveButtonText("确定").setTitle("提示")
 					.setMessage("连接错误！请稍后再试!").setCancelable(false).setRequestCode(TYPE_CONNECT_FAILED).show();
 		}
@@ -404,8 +401,6 @@ public class ChatRoomActivity extends BaseFragmentActivity implements OnClickLis
 				dialog = SimpleDialogFragment.createBuilder(mContext, getSupportFragmentManager()).setPositiveButtonText("确定")
 						.setTitle("提示").setMessage(getString(R.string.unkownError)).setCancelable(false).setRequestCode(TYPE_UNKOWNERROR)
 						.show();
-				// Utility.toastResult(mContext,
-				// getString(R.string.unkownError));
 				return;
 			}
 			int code = 200;
@@ -454,15 +449,23 @@ public class ChatRoomActivity extends BaseFragmentActivity implements OnClickLis
 					last_chat_time = System.currentTimeMillis();
 					
 					ChatMsg chatMsg = JsonMapperUtils.toObject(msg, ChatMsg.class);
-					
+					// 自己发的信息，右边
 					if (self_user_name.equals(chatMsg.from)) {
-						chatMsg.type = ChatListAdapter.VALUE_RIGHT_TEXT;
-						show(chatMsg);
+						if ("image".equals(chatMsg.type) || chatMsg.msg.content.endsWith(".png") || chatMsg.msg.content.endsWith(".jpg")) {
+							chatMsg.item_type = ChatListAdapter.VALUE_RIGHT_IMAGE;
+						}
+						else
+							chatMsg.item_type = ChatListAdapter.VALUE_RIGHT_TEXT;
 					}
 					else {
-						chatMsg.type = ChatListAdapter.VALUE_LEFT_TEXT;
-						show(chatMsg);
+						// 其他人，左边
+						if ("image".equals(chatMsg.type) || chatMsg.msg.content.endsWith(".png") || chatMsg.msg.content.endsWith(".jpg")) {
+							chatMsg.item_type = ChatListAdapter.VALUE_LEFT_IMAGE;
+						}
+						else
+							chatMsg.item_type = ChatListAdapter.VALUE_LEFT_TEXT;
 					}
+					show(chatMsg);
 				}
 			});
 		}
@@ -487,13 +490,11 @@ public class ChatRoomActivity extends BaseFragmentActivity implements OnClickLis
 		
 		@Override
 		public void onMessage(JSONObject arg0, IOAcknowledge arg1) {
-			// TODO Auto-generated method stub
 			
 		}
 		
 		@Override
 		public void onMessage(String arg0, IOAcknowledge arg1) {
-			// TODO Auto-generated method stub
 			
 		}
 		
@@ -502,10 +503,8 @@ public class ChatRoomActivity extends BaseFragmentActivity implements OnClickLis
 			handler.post(new Runnable() {
 				@Override
 				public void run() {
-					
 					dialog = SimpleDialogFragment.createBuilder(mContext, getSupportFragmentManager()).setTitle("提示").setCancelable(false)
 							.setMessage("与聊天室连接超时！").setPositiveButtonText("确定").setRequestCode(TYPE_SOCKET_TIME_OUT).show();
-					
 				}
 			});
 		}
@@ -516,20 +515,17 @@ public class ChatRoomActivity extends BaseFragmentActivity implements OnClickLis
 		
 		@Override
 		public void onConnect() {
-			// TODO Auto-generated method stub
 			
 		}
 		
 		@Override
 		public void on(String arg0, IOAcknowledge arg1, Object... arg2) {
-			// TODO Auto-generated method stub
 			
 		}
 	};
 	
 	@Override
 	public void onNegativeButtonClicked(int arg0) {
-		// TODO Auto-generated method stub
 		
 	}
 	
