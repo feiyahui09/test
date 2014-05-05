@@ -31,8 +31,8 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.zmax.app.R;
+import com.zmax.app.ZMaxApplication;
 import com.zmax.app.model.Update;
-import com.zmax.app.net.HttpUtils;
 import com.zmax.app.net.NetWorkHelper;
 import com.zmax.app.task.CheckUpdateTask;
 import com.zmax.app.ui.AboutActivity;
@@ -203,7 +203,7 @@ public class SettingFragment extends Fragment implements OnClickListener {
 						inty.setDataAndType(Uri.parse("file://" + getApkPath()), "application/vnd.android.package-archive");
 						inty.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 						// context.startActivity(intent);
-						PendingIntent intent = PendingIntent.getActivity(getActivity(), 0, inty, 0);
+						PendingIntent intent = PendingIntent.getActivity(ZMaxApplication.getInstance(), 0, inty, 0);
 						mBuilder.setContentIntent(intent);
 						
 						mNotifyManager.notify(0, mBuilder.build());

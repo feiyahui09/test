@@ -21,6 +21,7 @@ import com.zmax.app.ui.fragment.ActListFragment;
 import com.zmax.app.ui.fragment.DefaultFragment;
 import com.zmax.app.ui.fragment.HotelBookFragment;
 import com.zmax.app.ui.fragment.MoreMenuFragment;
+import com.zmax.app.utils.Log;
 
 /**
  * This activity is an example of a responsive Android UI. On phones, the
@@ -154,9 +155,16 @@ public class BaseSlidingFragmentActivity extends SlidingFragmentActivity {
 	}
 	
 	public void switchContent(final Fragment fragment) {
-		// if (fragment == null || fragment.getActivity() == null
-		// || !fragment.isAdded())
-		// return;
+//		Log.i("[maxMemory]:  " + Runtime.getRuntime().maxMemory()/1000+"k");
+//		Log.i("[totalMemory]:  " + Runtime.getRuntime().totalMemory()/1000+"k");
+//		Log.i("[freeMemory]:   " + Runtime.getRuntime().freeMemory()/1000+"k");
+//		
+//		System.gc();
+//		
+//		Log.i("after  [maxMemory]:  " + Runtime.getRuntime().maxMemory()/1000+"k");
+//		Log.i("after  [totalMemory]:  " + Runtime.getRuntime().totalMemory()/1000+"k");
+//		Log.i("after  [freeMemory]:   " + Runtime.getRuntime().freeMemory()/1000+"k");
+		
 		mContent = fragment;
 		if (mContent instanceof ActListFragment) {
 			findViewById(R.id.above_content_second_header).setVisibility(View.VISIBLE);
@@ -180,7 +188,6 @@ public class BaseSlidingFragmentActivity extends SlidingFragmentActivity {
 				// }
 			}
 		}, 50);
-		
 		
 	}
 	
