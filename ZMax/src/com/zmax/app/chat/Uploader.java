@@ -1,10 +1,10 @@
 package com.zmax.app.chat;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 
 import org.apache.commons.io.FileUtils;
-import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
@@ -13,24 +13,30 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.graphics.Bitmap;
+import android.text.TextUtils;
+import android.util.Base64;
+
 import com.zmax.app.model.UploadResult;
 import com.zmax.app.utils.JsonMapperUtils;
 import com.zmax.app.utils.Log;
-
-import android.util.Base64;
 
 public class Uploader {
 	private String url;
 	private String fileName;
 	
-	public Uploader(String url, String fileName) {
+	private Bitmap bitmap;
+	
+	public Uploader(String url, Object object) {
 		this.url = url;
-		this.fileName = fileName;
+		if (object instanceof String)
+			this.fileName = (String) object;
+		else if (object instanceof Bitmap) this.bitmap = (Bitmap) object;
 		Log.i("urL: " + url);
 		Log.i("fileName: " + fileName);
 	}
 	
-	public UploadResult upload()  {
+	public UploadResult upload() {
 		UploadResult result = null;
 		try {
 			JSONObject jsonObject = constructPictureJson();
@@ -50,20 +56,31 @@ public class Uploader {
 		catch (Exception e) {
 			result = null;
 			Log.e(e.toString());
+			e.printStackTrace();
 		}
 		return result;
 	}
 	
 	public JSONObject constructPictureJson() throws JSONException, IOException {
-		String[] file = fileName.split("/");
-		JSONObject picturefile = new JSONObject();
-		picturefile.put("original_filename", "base64:" + file[file.length - 1]);
-		picturefile.put("filename", file[file.length - 1]);
-		picturefile.put("file", encodePicture(fileName));
 		JSONObject picture = new JSONObject();
-		picture.put("picture", picturefile);
 		
+		if (!TextUtils.isEmpty(fileName)) {
+			String[] file = fileName.split("/");
+			JSONObject picturefile = new JSONObject();
+			picturefile.put("original_filename", "base64:" + file[file.length - 1]);
+			picturefile.put("filename", file[file.length - 1]);
+			picturefile.put("file", encodePicture(fileName));
+			picture.put("picture", picturefile);
+		}
+		else if (bitmap != null) {
+			JSONObject picturefile = new JSONObject();
+			picturefile.put("original_filename", "png");
+			picturefile.put("filename", "png");
+			picturefile.put("file", encodePicture(bitmap));
+			picture.put("picture", picturefile);
+		}
 		return picture;
+		
 	}
 	
 	public String encodePicture(String fileName) throws IOException {
@@ -71,4 +88,9 @@ public class Uploader {
 		return Base64.encodeToString(FileUtils.readFileToByteArray(picture), Base64.DEFAULT);
 	}
 	
+	public String encodePicture(Bitmap bitmap) {
+		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+		bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream);
+		return Base64.encodeToString(outputStream.toByteArray(), Base64.DEFAULT);
+	}
 }

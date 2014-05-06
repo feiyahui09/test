@@ -4,16 +4,26 @@ import io.socket.IOAcknowledge;
 import io.socket.IOCallback;
 import io.socket.SocketIOException;
 
+import java.io.File;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.json.JSONObject;
 
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Message;
+import android.provider.MediaStore;
 import android.support.v4.app.DialogFragment;
 import android.text.Spannable;
 import android.text.SpannableString;
@@ -31,6 +41,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
+import android.widget.Toast;
 
 import com.zmax.app.R;
 import com.zmax.app.adapter.GridViewFaceAdapter;
@@ -40,8 +51,11 @@ import com.zmax.app.net.NetWorkHelper;
 import com.zmax.app.task.UploadImgTask;
 import com.zmax.app.ui.base.BaseFragmentActivity;
 import com.zmax.app.utils.Constant;
+import com.zmax.app.utils.FileUtil;
+import com.zmax.app.utils.ImageUtils;
 import com.zmax.app.utils.JsonMapperUtils;
 import com.zmax.app.utils.Log;
+import com.zmax.app.utils.MediaUtils;
 import com.zmax.app.utils.PhoneUtil;
 import com.zmax.app.utils.Utility;
 
@@ -125,9 +139,7 @@ public class ChatRoomActivity extends BaseFragmentActivity implements OnClickLis
 				if (keyCode == KeyEvent.KEYCODE_BACK) {
 					if (isIMMOrFaceShow) {
 						isIMMOrFaceShow = false;
-						et_edit.clearFocus();// 隐藏软键盘
-						// et_edit.setVisibility(View.GONE);// 隐藏编辑框
-						hideFace();// 隐藏表情
+						hideAndHideIMM();
 						return true;
 					}
 				}
@@ -193,13 +205,14 @@ public class ChatRoomActivity extends BaseFragmentActivity implements OnClickLis
 					Utility.toastResult(mContext, "输入内容不能为空哦！");
 					return;
 				}
+				hideAndHideIMM();
 				chatHelper.send(et_edit.getText().toString(), new DataCallBack() {
 					@Override
 					public void responseData(final JSONObject arg0) {
 						handler.post(new Runnable() {
 							@Override
 							public void run() {
-								et_edit.clearComposingText();
+								// et_edit.clearComposingText();
 								et_edit.setText("");
 								Log.i("" + arg0.toString());
 							}
@@ -208,39 +221,9 @@ public class ChatRoomActivity extends BaseFragmentActivity implements OnClickLis
 				}, false);
 				break;
 			case R.id.iv_pic:
-				
-				uploadImgTask = new UploadImgTask(mContext, new UploadImgTask.TaskCallBack() {
-					@Override
-					public void onCallBack(UploadResult result) {
-						if (result == null) {
-							if (!NetWorkHelper.checkNetState(mContext))
-								Utility.toastNetworkFailed(mContext);
-							else
-								Utility.toastFailedResult(mContext);
-						}
-						else if (result.status != 200) {
-							Utility.toastResult(mContext, result.message);
-						}
-						else {
-							Utility.toastResult(mContext, "ok .");
-							
-							chatHelper.send(result.image, new DataCallBack() {
-								@Override
-								public void responseData(final JSONObject arg0) {
-									handler.post(new Runnable() {
-										@Override
-										public void run() {
-											et_edit.clearComposingText();
-											et_edit.setText("");
-											Log.i("" + arg0.toString());
-										}
-									});
-								}
-							}, true);
-						}
-					}
-				});
-				uploadImgTask.execute("sdcard/Download/p1.png");
+				hideAndHideIMM();
+				CharSequence[] items = { "图片", "拍照" };
+				imageChooseItem(items);
 				
 				// new AlertDialog.Builder(mContext).setTitle("title")
 				// .setItems(R.array.pic_dialog_items, new
@@ -263,9 +246,11 @@ public class ChatRoomActivity extends BaseFragmentActivity implements OnClickLis
 				break;
 			
 			case R.id.btn_back:
+				hideAndHideIMM();
 				finish();
 				break;
 			case R.id.btn_share:
+				hideAndHideIMM();
 				startActivity(new Intent(mContext, ChatMoreActivity.class));
 				
 				break;
@@ -275,6 +260,198 @@ public class ChatRoomActivity extends BaseFragmentActivity implements OnClickLis
 			default:
 				break;
 		}
+	}
+	
+	private String theLarge;
+	private String theThumbnail;
+	private File imgFile;
+	
+	public void imageChooseItem(CharSequence[] items) {
+		AlertDialog imageDialog = new AlertDialog.Builder(this).setTitle("上传图片").setIcon(android.R.drawable.btn_star)
+				.setItems(items, new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int item) {
+						// 手机选图
+						if (item == 0) {
+							Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+							intent.addCategory(Intent.CATEGORY_OPENABLE);
+							intent.setType("image/*");
+							startActivityForResult(Intent.createChooser(intent, "选择图片"), ImageUtils.REQUEST_CODE_GETIMAGE_BYSDCARD);
+						}
+						// 拍照
+						else if (item == 1) {
+							String savePath = "";
+							// 判断是否挂载了SD卡
+							String storageState = Environment.getExternalStorageState();
+							if (storageState.equals(Environment.MEDIA_MOUNTED)) {
+								savePath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/zmax/Camera/";// 存放照片的文件夹
+								File savedir = new File(savePath);
+								if (!savedir.exists()) {
+									savedir.mkdirs();
+								}
+							}
+							
+							// 没有挂载SD卡，无法保存文件
+							if (TextUtils.isEmpty(savePath)) {
+								Utility.toastResult(mContext, "无法保存照片，请检查SD卡是否挂载");
+								return;
+							}
+							
+							String timeStamp = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+							String fileName = "thumb_" + timeStamp + ".jpg";// 照片命名
+							File out = new File(savePath, fileName);
+							Uri uri = Uri.fromFile(out);
+							
+							theLarge = savePath + fileName;// 该照片的绝对路径
+							
+							Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+							intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
+							startActivityForResult(intent, ImageUtils.REQUEST_CODE_GETIMAGE_BYCAMERA);
+						}
+					}
+				}).create();
+		
+		imageDialog.show();
+	}
+	
+	@Override
+	protected void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
+		if (resultCode != RESULT_OK) return;
+		
+		handler = new Handler() {
+			public void handleMessage(Message msg) {
+				if (msg.what == 1 && msg.obj != null) {
+					// 显示图片
+					uploadImgTask = new UploadImgTask(mContext, new UploadImgTask.TaskCallBack() {
+						@Override
+						public void onCallBack(UploadResult result) {
+							if (result == null) {
+								if (!NetWorkHelper.checkNetState(mContext))
+									Utility.toastNetworkFailed(mContext);
+								else
+									Utility.toastFailedResult(mContext);
+							}
+							else if (result.status != 200) {
+								Utility.toastResult(mContext, result.message);
+							}
+							else {
+								Utility.toastResult(mContext, "ok .");
+								
+								chatHelper.send(result.image, new DataCallBack() {
+									@Override
+									public void responseData(final JSONObject arg0) {
+										handler.post(new Runnable() {
+											@Override
+											public void run() {
+												et_edit.clearComposingText();
+												et_edit.setText("");
+												Log.i("" + arg0.toString());
+											}
+										});
+									}
+								}, true);
+							}
+						}
+					});
+					uploadImgTask.execute(msg.obj);
+				}
+			}
+		};
+		
+		new Thread() {
+			public void run() {
+				Bitmap bitmap = null;
+				
+				if (requestCode == ImageUtils.REQUEST_CODE_GETIMAGE_BYSDCARD) {
+					if (data == null) return;
+					
+					Uri thisUri = data.getData();
+					String thePath = ImageUtils.getAbsolutePathFromNoStandardUri(thisUri);
+					
+					// 如果是标准Uri
+					if (TextUtils.isEmpty(thePath)) {
+						theLarge = ImageUtils.getAbsoluteImagePath((Activity) mContext, thisUri);
+					}
+					else {
+						theLarge = thePath;
+					}
+					
+					String attFormat = FileUtil.getFileFormat(theLarge);
+					if (!"photo".equals(MediaUtils.getContentType(attFormat))) {
+						Log.i("attFormat:" + attFormat);
+						Log.i("MediaUtils.getContentType(attFormat):" + MediaUtils.getContentType(attFormat));
+						handler.post(new Runnable() {
+							@Override
+							public void run() {
+								
+								Toast.makeText(mContext, "无效图片类型！", Toast.LENGTH_SHORT).show();
+							}
+						});
+						return;
+					}
+					
+					// 获取图片缩略图 只有Android2.1以上版本支持
+					String imgName = FileUtil.getFileName(theLarge);
+					bitmap = ImageUtils.loadImgThumbnail((Activity) mContext, imgName, MediaStore.Images.Thumbnails.MICRO_KIND);
+					
+					if (bitmap == null && !TextUtils.isEmpty(theLarge)) {
+						bitmap = ImageUtils.loadImgThumbnail(theLarge, 100, 100);
+					}
+				}
+				// 拍摄图片
+				else if (requestCode == ImageUtils.REQUEST_CODE_GETIMAGE_BYCAMERA) {
+					if (bitmap == null && !TextUtils.isEmpty(theLarge)) {
+						bitmap = ImageUtils.loadImgThumbnail(theLarge, 100, 100);
+					}
+				}
+				
+				if (bitmap != null) {
+					// 存放照片的文件夹
+					String savePath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/zmax/Camera/";
+					File savedir = new File(savePath);
+					if (!savedir.exists()) {
+						savedir.mkdirs();
+					}
+					
+					String largeFileName = FileUtil.getFileName(theLarge);
+					String largeFilePath = savePath + largeFileName;
+					// 判断是否已存在缩略图
+					if (largeFileName.startsWith("thumb_") && new File(largeFilePath).exists()) {
+						theThumbnail = largeFilePath;
+						imgFile = new File(theThumbnail);
+					}
+					else {
+						// 生成上传的800宽度图片
+						String thumbFileName = "thumb_" + largeFileName;
+						theThumbnail = savePath + thumbFileName;
+						if (new File(theThumbnail).exists()) {
+							imgFile = new File(theThumbnail);
+						}
+						else {
+							try {
+								// 压缩上传的图片
+								ImageUtils.createImageThumbnail(mContext, theLarge, theThumbnail, 800, 80);
+								imgFile = new File(theThumbnail);
+							}
+							catch (IOException e) {
+								e.printStackTrace();
+							}
+						}
+					}
+					// 保存动弹临时图片
+					// ((AppContext)
+					// getApplication()).setProperty(tempTweetImageKey,
+					// theThumbnail);
+					
+					Message msg = new Message();
+					msg.what = 1;
+					msg.obj = theThumbnail;
+					Log.d("theThumbnail: " + theThumbnail);
+					Log.d("theLarge: " + theLarge);
+					
+					handler.sendMessage(msg);
+				}
+			};
+		}.start();
 	}
 	
 	private void show(ChatMsg chatMsg) {
@@ -330,6 +507,12 @@ public class ChatRoomActivity extends BaseFragmentActivity implements OnClickLis
 		iv_emotion.setImageResource(R.drawable.chat_emotion);
 		iv_emotion.setTag(null);
 		mGridView.setVisibility(View.GONE);
+	}
+	
+	private void hideAndHideIMM() {
+		isIMMOrFaceShow = false;
+		et_edit.clearFocus();// 隐藏软键盘
+		hideFace();// 隐藏表情
 	}
 	
 	private void showOrHideIMM() {

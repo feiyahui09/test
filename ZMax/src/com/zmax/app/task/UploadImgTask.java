@@ -7,7 +7,7 @@ import com.zmax.app.chat.Uploader;
 import com.zmax.app.model.UploadResult;
 import com.zmax.app.utils.Constant;
 
-public class UploadImgTask extends AsyncTask<String, Void, UploadResult> {
+public class UploadImgTask extends AsyncTask<Object, Void, UploadResult> {
 	private Context context;
 	private TaskCallBack callBack;
 	
@@ -23,7 +23,7 @@ public class UploadImgTask extends AsyncTask<String, Void, UploadResult> {
 	}
 	
 	@Override
-	protected UploadResult doInBackground(String... params) {
+	protected UploadResult doInBackground(Object... params) {
 		Uploader up = new Uploader(Constant.ZMAX_URL + "chat/image/upload", params[0]);
 		return up.upload();
 	}

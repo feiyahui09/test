@@ -49,6 +49,10 @@ public class Utility {
 		showToast(context, "获取信息失败，请稍后再试！");
 	}
 	
+	public static void toastUnkownResult(Context context) {
+		showToast(context, context.getString(R.string.unkownError));
+	}
+	
 	public static void toastResult(Context context, String msg) {
 		showToast(context, msg);
 	}
@@ -64,9 +68,9 @@ public class Utility {
 	private static Toast mToast;
 	
 	public static void showToast(Context context, String text) {
-		if(TextUtils.isEmpty(text))return ;
+		if (TextUtils.isEmpty(text)) return;
 		if (mToast == null) {
-			mToast = Toast.makeText(context, text+"", Toast.LENGTH_SHORT);
+			mToast = Toast.makeText(context, text + "", Toast.LENGTH_SHORT);
 		}
 		else {
 			mToast.setText(text);

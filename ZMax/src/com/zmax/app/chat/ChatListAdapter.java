@@ -6,8 +6,10 @@ import java.util.List;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.text.SpannableString;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -16,12 +18,14 @@ import android.view.WindowManager.LayoutParams;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.baidu.platform.comapi.map.a.r;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.zmax.app.R;
+import com.zmax.app.task.GetRoomStatusTask;
 import com.zmax.app.utils.EmotionUtils;
 import com.zmax.app.utils.Log;
 import com.zmax.app.utils.PhoneUtil;
@@ -167,7 +171,7 @@ public class ChatListAdapter extends BaseAdapter {
 				holder.ivRightImage.setOnClickListener(new OnClickListener() {
 					@Override
 					public void onClick(View v) {
-						showImg(chatMsg.msg.content);
+						showImg(v, chatMsg.msg.content);
 					}
 				});
 				
@@ -191,7 +195,7 @@ public class ChatListAdapter extends BaseAdapter {
 				holder.ivRightImage.setOnClickListener(new OnClickListener() {
 					@Override
 					public void onClick(View v) {
-						showImg(chatMsg.msg.content);
+						showImg(v, chatMsg.msg.content);
 					}
 				});
 				break;
@@ -229,6 +233,19 @@ public class ChatListAdapter extends BaseAdapter {
 				.showImageOnLoading(new BitmapDrawable(ImageLoader.getInstance().loadImageSync(getShrinkImg(path)))).build();
 		ImageLoader.getInstance().displayImage(path, imageView, displayImageOptions);
 		new AlertDialog.Builder(context).setView(imageView).show();
+		
+	}
+	
+	private void showImg(View view, String path) {
+		PopupWindow popupWindow = new PopupWindow(context);
+		popupWindow.setWindowLayoutMode(android.view.ViewGroup.LayoutParams.WRAP_CONTENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT);
+		popupWindow.setBackgroundDrawable(new BitmapDrawable(BitmapFactory.decodeResource(context.getResources(), R.drawable.black_bg_2)));
+		popupWindow.setOutsideTouchable(true);
+		popupWindow.setFocusable(true);
+		ImageView imageView = (ImageView) ((Activity) context).getLayoutInflater().inflate(R.layout.chat_big_img, null);
+		popupWindow.setContentView(imageView);
+		popupWindow.showAtLocation(new View(context), Gravity.CENTER, 0, 0);
+		ImageLoader.getInstance().displayImage(path, imageView);
 		
 	}
 	
