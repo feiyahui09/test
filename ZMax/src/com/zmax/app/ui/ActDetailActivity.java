@@ -1,8 +1,6 @@
 package com.zmax.app.ui;
 
 import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.DialogFragment;
@@ -28,9 +26,7 @@ import com.zmax.app.ui.fragment.ActDetailFirstFragment;
 import com.zmax.app.ui.fragment.ActDetailSecondFragment;
 import com.zmax.app.ui.fragment.ActDetailThirdFragment;
 import com.zmax.app.utils.Constant;
-import com.zmax.app.utils.Log;
 import com.zmax.app.utils.ShareUtils;
-import com.zmax.app.utils.StackBlurManager;
 import com.zmax.app.utils.Utility;
 
 import eu.inmite.android.lib.dialogs.ProgressDialogFragment;

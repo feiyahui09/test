@@ -13,8 +13,11 @@
     </style>
 
     <!-- Application theme. -->
-    <style name="AppTheme" parent="AppBaseTheme">
+    <style name="AppTheme"  >
+
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+        <item name="android:screenOrientation">portrait</item>
+        <item name="android:windowNoTitle">true</item>
     </style>
 
     <style name="ShareDialog" parent="@android:Theme.Dialog">

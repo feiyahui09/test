@@ -55,39 +55,96 @@
             android:name="com.zmax.app.ui.MainActivity"
             android:label="@string/app_name"
             android:launchMode="singleTop"
-            android:theme="@android:style/Theme.NoTitleBar" >
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.zmax.app.chat.ChatRoomActivity" >
+        <activity
+            android:name="com.zmax.app.chat.ChatRoomActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" >
         </activity>
-        <activity android:name="com.zmax.app.ui.ActDetailFlashActivity" />
-        <activity android:name="com.zmax.app.ui.ActDetailActivity" />
-        <activity android:name="com.zmax.app.chat.ChatIndexActivity" />
-        <activity android:name="com.zmax.app.chat.ChatMoreActivity" />
-        <activity android:name="com.zmax.app.chat.ChatSettingActivity" >
+        <activity
+            android:name="com.zmax.app.ui.ActDetailFlashActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name="com.zmax.app.ui.ActDetailActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name="com.zmax.app.chat.ChatIndexActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name="com.zmax.app.chat.ChatMoreActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name="com.zmax.app.chat.ChatSettingActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" >
         </activity>
-        <activity android:name="com.zmax.app.ui.WebViewActivity" />
-        <activity android:name="com.zmax.app.ui.HotelDetailActivity" />
-        <activity android:name="com.zmax.app.ui.HotelFacilityActivity" />
-        <activity android:name="com.zmax.app.ui.HotelCommentActivity" />
-        <activity android:name="com.zmax.app.ui.HotelDatePickActivity" />
-        <activity android:name="com.zmax.app.ui.AboutActivity" >
+        <activity
+            android:name="com.zmax.app.ui.WebViewActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name="com.zmax.app.ui.HotelDetailActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name="com.zmax.app.ui.HotelFacilityActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name="com.zmax.app.ui.HotelCommentActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name="com.zmax.app.ui.HotelDatePickActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name="com.zmax.app.ui.AboutActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" >
         </activity>
-        <activity android:name="com.zmax.app.ui.ActsInHotelActivity" />
-        <activity android:name="com.zmax.app.ui.RoomControlActivity" >
+        <activity
+            android:name="com.zmax.app.ui.ActsInHotelActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name="com.zmax.app.ui.RoomControlActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" >
         </activity>
-        <activity android:name="com.zmax.app.ui.OrderFillActivity" />
-        <activity android:name="com.zmax.app.ui.WelcomeActivity" />
-        <activity android:name="com.zmax.app.map.RoutePlanDemo" />
+        <activity
+            android:name="com.zmax.app.ui.OrderFillActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name="com.zmax.app.ui.WelcomeActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name="com.zmax.app.map.RoutePlanDemo"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" />
         <activity
             android:name="com.zmax.app.ui.FeedBackActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateVisible|adjustResize" >
         </activity>
-        <activity android:name="com.zmax.app.ui.DocumentsActivity" />
+        <activity
+            android:name="com.zmax.app.ui.DocumentsActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" />
 
         <service android:name="com.zmax.app.manage.SendFeedbackService" >
         </service>

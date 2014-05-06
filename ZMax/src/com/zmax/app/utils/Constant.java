@@ -56,6 +56,9 @@ public class Constant {
 	
 	public static class Acts {
 		
+		
+		public static final String DATE_SPF_KEY = "date_spf_key";
+		public static final String CITY_SPF_KEY = "city_spf_key";
 		public static final String ID_KEY = "act_id_key";
 		public static final String HOTEL_ID_KEY = "hotel_id_key";
 		public static final String DATE_KEY = "act_date_key";
