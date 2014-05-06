@@ -98,6 +98,7 @@ public class ChatRoomActivity extends BaseFragmentActivity implements OnClickLis
 		
 		tv_title.setText("聊天室");
 		et_edit = (EditText) findViewById(R.id.et_edit);
+		et_edit.setOnClickListener(this);
 		et_edit.setOnEditorActionListener(new OnEditorActionListener() {
 			@Override
 			public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
@@ -119,20 +120,20 @@ public class ChatRoomActivity extends BaseFragmentActivity implements OnClickLis
 			}
 		});
 		
-		// et_edit.setOnKeyListener(new View.OnKeyListener() {
-		// public boolean onKey(View v, int keyCode, KeyEvent event) {
-		// if (keyCode == KeyEvent.KEYCODE_BACK) {
-		// if (isIMMOrFaceShow) {
-		// isIMMOrFaceShow=true;
-		// et_edit.clearFocus();// 隐藏软键盘
-		// // et_edit.setVisibility(View.GONE);// 隐藏编辑框
-		// hideFace();// 隐藏表情
-		// return true;
-		// }
-		// }
-		// return false;
-		// }
-		// });
+		et_edit.setOnKeyListener(new View.OnKeyListener() {
+			public boolean onKey(View v, int keyCode, KeyEvent event) {
+				if (keyCode == KeyEvent.KEYCODE_BACK) {
+					if (isIMMOrFaceShow) {
+						isIMMOrFaceShow = false;
+						et_edit.clearFocus();// 隐藏软键盘
+						// et_edit.setVisibility(View.GONE);// 隐藏编辑框
+						hideFace();// 隐藏表情
+						return true;
+					}
+				}
+				return false;
+			}
+		});
 		lv_chat = (ListView) findViewById(R.id.list_view);
 		adapter = new ChatListAdapter(mContext);
 		lv_chat.setAdapter(adapter);
@@ -332,27 +333,19 @@ public class ChatRoomActivity extends BaseFragmentActivity implements OnClickLis
 	}
 	
 	private void showOrHideIMM() {
+		isIMMOrFaceShow = true;
 		if (iv_emotion.getTag() == null) {
 			// 显示表情
-			handler.postDelayed(new Runnable() {
-				@Override
-				public void run() {
-					showFace();
-				}
-			}, 120);
+			showFace();
 			// 隐藏软键盘
 			imm.hideSoftInputFromWindow(et_edit.getWindowToken(), 0);
 		}
 		else {
+			// 隐藏表情
+			hideFace();
 			// 显示软键盘
 			imm.showSoftInput(et_edit, 0);
-			// 隐藏表情
-			handler.postDelayed(new Runnable() {
-				@Override
-				public void run() {
-					hideFace();
-				}
-			}, 120);
+			
 		}
 	}
 	
@@ -422,9 +415,9 @@ public class ChatRoomActivity extends BaseFragmentActivity implements OnClickLis
 				handler.post(new Runnable() {
 					@Override
 					public void run() {
-						// Utility.toastResult(mContext, message);
+						String _msg = TextUtils.isEmpty(message) ? getString(R.string.unkownError) : message;
 						dialog = SimpleDialogFragment.createBuilder(mContext, getSupportFragmentManager()).setTitle("提示")
-								.setCancelable(false).setMessage(message).setRequestCode(TYPE_CONNECTORENTER_ERROR)
+								.setCancelable(false).setMessage(_msg).setRequestCode(TYPE_CONNECTORENTER_ERROR)
 								.setPositiveButtonText("确定").show();
 					}
 				});
@@ -475,9 +468,9 @@ public class ChatRoomActivity extends BaseFragmentActivity implements OnClickLis
 			handler.post(new Runnable() {
 				@Override
 				public void run() {
-					// Utility.toastResult(mContext, msg);
+					String _msg = TextUtils.isEmpty(msg) ? "你已经被禁言！" : msg;
 					dialog = SimpleDialogFragment.createBuilder(mContext, getSupportFragmentManager()).setPositiveButtonText("确定")
-							.setTitle("提示").setMessage(msg).setRequestCode(TYPE_FORBIDDEN).show();
+							.setTitle("提示").setMessage(_msg).setRequestCode(TYPE_FORBIDDEN).show();
 				}
 			});
 		}
