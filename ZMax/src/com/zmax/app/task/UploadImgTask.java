@@ -23,6 +23,14 @@ public class UploadImgTask extends AsyncTask<Object, Void, UploadResult> {
 	}
 	
 	@Override
+	protected void onProgressUpdate(Void... values) {
+		// TODO Auto-generated method stub
+		super.onProgressUpdate(values);
+		
+		
+	}
+
+	@Override
 	protected UploadResult doInBackground(Object... params) {
 		Uploader up = new Uploader(Constant.ZMAX_URL + "chat/image/upload", params[0]);
 		return up.upload();

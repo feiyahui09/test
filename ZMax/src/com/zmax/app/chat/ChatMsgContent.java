@@ -15,4 +15,5 @@ public class ChatMsgContent implements Serializable {
 	@DatabaseField
 	public String createdAt; // 2014-04-21 11:31:41
 	
+	public String thumb_path;// for right only
 }

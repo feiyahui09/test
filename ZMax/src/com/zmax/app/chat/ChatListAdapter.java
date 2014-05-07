@@ -6,9 +6,11 @@ import java.util.List;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.text.SpannableString;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,11 +21,15 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.baidu.platform.comapi.map.a.r;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.assist.ImageLoadingListener;
+import com.nostra13.universalimageloader.core.assist.ImageLoadingProgressListener;
 import com.zmax.app.R;
 import com.zmax.app.task.GetRoomStatusTask;
 import com.zmax.app.utils.EmotionUtils;
@@ -135,6 +141,8 @@ public class ChatListAdapter extends BaseAdapter {
 					holder.ivRightIcon = (ImageView) convertView.findViewById(R.id.iv_icon);
 					holder.tvRightName = (TextView) convertView.findViewById(R.id.tv_right_name);
 					holder.ivRightImage = (ImageView) convertView.findViewById(R.id.iv_right_image);
+					holder.pbRight = (ProgressBar) convertView.findViewById(R.id.pb_right);
+					
 					// holder.ivRightImage.setImageResource(R.drawable.test);
 					break;
 				
@@ -219,9 +227,15 @@ public class ChatListAdapter extends BaseAdapter {
 	}
 	
 	private String getShrinkImg(String img) {
+		Log.i("orgin image url:   " + img);
+		String result = "";
+		if (img.startsWith("http"))
+			result = img + "_s";
+		else
+			result = "file:///" + img;
+		Log.i("thumb image url:   " + result);
 		
-		return img + "_s";
-		
+		return result;
 	}
 	
 	private void showImg(String path) {
@@ -236,15 +250,23 @@ public class ChatListAdapter extends BaseAdapter {
 		
 	}
 	
-	private void showImg(View view, String path) {
-		PopupWindow popupWindow = new PopupWindow(context);
-		popupWindow.setWindowLayoutMode(android.view.ViewGroup.LayoutParams.WRAP_CONTENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT);
-		popupWindow.setBackgroundDrawable(new BitmapDrawable(BitmapFactory.decodeResource(context.getResources(), R.drawable.black_bg_2)));
+	private void showImg(View view, final String path) {
+		final PopupWindow popupWindow = new PopupWindow(context);
+		popupWindow.setWindowLayoutMode(android.view.ViewGroup.LayoutParams.FILL_PARENT, android.view.ViewGroup.LayoutParams.FILL_PARENT);
+		popupWindow.setBackgroundDrawable(new BitmapDrawable(BitmapFactory.decodeResource(context.getResources(), R.drawable.black_bg)));
 		popupWindow.setOutsideTouchable(true);
 		popupWindow.setFocusable(true);
-		ImageView imageView = (ImageView) ((Activity) context).getLayoutInflater().inflate(R.layout.chat_big_img, null);
-		popupWindow.setContentView(imageView);
+		View v = ((Activity) context).getLayoutInflater().inflate(R.layout.chat_big_img, null);
+		final ImageView imageView = (ImageView) v.findViewById(R.id.iv_img);
+		v.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				popupWindow.dismiss();
+			}
+		});
+		popupWindow.setContentView(v);
 		popupWindow.showAtLocation(new View(context), Gravity.CENTER, 0, 0);
+		
 		ImageLoader.getInstance().displayImage(path, imageView);
 		
 	}
@@ -270,6 +292,8 @@ public class ChatListAdapter extends BaseAdapter {
 		private ImageView ivRightIcon;// 右边的头像
 		private Button btnRightText;// 右边的文本
 		private ImageView ivRightImage;// 右边的图像
+		private ProgressBar pbRight;// 右边的图像
+		
 		private TextView tvRightName;//
 		
 	}

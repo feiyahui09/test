@@ -75,6 +75,10 @@ public class Constant {
 		public static final String SELF_NAME = "self_name";
 		public static final String SELF_GENDER = "self_gender";
 		
+		
+		public static final String  CHAT_UPLOAD_IMG_LARGE_KEY="chat_upload_img_large_key";
+		public static final String CHAT_UPLOAD_IMG_THUMB_KEY = "chat_upload_img_thumb_key";
+
 	}
 	
 	public static final int PER_NUM_GET_ACTLIST = 5;

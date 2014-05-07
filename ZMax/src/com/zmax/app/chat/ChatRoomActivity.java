@@ -120,7 +120,6 @@ public class ChatRoomActivity extends BaseFragmentActivity implements OnClickLis
 					@Override
 					public void responseData(final JSONObject arg0) {
 						handler.post(new Runnable() {
-							
 							@Override
 							public void run() {
 								et_edit.clearComposingText();
@@ -177,6 +176,12 @@ public class ChatRoomActivity extends BaseFragmentActivity implements OnClickLis
 			}
 			adapter.notifyDataSetChanged();
 		}
+	}
+	
+	@Override
+	protected void onPause() {
+		// TODO Auto-generated method stub
+		super.onPause();
 	}
 	
 	// 192.168.0.69 //测试环境
@@ -262,8 +267,8 @@ public class ChatRoomActivity extends BaseFragmentActivity implements OnClickLis
 		}
 	}
 	
-	private String theLarge;
-	private String theThumbnail;
+	private String theOrgin;
+	private String theThumbnail, theLarge;
 	private File imgFile;
 	
 	public void imageChooseItem(CharSequence[] items) {
@@ -301,7 +306,7 @@ public class ChatRoomActivity extends BaseFragmentActivity implements OnClickLis
 							File out = new File(savePath, fileName);
 							Uri uri = Uri.fromFile(out);
 							
-							theLarge = savePath + fileName;// 该照片的绝对路径
+							theOrgin = savePath + fileName;// 该照片的绝对路径
 							
 							Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 							intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
@@ -313,6 +318,26 @@ public class ChatRoomActivity extends BaseFragmentActivity implements OnClickLis
 		imageDialog.show();
 	}
 	
+	ChatMsg curUploadChatMsg = new ChatMsg();
+	
+	private void showImgNow(String thumbImagePath) {
+		curUploadChatMsg.from = Constant.getLogin().nick_name;
+		curUploadChatMsg.gender = Constant.getLogin().gender;
+		curUploadChatMsg.type = "image";
+		curUploadChatMsg.item_type = ChatListAdapter.VALUE_RIGHT_IMAGE;
+		ChatMsgContent subMsg = new ChatMsgContent();
+		subMsg.createdAt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+		subMsg.content = thumbImagePath;
+		curUploadChatMsg.msg = subMsg;
+		show(curUploadChatMsg);
+		
+	}
+	
+	private void addImage(String imagePath) {
+		curUploadChatMsg.msg.content = imagePath;
+		adapter.notifyDataSetChanged();
+	}
+	
 	@Override
 	protected void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
 		if (resultCode != RESULT_OK) return;
@@ -320,7 +345,14 @@ public class ChatRoomActivity extends BaseFragmentActivity implements OnClickLis
 		handler = new Handler() {
 			public void handleMessage(Message msg) {
 				if (msg.what == 1 && msg.obj != null) {
+					
+					final String large = ((Bundle) msg.obj).getString(Constant.Chat.CHAT_UPLOAD_IMG_LARGE_KEY);
+					final String thumb = ((Bundle) msg.obj).getString(Constant.Chat.CHAT_UPLOAD_IMG_THUMB_KEY);
+					
 					// 显示图片
+					// curUploadChatMsg = new ChatMsg();
+					// showImgNow(thumb);
+					Utility.toastResult(mContext, "图片上传中！");
 					uploadImgTask = new UploadImgTask(mContext, new UploadImgTask.TaskCallBack() {
 						@Override
 						public void onCallBack(UploadResult result) {
@@ -328,14 +360,14 @@ public class ChatRoomActivity extends BaseFragmentActivity implements OnClickLis
 								if (!NetWorkHelper.checkNetState(mContext))
 									Utility.toastNetworkFailed(mContext);
 								else
-									Utility.toastFailedResult(mContext);
+									Utility.toastResult(mContext, "上传失败，请稍后再试！");
 							}
 							else if (result.status != 200) {
 								Utility.toastResult(mContext, result.message);
 							}
 							else {
 								Utility.toastResult(mContext, "ok .");
-								
+								// addImage(large);
 								chatHelper.send(result.image, new DataCallBack() {
 									@Override
 									public void responseData(final JSONObject arg0) {
@@ -352,7 +384,7 @@ public class ChatRoomActivity extends BaseFragmentActivity implements OnClickLis
 							}
 						}
 					});
-					uploadImgTask.execute(msg.obj);
+					uploadImgTask.execute(thumb);
 				}
 			}
 		};
@@ -369,13 +401,13 @@ public class ChatRoomActivity extends BaseFragmentActivity implements OnClickLis
 					
 					// 如果是标准Uri
 					if (TextUtils.isEmpty(thePath)) {
-						theLarge = ImageUtils.getAbsoluteImagePath((Activity) mContext, thisUri);
+						theOrgin = ImageUtils.getAbsoluteImagePath((Activity) mContext, thisUri);
 					}
 					else {
-						theLarge = thePath;
+						theOrgin = thePath;
 					}
 					
-					String attFormat = FileUtil.getFileFormat(theLarge);
+					String attFormat = FileUtil.getFileFormat(theOrgin);
 					if (!"photo".equals(MediaUtils.getContentType(attFormat))) {
 						Log.i("attFormat:" + attFormat);
 						Log.i("MediaUtils.getContentType(attFormat):" + MediaUtils.getContentType(attFormat));
@@ -390,17 +422,17 @@ public class ChatRoomActivity extends BaseFragmentActivity implements OnClickLis
 					}
 					
 					// 获取图片缩略图 只有Android2.1以上版本支持
-					String imgName = FileUtil.getFileName(theLarge);
+					String imgName = FileUtil.getFileName(theOrgin);
 					bitmap = ImageUtils.loadImgThumbnail((Activity) mContext, imgName, MediaStore.Images.Thumbnails.MICRO_KIND);
 					
-					if (bitmap == null && !TextUtils.isEmpty(theLarge)) {
-						bitmap = ImageUtils.loadImgThumbnail(theLarge, 100, 100);
+					if (bitmap == null && !TextUtils.isEmpty(theOrgin)) {
+						bitmap = ImageUtils.loadImgThumbnail(theOrgin, 100, 100);
 					}
 				}
 				// 拍摄图片
 				else if (requestCode == ImageUtils.REQUEST_CODE_GETIMAGE_BYCAMERA) {
-					if (bitmap == null && !TextUtils.isEmpty(theLarge)) {
-						bitmap = ImageUtils.loadImgThumbnail(theLarge, 100, 100);
+					if (bitmap == null && !TextUtils.isEmpty(theOrgin)) {
+						bitmap = ImageUtils.loadImgThumbnail(theOrgin, 100, 100);
 					}
 				}
 				
@@ -412,7 +444,7 @@ public class ChatRoomActivity extends BaseFragmentActivity implements OnClickLis
 						savedir.mkdirs();
 					}
 					
-					String largeFileName = FileUtil.getFileName(theLarge);
+					String largeFileName = FileUtil.getFileName(theOrgin);
 					String largeFilePath = savePath + largeFileName;
 					// 判断是否已存在缩略图
 					if (largeFileName.startsWith("thumb_") && new File(largeFilePath).exists()) {
@@ -429,7 +461,7 @@ public class ChatRoomActivity extends BaseFragmentActivity implements OnClickLis
 						else {
 							try {
 								// 压缩上传的图片
-								ImageUtils.createImageThumbnail(mContext, theLarge, theThumbnail, 800, 80);
+								ImageUtils.createImageThumbnail(mContext, theOrgin, theThumbnail, 800, 100);
 								imgFile = new File(theThumbnail);
 							}
 							catch (IOException e) {
@@ -444,9 +476,12 @@ public class ChatRoomActivity extends BaseFragmentActivity implements OnClickLis
 					
 					Message msg = new Message();
 					msg.what = 1;
-					msg.obj = theThumbnail;
+					Bundle bundle = new Bundle();
+					bundle.putString(Constant.Chat.CHAT_UPLOAD_IMG_THUMB_KEY, theThumbnail);
+					bundle.putString(Constant.Chat.CHAT_UPLOAD_IMG_LARGE_KEY, theOrgin);
+					msg.obj = bundle;
 					Log.d("theThumbnail: " + theThumbnail);
-					Log.d("theLarge: " + theLarge);
+					Log.d("theLarge: " + theOrgin);
 					
 					handler.sendMessage(msg);
 				}
@@ -536,7 +571,6 @@ public class ChatRoomActivity extends BaseFragmentActivity implements OnClickLis
 		
 		@Override
 		public void onSendFailed(Exception e) {
-			
 			handler.post(new Runnable() {
 				@Override
 				public void run() {
@@ -552,10 +586,10 @@ public class ChatRoomActivity extends BaseFragmentActivity implements OnClickLis
 				@Override
 				public void run() {
 					// showShortToast("已连接聊天室，正在为您转入对应聊天房间！");
-					if (dialog != null && dialog.getActivity() != null) dialog.dismiss();
 					handler.post(new Runnable() {
 						@Override
 						public void run() {
+							if (dialog != null && dialog.getActivity() != null) dialog.dismiss();
 							Utility.toastResult(mContext, "欢迎进入聊天室!");
 						}
 					});
@@ -648,6 +682,7 @@ public class ChatRoomActivity extends BaseFragmentActivity implements OnClickLis
 		
 		@Override
 		public void onForbidden(final String msg) {
+			
 			handler.post(new Runnable() {
 				@Override
 				public void run() {
