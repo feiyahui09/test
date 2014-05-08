@@ -45,8 +45,6 @@ import com.zmax.app.widget.VerticalViewPager.OnPageChangeListener;
 
 public class HotelBookFragment extends Fragment implements OnPageChangeListener, OnItemClickListener, HotelBookVisivleCallback {
 	
-	private int mPosition = 0;
-	
 	protected View view;
 	
 	private HotelBookListAdapter adapter;
@@ -57,17 +55,11 @@ public class HotelBookFragment extends Fragment implements OnPageChangeListener,
 	private GetHotelListTask getHotelListTask;
 	
 	public HotelBookFragment() {
-		this(R.color.white);
-	}
-	
-	public HotelBookFragment(int mosition) {
-		mPosition = 0;
 		setRetainInstance(true);
 	}
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		if (savedInstanceState != null) mPosition = savedInstanceState.getInt("mPosition");
 		
 		view = inflater.inflate(R.layout.hotel_book_list, null);
 		
@@ -89,7 +81,6 @@ public class HotelBookFragment extends Fragment implements OnPageChangeListener,
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-		
 		getHotelListTask = new GetHotelListTask(getActivity(), new GetHotelListTask.TaskCallBack() {
 			
 			@Override
@@ -132,7 +123,6 @@ public class HotelBookFragment extends Fragment implements OnPageChangeListener,
 	}
 	
 	private void switchInidcator(int position) {
-		mPosition = position;
 		ImageView imageView;
 		for (int i = 0; i < indicator.getChildCount(); i++) {
 			imageView = (ImageView) indicator.getChildAt(i).findViewById(R.id.iv_img);
@@ -146,7 +136,6 @@ public class HotelBookFragment extends Fragment implements OnPageChangeListener,
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
-		outState.putInt("mPosition", mPosition);
 	}
 	
 	@Override
@@ -196,7 +185,7 @@ public class HotelBookFragment extends Fragment implements OnPageChangeListener,
 		List<View> views = fromViews(hotelList, upcomingHotelList);
 		adapter.addViews(views);
 		initPagerIndicator(views, indicator);
-		pager.setCurrentItem(mPosition);
+		pager.setCurrentItem(0);
 		
 	}
 	

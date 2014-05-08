@@ -68,11 +68,11 @@ public class MainActivity extends BaseSlidingFragmentActivity implements ISimple
 				// }
 				else {
 					
-					Constant.CUR_CITY = "武汉";
-					DefaultShared.putString(Constant.SPFKEY.CITY_LOCATION_KEY, "武汉");
+					Constant.CUR_CITY = "";
+					DefaultShared.putString(Constant.SPFKEY.CITY_LOCATION_KEY, "");
 					switchContent(new ActListFragment());
 					// 显示默认列表
-					Toast.makeText(mContext, "城市定位失败！   为您显示默认城武汉市信息！", 2222).show();
+					Toast.makeText(mContext, "定位失败!  为您显示默认城市信息！", 2222).show();
 					
 				}
 			}

@@ -21,12 +21,9 @@ public class AccountFragment extends Fragment {
 	private HTML5WebView wv_content;
 	
 	public AccountFragment() {
-		this(R.color.white);
-	}
-	
-	public AccountFragment(int colorRes) {
 		setRetainInstance(true);
 	}
+	
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

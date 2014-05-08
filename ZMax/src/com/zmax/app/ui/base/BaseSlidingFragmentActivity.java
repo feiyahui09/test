@@ -79,7 +79,7 @@ public class BaseSlidingFragmentActivity extends SlidingFragmentActivity {
 			// else if (checkedId == R.id.btn_activities)
 			// switchContent(new ActListFragment(R.color.red));
 		}
-		if (mContent == null) mContent = new DefaultFragment(R.color.white);
+		if (mContent == null) mContent = new DefaultFragment();
 		getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, mContent).commit();
 		
 		// set the Behind View Fragment
@@ -107,7 +107,7 @@ public class BaseSlidingFragmentActivity extends SlidingFragmentActivity {
 			@Override
 			public void onCheckedChanged(RadioGroup group, int checkedId) {
 				if (checkedId == R.id.btn_hotel_book)
-					switchContent(new HotelBookFragment(R.color.red));
+					switchContent(new HotelBookFragment());
 				else if (checkedId == R.id.btn_activities) switchContent(new ActListFragment());
 			}
 		});
@@ -155,15 +155,20 @@ public class BaseSlidingFragmentActivity extends SlidingFragmentActivity {
 	}
 	
 	public void switchContent(final Fragment fragment) {
-//		Log.i("[maxMemory]:  " + Runtime.getRuntime().maxMemory()/1000+"k");
-//		Log.i("[totalMemory]:  " + Runtime.getRuntime().totalMemory()/1000+"k");
-//		Log.i("[freeMemory]:   " + Runtime.getRuntime().freeMemory()/1000+"k");
-//		
-//		System.gc();
-//		
-//		Log.i("after  [maxMemory]:  " + Runtime.getRuntime().maxMemory()/1000+"k");
-//		Log.i("after  [totalMemory]:  " + Runtime.getRuntime().totalMemory()/1000+"k");
-//		Log.i("after  [freeMemory]:   " + Runtime.getRuntime().freeMemory()/1000+"k");
+		// Log.i("[maxMemory]:  " + Runtime.getRuntime().maxMemory()/1000+"k");
+		// Log.i("[totalMemory]:  " +
+		// Runtime.getRuntime().totalMemory()/1000+"k");
+		// Log.i("[freeMemory]:   " +
+		// Runtime.getRuntime().freeMemory()/1000+"k");
+		//
+		// System.gc();
+		//
+		// Log.i("after  [maxMemory]:  " +
+		// Runtime.getRuntime().maxMemory()/1000+"k");
+		// Log.i("after  [totalMemory]:  " +
+		// Runtime.getRuntime().totalMemory()/1000+"k");
+		// Log.i("after  [freeMemory]:   " +
+		// Runtime.getRuntime().freeMemory()/1000+"k");
 		
 		mContent = fragment;
 		if (mContent instanceof ActListFragment) {

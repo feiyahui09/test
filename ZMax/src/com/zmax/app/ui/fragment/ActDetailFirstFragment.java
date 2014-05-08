@@ -16,9 +16,8 @@ public class ActDetailFirstFragment extends Fragment {
 	private TextView tv_city, tv_date;
 	private String city, date;
 	
-	public ActDetailFirstFragment(String city, String date) {
-		this.city = city;
-		this.date = date;
+	public ActDetailFirstFragment() {
+		
 		setRetainInstance(true);
 	}
 	
@@ -27,14 +26,28 @@ public class ActDetailFirstFragment extends Fragment {
 		View v = inflater.inflate(R.layout.act_detail_first, null);
 		tv_city = (TextView) v.findViewById(R.id.tv_city);
 		tv_date = (TextView) v.findViewById(R.id.tv_date);
-		tv_city.setText(""+city);
-		tv_date.setText(""+date);
+		
+		if (getArguments().isEmpty()) {
+			city = savedInstanceState.getString("city");
+			date = savedInstanceState.getString("date");
+		}
+		else {
+			city = getArguments().getString("city");
+			date = getArguments().getString("date");
+			
+		}
+		
+		tv_city.setText("" + city);
+		tv_date.setText("" + date);
 		return v;
 	}
 	
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
+		outState.putString("date", date);
+		outState.putString("city", city);
+		
 	}
 	
 }

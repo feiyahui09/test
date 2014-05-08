@@ -40,7 +40,7 @@ public class Constant {
 	
 	public static String IP_LOCATION_URL = "http://api.map.baidu.com/location/ip";
 	
-	public static String CUR_CITY = "武汉";
+	public static String CUR_CITY = "";
 	
 	public static final String FEEDBACK_SENDED_ACTION = "feedback_sended_action";
 	

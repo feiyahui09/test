@@ -50,10 +50,6 @@ public class SettingFragment extends Fragment implements OnClickListener {
 	static Handler mHandler;
 	
 	public SettingFragment() {
-		this(R.color.white);
-	}
-	
-	public SettingFragment(int colorRes) {
 		setRetainInstance(true);
 	}
 	
@@ -138,10 +134,10 @@ public class SettingFragment extends Fragment implements OnClickListener {
 				if (getActivity() == null) return;
 				if (result == null) return;
 				if (result.status == 200) {
-					ProgressDialog	progressDialog = new ProgressDialog(getActivity());
+					ProgressDialog progressDialog = new ProgressDialog(getActivity());
 					progressDialog.setTitle("提示");
 					progressDialog.setMessage("正在更新房间控制信息中！");
-//					progressDialog.show();
+					// progressDialog.show();
 					new AlertDialog.Builder(getActivity()).setTitle("提示").setMessage(result.description)
 							.setPositiveButton("立即更新", new DialogInterface.OnClickListener() {
 								@Override

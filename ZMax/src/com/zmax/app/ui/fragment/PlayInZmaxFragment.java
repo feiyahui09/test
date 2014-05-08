@@ -47,9 +47,9 @@ public class PlayInZmaxFragment extends Fragment implements OnClickListener {
 	
 	private boolean isNameDup = false;
 	
-	public PlayInZmaxFragment(Login login) {
-		this.login = login;
+	public PlayInZmaxFragment() {
 		setRetainInstance(true);
+		login = Constant.getLogin();
 	}
 	
 	@Override

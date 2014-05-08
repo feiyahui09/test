@@ -48,17 +48,17 @@ public class MoreMenuFragment extends Fragment implements OnClickListener {
 				break;
 			case R.id.ll_menu_playzmax:
 				if (Constant.getLogin() == null) {
-					newContent = new PlayInZmaxLoginFragment( );
+					newContent = new PlayInZmaxLoginFragment();
 				}
 				else {
-					newContent = new PlayInZmaxFragment(Constant.getLogin());
+					newContent = new PlayInZmaxFragment();
 				}
 				break;
 			case R.id.ll_menu_myaccount:
-				newContent = new AccountFragment(R.color.blue);
+				newContent = new AccountFragment();
 				break;
 			case R.id.ll_menu_setting:
-				newContent = new SettingFragment(android.R.color.white);
+				newContent = new SettingFragment();
 				break;
 		
 		}

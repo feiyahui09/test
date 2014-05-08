@@ -22,10 +22,6 @@ public class ActDetailSecondFragment extends Fragment implements OnItemClickList
 	private ActDescptionListAdapter adapter;
 	
 	public ActDetailSecondFragment() {
-		this(R.color.white);
-	}
-	
-	public ActDetailSecondFragment(int colorRes) {
 		setRetainInstance(true);
 	}
 	

@@ -51,11 +51,7 @@ public class PlayInZmaxLoginFragment extends Fragment {
 	private EditText et_room_number, et_namecard, et_password;
 	
 	public PlayInZmaxLoginFragment() {
-		this(R.color.white);
 		setRetainInstance(true);
-	}
-	
-	public PlayInZmaxLoginFragment(int colorRes) {
 	}
 	
 	@Override
@@ -91,7 +87,7 @@ public class PlayInZmaxLoginFragment extends Fragment {
 	public void onDestroyView() {
 		// TODO Auto-generated method stub
 		super.onDestroyView();
-//		((MainActivity) getActivity()).hideLogoutView(false);
+		// ((MainActivity) getActivity()).hideLogoutView(false);
 		
 	}
 	
@@ -99,7 +95,7 @@ public class PlayInZmaxLoginFragment extends Fragment {
 	public void onActivityCreated(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onActivityCreated(savedInstanceState);
-//		((MainActivity) getActivity()).hideLogoutView(true);
+		// ((MainActivity) getActivity()).hideLogoutView(true);
 		
 		final List<Hotel> hotels = getHotels();
 		if (hotels != null && !hotels.isEmpty()) {
@@ -148,7 +144,7 @@ public class PlayInZmaxLoginFragment extends Fragment {
 				
 				if (loginResult != null && loginResult.status == 200) {
 					Constant.saveLogin(loginResult);
-					((MainActivity) getActivity()).switchContent(new PlayInZmaxFragment(loginResult));
+					((MainActivity) getActivity()).switchContent(new PlayInZmaxFragment());
 				}
 				else {
 					if (!NetWorkHelper.checkNetState(getActivity())) {

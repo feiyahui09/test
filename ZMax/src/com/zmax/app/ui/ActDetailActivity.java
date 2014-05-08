@@ -56,15 +56,21 @@ public class ActDetailActivity extends BaseFragmentActivity {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.act_detail);
-//		Log.i("[maxMemory]:  " + Runtime.getRuntime().maxMemory() / 1000 + " k");
-//		Log.i("[totalMemory]:  " + Runtime.getRuntime().totalMemory() / 1000 + " k");
-//		Log.i("[freeMemory]:   " + Runtime.getRuntime().freeMemory() / 1000 + " k");
-//		ImageLoader.getInstance().clearMemoryCache();
-////		System.gc();
-//
-//		Log.i("after  [maxMemory]:  " + Runtime.getRuntime().maxMemory() / 1000 + " k");
-//		Log.i("after  [totalMemory]:  " + Runtime.getRuntime().totalMemory() / 1000 + " k");
-//		Log.i("after  [freeMemory]:   " + Runtime.getRuntime().freeMemory() / 1000 + " k");
+		// Log.i("[maxMemory]:  " + Runtime.getRuntime().maxMemory() / 1000 +
+		// " k");
+		// Log.i("[totalMemory]:  " + Runtime.getRuntime().totalMemory() / 1000
+		// + " k");
+		// Log.i("[freeMemory]:   " + Runtime.getRuntime().freeMemory() / 1000 +
+		// " k");
+		// ImageLoader.getInstance().clearMemoryCache();
+		// // System.gc();
+		//
+		// Log.i("after  [maxMemory]:  " + Runtime.getRuntime().maxMemory() /
+		// 1000 + " k");
+		// Log.i("after  [totalMemory]:  " + Runtime.getRuntime().totalMemory()
+		// / 1000 + " k");
+		// Log.i("after  [freeMemory]:   " + Runtime.getRuntime().freeMemory() /
+		// 1000 + " k");
 		
 		init();
 		initHeader();
@@ -79,7 +85,12 @@ public class ActDetailActivity extends BaseFragmentActivity {
 		adapter = new ActDetailAdapter(this);
 		pager.setAdapter(adapter);
 		
-		adapter.addTab(new ActDetailFirstFragment(city, date));
+		Fragment fragment = new ActDetailFirstFragment();
+		Bundle args = new Bundle();
+		args.putString("city", city);
+		args.putString("date", date);
+		fragment.setArguments(args);
+		adapter.addTab(fragment);
 		adapter.addTab(new ActDetailSecondFragment());
 		adapter.addTab(new ActDetailThirdFragment());
 		pager.setOffscreenPageLimit(3);
