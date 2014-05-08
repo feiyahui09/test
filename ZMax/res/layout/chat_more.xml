@@ -78,7 +78,8 @@
     <Button
         android:id="@+id/btn_about"
         style="@style/setting_btn"
-        android:text="关于聊天室" />
+        android:text="关于聊天室"
+        android:visibility="gone" />
 
     <ImageView
         style="@style/setting_divider"

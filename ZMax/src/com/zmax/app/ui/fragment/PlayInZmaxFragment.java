@@ -95,7 +95,7 @@ public class PlayInZmaxFragment extends Fragment implements OnClickListener {
 			}
 		});
 		
-		tv_nick_name.setText(login.nick_name);
+		tv_nick_name.setText(login.name);
 		tv_hotel.setText("ZMAX-" + login.hotel_location + login.hotel_name);
 		tv_room_num.setText(login.room_num + "房");
 		
@@ -138,7 +138,7 @@ public class PlayInZmaxFragment extends Fragment implements OnClickListener {
 	public void onActivityCreated(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onActivityCreated(savedInstanceState);
-//		((MainActivity) getActivity()).showLogoutView();
+		// ((MainActivity) getActivity()).showLogoutView();
 		// vertifyDup(getActivity(), login.user_id + "", login.gender + "",
 		// login.nick_name, false);
 	}
@@ -146,7 +146,7 @@ public class PlayInZmaxFragment extends Fragment implements OnClickListener {
 	@Override
 	public void onDestroyView() {
 		// if (callback != null) callback.onLogoutViewDestroy();
-//		((MainActivity) getActivity()).hideLogoutView(true);
+		// ((MainActivity) getActivity()).hideLogoutView(true);
 		super.onDestroyView();
 	}
 	

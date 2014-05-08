@@ -66,7 +66,7 @@ public class ChatIndexActivity extends BaseActivity {
 		});
 		
 		btn_Share = (Button) findViewById(R.id.btn_share);
-		btn_Share.setVisibility(View.VISIBLE);
+		btn_Share.setVisibility(View.GONE);
 		btn_Share.setBackgroundResource(R.drawable.chat_more_menu_sel);
 		btn_Share.setOnClickListener(new OnClickListener() {
 			
