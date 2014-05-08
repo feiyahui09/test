@@ -2,6 +2,7 @@ package com.zmax.app.ui;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
@@ -15,6 +16,7 @@ import android.widget.Toast;
 
 import com.zmax.app.R;
 import com.zmax.app.adapter.ActDetailAdapter;
+import com.zmax.app.chat.ChatIndexActivity;
 import com.zmax.app.model.RoomStatus;
 import com.zmax.app.net.NetWorkHelper;
 import com.zmax.app.task.GetRoomStatusTask;
@@ -22,11 +24,14 @@ import com.zmax.app.ui.base.BaseFragmentActivity;
 import com.zmax.app.ui.fragment.RoomControlAirConditionFragment;
 import com.zmax.app.ui.fragment.RoomControlLightingFragment;
 import com.zmax.app.ui.fragment.RoomControlTVFragment;
+import com.zmax.app.utils.Constant;
+import com.zmax.app.utils.Utility;
 import com.zmax.app.widget.SmartViewPager;
 
+import eu.inmite.android.lib.dialogs.ISimpleDialogListener;
 import eu.inmite.android.lib.dialogs.ProgressDialogFragment;
 
-public class RoomControlActivity extends BaseFragmentActivity {
+public class RoomControlActivity extends BaseFragmentActivity implements ISimpleDialogListener {
 	
 	public interface VerticalChangedCallback {
 		public void onCallBack(boolean isCurAbove);
@@ -71,6 +76,10 @@ public class RoomControlActivity extends BaseFragmentActivity {
 						Toast.makeText(mContext, mContext.getString(R.string.httpProblem), 450).show();
 					else
 						Toast.makeText(mContext, mContext.getString(R.string.unkownError), 450).show();
+				}
+				else if (result.status == 401) {
+					
+					Utility.showTokenErrorDialog(RoomControlActivity.this, result.message);
 				}
 				else if (result.status != 200)
 					Toast.makeText(mContext, "" + result.message, 450).show();
@@ -201,6 +210,28 @@ public class RoomControlActivity extends BaseFragmentActivity {
 			iv_left.setVisibility(View.VISIBLE);
 		}
 		
+	}
+	
+	@Override
+	public void onNegativeButtonClicked(int arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	@Override
+	public void onPositiveButtonClicked(int arg0) {
+		switch (arg0) {
+			case Constant.DialogCode.TYPE_TOKEN_ERROR:
+				Constant.saveLogin(null);
+				Intent intent = new Intent(mContext, MainActivity.class);
+				intent.setAction(Constant.DialogCode.ACTION_BACK_LOGIN);
+				startActivity(intent);
+				finish();
+				break;
+			
+			default:
+				break;
+		}
 	}
 	
 }

@@ -12,9 +12,11 @@ import com.zmax.app.model.Login;
 import com.zmax.app.net.NetWorkHelper;
 import com.zmax.app.task.GetActListTask;
 
+import eu.inmite.android.lib.dialogs.SimpleDialogFragment;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.support.v4.app.FragmentActivity;
 import android.text.TextUtils;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -96,6 +98,12 @@ public class Utility {
 		};
 	}
 	
+	public static void showTokenErrorDialog(FragmentActivity fragmentActivity, String msg) {
+		SimpleDialogFragment.createBuilder(fragmentActivity, fragmentActivity.getSupportFragmentManager()).setPositiveButtonText("确定")
+				.setTitle("提示").setMessage(TextUtils.isEmpty(msg) ? "Token验证失败，请重新登录！" : msg)
+				.setRequestCode(Constant.DialogCode.TYPE_TOKEN_ERROR).setCancelable(false).show();
+	}
+	
 	/**
 	 * 打开浏览器
 	 * 
@@ -117,15 +125,15 @@ public class Utility {
 	public static int getChatThumbImgSize(Context context) {
 		
 		int sw = PhoneUtil.getScreenW(context);
-//		if (sw > 1000) {
-			sw = 1000;
-//		}
-//		else if (sw > 700) {
-//			sw = 700;
-//		}
-//		else {
-//			sw = 440;
-//		}
+		// if (sw > 1000) {
+		sw = 1000;
+		// }
+		// else if (sw > 700) {
+		// sw = 700;
+		// }
+		// else {
+		// sw = 440;
+		// }
 		
 		Log.i(" ChatThumbImgSize:" + sw);
 		return sw;

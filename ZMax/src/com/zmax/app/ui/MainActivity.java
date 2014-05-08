@@ -20,6 +20,7 @@ import com.zmax.app.ui.fragment.PlayInZmaxFragment;
 import com.zmax.app.ui.fragment.PlayInZmaxLoginFragment;
 import com.zmax.app.utils.Constant;
 import com.zmax.app.utils.DefaultShared;
+import com.zmax.app.utils.Log;
 import com.zmax.app.utils.Utility;
 
 import eu.inmite.android.lib.dialogs.ISimpleDialogCancelListener;
@@ -37,11 +38,9 @@ public class MainActivity extends BaseSlidingFragmentActivity implements ISimple
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		mContext = this;
-		// if (!PhoneUtil.isNetworkOk(mContext)) {
-		// switchContent(new NetErrorFragment());
-		// return;
-		// }
-		initLocate();
+		if (!handleIntent()) {
+			initLocate();
+		}
 	}
 	
 	private void initLocate() {
@@ -168,6 +167,39 @@ public class MainActivity extends BaseSlidingFragmentActivity implements ISimple
 	
 	@Override
 	public void onPositiveButtonClicked(int arg0) {
-		
+		switch (arg0) {
+			case Constant.DialogCode.TYPE_TOKEN_ERROR:
+				Constant.saveLogin(null);
+				switchContent(new PlayInZmaxLoginFragment());
+				break;
+			
+			default:
+				break;
+		}
+	}
+	
+	@Override
+	protected void onRestart() {
+		// TODO Auto-generated method stub
+		super.onRestart();
+		Log.e("@@");
+	}
+	
+	@Override
+	protected void onNewIntent(Intent intent) {
+		// TODO Auto-generated method stub
+		super.onNewIntent(intent);
+		Log.e("@@");
+		setIntent(intent);
+		handleIntent();
+	}
+	
+	private boolean handleIntent() {
+		boolean shouldDo = false;
+		if (getIntent().getAction() != null && getIntent().getAction().equals(Constant.DialogCode.ACTION_BACK_LOGIN)) {
+			switchContent(new PlayInZmaxLoginFragment());
+			shouldDo = true;
+		}
+		return shouldDo;
 	}
 }

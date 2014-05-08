@@ -38,7 +38,9 @@ import com.zmax.app.utils.JsonMapperUtils;
 import com.zmax.app.utils.Log;
 import com.zmax.app.utils.Utility;
 
-public class PlayInZmaxLoginFragment extends Fragment {
+import eu.inmite.android.lib.dialogs.ISimpleDialogListener;
+
+public class PlayInZmaxLoginFragment extends Fragment    {
 	
 	private View view;
 	private Button btn_login;

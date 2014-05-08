@@ -195,6 +195,7 @@ public class PlayInZmaxFragment extends Fragment implements OnClickListener {
 	}
 	
 	// 验证已保存的名字是否有重复
+	@Deprecated
 	private void vertifyDup(final Context context, String user_id, String gender, String nick_name, final boolean isShowProgress) {
 		progressDialog = new ProgressDialog(context);
 		progressDialog.setTitle("提示");

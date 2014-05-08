@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import com.zmax.app.R;
 import com.zmax.app.adapter.RoomControlAdapter;
+import com.zmax.app.chat.ChatIndexActivity;
 import com.zmax.app.model.AirCondition;
 import com.zmax.app.net.NetWorkHelper;
 import com.zmax.app.task.SetAirConditionTask;
@@ -286,12 +287,16 @@ public class RoomControlAirConditionFragment extends Fragment {
 					if (!NetWorkHelper.checkNetState(getActivity()))
 						Toast.makeText(getActivity(), getActivity().getString(R.string.httpProblem), 450).show();
 					else
-					Utility.toastResult(getActivity(), getActivity().getString(R.string.unkownError));
+						Utility.toastResult(getActivity(), getActivity().getString(R.string.unkownError));
 				}
 				else if (result.status == 200) {
 					if (opera_type.equals("air_blower")) {
 						cur_air_blower = opera_air_blower;
 						setTvAirBlower();
+					}
+					else if (result.status == 401) {
+						
+						Utility.showTokenErrorDialog(getActivity(), result.message);
 					}
 					else if (opera_type.equals("temperature")) {
 						cur_temperature = opera_temperature;
@@ -308,7 +313,7 @@ public class RoomControlAirConditionFragment extends Fragment {
 				}
 				else {
 					Utility.toastResult(getActivity(), result.message);
- 		
+					
 				}
 			}
 		});

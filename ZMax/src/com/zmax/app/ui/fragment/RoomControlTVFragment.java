@@ -282,6 +282,10 @@ public class RoomControlTVFragment extends Fragment {
 				else if (result.status == 200) {
 					
 				}
+				else if (result.status == 401) {
+					
+					Utility.showTokenErrorDialog(getActivity(), result.message);
+				}
 				else {
 					Utility.toastResult(getActivity(), result.message);
 				}

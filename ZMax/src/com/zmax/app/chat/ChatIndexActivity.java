@@ -18,12 +18,16 @@ import com.zmax.app.R;
 import com.zmax.app.model.BaseModel;
 import com.zmax.app.net.NetWorkHelper;
 import com.zmax.app.task.ModifyChatUserInfoTask;
+import com.zmax.app.ui.MainActivity;
 import com.zmax.app.ui.base.BaseActivity;
+import com.zmax.app.ui.base.BaseFragmentActivity;
 import com.zmax.app.utils.Constant;
 import com.zmax.app.utils.DefaultShared;
 import com.zmax.app.utils.Utility;
 
-public class ChatIndexActivity extends BaseActivity {
+import eu.inmite.android.lib.dialogs.ISimpleDialogListener;
+
+public class ChatIndexActivity extends BaseFragmentActivity implements ISimpleDialogListener {
 	private Context mContext;
 	private EditText et_nick_name;
 	private Button btn_Back, btn_Share, btn_login;
@@ -141,9 +145,14 @@ public class ChatIndexActivity extends BaseActivity {
 					else
 						Utility.toastFailedResult(context);
 				}
+				else if (result.status == 401) {
+					
+					Utility.showTokenErrorDialog(ChatIndexActivity.this, result.message);
+				}
 				else if (result.status != 200) {
 					Utility.toastResult(context, result.message);
 				}
+				
 				else {
 					Utility.toastResult(mContext, "恭喜！你可以使用该昵称！");
 					// saveSelfInfo();
@@ -159,5 +168,27 @@ public class ChatIndexActivity extends BaseActivity {
 			}
 		});
 		modifyChatUserInfoTask.execute(Constant.getLogin().user_id + "", _gender + "", _nick_name);
+	}
+	
+	@Override
+	public void onNegativeButtonClicked(int arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	@Override
+	public void onPositiveButtonClicked(int arg0) {
+		switch (arg0) {
+			case Constant.DialogCode.TYPE_TOKEN_ERROR:
+				Constant.saveLogin(null);
+				Intent intent = new Intent(mContext, MainActivity.class);
+				intent.setAction(Constant.DialogCode.ACTION_BACK_LOGIN);
+				startActivity(intent);
+				finish();
+				break;
+			
+			default:
+				break;
+		}
 	}
 }

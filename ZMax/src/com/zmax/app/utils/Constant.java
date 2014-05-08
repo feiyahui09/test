@@ -44,6 +44,19 @@ public class Constant {
 	
 	public static final String FEEDBACK_SENDED_ACTION = "feedback_sended_action";
 	
+	public static class DialogCode {
+		public static final int TYPE_SEND_FAILED = 5;
+		public static final int TYPE_UNKOWNERROR = 6;
+		public static final int TYPE_FORBIDDEN = 2;
+		public static final int TYPE_CONNECTORENTER_ERROR = 3;
+		public static final int TYPE_SOCKET_TIME_OUT = 1;
+		public static final int TYPE_CONNECT_FAILED = 4;
+		
+		public static final int TYPE_TOKEN_ERROR = 404;
+		public static final String ACTION_BACK_LOGIN = "action_back_login";
+		
+	}
+	
 	public static class Documents {
 		
 		public static final String DOCUMENTS_TYPE_KEY = "documents_type_key";
@@ -83,7 +96,7 @@ public class Constant {
 		public static final String CHAT_IMG_CACHE_ABS_PATH = Environment.getExternalStorageDirectory().getAbsolutePath() + "/zmax/Camera/";
 		public static final String CHAT_IMG_CACHE_PATH = "/zmax/Camera/";
 		public static final String CHAT_IMG_LARGE_IMG_KEY = "chat_img_large_img_key";
-
+		
 	}
 	
 	public static final int PER_NUM_GET_ACTLIST = 5;

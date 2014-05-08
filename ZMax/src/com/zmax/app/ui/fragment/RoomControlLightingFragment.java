@@ -233,6 +233,10 @@ public class RoomControlLightingFragment extends Fragment {
 				else if (result.status == 200) {
 					curMode = operaMode;
 				}
+				else if (result.status == 401) {
+					
+					Utility.showTokenErrorDialog(getActivity(), result.message);
+				}
 				else {
 					Utility.toastResult(getActivity(), result.message);
 					

@@ -49,6 +49,7 @@ import com.zmax.app.chat.promelo.DataCallBack;
 import com.zmax.app.model.UploadResult;
 import com.zmax.app.net.NetWorkHelper;
 import com.zmax.app.task.UploadImgTask;
+import com.zmax.app.ui.MainActivity;
 import com.zmax.app.ui.base.BaseFragmentActivity;
 import com.zmax.app.utils.Constant;
 import com.zmax.app.utils.FileUtil;
@@ -576,7 +577,7 @@ public class ChatRoomActivity extends BaseFragmentActivity implements OnClickLis
 				@Override
 				public void run() {
 					dialog = SimpleDialogFragment.createBuilder(mContext, getSupportFragmentManager()).setPositiveButtonText("确定")
-							.setTitle("提示").setMessage("发送信息失败!").setRequestCode(TYPE_SEND_FAILED).show();
+							.setTitle("提示").setMessage("发送信息失败!").setRequestCode(Constant.DialogCode.TYPE_SEND_FAILED).show();
 				}
 			});
 		}
@@ -601,7 +602,7 @@ public class ChatRoomActivity extends BaseFragmentActivity implements OnClickLis
 		@Override
 		public void onEnterFailed(Exception e) {
 			dialog = SimpleDialogFragment.createBuilder(mContext, getSupportFragmentManager()).setPositiveButtonText("确定").setTitle("提示")
-					.setMessage("连接错误！请稍后再试!").setCancelable(false).setRequestCode(TYPE_CONNECT_FAILED).show();
+					.setMessage("连接错误！请稍后再试!").setCancelable(false).setRequestCode(Constant.DialogCode.TYPE_CONNECT_FAILED).show();
 		}
 		
 		@Override
@@ -610,13 +611,12 @@ public class ChatRoomActivity extends BaseFragmentActivity implements OnClickLis
 			if (body == null) {
 				if (dialog != null && dialog.getActivity() != null) dialog.dismiss();
 				dialog = SimpleDialogFragment.createBuilder(mContext, getSupportFragmentManager()).setPositiveButtonText("确定")
-						.setTitle("提示").setMessage(getString(R.string.unkownError)).setCancelable(false).setRequestCode(TYPE_UNKOWNERROR)
-						.show();
+						.setTitle("提示").setMessage(getString(R.string.unkownError)).setCancelable(false)
+						.setRequestCode(Constant.DialogCode.TYPE_UNKOWNERROR).show();
 				return;
 			}
-			int code = 200;
 			boolean isError;
-			code = body.optInt("code", 200);
+			final int code = body.optInt("code");
 			final String message = body.optString("message");
 			isError = body.optBoolean("error");
 			
@@ -634,9 +634,16 @@ public class ChatRoomActivity extends BaseFragmentActivity implements OnClickLis
 					@Override
 					public void run() {
 						String _msg = TextUtils.isEmpty(message) ? getString(R.string.unkownError) : message;
-						dialog = SimpleDialogFragment.createBuilder(mContext, getSupportFragmentManager()).setTitle("提示")
-								.setCancelable(false).setMessage(_msg).setRequestCode(TYPE_CONNECTORENTER_ERROR)
-								.setPositiveButtonText("确定").show();
+						if (code == 401) {
+							SimpleDialogFragment.createBuilder(mContext, getSupportFragmentManager()).setPositiveButtonText("确定")
+									.setTitle("提示").setMessage(TextUtils.isEmpty(_msg) ? "Token验证失败，请重新登录！" : _msg)
+									.setRequestCode(Constant.DialogCode.TYPE_TOKEN_ERROR).setCancelable(false).show();
+						}
+						else
+							dialog = SimpleDialogFragment.createBuilder(mContext, getSupportFragmentManager()).setTitle("提示")
+									.setCancelable(false).setMessage(_msg).setRequestCode(Constant.DialogCode.TYPE_CONNECTORENTER_ERROR)
+									.setPositiveButtonText("确定").show();
+						
 					}
 				});
 				chatHelper.disConnect();
@@ -689,7 +696,7 @@ public class ChatRoomActivity extends BaseFragmentActivity implements OnClickLis
 				public void run() {
 					String _msg = TextUtils.isEmpty(msg) ? "你已经被禁言！" : msg;
 					dialog = SimpleDialogFragment.createBuilder(mContext, getSupportFragmentManager()).setPositiveButtonText("确定")
-							.setTitle("提示").setMessage(_msg).setRequestCode(TYPE_FORBIDDEN).show();
+							.setTitle("提示").setMessage(_msg).setRequestCode(Constant.DialogCode.TYPE_FORBIDDEN).show();
 				}
 			});
 		}
@@ -716,7 +723,8 @@ public class ChatRoomActivity extends BaseFragmentActivity implements OnClickLis
 				@Override
 				public void run() {
 					dialog = SimpleDialogFragment.createBuilder(mContext, getSupportFragmentManager()).setTitle("提示").setCancelable(false)
-							.setMessage("与聊天室连接超时！").setPositiveButtonText("确定").setRequestCode(TYPE_SOCKET_TIME_OUT).show();
+							.setMessage("与聊天室连接超时！").setPositiveButtonText("确定").setRequestCode(Constant.DialogCode.TYPE_SOCKET_TIME_OUT)
+							.show();
 				}
 			});
 		}
@@ -744,35 +752,35 @@ public class ChatRoomActivity extends BaseFragmentActivity implements OnClickLis
 	@Override
 	public void onPositiveButtonClicked(int arg0) {
 		switch (arg0) {
-			case TYPE_SOCKET_TIME_OUT:
+			case Constant.DialogCode.TYPE_SOCKET_TIME_OUT:
 				finish();
 				break;
-			case TYPE_FORBIDDEN:
+			case Constant.DialogCode.TYPE_FORBIDDEN:
 				finish();
 				break;
-			case TYPE_CONNECTORENTER_ERROR:
+			case Constant.DialogCode.TYPE_CONNECTORENTER_ERROR:
 				finish();
 				break;
-			case TYPE_UNKOWNERROR:
+			case Constant.DialogCode.TYPE_UNKOWNERROR:
 				finish();
 				break;
-			case TYPE_CONNECT_FAILED:
+			case Constant.DialogCode.TYPE_CONNECT_FAILED:
 				finish();
 				break;
-			case TYPE_SEND_FAILED:
+			case Constant.DialogCode.TYPE_SEND_FAILED:
 				// finish();
+				break;
+			case Constant.DialogCode.TYPE_TOKEN_ERROR:
+				Constant.saveLogin(null);
+				Intent intent = new Intent(mContext, MainActivity.class);
+				intent.setAction(Constant.DialogCode.ACTION_BACK_LOGIN);
+				startActivity(intent);
+				finish();
 				break;
 			default:
 				break;
 		}
 		
 	}
-	
-	static final int TYPE_SEND_FAILED = 5;
-	static final int TYPE_UNKOWNERROR = 6;
-	static final int TYPE_FORBIDDEN = 2;
-	static final int TYPE_CONNECTORENTER_ERROR = 3;
-	static final int TYPE_SOCKET_TIME_OUT = 1;
-	static final int TYPE_CONNECT_FAILED = 4;
 	
 }
