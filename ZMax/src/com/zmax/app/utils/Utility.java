@@ -114,4 +114,20 @@ public class Utility {
 		}
 	}
 	
+	public static int getChatThumbImgSize(Context context) {
+		
+		int sw = PhoneUtil.getScreenW(context);
+//		if (sw > 1000) {
+			sw = 1000;
+//		}
+//		else if (sw > 700) {
+//			sw = 700;
+//		}
+//		else {
+//			sw = 440;
+//		}
+		
+		Log.i(" ChatThumbImgSize:" + sw);
+		return sw;
+	}
 }

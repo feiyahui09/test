@@ -145,6 +145,10 @@
             android:name="com.zmax.app.ui.DocumentsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
+        <activity
+            android:name="com.zmax.app.widget.WebImageViewer"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" />
 
         <service android:name="com.zmax.app.manage.SendFeedbackService" >
         </service>

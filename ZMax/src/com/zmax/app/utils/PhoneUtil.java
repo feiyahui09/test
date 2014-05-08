@@ -38,31 +38,33 @@ public class PhoneUtil {
 		TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
 		return telephonyManager.getSubscriberId() != null ? telephonyManager.getSubscriberId() : "";
 	}
-	   /** 
-     * 将px值转换为sp值，保证文字大小不变 
-     *  
-     * @param pxValue 
-     * @param fontScale 
-     *            （DisplayMetrics类中属性scaledDensity） 
-     * @return 
-     */  
-    public static int px2sp(Context context, float pxValue) {  
-        final float fontScale = context.getResources().getDisplayMetrics().scaledDensity;  
-        return (int) (pxValue / fontScale + 0.5f);  
-    }  
-  
-    /** 
-     * 将sp值转换为px值，保证文字大小不变 
-     *  
-     * @param spValue 
-     * @param fontScale 
-     *            （DisplayMetrics类中属性scaledDensity） 
-     * @return 
-     */  
-    public static int sp2px(Context context, float spValue) {  
-        final float fontScale = context.getResources().getDisplayMetrics().scaledDensity;  
-        return (int) (spValue * fontScale + 0.5f);  
-    }  
+	
+	/**
+	 * 将px值转换为sp值，保证文字大小不变
+	 * 
+	 * @param pxValue
+	 * @param fontScale
+	 *            （DisplayMetrics类中属性scaledDensity）
+	 * @return
+	 */
+	public static int px2sp(Context context, float pxValue) {
+		final float fontScale = context.getResources().getDisplayMetrics().scaledDensity;
+		return (int) (pxValue / fontScale + 0.5f);
+	}
+	
+	/**
+	 * 将sp值转换为px值，保证文字大小不变
+	 * 
+	 * @param spValue
+	 * @param fontScale
+	 *            （DisplayMetrics类中属性scaledDensity）
+	 * @return
+	 */
+	public static int sp2px(Context context, float spValue) {
+		final float fontScale = context.getResources().getDisplayMetrics().scaledDensity;
+		return (int) (spValue * fontScale + 0.5f);
+	}
+	
 	public static String getEsn(final Context context) {
 		TelephonyManager tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
 		String imei = tm.getDeviceId();
@@ -228,14 +230,14 @@ public class PhoneUtil {
 		public static String NOMATCH = "nomatch";
 	}
 	
-	public static String getScreenW(Context ctx) {
+	public static int getScreenW(Context ctx) {
 		WindowManager wm = (WindowManager) ctx.getSystemService(Context.WINDOW_SERVICE);
-		return "" + wm.getDefaultDisplay().getWidth();
+		return wm.getDefaultDisplay().getWidth();
 	}
 	
-	public static String getScreenH(Context ctx) {
+	public static int getScreenH(Context ctx) {
 		WindowManager wm = (WindowManager) ctx.getSystemService(Context.WINDOW_SERVICE);
-		return "" + wm.getDefaultDisplay().getHeight();
+		return wm.getDefaultDisplay().getHeight();
 	}
 	
 	public static String GetHostIp() {

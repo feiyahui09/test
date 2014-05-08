@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@android:color/transparent" >
+     >
 
     <ImageView
         android:id="@+id/iv_img"
@@ -13,6 +13,6 @@
         android:minHeight="100dp"
         android:minWidth="100dp"
         android:orientation="vertical"
-        android:scaleType="centerCrop" />
+        android:scaleType="centerInside" />
 
 </RelativeLayout>

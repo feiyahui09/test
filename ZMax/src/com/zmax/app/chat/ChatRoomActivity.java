@@ -352,7 +352,7 @@ public class ChatRoomActivity extends BaseFragmentActivity implements OnClickLis
 					// 显示图片
 					// curUploadChatMsg = new ChatMsg();
 					// showImgNow(thumb);
-					Utility.toastResult(mContext, "图片上传中！");
+					Utility.toastResult(mContext, "图片上传中...");
 					uploadImgTask = new UploadImgTask(mContext, new UploadImgTask.TaskCallBack() {
 						@Override
 						public void onCallBack(UploadResult result) {
@@ -366,7 +366,7 @@ public class ChatRoomActivity extends BaseFragmentActivity implements OnClickLis
 								Utility.toastResult(mContext, result.message);
 							}
 							else {
-								Utility.toastResult(mContext, "ok .");
+								Utility.toastResult(mContext, "图片上传成功！");
 								// addImage(large);
 								chatHelper.send(result.image, new DataCallBack() {
 									@Override
@@ -461,7 +461,8 @@ public class ChatRoomActivity extends BaseFragmentActivity implements OnClickLis
 						else {
 							try {
 								// 压缩上传的图片
-								ImageUtils.createImageThumbnail(mContext, theOrgin, theThumbnail, 800, 100);
+								ImageUtils.createImageThumbnail(mContext, theOrgin, theThumbnail, Utility.getChatThumbImgSize(mContext),
+										100);
 								imgFile = new File(theThumbnail);
 							}
 							catch (IOException e) {

@@ -1,0 +1,74 @@
+<html>
+<head>
+</head>
+<body style="background-color: rgb(0, 0, 0); " onload="javascript: startLoad();">
+
+<div id="container" style="position:absolute; top: 0px; left: 0px; width:100%; height:100%; visibility: visible; background-color: rgb(0, 0, 0); ">
+
+<div id="wrap" style="position:absolute; left: 50%; top: 50%; background-color: rgb(0, 0, 0);">
+
+<img id="pic" style="width:100%; height:100%;" src=""/>
+
+</div>
+
+</div>
+
+</body>
+</html>
+<script type="text/javascript">
+function loadImgs(urls, idx) {
+	if (window.testconsole != null) {
+		var  s = ""; 
+		s += "\r\ndocument.body.clientWidth:"+ document.body.clientWidth; 
+		s += "\r\ndocument.body.clientHeight:"+ document.body.clientHeight; 
+		s += "\r\ndocument.body.offsetWidth:"+ document.body.offsetWidth; 
+		s += "\r\ndocument.body.offsetHeight:"+ document.body.offsetHeight; 
+		s += "\r\ndocument.body.scrollWidth:"+ document.body.scrollWidth; 
+		s += "\r\ndocument.body.scrollHeight:"+ document.body.scrollHeight; 
+		s += "\r\ndocument.body.scrollTop:"+ document.body.scrollTop; 
+		s += "\r\ndocument.body.scrollLeft:"+ document.body.scrollLeft; 
+		s += "\r\nwindow.screenTop:"+ window.screenTop; 
+		s += "\r\nwindow.screenLeft:"+ window.screenLeft; 
+		s += "\r\nwindow.screen.height:"+ window.screen.height; 
+		s += "\r\nwindow.screen.width:"+ window.screen.width; 
+		s += "\r\nwindow.screen.availHeight:"+ window.screen.availHeight; 
+		s += "\r\nwindow.screen.availWidth:"+ window.screen.availWidth; 
+		window.testconsole.log(s);
+	}
+	var img = new Image();
+	img.onload = function() {
+		var container = document.getElementById("container");
+		var wrap = document.getElementById("wrap");
+        var pic = document.getElementById("pic");
+        
+		var w = container.offsetWidth;
+		var h = container.offsetHeight;
+		var iw = this.width;
+        var ih = this.height;
+		var scale = w/iw;
+	      
+		if (h < ih * scale) container.style.height = ih * scale;
+		
+		pic.style.display = "none";
+		wrap.style.width = this.width * scale;
+		wrap.style.height = this.height * scale;
+		wrap.style["margin-left"] = -this.width * scale / 2;
+		wrap.style["margin-top"] = -this.height * scale / 2;
+        pic.src = img.src;
+
+        pic.style.display = "block";
+		if (urls[idx++] != null) {
+			loadImgs(urls, idx);
+		}
+		
+		if (window.testconsole != null) {
+			window.testconsole.log(pic.style);
+			window.testconsole.log(pic.src);
+		}
+	}
+	img.src = urls[idx];
+}
+function startLoad() {
+	setTimeout(loadImgs(["$IMAGES$"], 0), 1);
+}
+</script>

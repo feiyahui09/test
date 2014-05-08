@@ -17,6 +17,7 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
 import com.zmax.app.R;
+import com.zmax.app.ZMaxApplication;
 import com.zmax.app.model.Act;
 import com.zmax.app.model.Login;
 import com.zmax.app.ui.HotelDetailActivity;
@@ -81,7 +82,8 @@ public class Constant {
 		
 		public static final String CHAT_IMG_CACHE_ABS_PATH = Environment.getExternalStorageDirectory().getAbsolutePath() + "/zmax/Camera/";
 		public static final String CHAT_IMG_CACHE_PATH = "/zmax/Camera/";
-		
+		public static final String CHAT_IMG_LARGE_IMG_KEY = "chat_img_large_img_key";
+
 	}
 	
 	public static final int PER_NUM_GET_ACTLIST = 5;

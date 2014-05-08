@@ -6,35 +6,34 @@ import java.util.List;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ColorDrawable;
 import android.text.SpannableString;
-import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.view.WindowManager.LayoutParams;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.FrameLayout.LayoutParams;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.baidu.platform.comapi.map.a.r;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.assist.ImageLoadingListener;
-import com.nostra13.universalimageloader.core.assist.ImageLoadingProgressListener;
 import com.zmax.app.R;
-import com.zmax.app.task.GetRoomStatusTask;
+import com.zmax.app.utils.Constant;
 import com.zmax.app.utils.EmotionUtils;
 import com.zmax.app.utils.Log;
 import com.zmax.app.utils.PhoneUtil;
+import com.zmax.app.widget.WebImageViewer;
 
 /**
  * 想比较原来的多了getItemViewType和getViewTypeCount这两个方法，原来循环使用layout布局，起到了优化的作用
@@ -176,10 +175,12 @@ public class ChatListAdapter extends BaseAdapter {
 				holder.ivLeftIcon.setImageResource(chatMsg.gender == 0 ? R.drawable.chat_female_icon : R.drawable.chat_male_icon);
 				ImageLoader.getInstance().displayImage(getShrinkImg(chatMsg.msg.content), holder.ivLeftImage,
 						new DisplayImageOptions.Builder().cacheInMemory().cacheOnDisc().build());
-				holder.ivRightImage.setOnClickListener(new OnClickListener() {
+				holder.ivLeftImage.setOnClickListener(new OnClickListener() {
 					@Override
 					public void onClick(View v) {
-						showImg(v, chatMsg.msg.content);
+						// showImg(v, chatMsg.msg.content);
+						showImg(chatMsg.msg.content);
+						
 					}
 				});
 				
@@ -203,7 +204,8 @@ public class ChatListAdapter extends BaseAdapter {
 				holder.ivRightImage.setOnClickListener(new OnClickListener() {
 					@Override
 					public void onClick(View v) {
-						showImg(v, chatMsg.msg.content);
+						// showImg(v, chatMsg.msg.content);
+						showImg(chatMsg.msg.content);
 					}
 				});
 				break;
@@ -239,21 +241,18 @@ public class ChatListAdapter extends BaseAdapter {
 	}
 	
 	private void showImg(String path) {
-		ImageView imageView = (ImageView) ((Activity) context).getLayoutInflater().inflate(R.layout.chat_big_img, null);
-		imageView.setMinimumHeight(PhoneUtil.dip2px(context, 100));
-		imageView.setMinimumWidth(PhoneUtil.dip2px(context, 100));
-		
-		DisplayImageOptions displayImageOptions = new DisplayImageOptions.Builder().cacheInMemory().cacheOnDisc()
-				.showImageOnLoading(new BitmapDrawable(ImageLoader.getInstance().loadImageSync(getShrinkImg(path)))).build();
-		ImageLoader.getInstance().displayImage(path, imageView, displayImageOptions);
-		new AlertDialog.Builder(context).setView(imageView).show();
+		Intent intent = new Intent();
+		intent.setClass(context, WebImageViewer.class);
+		intent.putExtra(Constant.Chat.CHAT_IMG_LARGE_IMG_KEY, path);
+		context.startActivity(intent);
 		
 	}
 	
 	private void showImg(View view, final String path) {
 		final PopupWindow popupWindow = new PopupWindow(context);
 		popupWindow.setWindowLayoutMode(android.view.ViewGroup.LayoutParams.FILL_PARENT, android.view.ViewGroup.LayoutParams.FILL_PARENT);
-		popupWindow.setBackgroundDrawable(new BitmapDrawable(BitmapFactory.decodeResource(context.getResources(), R.drawable.black_bg)));
+		ColorDrawable dw = new ColorDrawable(R.color.black);
+		popupWindow.setBackgroundDrawable(dw);
 		popupWindow.setOutsideTouchable(true);
 		popupWindow.setFocusable(true);
 		View v = ((Activity) context).getLayoutInflater().inflate(R.layout.chat_big_img, null);
@@ -264,11 +263,36 @@ public class ChatListAdapter extends BaseAdapter {
 				popupWindow.dismiss();
 			}
 		});
+		
+		ImageLoader.getInstance().displayImage(path, imageView, new ImageLoadingListener() {
+			
+			@Override
+			public void onLoadingStarted(String imageUri, View view) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+				if (popupWindow != null && popupWindow.isShowing()) {
+					popupWindow.update();
+				}
+			}
+			
+			@Override
+			public void onLoadingCancelled(String imageUri, View view) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
 		popupWindow.setContentView(v);
-		popupWindow.showAtLocation(new View(context), Gravity.CENTER, 0, 0);
-		
-		ImageLoader.getInstance().displayImage(path, imageView);
-		
+		popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
 	}
 	
 	/**
