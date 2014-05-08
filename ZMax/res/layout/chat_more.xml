@@ -21,7 +21,6 @@
             android:textSize="18sp" />
 
         <ImageView
-            android:id="@+id/btn_clear"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:layout_centerVertical="true"
@@ -55,7 +54,6 @@
             android:text="清空聊天记录(0.13M)" />
 
         <ImageView
-            android:id="@+id/btn_clear"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:layout_centerVertical="true"

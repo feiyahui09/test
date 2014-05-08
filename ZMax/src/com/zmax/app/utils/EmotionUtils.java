@@ -49,12 +49,11 @@ public class EmotionUtils {
 		EMOTIONS_MAP.put("憎", R.drawable.e28);
 		EMOTIONS_MAP.put("皱眉", R.drawable.e29);
 	}
-	public static final String[] COM_SINA_ES = { "呵呵", "哈哈", "惊讶", "亲亲", "害羞", "悲伤", "怒", "泪", "挖鼻屎", "酷" };
 	
-	public static final Pattern EMOTION_URL_SINA = Pattern.compile("\\[(\\S+?)\\]");
+	public static final Pattern EMOTION_PATTERN = Pattern.compile("\\[(\\S+?)\\]");
 	
 	public static SpannableString getSinaEmotionsString(SpannableString value, Context context) {
-		Matcher localMatcher = EMOTION_URL_SINA.matcher(value);
+		Matcher localMatcher = EMOTION_PATTERN.matcher(value);
 		while (localMatcher.find()) {
 			String str2 = localMatcher.group(0);
 			int k = localMatcher.start();

@@ -224,6 +224,25 @@ public class FileUtil {
 	}
 	
 	/**
+	 * 获取文件大小
+	 * 
+	 * @param size
+	 *            字节
+	 * @return
+	 */
+	public static String formatFileSizeByM(long size) {
+		if (size <= 0) return "0.00 M";
+		java.text.DecimalFormat df = new java.text.DecimalFormat("##.##");
+		float temp = (float) size / 1024;
+		// if (temp >= 1024) {
+		return df.format(temp / 1024) + "M";
+		// }
+		// else {
+		// return df.format(temp) + "K";
+		// }
+	}
+	
+	/**
 	 * 转换文件大小
 	 * 
 	 * @param fileS
@@ -400,7 +419,7 @@ public class FileUtil {
 	 * @param fileName
 	 * @return
 	 */
-	public static boolean deleteDirectory(String fileName) {
+	public static boolean deleteDirectory(String fileName, boolean isSelfDelete) {
 		boolean status;
 		SecurityManager checker = new SecurityManager();
 		
@@ -418,7 +437,7 @@ public class FileUtil {
 						File deletedFile = new File(newPath.toString() + "/" + listfile[i].toString());
 						deletedFile.delete();
 					}
-					newPath.delete();
+					if (isSelfDelete) newPath.delete();
 					Log.i("DirectoryManager deleteDirectory", fileName);
 					status = true;
 				}

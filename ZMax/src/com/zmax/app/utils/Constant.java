@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Random;
 
 import android.content.Intent;
+import android.os.Environment;
 import android.support.v4.app.FragmentActivity;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -25,7 +26,8 @@ public class Constant {
 	public static final boolean LOG_SDCARD_ENABLE = false; // 是否打印日志在SDcard上，正式发版前记得设置为false
 	public static final String LOG_FILE_NAME = "com.zmax.app" + "_log.txt"; // 根据包名改变日志文件名字
 	
-	// public static final String ZMAX_URL = "http://zmax.bestapp.us/api/v1/"; // 正式环境
+	// public static final String ZMAX_URL = "http://zmax.bestapp.us/api/v1/";
+	// // 正式环境
 	public static String ZMAX_URL = "http://zmaxtest.bestapp.us/api/v1/";
 	// 测试环境
 	public static final String TEST_ICON_URI = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQQGKJtgkUvw47FeyYwTia3chxBqChjxqKgRmX_QItRWAhVqJjc";
@@ -56,7 +58,6 @@ public class Constant {
 	
 	public static class Acts {
 		
-		
 		public static final String DATE_SPF_KEY = "date_spf_key";
 		public static final String CITY_SPF_KEY = "city_spf_key";
 		public static final String ID_KEY = "act_id_key";
@@ -67,18 +68,20 @@ public class Constant {
 	}
 	
 	public static class Chat {
-		public static final String CHAT_SERVER_IP="14.23.159.74";
-		public static final int CHAT_SERVER_PORT=3014;
+		public static final String CHAT_SERVER_IP = "14.23.159.74";
+		public static final int CHAT_SERVER_PORT = 3014;
 		public static final int EMOTION_DIMEN = 22;
 		public static final String SELF_ID = "self_id";
 		
 		public static final String SELF_NAME = "self_name";
 		public static final String SELF_GENDER = "self_gender";
 		
-		
-		public static final String  CHAT_UPLOAD_IMG_LARGE_KEY="chat_upload_img_large_key";
+		public static final String CHAT_UPLOAD_IMG_LARGE_KEY = "chat_upload_img_large_key";
 		public static final String CHAT_UPLOAD_IMG_THUMB_KEY = "chat_upload_img_thumb_key";
-
+		
+		public static final String CHAT_IMG_CACHE_ABS_PATH = Environment.getExternalStorageDirectory().getAbsolutePath() + "/zmax/Camera/";
+		public static final String CHAT_IMG_CACHE_PATH = "/zmax/Camera/";
+		
 	}
 	
 	public static final int PER_NUM_GET_ACTLIST = 5;

@@ -288,7 +288,7 @@ public class ChatRoomActivity extends BaseFragmentActivity implements OnClickLis
 							// 判断是否挂载了SD卡
 							String storageState = Environment.getExternalStorageState();
 							if (storageState.equals(Environment.MEDIA_MOUNTED)) {
-								savePath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/zmax/Camera/";// 存放照片的文件夹
+								savePath = Constant.Chat.CHAT_IMG_CACHE_ABS_PATH;// 存放照片的文件夹
 								File savedir = new File(savePath);
 								if (!savedir.exists()) {
 									savedir.mkdirs();
@@ -438,7 +438,7 @@ public class ChatRoomActivity extends BaseFragmentActivity implements OnClickLis
 				
 				if (bitmap != null) {
 					// 存放照片的文件夹
-					String savePath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/zmax/Camera/";
+					String savePath = Constant.Chat.CHAT_IMG_CACHE_ABS_PATH;
 					File savedir = new File(savePath);
 					if (!savedir.exists()) {
 						savedir.mkdirs();
