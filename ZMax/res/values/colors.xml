@@ -6,7 +6,16 @@
     <color name="blue">#009</color>
     <color name="white">#FFF</color>
     <color name="black">#000</color>
-
+    
+    
+    <color name="sdl_message_text_dark">#FFFFFF</color>
+    <color name="sdl_title_text_dark">#ff0099cc</color>
+    <color name="sdl_title_separator_dark">#ff0099cc</color>
+    <color name="sdl_button_text_dark">@color/sdl_primary_text_holo_dark</color>
+    <color name="sdl_button_normal_dark">@android:color/transparent</color>
+    <color name="sdl_button_pressed_dark">#990099cc</color> <!-- 60 % opacity -->
+    <color name="sdl_button_focused_dark">#4C0099cc</color> <!-- 30 % opacity -->
+    <color name="sdl_button_separator_dark">#12ffffff</color> <!-- 7% opacity -->
     <!-- 日历 -->
 
 
@@ -25,14 +34,10 @@
 
     <color name="current_date_color">#900</color>
     <color name="unable_date_color">#009</color>
-
-    
-    
     <color name="default_menu_actived">#43c1ee</color>
     <color name="default_menu_normal">#b2b2b2</color>
-     <color name="hotel_list_tile">#222222</color>
-     
-     <color name="index_title_actived">#43c1ee</color>
+    <color name="hotel_list_tile">#222222</color>
+    <color name="index_title_actived">#43c1ee</color>
     <color name="index_title_normal">#ffffff</color>
-    
+
 </resources>

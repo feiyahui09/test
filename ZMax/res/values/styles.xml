@@ -13,12 +13,25 @@
     </style>
 
     <!-- Application theme. -->
-    <style name="AppTheme"  >
+    <style name="AppTheme">
 
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
         <item name="android:screenOrientation">portrait</item>
         <item name="android:windowNoTitle">true</item>
+        <item name="sdlDialogStyle">@style/DialogStyleDark</item>
     </style>
+
+	<style name="DialogStyleDark">
+		<item name="dialogBackground">@drawable/sdl_background_dark</item>
+		<item name="titleTextColor">@color/sdl_title_text_dark</item>
+		<item name="titleSeparatorColor">@color/sdl_title_separator_dark</item>
+		<item name="messageTextColor">@color/sdl_message_text_dark</item>
+		<item name="buttonTextColor">@color/sdl_button_text_dark</item>
+		<item name="buttonSeparatorColor">@color/sdl_button_separator_dark</item>
+		<item name="buttonBackgroundColorNormal">@color/sdl_button_normal_dark</item>
+		<item name="buttonBackgroundColorPressed">@color/sdl_button_pressed_dark</item>
+		<item name="buttonBackgroundColorFocused">@color/sdl_button_focused_dark</item>
+	</style>
 
     <style name="ShareDialog" parent="@android:Theme.Dialog">
         <item name="android:windowFrame">@null</item>
