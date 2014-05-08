@@ -18,16 +18,16 @@ public class HttpUtils {
 		return CustomHttpURLConnection.GetFromWebByHttpUrlConnection(strUrl, nameValuePairs);
 	}
 	
-	public static String postByHttpClient(Context context, String strUrl, NameValuePair... nameValuePairs) {
-		return CustomHttpClient.PostFromWebByHttpClient(context, strUrl, nameValuePairs);
+	public static String postByHttpClient(Context context, String strUrl, String header, NameValuePair... nameValuePairs) {
+		return CustomHttpClient.PostFromWebByHttpClient(context, strUrl, header,nameValuePairs);
 	}
 	@Deprecated
 	public static String postByHttpClient(Context context, String strUrl, List<NameValuePair> nameValuePairsList) {
 		return CustomHttpClient.PostFromWebByHttpClient(context, strUrl, nameValuePairsList);
 	}
 	
-	public static String getByHttpClient(Context context, String strUrl, NameValuePair... nameValuePairs) throws Exception {
-		return CustomHttpClient.getFromWebByHttpClient(context, strUrl, nameValuePairs);
+	public static String getByHttpClient(Context context, String strUrl,  String header,NameValuePair... nameValuePairs) throws Exception {
+		return CustomHttpClient.getFromWebByHttpClient(context, strUrl,header, nameValuePairs);
 	}
 	
 	// ------------------------------------------------------------------------------------------

@@ -3,6 +3,7 @@ package com.zmax.app.net;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.http.HttpEntity;
@@ -32,6 +33,7 @@ import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
 
 import android.content.Context;
+import android.text.TextUtils;
 
 import com.zmax.app.R;
 import com.zmax.app.utils.JsonMapperUtils;
@@ -42,6 +44,7 @@ public class CustomHttpClient {
 	private static final String CHARSET_UTF8 = HTTP.UTF_8;
 	private static final String CHARSET_GB2312 = "GB2312";
 	private static HttpClient customerHttpClient;
+	public  static final String ZMAX_AUTH_TOKEN_KEY = "Zmax-Auth-Token";
 	
 	private CustomHttpClient() {
 		
@@ -54,7 +57,7 @@ public class CustomHttpClient {
 	 * @param nameValuePairs
 	 * @return
 	 */
-	public static String PostFromWebByHttpClient(Context context, String url, NameValuePair... nameValuePairs) {
+	public static String PostFromWebByHttpClient(Context context, String url, String header, NameValuePair... nameValuePairs) {
 		try {
 			List<NameValuePair> params = new ArrayList<NameValuePair>();
 			if (nameValuePairs != null) {
@@ -66,6 +69,7 @@ public class CustomHttpClient {
 			HttpPost httpPost = new HttpPost(url);
 			Log.d(url.toString());
 			Log.d(params.toString());
+			if (!TextUtils.isEmpty(header)) httpPost.setHeader(ZMAX_AUTH_TOKEN_KEY, header);
 			httpPost.setEntity(urlEncoded);
 			HttpClient client = getHttpClient(context);
 			HttpResponse response = client.execute(httpPost);
@@ -126,7 +130,8 @@ public class CustomHttpClient {
 		}
 	}
 	
-	public static String getFromWebByHttpClient(Context context, String url, NameValuePair... nameValuePairs) throws Exception {
+	public static String getFromWebByHttpClient(Context context, String url, String header, NameValuePair... nameValuePairs)
+			throws Exception {
 		try {
 			// http地址
 			// String httpUrl =
@@ -146,6 +151,7 @@ public class CustomHttpClient {
 			
 			// HttpGet连接对象
 			HttpGet httpRequest = new HttpGet(sb.toString());
+			if (!TextUtils.isEmpty(header)) httpRequest.setHeader(ZMAX_AUTH_TOKEN_KEY, header);
 			// 取得HttpClient对象
 			HttpClient httpclient = getHttpClient(context);
 			// 请求HttpClient，取得HttpResponse

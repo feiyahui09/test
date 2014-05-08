@@ -18,6 +18,8 @@ import android.text.TextUtils;
 import android.util.Base64;
 
 import com.zmax.app.model.UploadResult;
+import com.zmax.app.net.CustomHttpClient;
+import com.zmax.app.utils.Constant;
 import com.zmax.app.utils.JsonMapperUtils;
 import com.zmax.app.utils.Log;
 
@@ -48,6 +50,7 @@ public class Uploader {
 			postMethod.setHeader("Accept", "application/json");
 			postMethod.setHeader("Content-type", "application/json");
 			postMethod.setHeader("Data-type", "json");
+			postMethod.setHeader(CustomHttpClient.ZMAX_AUTH_TOKEN_KEY, Constant.getLogin().auth_token);
 			
 			String jsonStr = httpClient.execute(postMethod, responseHandler);
 			result = JsonMapperUtils.toObject(jsonStr, UploadResult.class);

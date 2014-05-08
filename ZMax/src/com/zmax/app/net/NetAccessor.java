@@ -32,7 +32,7 @@ public class NetAccessor {
 			JSONObject params = new JSONObject();
 			params.put("ak", ak);
 			
-			String jsonString = HttpUtils.getByHttpClient(context, Constant.IP_LOCATION_URL, new BasicNameValuePair("ak", ak));
+			String jsonString = HttpUtils.getByHttpClient(context, Constant.IP_LOCATION_URL, null, new BasicNameValuePair("ak", ak));
 			// String jsonString = HttpUtil.sendRequest(context,
 			// Constant.IP_LOCATION_URL+"ak="+ak, "POST", null);
 			Log.d("  responeString -->\n" + jsonString);
@@ -63,7 +63,7 @@ public class NetAccessor {
 	public static ActList getActList(Context context, String city_name, String page_num, String per) {
 		ActList actList = null;
 		try {
-			String jsonString = HttpUtils.getByHttpClient(context, Constant.ZMAX_URL + "events", new BasicNameValuePair("city_name",
+			String jsonString = HttpUtils.getByHttpClient(context, Constant.ZMAX_URL + "events", null, new BasicNameValuePair("city_name",
 					city_name), new BasicNameValuePair("page_num", page_num), new BasicNameValuePair("per", per));
 			Log.d("  responeString -->\n" + jsonString);
 			if (!TextUtils.isEmpty(jsonString)) {
@@ -81,8 +81,8 @@ public class NetAccessor {
 	public static ActList getActListInHotel(Context context, String id, String page_num, String per) {
 		ActList actList = null;
 		try {
-			String jsonString = HttpUtils.getByHttpClient(context, Constant.ZMAX_URL + "hotels/" + id + "/events", new BasicNameValuePair(
-					"page_num", page_num), new BasicNameValuePair("per", per));
+			String jsonString = HttpUtils.getByHttpClient(context, Constant.ZMAX_URL + "hotels/" + id + "/events", null,
+					new BasicNameValuePair("page_num", page_num), new BasicNameValuePair("per", per));
 			Log.d("  responeString -->\n" + jsonString);
 			if (!TextUtils.isEmpty(jsonString)) {
 				actList = JsonMapperUtils.toObject(jsonString, ActList.class);
@@ -99,8 +99,8 @@ public class NetAccessor {
 	public static Update checkUpdateVersion(Context context, String tag) {
 		Update update = null;
 		try {
-			String jsonString = HttpUtils
-					.getByHttpClient(context, Constant.ZMAX_URL + "versions/check", new BasicNameValuePair("tag", tag));
+			String jsonString = HttpUtils.getByHttpClient(context, Constant.ZMAX_URL + "versions/check", null, new BasicNameValuePair(
+					"tag", tag));
 			Log.d("  responeString -->\n" + jsonString);
 			if (!TextUtils.isEmpty(jsonString)) {
 				update = JsonMapperUtils.toObject(jsonString, Update.class);
@@ -119,8 +119,9 @@ public class NetAccessor {
 	public static BaseModel vetfityNameDup(Context context, String user_id, String gender, String nick_name) {
 		BaseModel result = null;
 		try {
-			String jsonString = HttpUtils.postByHttpClient(context, Constant.ZMAX_URL + "chat/user_info", new BasicNameValuePair("user_id",
-					user_id + ""), new BasicNameValuePair("gender", gender + ""), new BasicNameValuePair("nick_name", nick_name));
+			String jsonString = HttpUtils.postByHttpClient(context, Constant.ZMAX_URL + "chat/user_info", Constant.getLogin().auth_token,
+					new BasicNameValuePair("user_id", user_id + ""), new BasicNameValuePair("gender", gender + ""), new BasicNameValuePair(
+							"nick_name", nick_name));
 			Log.d("  responeString -->\n" + jsonString);
 			if (!TextUtils.isEmpty(jsonString)) {
 				result = JsonMapperUtils.toObject(jsonString, BaseModel.class);
@@ -136,7 +137,7 @@ public class NetAccessor {
 	
 	public static void testPost(Context context) {
 		
-		HttpUtils.postByHttpClient(context, Constant.ZMAX_URL + "devices/scenes", new BasicNameValuePair("time", "asd"),
+		HttpUtils.postByHttpClient(context, Constant.ZMAX_URL + "devices/scenes", null, new BasicNameValuePair("time", "asd"),
 				new BasicNameValuePair("devices_and_opera[]", "asd"), new BasicNameValuePair("devices_and_opera[]", "asd"),
 				new BasicNameValuePair("user_id", "asd"), new BasicNameValuePair("room_id", "asd"), new BasicNameValuePair("hotel_id",
 						"asd"));
@@ -155,7 +156,7 @@ public class NetAccessor {
 	public static HotelList getHotelList(Context context, String city_name, String page_num, String per) {
 		HotelList hotelList = null;
 		try {
-			String jsonString = HttpUtils.getByHttpClient(context, Constant.ZMAX_URL + "hotels", new BasicNameValuePair("city_name",
+			String jsonString = HttpUtils.getByHttpClient(context, Constant.ZMAX_URL + "hotels", null, new BasicNameValuePair("city_name",
 					city_name), new BasicNameValuePair("page_num", page_num), new BasicNameValuePair("per", per));
 			Log.d(" responeString-->\n" + jsonString);
 			if (!TextUtils.isEmpty(jsonString)) {
@@ -174,7 +175,7 @@ public class NetAccessor {
 	public static HotelList getHotelUpcomingList(Context context) {
 		HotelList hotelList = null;
 		try {
-			String jsonString = HttpUtils.getByHttpClient(context, Constant.ZMAX_URL + "hotels/upcoming");
+			String jsonString = HttpUtils.getByHttpClient(context, Constant.ZMAX_URL + "hotels/upcoming", null);
 			Log.d("  responeString -->\n" + jsonString);
 			if (!TextUtils.isEmpty(jsonString)) {
 				hotelList = JsonMapperUtils.toObject(jsonString, HotelList.class);
@@ -192,7 +193,7 @@ public class NetAccessor {
 	public static ActDetail getActDetail(Context context, String id) {
 		ActDetail actDetail = null;
 		try {
-			String jsonString = HttpUtils.getByHttpClient(context, Constant.ZMAX_URL + "events/" + id);
+			String jsonString = HttpUtils.getByHttpClient(context, Constant.ZMAX_URL + "events/" + id, null);
 			Log.d("  responeString -->\n" + jsonString);
 			if (!TextUtils.isEmpty(jsonString)) {
 				actDetail = JsonMapperUtils.toObject(jsonString, ActDetail.class);
@@ -210,7 +211,7 @@ public class NetAccessor {
 	public static Documents getDocuments(Context context, String type, String updated_time) {
 		Documents documents = null;
 		try {
-			String jsonString = HttpUtils.getByHttpClient(context, Constant.ZMAX_URL + "documents/" + type, new BasicNameValuePair(
+			String jsonString = HttpUtils.getByHttpClient(context, Constant.ZMAX_URL + "documents/" + type, null, new BasicNameValuePair(
 					"updated_time", updated_time));
 			Log.d("  responeString -->\n" + jsonString);
 			if (!TextUtils.isEmpty(jsonString)) {
@@ -229,8 +230,8 @@ public class NetAccessor {
 	public static FeeBack sendFeedBack(Context context, String contacts, String advise) {
 		FeeBack feeBack = null;
 		try {
-			String jsonString = HttpUtils.postByHttpClient(context, Constant.ZMAX_URL + "feedbacks", new BasicNameValuePair("contacts",
-					contacts), new BasicNameValuePair("advise", advise));
+			String jsonString = HttpUtils.postByHttpClient(context, Constant.ZMAX_URL + "feedbacks", null, new BasicNameValuePair(
+					"contacts", contacts), new BasicNameValuePair("advise", advise));
 			Log.d("  responeString -->\n" + jsonString);
 			feeBack = JsonMapperUtils.toObject(jsonString, FeeBack.class);
 		}
@@ -245,7 +246,7 @@ public class NetAccessor {
 	public static Login loginPlayZMAX(Context context, String pms_hotel_id, String room_num, String id_number, String password) {
 		Login login = null;
 		try {
-			String jsonString = HttpUtils.postByHttpClient(context, Constant.ZMAX_URL + "users/login", new BasicNameValuePair(
+			String jsonString = HttpUtils.postByHttpClient(context, Constant.ZMAX_URL + "users/login", null, new BasicNameValuePair(
 					"pms_hotel_id", pms_hotel_id), new BasicNameValuePair("room_num", room_num), new BasicNameValuePair("id_number",
 					id_number), new BasicNameValuePair("password", password));
 			Log.d("  responeString -->\n" + jsonString);
@@ -269,8 +270,8 @@ public class NetAccessor {
 	public static Light setLight(Context context, String pattern) {
 		Light light = null;
 		try {
-			String jsonString = HttpUtils.postByHttpClient(context, Constant.ZMAX_URL + "devices/light", new BasicNameValuePair("pattern",
-					pattern));
+			String jsonString = HttpUtils.postByHttpClient(context, Constant.ZMAX_URL + "devices/light", Constant.getLogin().auth_token,
+					new BasicNameValuePair("pattern", pattern));
 			Log.d("  responeString -->\n" + jsonString);
 			if (!TextUtils.isEmpty(jsonString)) {
 				light = JsonMapperUtils.toObject(jsonString, Light.class);
@@ -295,8 +296,8 @@ public class NetAccessor {
 	public static Television setTelevision(Context context, String push_button) {
 		Television television = null;
 		try {
-			String jsonString = HttpUtils.postByHttpClient(context, Constant.ZMAX_URL + "devices/television", new BasicNameValuePair(
-					"push_button", push_button));
+			String jsonString = HttpUtils.postByHttpClient(context, Constant.ZMAX_URL + "devices/television",
+					Constant.getLogin().auth_token, new BasicNameValuePair("push_button", push_button));
 			Log.d("  responeString -->\n" + jsonString);
 			if (!TextUtils.isEmpty(jsonString)) {
 				television = JsonMapperUtils.toObject(jsonString, Television.class);
@@ -327,8 +328,9 @@ public class NetAccessor {
 	public static AirCondition setAirCondition(Context context, String opera_type, String opera_data) {
 		AirCondition airCondition = null;
 		try {
-			String jsonString = HttpUtils.postByHttpClient(context, Constant.ZMAX_URL + "devices/air_condiction", new BasicNameValuePair(
-					"opera_type", opera_type), new BasicNameValuePair("opera_data", opera_data));
+			String jsonString = HttpUtils.postByHttpClient(context, Constant.ZMAX_URL + "devices/air_condiction",
+					Constant.getLogin().auth_token, new BasicNameValuePair("opera_type", opera_type), new BasicNameValuePair("opera_data",
+							opera_data));
 			Log.d("  responeString -->\n" + jsonString);
 			if (!TextUtils.isEmpty(jsonString)) {
 				airCondition = JsonMapperUtils.toObject(jsonString, AirCondition.class);
@@ -346,7 +348,8 @@ public class NetAccessor {
 		AirCondition airCondition = null;
 		try {
 			airCondition = new AirCondition();
-			String jsonString = HttpUtils.getByHttpClient(context, Constant.ZMAX_URL + "devices/air_condiction");
+			String jsonString = HttpUtils.getByHttpClient(context, Constant.ZMAX_URL + "devices/air_condiction",
+					Constant.getLogin().auth_token);
 			Log.d("  responeString -->\n" + jsonString);
 			if (!TextUtils.isEmpty(jsonString)) {
 				JSONObject jsonObject = new JSONObject(jsonString);
@@ -369,7 +372,8 @@ public class NetAccessor {
 		Television television = null;
 		try {
 			television = new Television();
-			String jsonString = HttpUtils.getByHttpClient(context, Constant.ZMAX_URL + "devices/television");
+			String jsonString = HttpUtils
+					.getByHttpClient(context, Constant.ZMAX_URL + "devices/television", Constant.getLogin().auth_token);
 			Log.d("  responeString -->\n" + jsonString);
 			if (!TextUtils.isEmpty(jsonString)) {
 				JSONObject jsonObject = new JSONObject(jsonString);
@@ -391,7 +395,7 @@ public class NetAccessor {
 	public static Light getLight(Context context) {
 		Light airCondition = null;
 		try {
-			String jsonString = HttpUtils.getByHttpClient(context, Constant.ZMAX_URL + "devices/light");
+			String jsonString = HttpUtils.getByHttpClient(context, Constant.ZMAX_URL + "devices/light", Constant.getLogin().auth_token);
 			Log.d("  responeString -->\n" + jsonString);
 			if (!TextUtils.isEmpty(jsonString)) {
 				airCondition = JsonMapperUtils.toObject(jsonString, Light.class);
