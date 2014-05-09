@@ -93,6 +93,7 @@ public class SettingFragment extends Fragment implements OnClickListener {
 				break;
 			case R.id.btn_welcome:
 				intent.setClass(getActivity(), WelcomeActivity.class);
+				intent.setAction(Constant.ACTION_WELCOME_FROM_SETTING);
 				startActivity(intent);
 				break;
 			case R.id.btn_user_regulation:

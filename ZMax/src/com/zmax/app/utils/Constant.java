@@ -42,9 +42,11 @@ public class Constant {
 	
 	public static String CUR_CITY = "";
 	
-	
-	public static final String SDCARD_CACHE_PATH="/zmax/cacheImg";
+	public static final String SDCARD_CACHE_PATH = "/zmax/cacheImg";
 	public static final String FEEDBACK_SENDED_ACTION = "feedback_sended_action";
+	
+	public static final String ACTION_WELCOME_FROM_INDEX = "action_welcome_from_index";
+	public static final String ACTION_WELCOME_FROM_SETTING = "action_welcome_from_setting";
 	
 	public static class DialogCode {
 		public static final int TYPE_SEND_FAILED = 5;
