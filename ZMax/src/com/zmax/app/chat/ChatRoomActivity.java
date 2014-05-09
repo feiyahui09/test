@@ -43,7 +43,9 @@ import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.zmax.app.R;
+import com.zmax.app.ZMaxApplication;
 import com.zmax.app.adapter.GridViewFaceAdapter;
 import com.zmax.app.chat.promelo.DataCallBack;
 import com.zmax.app.model.UploadResult;
@@ -90,6 +92,7 @@ public class ChatRoomActivity extends BaseFragmentActivity implements OnClickLis
 		init();
 		initGridView();
 		initChatPomelo();
+		
 	}
 	
 	private void init() {
@@ -158,6 +161,11 @@ public class ChatRoomActivity extends BaseFragmentActivity implements OnClickLis
 	protected void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
+		
+		// 强行重新初始化，更改聊天室图片缓存目录
+		ImageLoader.getInstance().destroy();
+		ZMaxApplication.initImageLoader4Chat();
+		
 		String name = Constant.getLogin().nick_name;
 		if (TextUtils.isEmpty(name)) {
 			return;
@@ -183,6 +191,8 @@ public class ChatRoomActivity extends BaseFragmentActivity implements OnClickLis
 	protected void onPause() {
 		// TODO Auto-generated method stub
 		super.onPause();
+		ImageLoader.getInstance().destroy();
+		ZMaxApplication.initImageLoader();
 	}
 	
 	// 192.168.0.69 //测试环境
@@ -633,7 +643,9 @@ public class ChatRoomActivity extends BaseFragmentActivity implements OnClickLis
 				handler.post(new Runnable() {
 					@Override
 					public void run() {
-						String _msg = TextUtils.isEmpty(message) ? getString(R.string.unkownError) : message;
+						// String _msg = TextUtils.isEmpty(message) ?
+						// getString(R.string.unkownError) : message;
+						String _msg = getString(R.string.unkownError);
 						if (code == 401) {
 							SimpleDialogFragment.createBuilder(mContext, getSupportFragmentManager()).setPositiveButtonText("确定")
 									.setTitle("提示").setMessage(TextUtils.isEmpty(_msg) ? "Token验证失败，请重新登录！" : _msg)

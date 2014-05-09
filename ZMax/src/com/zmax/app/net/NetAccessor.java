@@ -135,6 +135,7 @@ public class NetAccessor {
 		return result;
 	}
 	
+	@Deprecated
 	public static void testPost(Context context) {
 		
 		HttpUtils.postByHttpClient(context, Constant.ZMAX_URL + "devices/scenes", null, new BasicNameValuePair("time", "asd"),

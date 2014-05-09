@@ -173,8 +173,7 @@ public class ChatListAdapter extends BaseAdapter {
 			case VALUE_LEFT_IMAGE:
 				holder.tvLeftName.setText(chatMsg.from);
 				holder.ivLeftIcon.setImageResource(chatMsg.gender == 0 ? R.drawable.chat_female_icon : R.drawable.chat_male_icon);
-				ImageLoader.getInstance().displayImage(getShrinkImg(chatMsg.msg.content), holder.ivLeftImage,
-						new DisplayImageOptions.Builder().cacheInMemory().cacheOnDisc().build());
+				ImageLoader.getInstance().displayImage(getShrinkImg(chatMsg.msg.content), holder.ivLeftImage);
 				holder.ivLeftImage.setOnClickListener(new OnClickListener() {
 					@Override
 					public void onClick(View v) {
@@ -199,8 +198,7 @@ public class ChatListAdapter extends BaseAdapter {
 			case VALUE_RIGHT_IMAGE:
 				holder.tvRightName.setText(chatMsg.from);
 				holder.ivRightIcon.setImageResource(chatMsg.gender == 0 ? R.drawable.chat_female_icon : R.drawable.chat_male_icon);
-				ImageLoader.getInstance().displayImage(getShrinkImg(chatMsg.msg.content), holder.ivRightImage,
-						new DisplayImageOptions.Builder().cacheInMemory().cacheOnDisc().build());
+				ImageLoader.getInstance().displayImage(getShrinkImg(chatMsg.msg.content), holder.ivRightImage);
 				holder.ivRightImage.setOnClickListener(new OnClickListener() {
 					@Override
 					public void onClick(View v) {

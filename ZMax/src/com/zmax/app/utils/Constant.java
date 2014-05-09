@@ -42,6 +42,8 @@ public class Constant {
 	
 	public static String CUR_CITY = "";
 	
+	
+	public static final String SDCARD_CACHE_PATH="/zmax/cacheImg";
 	public static final String FEEDBACK_SENDED_ACTION = "feedback_sended_action";
 	
 	public static class DialogCode {

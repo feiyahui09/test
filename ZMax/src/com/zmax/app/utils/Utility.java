@@ -100,8 +100,8 @@ public class Utility {
 	
 	public static void showTokenErrorDialog(FragmentActivity fragmentActivity, String msg) {
 		SimpleDialogFragment.createBuilder(fragmentActivity, fragmentActivity.getSupportFragmentManager()).setPositiveButtonText("确定")
-				.setTitle("提示").setMessage(TextUtils.isEmpty(msg) ? "Token验证失败，请重新登录！" : msg)
-				.setRequestCode(Constant.DialogCode.TYPE_TOKEN_ERROR).setCancelable(false).show();
+				.setTitle("提示").setMessage("Token验证失败，请重新登录！").setRequestCode(Constant.DialogCode.TYPE_TOKEN_ERROR).setCancelable(false)
+				.show();
 	}
 	
 	/**

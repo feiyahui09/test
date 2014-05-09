@@ -29,7 +29,18 @@ public class FileUtil {
 	public static File getSdcardDir() {
 		File retVal = Environment.getExternalStorageDirectory();
 		if (retVal != null) {
-			retVal = new File(retVal.getAbsolutePath() + "/zmax/cacheImg");
+			retVal = new File(retVal.getAbsolutePath() + Constant.SDCARD_CACHE_PATH);
+			if (!retVal.exists() && !retVal.mkdirs()) {
+				retVal = null;
+			}
+		}
+		return retVal;
+	}
+	
+	public static File getSdcardDir4Chat() {
+		File retVal = Environment.getExternalStorageDirectory();
+		if (retVal != null) {
+			retVal = new File(retVal.getAbsolutePath() + Constant.Chat.CHAT_IMG_CACHE_PATH);
 			if (!retVal.exists() && !retVal.mkdirs()) {
 				retVal = null;
 			}

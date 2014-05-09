@@ -62,15 +62,28 @@ public class ZMaxApplication extends Application {
 		mBMapManager.init(Constant.MAP_SDK_KEY, null);
 	}
 	
-	private void initImageLoader() {
+	public static void initImageLoader() {
 		ImageLoaderConfiguration config;
 		DisplayImageOptions options = new DisplayImageOptions.Builder().cacheInMemory().cacheOnDisc().delayBeforeLoading(100)
 				.displayer(new FadeInBitmapDisplayer(650)).showImageOnLoading(R.drawable.default_loading_img)
 				.showImageForEmptyUri(R.drawable.default_loading_fail_img).showImageOnFail(R.drawable.default_loading_fail_img).build();
-		config = new ImageLoaderConfiguration.Builder(this).threadPriority(Thread.NORM_PRIORITY - 2).denyCacheImageMultipleSizesInMemory()
-				.discCacheExtraOptions(480, 800, CompressFormat.PNG, 90, null).discCacheFileNameGenerator(new Md5FileNameGenerator())
-				.tasksProcessingOrder(QueueProcessingType.LIFO).discCache(new UnlimitedDiscCache(FileUtil.getSdcardDir()))
-				.discCacheSize(4 * 1024 * 1024).discCacheFileCount(100).defaultDisplayImageOptions(options).build();
+		config = new ImageLoaderConfiguration.Builder(mInstance).threadPriority(Thread.NORM_PRIORITY - 2)
+				.denyCacheImageMultipleSizesInMemory().discCacheExtraOptions(480, 800, CompressFormat.PNG, 90, null)
+				.discCacheFileNameGenerator(new Md5FileNameGenerator()).tasksProcessingOrder(QueueProcessingType.LIFO)
+				.discCache(new UnlimitedDiscCache(FileUtil.getSdcardDir())).discCacheSize(4 * 1024 * 1024).discCacheFileCount(100)
+				.defaultDisplayImageOptions(options).build();
+		ImageLoader.getInstance().init(config);
+		com.nostra13.universalimageloader.utils.L.disableLogging();
+	}
+	
+	public static void initImageLoader4Chat() {
+		ImageLoaderConfiguration config;
+		DisplayImageOptions options = new DisplayImageOptions.Builder().cacheInMemory().cacheOnDisc().build();
+		config = new ImageLoaderConfiguration.Builder(mInstance).threadPriority(Thread.NORM_PRIORITY - 2)
+				.denyCacheImageMultipleSizesInMemory().discCacheExtraOptions(480, 800, CompressFormat.PNG, 90, null)
+				.discCacheFileNameGenerator(new Md5FileNameGenerator()).tasksProcessingOrder(QueueProcessingType.LIFO)
+				.discCache(new UnlimitedDiscCache(FileUtil.getSdcardDir4Chat())).discCacheSize(4 * 1024 * 1024).discCacheFileCount(100)
+				.defaultDisplayImageOptions(options).build();
 		ImageLoader.getInstance().init(config);
 		com.nostra13.universalimageloader.utils.L.disableLogging();
 	}
