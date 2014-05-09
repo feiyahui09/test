@@ -61,6 +61,7 @@
         <activity
             android:name="com.zmax.app.chat.ChatRoomActivity"
             android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" 
             android:theme="@style/AppTheme" >
         </activity>
         <activity

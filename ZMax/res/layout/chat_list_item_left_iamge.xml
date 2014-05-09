@@ -1,7 +1,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+   android:paddingRight="@dimen/chat_list_profile_size" >
 
     <ImageView
         android:id="@+id/iv_icon"
@@ -34,10 +35,10 @@
             android:id="@+id/iv_left_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="left|center_vertical"
+            android:layout_gravity="center"
             android:layout_marginBottom="5dip"
             android:background="@drawable/chat_list_item_left_bg"
-            android:gravity="left|center_vertical"
+            android:gravity="center"
             android:scaleType="centerCrop" />
     </LinearLayout>
 

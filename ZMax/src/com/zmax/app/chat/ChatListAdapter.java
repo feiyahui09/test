@@ -140,7 +140,6 @@ public class ChatListAdapter extends BaseAdapter {
 					holder.ivRightIcon = (ImageView) convertView.findViewById(R.id.iv_icon);
 					holder.tvRightName = (TextView) convertView.findViewById(R.id.tv_right_name);
 					holder.ivRightImage = (ImageView) convertView.findViewById(R.id.iv_right_image);
-					holder.pbRight = (ProgressBar) convertView.findViewById(R.id.pb_right);
 					
 					// holder.ivRightImage.setImageResource(R.drawable.test);
 					break;
@@ -314,7 +313,6 @@ public class ChatListAdapter extends BaseAdapter {
 		private ImageView ivRightIcon;// 右边的头像
 		private Button btnRightText;// 右边的文本
 		private ImageView ivRightImage;// 右边的图像
-		private ProgressBar pbRight;// 右边的图像
 		
 		private TextView tvRightName;//
 		

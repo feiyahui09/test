@@ -222,6 +222,7 @@ public class ChatRoomActivity extends BaseFragmentActivity implements OnClickLis
 					return;
 				}
 				hideAndHideIMM();
+				et_edit.requestFocus();
 				chatHelper.send(et_edit.getText().toString(), new DataCallBack() {
 					@Override
 					public void responseData(final JSONObject arg0) {
