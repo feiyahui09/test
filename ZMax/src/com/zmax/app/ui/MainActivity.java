@@ -1,5 +1,6 @@
 package com.zmax.app.ui;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -32,6 +33,14 @@ public class MainActivity extends BaseSlidingFragmentActivity implements ISimple
 	private DialogFragment progressDialog;
 	public static final int REQUEST_PROGRESS = 1;
 	
+	private class ReponsiveReceiver extends BroadcastReceiver {
+		
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			
+		}
+	}
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -42,6 +51,7 @@ public class MainActivity extends BaseSlidingFragmentActivity implements ISimple
 		}
 	}
 	
+	@Deprecated
 	private void initLocate() {
 		progressDialog = ProgressDialogFragment.createBuilder(this, getSupportFragmentManager()).setMessage("正在定位中...")
 				.setRequestCode(REQUEST_PROGRESS).setTitle("提示").setCancelable(true).show();
@@ -55,18 +65,15 @@ public class MainActivity extends BaseSlidingFragmentActivity implements ISimple
 				if (result != null && !TextUtils.isEmpty(result.city) && !isFinishing()) {
 					String cityStr = result.city.replace("市", "");
 					Constant.CUR_CITY = cityStr;
-					DefaultShared.putString(Constant.SPFKEY.CITY_LOCATION_KEY, cityStr);
+					// DefaultShared.putString(Constant.SPFKEY.CITY_LOCATION_KEY,
+					// cityStr);
 					switchContent(new ActListFragment());
 					Toast.makeText(mContext, "   " + result.province + cityStr, 2222).show();
 				}
-				// else if (!PhoneUtil.isNetworkOk(mContext)) {
-				// switchContent(new NetErrorFragment());
-				// return;
-				// }
 				else {
-					
 					Constant.CUR_CITY = "";
-					DefaultShared.putString(Constant.SPFKEY.CITY_LOCATION_KEY, "");
+					// DefaultShared.putString(Constant.SPFKEY.CITY_LOCATION_KEY,
+					// "");
 					switchContent(new ActListFragment());
 					// 显示默认列表
 					Toast.makeText(mContext, "定位失败!  为您显示默认城市信息！", 2222).show();

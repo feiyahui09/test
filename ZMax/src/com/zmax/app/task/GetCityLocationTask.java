@@ -27,16 +27,13 @@ public class GetCityLocationTask extends AsyncTask<String, Void, CityLocation> {
 	protected void onPreExecute() {
 		// TODO Auto-generated method stub
 		super.onPreExecute();
-		if (!NetWorkHelper.checkNetState(context))
-			Toast.makeText(context, context.getResources().getString(R.string.httpProblem), 300).show();
 	}
 	
 	@Override
 	protected CityLocation doInBackground(String... params) {
 		
 		CityLocation cityLocation = NetAccessor.getCityLoacationByIp(context, params[0]);
-		
-		if (cityLocation != null) DBAccessor.saveObject(cityLocation);
+//		if (cityLocation != null) DBAccessor.saveObject(cityLocation);
 		return cityLocation;
 	}
 	

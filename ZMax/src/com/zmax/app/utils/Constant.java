@@ -40,13 +40,19 @@ public class Constant {
 	
 	public static String IP_LOCATION_URL = "http://api.map.baidu.com/location/ip";
 	
-	public static String CUR_CITY = "";
-	
 	public static final String SDCARD_CACHE_PATH = "/zmax/cacheImg";
 	public static final String FEEDBACK_SENDED_ACTION = "feedback_sended_action";
 	
 	public static final String ACTION_WELCOME_FROM_INDEX = "action_welcome_from_index";
 	public static final String ACTION_WELCOME_FROM_SETTING = "action_welcome_from_setting";
+	
+	/**
+	 * inital data
+	 */
+	public static boolean isLocateEnd = false;
+	public static boolean isActlistEnd = false;
+	public static boolean isHotellistEnd = false;
+	public static String CUR_CITY = "";
 	
 	public static class DialogCode {
 		public static final int TYPE_SEND_FAILED = 5;

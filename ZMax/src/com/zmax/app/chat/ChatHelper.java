@@ -29,7 +29,7 @@ public class ChatHelper {
 		return helper;
 	}
 	
-	public void init(Context context, String serverIP, int serverPort, int uid, String rid, final String authToken, String name,
+	public void init(Context context, final String serverIP, final int serverPort, int uid, String rid, final String authToken, String name,
 			int gender, final ClientCallback clientCallback, final IOCallback ioCallback) throws JSONException {
 		this.name = name;
 		this.gender = gender;
@@ -56,9 +56,11 @@ public class ChatHelper {
 				if (clientCallback != null) clientCallback.onGateEnter(msg);
 				
 				try {
-					client = new PomeloClient(msg.getString("host"), msg.getInt("port"));
+//					client = new PomeloClient(msg.getString("host"), msg.getInt("port"));
+					client = new PomeloClient(serverIP , msg.getInt("port"));
+
 					Log.i("connector.enter ");
-					Log.i("real-serverIP：" + msg.getString("host") + "        serverPort:" + msg.getInt("port"));
+					Log.i("real-serverIP：" +serverIP + "        serverPort:" + msg.getInt("port"));
 					client.init(ioCallback, clientCallback);
 					// 真正分配到个服务器，
 					client.request("connector.entryHandler.enter", new JSONObject().put("auth_token", authToken), new DataCallBack() {
