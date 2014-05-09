@@ -3,7 +3,6 @@ package com.zmax.app.ui;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
@@ -48,7 +47,6 @@ public class MainActivity extends BaseSlidingFragmentActivity implements ISimple
 				.setRequestCode(REQUEST_PROGRESS).setTitle("提示").setCancelable(true).show();
 		
 		locationTask = new GetCityLocationTask(this, new GetCityLocationTask.TaskCallBack() {
-			
 			@Override
 			public void onCallBack(CityLocation result) {
 				if (progressDialog != null && progressDialog.getActivity() != null) progressDialog.dismiss();

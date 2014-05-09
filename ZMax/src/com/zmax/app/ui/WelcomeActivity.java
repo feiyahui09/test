@@ -25,18 +25,11 @@ public class WelcomeActivity extends BaseFragmentActivity {
 			setContentView(R.layout.welcome);
 			init();
 			initData();
-			return;
-		}
-		if (DefaultShared.getBoolean("IS_FIRST_INSTALLED", true)) {
-			setContentView(R.layout.welcome);
-			init();
-			initData();
 		}
 		else {
 			startActivity(new Intent(this, MainActivity.class));
 			finish();
 		}
-		
 	}
 	
 	@Override
