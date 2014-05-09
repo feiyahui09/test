@@ -25,7 +25,8 @@
     <string name="httpisNull">没有网络</string>
     <string name="httpProblem">网络不给力，请稍后再试！</string>
     <string name="unkownError">出错了，请稍后再试！</string>
-
+    <string name="tokenError">Token验证错误，请重新登录！</string>
+    
     <!-- 分享 -->
     <string name="share_title">share_content</string>
     <string name="share_content">#ZMAX客户端#我在ZMAX发现一个很棒的活动【Z-Cocktail品鉴会，将于2014-05-01 18点在ZMAX武汉光谷潮漫酒店举行】，更多好玩的活动尽在ZMAX APP，快来</string>

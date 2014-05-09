@@ -44,7 +44,7 @@ public class CustomHttpClient {
 	private static final String CHARSET_UTF8 = HTTP.UTF_8;
 	private static final String CHARSET_GB2312 = "GB2312";
 	private static HttpClient customerHttpClient;
-	public  static final String ZMAX_AUTH_TOKEN_KEY = "Zmax-Auth-Token";
+	public static final String ZMAX_AUTH_TOKEN_KEY = "Zmax-Auth-Token";
 	
 	private CustomHttpClient() {
 		
@@ -158,7 +158,10 @@ public class CustomHttpClient {
 			HttpResponse httpResponse = httpclient.execute(httpRequest);
 			// 请求成功
 			if (httpResponse.getStatusLine().getStatusCode() != HttpStatus.SC_OK) {
-				throw new RuntimeException(context.getResources().getString(R.string.httpError));
+				if (httpResponse.getStatusLine().getStatusCode() == 401)
+					throw new RuntimeException(context.getResources().getString(R.string.tokenError));
+				else
+					throw new RuntimeException(context.getResources().getString(R.string.httpError));
 			}
 			return EntityUtils.toString(httpResponse.getEntity());
 		}

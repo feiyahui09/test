@@ -6,6 +6,7 @@ import org.json.JSONObject;
 import android.content.Context;
 import android.text.TextUtils;
 
+import com.zmax.app.R;
 import com.zmax.app.model.ActDetail;
 import com.zmax.app.model.ActList;
 import com.zmax.app.model.AirCondition;
@@ -393,7 +394,7 @@ public class NetAccessor {
 		
 	}
 	
-	public static Light getLight(Context context) {
+	public static Light getLight(Context context) throws Exception {
 		Light airCondition = null;
 		try {
 			String jsonString = HttpUtils.getByHttpClient(context, Constant.ZMAX_URL + "devices/light", Constant.getLogin().auth_token);
@@ -405,7 +406,7 @@ public class NetAccessor {
 		catch (Exception e) {
 			airCondition = null;
 			Log.e("   Exception :" + e.toString());
-			e.printStackTrace();
+			throw e;
 		}
 		return airCondition;
 		

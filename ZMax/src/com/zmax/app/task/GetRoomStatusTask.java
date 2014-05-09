@@ -1,10 +1,9 @@
 package com.zmax.app.task;
 
-import java.util.HashMap;
-
 import android.content.Context;
 import android.os.AsyncTask;
 
+import com.zmax.app.R;
 import com.zmax.app.model.RoomStatus;
 import com.zmax.app.net.NetAccessor;
 
@@ -41,9 +40,15 @@ public class GetRoomStatusTask extends AsyncTask<String, Void, RoomStatus> {
 				result.message = result.light.message;// result.light可能为空，但没关系，后面有处理
 			}
 		}
+		
 		catch (Exception e) {
-			result = null;
+			if (e.getMessage().equals(context.getString(R.string.tokenError))) {
+				result.status = 401;
+			}
+			else
+				result = null;
 			e.printStackTrace();
+			
 		}
 		return result;
 	}
