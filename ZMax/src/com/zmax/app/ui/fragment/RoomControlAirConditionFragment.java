@@ -294,10 +294,6 @@ public class RoomControlAirConditionFragment extends Fragment {
 						cur_air_blower = opera_air_blower;
 						setTvAirBlower();
 					}
-					else if (result.status == 401) {
-						
-						Utility.showTokenErrorDialog(getActivity(), result.message);
-					}
 					else if (opera_type.equals("temperature")) {
 						cur_temperature = opera_temperature;
 						setTvTemperature();
@@ -310,6 +306,10 @@ public class RoomControlAirConditionFragment extends Fragment {
 						cur_status = opera_status;
 						onStatusChanged(cur_status);
 					}
+				}
+				else if (result.status == 401) {
+					
+					Utility.showTokenErrorDialog(getActivity(), result.message);
 				}
 				else {
 					Utility.toastResult(getActivity(), result.message);

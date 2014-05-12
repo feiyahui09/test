@@ -264,8 +264,8 @@ public class RoomControlTVFragment extends Fragment {
 		}
 	};
 	
-	private void set(String push_button) {
-		if (!isEnable) return;
+	private void set(final String push_button) {
+		if (!isEnable && !push_button.equals("on")) return;
 		task = new SetTelevisionTask(getActivity(), new SetTelevisionTask.TaskCallBack() {
 			@Override
 			public void onCallBack(Television result) {
@@ -280,6 +280,8 @@ public class RoomControlTVFragment extends Fragment {
 						Utility.toastResult(getActivity(), getActivity().getString(R.string.unkownError));
 				}
 				else if (result.status == 200) {
+					
+					if (push_button.equals("on")) isEnable = !isEnable;
 					
 				}
 				else if (result.status == 401) {

@@ -70,14 +70,15 @@ public class CustomHttpClient {
 			Log.d(url.toString());
 			Log.d(params.toString());
 			if (!TextUtils.isEmpty(header)) httpPost.setHeader(ZMAX_AUTH_TOKEN_KEY, header);
+			Log.d("ZMAX_AUTH_TOKEN_KEY:"+header);
 			httpPost.setEntity(urlEncoded);
 			HttpClient client = getHttpClient(context);
 			HttpResponse response = client.execute(httpPost);
-			if (response.getStatusLine().getStatusCode() != HttpStatus.SC_OK
-					&& response.getStatusLine().getStatusCode() != HttpStatus.SC_CREATED) {
-				Log.e("StatusCode" + response.getStatusLine().getStatusCode());
-				throw new RuntimeException("请求失败");
-			}
+			Log.e("StatusCode" + response.getStatusLine().getStatusCode());
+
+//			if (response.getStatusLine().getStatusCode() != HttpStatus.SC_OK}
+//					throw new RuntimeException("请求失败");
+//			}
 			HttpEntity resEntity = response.getEntity();
 			return EntityUtils.toString(resEntity, CHARSET_UTF8);
 		}
@@ -111,9 +112,9 @@ public class CustomHttpClient {
 			httpPost.setEntity(urlEncoded);
 			HttpClient client = getHttpClient(context);
 			HttpResponse response = client.execute(httpPost);
-			if (response.getStatusLine().getStatusCode() != HttpStatus.SC_OK) {
-				throw new RuntimeException("请求失败");
-			}
+//			if (response.getStatusLine().getStatusCode() != HttpStatus.SC_OK) {
+//				throw new RuntimeException("请求失败");
+//			}
 			HttpEntity resEntity = response.getEntity();
 			return EntityUtils.toString(resEntity);
 		}
@@ -157,12 +158,14 @@ public class CustomHttpClient {
 			// 请求HttpClient，取得HttpResponse
 			HttpResponse httpResponse = httpclient.execute(httpRequest);
 			// 请求成功
-			if (httpResponse.getStatusLine().getStatusCode() != HttpStatus.SC_OK) {
-				if (httpResponse.getStatusLine().getStatusCode() == 401)
-					throw new RuntimeException(context.getResources().getString(R.string.tokenError));
-				else
-					throw new RuntimeException(context.getResources().getString(R.string.httpError));
-			}
+			Log.e("StatusCode" + httpResponse.getStatusLine().getStatusCode());
+
+//			if (httpResponse.getStatusLine().getStatusCode() != HttpStatus.SC_OK) {
+//				if (httpResponse.getStatusLine().getStatusCode() == 401)
+//					throw new RuntimeException(context.getResources().getString(R.string.tokenError));
+//				else
+//					throw new RuntimeException(context.getResources().getString(R.string.httpError));
+//			}
 			return EntityUtils.toString(httpResponse.getEntity());
 		}
 		catch (ParseException e) {

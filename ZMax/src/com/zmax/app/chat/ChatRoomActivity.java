@@ -644,18 +644,16 @@ public class ChatRoomActivity extends BaseFragmentActivity implements OnClickLis
 				handler.post(new Runnable() {
 					@Override
 					public void run() {
-						// String _msg = TextUtils.isEmpty(message) ?
-						// getString(R.string.unkownError) : message;
-						String _msg = getString(R.string.unkownError);
 						if (code == 401) {
 							SimpleDialogFragment.createBuilder(mContext, getSupportFragmentManager()).setPositiveButtonText("确定")
-									.setTitle("提示").setMessage(TextUtils.isEmpty(_msg) ? "Token验证失败，请重新登录！" : _msg)
+									.setTitle("提示").setMessage(getString(R.string.tokenError))
 									.setRequestCode(Constant.DialogCode.TYPE_TOKEN_ERROR).setCancelable(false).show();
 						}
 						else
 							dialog = SimpleDialogFragment.createBuilder(mContext, getSupportFragmentManager()).setTitle("提示")
-									.setCancelable(false).setMessage(_msg).setRequestCode(Constant.DialogCode.TYPE_CONNECTORENTER_ERROR)
-									.setPositiveButtonText("确定").show();
+									.setCancelable(false)
+									.setMessage(TextUtils.isEmpty(message) ? getString(R.string.unkownError) : message)
+									.setRequestCode(Constant.DialogCode.TYPE_CONNECTORENTER_ERROR).setPositiveButtonText("确定").show();
 						
 					}
 				});
