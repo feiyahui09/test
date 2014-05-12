@@ -20,16 +20,10 @@ public class WelcomeActivity extends BaseFragmentActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
+		setContentView(R.layout.welcome);
+		init();
+		initData();
 		
-		if (getIntent().getAction() != null && getIntent().getAction().equals(Constant.ACTION_WELCOME_FROM_SETTING)) {
-			setContentView(R.layout.welcome);
-			init();
-			initData();
-		}
-		else {
-			startActivity(new Intent(this, MainActivity.class));
-			finish();
-		}
 	}
 	
 	@Override
@@ -55,11 +49,11 @@ public class WelcomeActivity extends BaseFragmentActivity {
 		adapter.addTab(new WelcomeFragment(R.drawable.welcome_img_3, new StartAppCallBack() {
 			@Override
 			public void onStartAPP() {
-				if (getIntent().getAction() != null && getIntent().getAction().equals(Constant.ACTION_WELCOME_FROM_SETTING)) {
+				if (getIntent().getAction() != null && getIntent().getAction().equals(Constant.ACTION_WELCOME_FROM_INDEX)) {
+					startActivity(new Intent(WelcomeActivity.this, MainActivity.class));
 					finish();
 				}
 				else {
-					startActivity(new Intent(WelcomeActivity.this, MainActivity.class));
 					finish();
 				}
 			}

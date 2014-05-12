@@ -90,7 +90,14 @@ public class Constant {
 		public static final String CITY_KEY = "act_city_key";
 		
 	}
-	
+public static class Share {
+		
+		public static   String SHARE_TITLE = "share_title";
+		public static   String SHARE_CONTENT = "share_content";
+		public static final String SHARE_URL = "www.zmaxhotels.cc";
+
+		
+	}
 	public static class Chat {
 		public static final String CHAT_SERVER_IP = "14.23.159.74";
 		public static final int CHAT_SERVER_PORT = 3014;

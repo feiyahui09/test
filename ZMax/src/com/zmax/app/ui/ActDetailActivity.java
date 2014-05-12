@@ -27,6 +27,7 @@ import com.zmax.app.ui.fragment.ActDetailFirstFragment;
 import com.zmax.app.ui.fragment.ActDetailSecondFragment;
 import com.zmax.app.ui.fragment.ActDetailThirdFragment;
 import com.zmax.app.utils.Constant;
+import com.zmax.app.utils.DateTimeUtils;
 import com.zmax.app.utils.ShareUtils;
 import com.zmax.app.utils.StackBlurManager;
 import com.zmax.app.utils.Utility;
@@ -216,11 +217,17 @@ public class ActDetailActivity extends BaseFragmentActivity {
 		btn_Share.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				initShareContent();
 				new ShareUtils().showShare(ActDetailActivity.this, false, null);
 				
 			}
 		});
 		
+	}
+	String pattern="#ZMAX客户端#我在ZMAX发现一个很棒的活动【%s,将于%s在%s举行】，更多好玩的活动尽在ZMAX APP，快来下载吧~%s";
+	private void initShareContent(){
+		Constant.Share.SHARE_CONTENT=String.format(pattern, detailContent.name,DateTimeUtils.friendly_time(detailContent.start_date),city,Constant.Share.SHARE_URL);
+		Constant.Share.SHARE_TITLE="ZMAX活动分享";
 	}
 	
 }

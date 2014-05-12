@@ -130,6 +130,9 @@ public class FeedBackActivity extends BaseActivity {
 			Utility.toastResult(mContext, "反馈意见不能为空");
 		else if (tv_contacts.getText().toString().trim().isEmpty())
 			Utility.toastResult(mContext, "联系方式不能为空");
+		else if (tv_advise.getText().toString().trim().length() > 200) {
+			Utility.toastResult(mContext, "反馈意见不能超过200字");
+		}
 		else {
 			sendFeedback();
 		}

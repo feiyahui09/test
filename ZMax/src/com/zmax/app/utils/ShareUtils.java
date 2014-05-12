@@ -50,22 +50,22 @@ public class ShareUtils {
 			e.printStackTrace();
 		}
 		final OnekeyShare oks = new OnekeyShare();
-		oks.setNotification(R.drawable.ic_launcher, context.getString(R.string.app_name));
-		oks.setAddress("12345678901");
-		oks.setTitle(context.getString(R.string.share_title));
-		oks.setTitleUrl("http://sharesdk.cn");
-		oks.setText(context.getString(R.string.share_content));
+//		oks.setNotification(R.drawable.ic_launcher, context.getString(R.string.app_name));
+//		oks.setAddress("10086");
+		oks.setTitle(Constant.Share.SHARE_TITLE);
+//		oks.setTitleUrl("http://sharesdk.cn");
+		oks.setText( Constant.Share.SHARE_CONTENT);
 		oks.setImagePath(TEST_IMAGE);
 		// oks.setImageUrl(MainActivity.TEST_IMAGE_URL);
 		oks.setUrl("http://www.sharesdk.cn");
-		// oks.setFilePath(MainActivity.TEST_IMAGE);
-		oks.setComment(context.getString(R.string.share));
-		oks.setSite(context.getString(R.string.app_name));
-		oks.setSiteUrl("http://sharesdk.cn");
-		oks.setVenueName("ShareSDK");
-		oks.setVenueDescription("This is a beautiful place!");
-		oks.setLatitude(23.056081f);
-		oks.setLongitude(113.385708f);
+// 		  oks.setFilePath(MainActivity.TEST_IMAGE);
+//		oks.setComment(context.getString(R.string.share));
+//		oks.setSite(context.getString(R.string.app_name));
+//		oks.setSiteUrl("http://sharesdk.cn");
+//		oks.setVenueName("ShareSDK");
+//		oks.setVenueDescription("This is a beautiful place!");
+//		oks.setLatitude(23.056081f);
+//		oks.setLongitude(113.385708f);
 		oks.setSilent(silent);
 		if (platform != null) {
 			oks.setPlatform(platform);
@@ -79,8 +79,8 @@ public class ShareUtils {
 		
 		// 去除注释，则快捷分享的操作结果将通过OneKeyShareCallback回调
 		oks.setCallback(new OneKeyShareCallback());
-		// oks.setShareContentCustomizeCallback(new
-		// ShareContentCustomizeDemo());
+//		 oks.setShareContentCustomizeCallback(new
+//		 ShareContentCustomizeDemo());
 		
 		// 去除注释，演示在九宫格设置自定义的图标
 		// Bitmap logo = BitmapFactory.decodeResource(menu.getResources(),
@@ -111,7 +111,8 @@ public class ShareUtils {
 	class OneKeyShareCallback implements PlatformActionListener {
 		
 		public void onComplete(Platform plat, int action, HashMap<String, Object> res) {
-			System.out.println(res.toString());
+			Log.i("action  :"+action);	
+			Log.i("res  :"+res);
 			// 在这里添加分享成功的处理代码
 			handler.post(new Runnable() {
 				@Override
@@ -122,6 +123,7 @@ public class ShareUtils {
 		}
 		
 		public void onError(Platform plat, int action, Throwable t) {
+			Log.i("action  :"+action);	
 			handler.post(new Runnable() {
 				@Override
 				public void run() {
@@ -133,6 +135,7 @@ public class ShareUtils {
 		}
 		
 		public void onCancel(Platform plat, int action) {
+			Log.i("action  :"+action);	
 			// 在这里添加取消分享的处理代码
 			handler.post(new Runnable() {
 				@Override
@@ -155,13 +158,13 @@ public class ShareUtils {
 	private void initImagePath(Context context) {
 		try {
 			String cachePath = cn.sharesdk.framework.utils.R.getCachePath(context, null);
-			TEST_IMAGE = cachePath + "share_file.jpg";
+			TEST_IMAGE = cachePath + "share_file.png";
 			File file = new File(TEST_IMAGE);
 			if (!file.exists()) {
 				file.createNewFile();
-				Bitmap pic = BitmapFactory.decodeResource(context.getResources(), R.drawable.icon);
+				Bitmap pic = BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_launcher);
 				FileOutputStream fos = new FileOutputStream(file);
-				pic.compress(CompressFormat.JPEG, 100, fos);
+				pic.compress(CompressFormat.PNG, 100, fos);
 				fos.flush();
 				fos.close();
 			}

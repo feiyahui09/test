@@ -9,6 +9,7 @@ import android.widget.RelativeLayout;
 
 import com.zmax.app.R;
 import com.zmax.app.ui.base.BaseFragmentActivity;
+import com.zmax.app.utils.Constant;
 import com.zmax.app.utils.DefaultShared;
 
 public class FlashActivity extends BaseFragmentActivity {
@@ -43,7 +44,9 @@ public class FlashActivity extends BaseFragmentActivity {
 	
 	private void goNext() {
 		if (DefaultShared.getBoolean("IS_FIRST_INSTALLED", true)) {
-			startActivity(new Intent(this, WelcomeActivity.class));
+			Intent  intent=new Intent(this, WelcomeActivity.class);
+			intent.setAction(Constant.ACTION_WELCOME_FROM_INDEX);
+			startActivity(intent);
 		}
 		else {
 			startActivity(new Intent(this, MainActivity.class));
