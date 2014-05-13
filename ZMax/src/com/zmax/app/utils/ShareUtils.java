@@ -12,13 +12,15 @@ import android.os.Handler;
 import android.widget.Toast;
 import cn.sharesdk.framework.Platform;
 import cn.sharesdk.framework.PlatformActionListener;
+import cn.sharesdk.framework.Platform.ShareParams;
 import cn.sharesdk.onekeyshare.OnekeyShare;
+import cn.sharesdk.onekeyshare.ShareContentCustomizeCallback;
 
 import com.zmax.app.R;
 
 public class ShareUtils {
 	
-	private String TEST_IMAGE = "";
+	private String SHARE_IMAGE = "";
 	private Context context;
 	private Handler handler;
 	
@@ -50,22 +52,23 @@ public class ShareUtils {
 			e.printStackTrace();
 		}
 		final OnekeyShare oks = new OnekeyShare();
-//		oks.setNotification(R.drawable.ic_launcher, context.getString(R.string.app_name));
-//		oks.setAddress("10086");
+		// oks.setNotification(R.drawable.ic_launcher,
+		// context.getString(R.string.app_name));
+		// oks.setAddress("10086");
 		oks.setTitle(Constant.Share.SHARE_TITLE);
-//		oks.setTitleUrl("http://sharesdk.cn");
-		oks.setText( Constant.Share.SHARE_CONTENT);
-		oks.setImagePath(TEST_IMAGE);
+		// oks.setTitleUrl("http://sharesdk.cn");
+		oks.setText(Constant.Share.SHARE_CONTENT);
+		oks.setImagePath(SHARE_IMAGE);
 		// oks.setImageUrl(MainActivity.TEST_IMAGE_URL);
 		oks.setUrl("http://www.sharesdk.cn");
-// 		  oks.setFilePath(MainActivity.TEST_IMAGE);
-//		oks.setComment(context.getString(R.string.share));
-//		oks.setSite(context.getString(R.string.app_name));
-//		oks.setSiteUrl("http://sharesdk.cn");
-//		oks.setVenueName("ShareSDK");
-//		oks.setVenueDescription("This is a beautiful place!");
-//		oks.setLatitude(23.056081f);
-//		oks.setLongitude(113.385708f);
+		// oks.setFilePath(MainActivity.TEST_IMAGE);
+		// oks.setComment(context.getString(R.string.share));
+		// oks.setSite(context.getString(R.string.app_name));
+		// oks.setSiteUrl("http://sharesdk.cn");
+		// oks.setVenueName("ShareSDK");
+		// oks.setVenueDescription("This is a beautiful place!");
+		// oks.setLatitude(23.056081f);
+		// oks.setLongitude(113.385708f);
 		oks.setSilent(silent);
 		if (platform != null) {
 			oks.setPlatform(platform);
@@ -75,12 +78,20 @@ public class ShareUtils {
 		// oks.setDialogMode();
 		
 		// 去除注释，在自动授权时可以禁用SSO方式
-		oks.disableSSOWhenAuthorize();
+		// oks.disableSSOWhenAuthorize();
 		
 		// 去除注释，则快捷分享的操作结果将通过OneKeyShareCallback回调
 		oks.setCallback(new OneKeyShareCallback());
-//		 oks.setShareContentCustomizeCallback(new
-//		 ShareContentCustomizeDemo());
+		// oks.setShareContentCustomizeCallback(new
+		// ShareContentCustomizeCallback() {
+		//
+		// @Override
+		// public void onShare(Platform platform, ShareParams paramsToShare) {
+		// Log.i("platform: " + platform.getName());
+		// Log.i("paramsToShare: " + paramsToShare);
+		//
+		// }
+		// });
 		
 		// 去除注释，演示在九宫格设置自定义的图标
 		// Bitmap logo = BitmapFactory.decodeResource(menu.getResources(),
@@ -111,10 +122,14 @@ public class ShareUtils {
 	class OneKeyShareCallback implements PlatformActionListener {
 		
 		public void onComplete(Platform plat, int action, HashMap<String, Object> res) {
-			Log.i("action  :"+action);	
-			Log.i("res  :"+res);
+			Log.i("plat.getName():  "+plat.getName());
+			Log.i("action  :" + action);
+			Log.i("res  :" + res.toString());
 			// 在这里添加分享成功的处理代码
-			handler.post(new Runnable() {
+			if ( plat.getName().equals("Email") ||  plat.getName().equals("WechatFavorite"))
+				return ;
+				
+				handler.post(new Runnable() {
 				@Override
 				public void run() {
 					Utility.toastResult(context, "分享成功！");
@@ -123,7 +138,7 @@ public class ShareUtils {
 		}
 		
 		public void onError(Platform plat, int action, Throwable t) {
-			Log.i("action  :"+action);	
+			Log.i("action  :" + action);
 			handler.post(new Runnable() {
 				@Override
 				public void run() {
@@ -135,7 +150,7 @@ public class ShareUtils {
 		}
 		
 		public void onCancel(Platform plat, int action) {
-			Log.i("action  :"+action);	
+			Log.i("action  :" + action);
 			// 在这里添加取消分享的处理代码
 			handler.post(new Runnable() {
 				@Override
@@ -158,8 +173,8 @@ public class ShareUtils {
 	private void initImagePath(Context context) {
 		try {
 			String cachePath = cn.sharesdk.framework.utils.R.getCachePath(context, null);
-			TEST_IMAGE = cachePath + "share_file.png";
-			File file = new File(TEST_IMAGE);
+			SHARE_IMAGE = cachePath + "share_file.png";
+			File file = new File(SHARE_IMAGE);
 			if (!file.exists()) {
 				file.createNewFile();
 				Bitmap pic = BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_launcher);
@@ -171,7 +186,7 @@ public class ShareUtils {
 		}
 		catch (Throwable t) {
 			t.printStackTrace();
-			TEST_IMAGE = null;
+			SHARE_IMAGE = null;
 		}
 	}
 }

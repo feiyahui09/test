@@ -48,7 +48,7 @@
 			VKontakte     http://vk.com/dev
     -->
 
-    <ShareSDK AppKey="androidv1101" />
+    <ShareSDK AppKey="165ec4cbced4" />
     <!-- 修改成你在sharesdk后台注册的应用的appkey" -->
 
 
@@ -85,7 +85,7 @@
 
     <WechatMoments
         AppId="wxd4c7ae630f3265fd"
-        BypassApproval="true"
+        BypassApproval="false"
         Enable="true"
         Id="5"
         SortId="5" />
