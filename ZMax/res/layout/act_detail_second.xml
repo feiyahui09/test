@@ -6,7 +6,7 @@
     android:layout_marginLeft="@dimen/act_detail_margin_left"
     android:layout_marginRight="@dimen/act_detail_margin_left"
     android:layout_marginTop="@dimen/act_detail_margin_top"
-    android:background="@drawable/act_detial_envelope_bg"
+    android:background="@drawable/act_detial_envelope_bg_repeat"
     android:orientation="vertical"
     android:paddingBottom="@dimen/act_detail_inner_padding_top"
     android:paddingLeft="@dimen/act_detail_inner_padding_left"

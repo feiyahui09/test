@@ -20,7 +20,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.zmax.app.R;
 import com.zmax.app.db.DBAccessor;
@@ -31,16 +30,12 @@ import com.zmax.app.model.Login;
 import com.zmax.app.net.NetWorkHelper;
 import com.zmax.app.task.GetHotelListTask;
 import com.zmax.app.task.LoginPlayZmaxTask;
-import com.zmax.app.ui.MainActivity;
+import com.zmax.app.ui.fragment.MoreMenuFragment.TabSelectedListener;
 import com.zmax.app.utils.Constant;
-import com.zmax.app.utils.DefaultShared;
-import com.zmax.app.utils.JsonMapperUtils;
 import com.zmax.app.utils.Log;
 import com.zmax.app.utils.Utility;
 
-import eu.inmite.android.lib.dialogs.ISimpleDialogListener;
-
-public class PlayInZmaxLoginFragment extends Fragment    {
+public class PlayInZmaxLoginFragment extends Fragment {
 	
 	private View view;
 	private Button btn_login;
@@ -54,6 +49,7 @@ public class PlayInZmaxLoginFragment extends Fragment    {
 	
 	public PlayInZmaxLoginFragment() {
 		setRetainInstance(true);
+		Log.i("@@");
 	}
 	
 	@Override
@@ -82,6 +78,7 @@ public class PlayInZmaxLoginFragment extends Fragment    {
 			}
 		});
 		sp_hotels = (Spinner) view.findViewById(R.id.sp_hotels);
+		Log.i("@@");
 		return view;
 	}
 	
@@ -90,6 +87,7 @@ public class PlayInZmaxLoginFragment extends Fragment    {
 		// TODO Auto-generated method stub
 		super.onDestroyView();
 		// ((MainActivity) getActivity()).hideLogoutView(false);
+		Log.i("@@");
 		
 	}
 	
@@ -97,6 +95,8 @@ public class PlayInZmaxLoginFragment extends Fragment    {
 	public void onActivityCreated(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onActivityCreated(savedInstanceState);
+		Log.i("@@");
+		
 		// ((MainActivity) getActivity()).hideLogoutView(true);
 		
 		final List<Hotel> hotels = getHotels();
@@ -146,7 +146,8 @@ public class PlayInZmaxLoginFragment extends Fragment    {
 				
 				if (loginResult != null && loginResult.status == 200) {
 					Constant.saveLogin(loginResult);
-					((MainActivity) getActivity()).switchContent(new PlayInZmaxFragment());
+					
+					((TabSelectedListener) getActivity()).handleSeleceted(R.id.ll_menu_playzmax + 100,true);
 				}
 				else {
 					if (!NetWorkHelper.checkNetState(getActivity())) {

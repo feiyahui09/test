@@ -8,13 +8,20 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import com.jeremyfeinstein.slidingmenu.lib.app.SlidingFragmentActivity;
 import com.zmax.app.R;
 import com.zmax.app.ui.MainActivity;
+import com.zmax.app.ui.fragment.MoreMenuFragment.TabSelectedListener;
 import com.zmax.app.utils.Constant;
-import com.zmax.app.utils.Utility;
 
 public class MoreMenuFragment extends Fragment implements OnClickListener {
 	private LinearLayout ll_menu_index, ll_menu_playzmax, ll_menu_myaccount, ll_menu_setting;
+	
+	public interface TabSelectedListener {
+		
+		public void handleSeleceted(int rid,boolean isInitial );
+		
+	}
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -44,25 +51,33 @@ public class MoreMenuFragment extends Fragment implements OnClickListener {
 		Fragment newContent = null;
 		switch (v.getId()) {
 			case R.id.ll_menu_index:
-				newContent = new ActListFragment();
+				((TabSelectedListener) getActivity()).handleSeleceted(R.id.btn_activities,true);
+				// newContent = new ActListFragment();
 				break;
 			case R.id.ll_menu_playzmax:
+				
 				if (Constant.getLogin() == null) {
-					newContent = new PlayInZmaxLoginFragment();
+					((TabSelectedListener) getActivity()).handleSeleceted(v.getId() ,true);
+					// newContent = new PlayInZmaxLoginFragment();
 				}
 				else {
-					newContent = new PlayInZmaxFragment();
+					((TabSelectedListener) getActivity()).handleSeleceted(v.getId()+100,true) ;
+					// newContent = new PlayInZmaxFragment();
 				}
 				break;
 			case R.id.ll_menu_myaccount:
-				newContent = new AccountFragment();
+				((TabSelectedListener) getActivity()).handleSeleceted(v.getId(),true);
+				// newContent = new AccountFragment();
 				break;
 			case R.id.ll_menu_setting:
-				newContent = new SettingFragment();
+				((TabSelectedListener) getActivity()).handleSeleceted(v.getId(),true);
+				// newContent = new SettingFragment();
 				break;
 		
 		}
-		if (newContent != null) switchFragment(newContent);
+//		((SlidingFragmentActivity) getActivity()).getSlidingMenu().showContent();
+
+//		  if (newContent != null) switchFragment(newContent);
 		
 	} // the meat of switching the above fragment
 	

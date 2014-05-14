@@ -2,7 +2,6 @@ package com.zmax.app.ui.fragment;
 
 import java.util.List;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
@@ -13,6 +12,8 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.PauseOnScrollListener;
 import com.zmax.app.R;
 import com.zmax.app.adapter.ActListAdapter;
 import com.zmax.app.manage.DataManage;
@@ -27,8 +28,6 @@ import com.zmax.app.utils.Utility;
 import com.zmax.app.widget.XListView;
 import com.zmax.app.widget.XListView.IXListViewListener;
 
-import eu.inmite.android.lib.dialogs.ProgressDialogFragment;
-
 public class ActListFragment extends Fragment implements IXListViewListener, OnItemClickListener {
 	
 	protected XListView listview;
@@ -41,6 +40,7 @@ public class ActListFragment extends Fragment implements IXListViewListener, OnI
 	
 	public ActListFragment() {
 		setRetainInstance(true);
+		Log.i("@@");
 	}
 	
 	@Override
@@ -57,7 +57,11 @@ public class ActListFragment extends Fragment implements IXListViewListener, OnI
 		// adapter.appendToList(Constant.getFalseData(false));
 		listview.setAdapter(adapter);
 		listview.setOnItemClickListener(this);
+		PauseOnScrollListener listener = new PauseOnScrollListener(ImageLoader.getInstance(), true, true);
+		listview.setOnScrollListener(listener);
 		curPage = 1;
+		Log.i("@@");
+		
 		return view;
 	}
 	
@@ -65,6 +69,7 @@ public class ActListFragment extends Fragment implements IXListViewListener, OnI
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onViewCreated(view, savedInstanceState);
+		Log.i("@@");
 		
 	}
 	
@@ -83,14 +88,17 @@ public class ActListFragment extends Fragment implements IXListViewListener, OnI
 		 * }
 		 * }
 		 */
+		if (!isLoaded) onRefresh();
+		Log.i("@@");
 		
-		onRefresh();
 	}
 	
 	@Override
 	public void setUserVisibleHint(boolean isVisibleToUser) {
 		// TODO Auto-generated method stub
 		super.setUserVisibleHint(isVisibleToUser);
+		Log.i("@@  isVisibleToUser" + isVisibleToUser);
+		
 	}
 	
 	@Override
@@ -104,6 +112,9 @@ public class ActListFragment extends Fragment implements IXListViewListener, OnI
 		 * outState.putInt("index", index);
 		 * outState.putInt("top", top);
 		 */
+		
+		Log.i("@@");
+		
 	}
 	
 	@Override
@@ -113,6 +124,8 @@ public class ActListFragment extends Fragment implements IXListViewListener, OnI
 		listview.onLoad();
 	}
 	
+	private boolean isLoaded = false;
+	
 	@Override
 	public void onLoadMore() {
 		getActList(curPage);
@@ -120,18 +133,19 @@ public class ActListFragment extends Fragment implements IXListViewListener, OnI
 	}
 	
 	private void getActList(int page) {
-//		progressDialog = ProgressDialogFragment.createBuilder(getActivity(), getFragmentManager()).setMessage("正在加载中...").setTitle("提示")
-//				.setCancelable(true).show();
-		
+		// progressDialog = ProgressDialogFragment.createBuilder(getActivity(),
+		// getFragmentManager()).setMessage("正在加载中...").setTitle("提示")
+		// .setCancelable(true).show();
 		getActListTask = new GetActListTask(getActivity(), new GetActListTask.TaskCallBack() {
 			
 			@Override
 			public void onCallBack(ActList result) {
-				if (progressDialog != null && progressDialog.getActivity() != null) progressDialog.dismiss();
-				
 				if (getActivity() == null) {
 					return;
 				}
+				if (progressDialog != null && progressDialog.getActivity() != null) progressDialog.dismiss();
+				isLoaded = true;
+				
 				if (result != null && result.status == 200) {
 					final List<Act> actList = result.events;
 					if (curPage == 1) {
@@ -173,6 +187,16 @@ public class ActListFragment extends Fragment implements IXListViewListener, OnI
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 		try {
+			
+			Log.i("[maxMemory]:  " + Runtime.getRuntime().maxMemory() / 1000 + " k");
+			Log.i("[totalMemory]:  " + Runtime.getRuntime().totalMemory() / 1000 + " k");
+			Log.i("[freeMemory]:   " + Runtime.getRuntime().freeMemory() / 1000 + " k");
+			ImageLoader.getInstance().clearMemoryCache();
+			 System.gc();
+			
+			Log.i("after  [maxMemory]:  " + Runtime.getRuntime().maxMemory() / 1000 + " k");
+			Log.i("after  [totalMemory]:  " + Runtime.getRuntime().totalMemory() / 1000 + " k");
+			Log.i("after  [freeMemory]:   " + Runtime.getRuntime().freeMemory() / 1000 + " k");
 			Act act = (Act) adapter.getItem(position - 1);
 			Intent intent = new Intent();
 			intent.setClass(getActivity(), ActDetailActivity.class);

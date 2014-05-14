@@ -449,11 +449,11 @@ public class HotelDatePickActivity extends BaseActivity {
 				}
 				
 				if (position * 7 + i == startPos) {
-					tagGrop.getChildAt(i).setBackgroundResource(R.drawable.date_tag_start);
+//					tagGrop.getChildAt(i).setBackgroundResource(R.drawable.date_tag_start);
 					tagGrop.getChildAt(i).setVisibility(View.VISIBLE);
 				}
 				else if (position * 7 + i == endPos) {
-					tagGrop.getChildAt(i).setBackgroundResource(R.drawable.date_tag_end);
+//					tagGrop.getChildAt(i).setBackgroundResource(R.drawable.date_tag_end);
 					tagGrop.getChildAt(i).setVisibility(View.VISIBLE);
 				}
 				else

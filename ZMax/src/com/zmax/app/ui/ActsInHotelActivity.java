@@ -13,6 +13,8 @@ import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.PauseOnScrollListener;
 import com.zmax.app.R;
 import com.zmax.app.adapter.ActListAdapter;
 import com.zmax.app.model.Act;
@@ -63,6 +65,8 @@ public class ActsInHotelActivity extends BaseActivity implements IXListViewListe
 		listview.setAdapter(adapter);
 		listview.setOnItemClickListener(this);
 		listview.setXListViewListener(this);
+		PauseOnScrollListener listener = new PauseOnScrollListener(ImageLoader.getInstance(), true, true);
+		listview.setOnScrollListener(listener);
 		curPage = 1;
 		
 	}

@@ -1,9 +1,6 @@
 package com.zmax.app.ui.fragment;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,11 +8,11 @@ import java.util.Map;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
@@ -24,22 +21,21 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
-import com.j256.ormlite.stmt.Where;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.zmax.app.R;
+import com.zmax.app.adapter.CopyOfHotelBookListAdapter;
 import com.zmax.app.adapter.HotelBookListAdapter;
-import com.zmax.app.db.DBAccessor;
 import com.zmax.app.manage.DataManage;
 import com.zmax.app.model.Hotel;
 import com.zmax.app.model.HotelList;
 import com.zmax.app.net.NetWorkHelper;
 import com.zmax.app.task.GetHotelListTask;
-import com.zmax.app.ui.HotelDetailActivity;
 import com.zmax.app.ui.WebViewActivity;
 import com.zmax.app.ui.base.BaseSlidingFragmentActivity.HotelBookVisivleCallback;
 import com.zmax.app.utils.Constant;
 import com.zmax.app.utils.DateTimeUtils;
 import com.zmax.app.utils.Utility;
+import com.zmax.app.widget.PagerAdapter;
 import com.zmax.app.widget.VerticalViewPager;
 import com.zmax.app.widget.VerticalViewPager.OnPageChangeListener;
 
@@ -47,7 +43,7 @@ public class HotelBookFragment extends Fragment implements OnPageChangeListener,
 	
 	protected View view;
 	
-	private HotelBookListAdapter adapter;
+	private CopyOfHotelBookListAdapter adapter;
 	
 	private VerticalViewPager pager;
 	private LinearLayout indicator;
@@ -65,11 +61,11 @@ public class HotelBookFragment extends Fragment implements OnPageChangeListener,
 		
 		pager = (VerticalViewPager) view.findViewById(R.id.vvp_hotel);
 		indicator = (LinearLayout) view.findViewById(R.id.indicator);
-		adapter = new HotelBookListAdapter(getActivity(), null);
+		adapter = new CopyOfHotelBookListAdapter(getActivity());
 		pager.setAdapter(adapter);
-		
+		pager.setOffscreenPageLimit(1);
 		pager.setOnPageChangeListener(this);
-		// view.setOnClickListener(this);
+		
 		return view;
 	}
 	
@@ -81,11 +77,13 @@ public class HotelBookFragment extends Fragment implements OnPageChangeListener,
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
+		if (isLoaded) return;
 		getHotelListTask = new GetHotelListTask(getActivity(), new GetHotelListTask.TaskCallBack() {
 			
 			@Override
 			public void onCallBack(HotelList hotelList, HotelList upcomingHotelList) {
 				if (getActivity() == null) return;
+				isLoaded = true;
 				if (hotelList != null && hotelList.status == 200) {
 					List<Hotel> _hotelList = hotelList.hotels;
 					List<Hotel> _upcomingHotelList = upcomingHotelList == null ? null : upcomingHotelList.hotels;
@@ -109,10 +107,12 @@ public class HotelBookFragment extends Fragment implements OnPageChangeListener,
 		getHotelListTask.execute(Constant.CUR_CITY, "1", "" + Constant.PER_NUM_GET_HOTELLIST);
 	}
 	
-	private void initPagerIndicator(List<View> falseDataView, LinearLayout indicator) {
-		if (falseDataView == null || falseDataView.size() <= 0) return;
+	private boolean isLoaded = false;
+	
+	private void initPagerIndicator(int size, LinearLayout indicator) {
+		if (size <= 0) return;
 		LayoutInflater inflater = getActivity().getLayoutInflater();
-		for (int i = 0; i < falseDataView.size(); i++) {
+		for (int i = 0; i < size; i++) {
 			View view = inflater.inflate(R.layout.vpager_indicator_item, null);
 			((ImageView) view.findViewById(R.id.iv_img)).setImageResource(R.drawable.hotel_list_indicator_normal);
 			
@@ -146,7 +146,9 @@ public class HotelBookFragment extends Fragment implements OnPageChangeListener,
 	@Override
 	public void onPageSelected(int position) {
 		switchInidcator(position);
-		
+//		if (adapter.getItem(position) instanceof PagerAdapter.IPagerDisplay) {
+//			((PagerAdapter.IPagerDisplay) adapter.getItem(position)).onDisplay();
+//		}
 	}
 	
 	@Override
@@ -180,11 +182,23 @@ public class HotelBookFragment extends Fragment implements OnPageChangeListener,
 		
 	}
 	
+	// private void initData(final List<Hotel> hotelList, List<Hotel>
+	// upcomingHotelList) {
+	// if (hotelList == null || hotelList.isEmpty()) return;
+	// List<View> views = fromViews(hotelList, upcomingHotelList);
+	// adapter.addViews(views);
+	// initPagerIndicator(views, indicator);
+	// pager.setCurrentItem(0);
+	//
+	// }
 	private void initData(final List<Hotel> hotelList, List<Hotel> upcomingHotelList) {
 		if (hotelList == null || hotelList.isEmpty()) return;
-		List<View> views = fromViews(hotelList, upcomingHotelList);
-		adapter.addViews(views);
-		initPagerIndicator(views, indicator);
+		// List<View> views = fromViews(hotelList, upcomingHotelList);
+		// adapter.addViews(views);
+		
+		adapter.addAll(hotelList);
+		
+		initPagerIndicator(hotelList.size(), indicator);
 		pager.setCurrentItem(0);
 		
 	}
@@ -222,7 +236,9 @@ public class HotelBookFragment extends Fragment implements OnPageChangeListener,
 				}
 			});
 			((TextView) view.findViewById(R.id.tv_title)).setText("" + hotel.name);
-			ImageLoader.getInstance().displayImage(hotel.poster, ((ImageView) view.findViewById(R.id.iv_img)));
+			view.setTag(hotel);
+			// ImageLoader.getInstance().displayImage(hotel.poster, ((ImageView)
+			// view.findViewById(R.id.iv_img)));
 			mList.add(view);
 		}
 		if (upcomingHotelList != null && !upcomingHotelList.isEmpty()) {

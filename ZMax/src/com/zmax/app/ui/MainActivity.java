@@ -67,14 +67,18 @@ public class MainActivity extends BaseSlidingFragmentActivity implements ISimple
 					Constant.CUR_CITY = cityStr;
 					// DefaultShared.putString(Constant.SPFKEY.CITY_LOCATION_KEY,
 					// cityStr);
-					switchContent(new ActListFragment());
+					// switchContent(new ActListFragment());
+					handleSeleceted(R.id.btn_activities,true);
+					
 					Toast.makeText(mContext, "   " + result.province + cityStr, 2222).show();
 				}
 				else {
 					Constant.CUR_CITY = "";
 					// DefaultShared.putString(Constant.SPFKEY.CITY_LOCATION_KEY,
 					// "");
-					switchContent(new ActListFragment());
+					// switchContent(new ActListFragment());
+					handleSeleceted(R.id.btn_activities,true);
+					
 					// 显示默认列表
 					Toast.makeText(mContext, "定位失败!  为您显示默认城市信息！", 2222).show();
 					
@@ -94,50 +98,52 @@ public class MainActivity extends BaseSlidingFragmentActivity implements ISimple
 		
 	}
 	
-	public void showLogoutView() {
-		btn_share.setVisibility(View.VISIBLE);
-		btn_share.setBackgroundResource(R.drawable.playzmax_quit_btn_sel);
-		
-		btn_share.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				Constant.saveLogin(null);
-				switchContent(new PlayInZmaxLoginFragment());
-			}
-		});
-	}
-	
-	public void hideLogoutView(boolean isGone) {
-		if (isGone) {
-			btn_share.setVisibility(View.GONE);
-			return;
-		}
-		btn_share.setVisibility(View.VISIBLE);
-		btn_share.setBackgroundResource(R.drawable.menu_guide_btn_sel);
-		btn_share.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				Intent intent = new Intent();
-				intent.setClass(mContext, DocumentsActivity.class);
-				intent.putExtra(Constant.Documents.DOCUMENTS_TYPE_KEY, Constant.Documents.GUIDE_TYPE);
-				startActivity(intent);
-			}
-		});
-	}
+	// public void showLogoutView() {
+	// btn_share.setVisibility(View.VISIBLE);
+	// btn_share.setBackgroundResource(R.drawable.playzmax_quit_btn_sel);
+	//
+	// btn_share.setOnClickListener(new OnClickListener() {
+	// @Override
+	// public void onClick(View v) {
+	// Constant.saveLogin(null);
+	// switchContent(new PlayInZmaxLoginFragment());
+	// }
+	// });
+	// }
+	//
+	// public void hideLogoutView(boolean isGone) {
+	// if (isGone) {
+	// btn_share.setVisibility(View.GONE);
+	// return;
+	// }
+	// btn_share.setVisibility(View.VISIBLE);
+	// btn_share.setBackgroundResource(R.drawable.menu_guide_btn_sel);
+	// btn_share.setOnClickListener(new OnClickListener() {
+	// @Override
+	// public void onClick(View v) {
+	// Intent intent = new Intent();
+	// intent.setClass(mContext, DocumentsActivity.class);
+	// intent.putExtra(Constant.Documents.DOCUMENTS_TYPE_KEY,
+	// Constant.Documents.GUIDE_TYPE);
+	// startActivity(intent);
+	// }
+	// });
+	// }
 	
 	@Override
 	public void switchContent(Fragment fragment) {
 		// TODO Auto-generated method stub
 		super.switchContent(fragment);
-		if (fragment instanceof PlayInZmaxLoginFragment) {
-			hideLogoutView(false);
-		}
-		else if (fragment instanceof PlayInZmaxFragment) {
-			showLogoutView();
-		}
-		else {
-			hideLogoutView(true);
-		}
+		
+		// if (fragment instanceof PlayInZmaxLoginFragment) {
+		// hideLogoutView(false);
+		// }
+		// else if (fragment instanceof PlayInZmaxFragment) {
+		// showLogoutView();
+		// }
+		// else {
+		// hideLogoutView(true);
+		// }
 	}
 	
 	int backPressCount = 0;
@@ -175,7 +181,8 @@ public class MainActivity extends BaseSlidingFragmentActivity implements ISimple
 		switch (arg0) {
 			case Constant.DialogCode.TYPE_TOKEN_ERROR:
 				Constant.saveLogin(null);
-				switchContent(new PlayInZmaxLoginFragment());
+				// switchContent(new PlayInZmaxLoginFragment());
+				handleSeleceted(R.id.ll_menu_playzmax,true);
 				break;
 			
 			default:
@@ -202,7 +209,9 @@ public class MainActivity extends BaseSlidingFragmentActivity implements ISimple
 	private boolean handleIntent() {
 		boolean shouldDo = false;
 		if (getIntent().getAction() != null && getIntent().getAction().equals(Constant.DialogCode.ACTION_BACK_LOGIN)) {
-			switchContent(new PlayInZmaxLoginFragment());
+			// switchContent(new PlayInZmaxLoginFragment());
+			handleSeleceted(R.id.ll_menu_playzmax,true);
+			
 			shouldDo = true;
 		}
 		return shouldDo;

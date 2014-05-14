@@ -11,7 +11,7 @@
         android:layout_marginLeft="@dimen/act_detail_margin_left"
         android:layout_marginRight="@dimen/act_detail_margin_left"
         android:layout_marginTop="@dimen/act_detail_margin_top"
-        android:background="@drawable/act_detial_index_bg" >
+        android:background="@drawable/act_detial_index_bg_repeat" >
 
         <TextView
             android:id="@+id/act_detail_title_hotel"

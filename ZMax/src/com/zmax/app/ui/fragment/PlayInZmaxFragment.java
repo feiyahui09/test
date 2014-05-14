@@ -49,11 +49,12 @@ public class PlayInZmaxFragment extends Fragment implements OnClickListener {
 	
 	public PlayInZmaxFragment() {
 		setRetainInstance(true);
-		login = Constant.getLogin();
 	}
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+		
+		login = Constant.getLogin();
 		view = inflater.inflate(R.layout.playzmax, null);
 		btn_act = (Button) view.findViewById(R.id.btn_act);
 		btn_chat = (Button) view.findViewById(R.id.btn_chat);
@@ -61,7 +62,6 @@ public class PlayInZmaxFragment extends Fragment implements OnClickListener {
 		btn_act.setOnClickListener(this);
 		btn_chat.setOnClickListener(this);
 		btn_room.setOnClickListener(this);
-		
 		tv_nick_name = (TextView) view.findViewById(R.id.tv_nick_name);
 		tv_hotel = (TextView) view.findViewById(R.id.tv_hotel);
 		tv_room_num = (TextView) view.findViewById(R.id.tv_room_num);

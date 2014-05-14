@@ -2,6 +2,7 @@ package com.zmax.app.ui;
 
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.DialogFragment;
@@ -163,7 +164,15 @@ public class ActDetailActivity extends BaseFragmentActivity {
 						@Override
 						public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
 							try {
-								ll_bg.setBackground(new BitmapDrawable(StackBlurManager.fastblur(ActDetailActivity.this, loadedImage, 11)));
+								
+								if (Build.VERSION.SDK_INT >= 16) {
+									ll_bg.setBackground(new BitmapDrawable(StackBlurManager.fastblur(ActDetailActivity.this, loadedImage,
+											11)));
+								}
+								else {
+									ll_bg.setBackgroundDrawable(new BitmapDrawable(StackBlurManager.fastblur(ActDetailActivity.this,
+											loadedImage, 11)));
+								}
 							}
 							catch (Exception e) {
 								e.printStackTrace();

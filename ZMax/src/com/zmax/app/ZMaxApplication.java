@@ -5,14 +5,16 @@ import java.io.StringWriter;
 import java.io.Writer;
 import java.lang.Thread.UncaughtExceptionHandler;
 
+import android.app.ActivityManager;
 import android.app.Application;
 import android.content.Context;
 import android.graphics.Bitmap.CompressFormat;
-import android.os.Handler;
+import android.util.Log;
 import cn.sharesdk.framework.ShareSDK;
 
 import com.baidu.mapapi.BMapManager;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiscCache;
+import com.nostra13.universalimageloader.cache.disc.naming.HashCodeFileNameGenerator;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -21,7 +23,6 @@ import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 import com.zmax.app.utils.Constant;
 import com.zmax.app.utils.FileUtil;
-import com.zmax.app.utils.Log;
 
 public class ZMaxApplication extends Application {
 	
@@ -33,6 +34,7 @@ public class ZMaxApplication extends Application {
 	public void onCreate() {
 		super.onCreate();
 		mInstance = this;
+		Log.e("ZMaxApplication", "oncreate");
 		init();
 	}
 	
@@ -68,8 +70,8 @@ public class ZMaxApplication extends Application {
 				.displayer(new FadeInBitmapDisplayer(650)).showImageOnLoading(R.drawable.default_loading_img)
 				.showImageForEmptyUri(R.drawable.default_loading_fail_img).showImageOnFail(R.drawable.default_loading_fail_img).build();
 		config = new ImageLoaderConfiguration.Builder(mInstance).threadPriority(Thread.NORM_PRIORITY - 2)
-				.denyCacheImageMultipleSizesInMemory().discCacheExtraOptions(480, 800, CompressFormat.PNG, 90, null)
-				.discCacheFileNameGenerator(new Md5FileNameGenerator()).tasksProcessingOrder(QueueProcessingType.LIFO)
+				.denyCacheImageMultipleSizesInMemory().discCacheExtraOptions(480, 800, CompressFormat.JPEG, 90, null)
+				.discCacheFileNameGenerator(new HashCodeFileNameGenerator()).tasksProcessingOrder(QueueProcessingType.LIFO)
 				.discCache(new UnlimitedDiscCache(FileUtil.getSdcardDir())).discCacheSize(4 * 1024 * 1024).discCacheFileCount(100)
 				.defaultDisplayImageOptions(options).build();
 		ImageLoader.getInstance().init(config);
@@ -80,7 +82,7 @@ public class ZMaxApplication extends Application {
 		ImageLoaderConfiguration config;
 		DisplayImageOptions options = new DisplayImageOptions.Builder().cacheInMemory().cacheOnDisc().build();
 		config = new ImageLoaderConfiguration.Builder(mInstance).threadPriority(Thread.NORM_PRIORITY - 2)
-				.denyCacheImageMultipleSizesInMemory().discCacheExtraOptions(480, 800, CompressFormat.PNG, 90, null)
+				.denyCacheImageMultipleSizesInMemory().discCacheExtraOptions(480, 800, CompressFormat.JPEG, 90, null)
 				.discCacheFileNameGenerator(new Md5FileNameGenerator()).tasksProcessingOrder(QueueProcessingType.LIFO)
 				.discCache(new UnlimitedDiscCache(FileUtil.getSdcardDir4Chat())).discCacheSize(4 * 1024 * 1024).discCacheFileCount(100)
 				.defaultDisplayImageOptions(options).build();
@@ -105,7 +107,7 @@ public class ZMaxApplication extends Application {
 			e.printStackTrace(printWriter);
 			String stacktrace = result.toString();
 			printWriter.close();
-			Log.e("ERROR:" + stacktrace);
+			com.zmax.app.utils.Log.e("ERROR:" + stacktrace);
 			defaultUEH.uncaughtException(t, e);
 		}
 	}

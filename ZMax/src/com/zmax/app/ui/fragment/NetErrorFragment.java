@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 
 import com.zmax.app.R;
 import com.zmax.app.ui.MainActivity;
+import com.zmax.app.ui.fragment.MoreMenuFragment.TabSelectedListener;
 
 public class NetErrorFragment extends Fragment {
 	
@@ -21,7 +22,10 @@ public class NetErrorFragment extends Fragment {
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
 				if (getActivity() != null && isAdded()) {
-					((MainActivity) getActivity()).switchContent(new ActListFragment( ));
+					// ((MainActivity) getActivity()).switchContent(new
+					// ActListFragment( ));
+					((TabSelectedListener) getActivity()).handleSeleceted(R.id.ll_menu_playzmax,true);
+					
 				}
 				return false;
 			}

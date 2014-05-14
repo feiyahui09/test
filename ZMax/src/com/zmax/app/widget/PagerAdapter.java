@@ -86,6 +86,12 @@ import android.view.ViewGroup;
  * </p>
  */
 public abstract class PagerAdapter {
+	
+	public interface IPagerDisplay {
+		public void onDisplay();
+		
+	}
+	
 	private DataSetObservable mObservable = new DataSetObservable();
 	
 	public static final int POSITION_UNCHANGED = -1;

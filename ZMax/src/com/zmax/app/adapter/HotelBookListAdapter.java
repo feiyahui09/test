@@ -10,8 +10,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.zmax.app.R;
 import com.zmax.app.model.Act;
+import com.zmax.app.model.Hotel;
 import com.zmax.app.widget.PagerAdapter;
 
 public class HotelBookListAdapter extends PagerAdapter {
@@ -35,11 +37,13 @@ public class HotelBookListAdapter extends PagerAdapter {
 		notifyDataSetChanged();
 	}
 	
+	@Deprecated
 	private void init() {
 		LayoutInflater inflater = ((Activity) mContext).getLayoutInflater();
 		for (int i = 0; i < mDetails.size(); i++) {
 			View view = inflater.inflate(R.layout.hotel_book_list_item, null);
 			((ImageView) view.findViewById(R.id.iv_img)).setBackgroundResource(R.drawable.ic_launcher);
+			
 			mListViews.add(view);
 		}
 		notifyDataSetChanged();
@@ -47,13 +51,17 @@ public class HotelBookListAdapter extends PagerAdapter {
 	
 	@Override
 	public void destroyItem(ViewGroup container, int position, Object object) {
-		if (mListViews != null && mListViews.size() > 0) container.removeView(mListViews.get(position));
+		if (mListViews != null && mListViews.size() > 0) {
+			container.removeView(mListViews.get(position));
+			
+		}
 	}
 	
 	@Override
 	public Object instantiateItem(ViewGroup container, int position) {
 		if (mListViews != null && mListViews.size() > 0) {
 			container.addView(mListViews.get(position), 0);
+			// onDisplay(position);
 			return mListViews.get(position);
 		}
 		return null;

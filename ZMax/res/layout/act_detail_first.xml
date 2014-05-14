@@ -9,7 +9,7 @@
         android:layout_marginBottom="@dimen/act_detail_margin_top"
         android:layout_marginLeft="@dimen/act_detail_margin_left"
         android:layout_marginRight="@dimen/act_detail_margin_left"
-        android:background="@drawable/act_detial_index_bg" >
+        android:background="@drawable/act_detial_index_bg_repeat" >
 
         <ImageView
             android:id="@+id/iv_act_detial_index_logo"
