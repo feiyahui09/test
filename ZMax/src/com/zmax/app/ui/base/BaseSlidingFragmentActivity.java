@@ -33,6 +33,7 @@ import com.zmax.app.ui.fragment.PlayInZmaxFragment;
 import com.zmax.app.ui.fragment.PlayInZmaxLoginFragment;
 import com.zmax.app.ui.fragment.SettingFragment;
 import com.zmax.app.utils.Constant;
+import com.zmax.app.utils.Constant.LOAD_STATE;
 import com.zmax.app.utils.Log;
 
 /**
@@ -164,6 +165,7 @@ public class BaseSlidingFragmentActivity extends SlidingFragmentActivity impleme
 				else {
 					hideLogoutView(true);
 				}
+				
 				hashMap.get(item_id).onTabSelected((isInitial || _isInitial) ? new Object() : null,
 						getSupportFragmentManager().beginTransaction());
 			}
@@ -222,18 +224,10 @@ public class BaseSlidingFragmentActivity extends SlidingFragmentActivity impleme
 				// else if (checkedId == R.id.btn_activities) switchContent(new
 				// ActListFragment());
 				if (checkedId == R.id.btn_hotel_book) {
-					handleSeleceted(checkedId, false);
-					// actTabListener.onTabUnselected(null,
-					// getSupportFragmentManager().beginTransaction());
-					// hotelbookTabListener.onTabSelected(null,
-					// getSupportFragmentManager().beginTransaction());
+					handleSeleceted(checkedId, HotelBookFragment.state==LOAD_STATE.FAILED);
 				}
 				else if (checkedId == R.id.btn_activities) {
-					handleSeleceted(checkedId, false);
-					// actTabListener.onTabSelected(null,
-					// getSupportFragmentManager().beginTransaction());
-					// hotelbookTabListener.onTabUnselected(null,
-					// getSupportFragmentManager().beginTransaction());
+					handleSeleceted(checkedId, ActListFragment.state==LOAD_STATE.FAILED);
 				}
 			}
 		});

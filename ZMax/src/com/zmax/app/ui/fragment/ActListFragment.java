@@ -24,6 +24,7 @@ import com.zmax.app.net.NetWorkHelper;
 import com.zmax.app.task.GetActListTask;
 import com.zmax.app.ui.ActDetailActivity;
 import com.zmax.app.utils.Constant;
+import com.zmax.app.utils.Constant.LOAD_STATE;
 import com.zmax.app.utils.Log;
 import com.zmax.app.utils.Utility;
 import com.zmax.app.widget.XListView;
@@ -40,10 +41,11 @@ public class ActListFragment extends Fragment implements IXListViewListener, OnI
 	private GetActListTask getActListTask;
 	private int curPage = 1;
 	private DialogFragment progressDialog;
+	public static LOAD_STATE state = LOAD_STATE.FAILED;
 	private Handler handler = new Handler();
 	
 	public ActListFragment() {
-		// setRetainInstance(true);
+		state = LOAD_STATE.FAILED;
 		Log.i("@@");
 	}
 	
@@ -128,8 +130,6 @@ public class ActListFragment extends Fragment implements IXListViewListener, OnI
 		listview.onLoad();
 	}
 	
-	private boolean isLoaded = false;
-	
 	@Override
 	public void onLoadMore() {
 		getActList(curPage);
@@ -137,11 +137,11 @@ public class ActListFragment extends Fragment implements IXListViewListener, OnI
 	}
 	
 	private void getActList(int page) {
+		state = LOAD_STATE.LOADING;
 		handler.postDelayed(new Runnable() {
-			
 			@Override
 			public void run() {
-				if (!isLoaded)
+				if (state == LOAD_STATE.LOADING)
 					progressDialog = ProgressDialogFragment.createBuilder(getActivity(), getFragmentManager()).setMessage("正在加载中...")
 							.setTitle("提示").setCancelable(true).show();
 			}
@@ -155,9 +155,8 @@ public class ActListFragment extends Fragment implements IXListViewListener, OnI
 					return;
 				}
 				if (progressDialog != null && progressDialog.getActivity() != null) progressDialog.dismiss();
-				isLoaded = true;
-				
 				if (result != null && result.status == 200) {
+					state = LOAD_STATE.SUCCESS;
 					final List<Act> actList = result.events;
 					if (curPage == 1) {
 						adapter.Clear();
@@ -179,8 +178,8 @@ public class ActListFragment extends Fragment implements IXListViewListener, OnI
 					}
 				}
 				else {
+					state = LOAD_STATE.FAILED;
 					if (curPage == 1) adapter.appendToList(DataManage.getIndexActlist4DB());
-					
 					if (!NetWorkHelper.checkNetState(getActivity())) {
 						Utility.toastNetworkFailed(getActivity());
 					}

@@ -31,7 +31,9 @@ import com.zmax.app.task.GetHotelListTask;
 import com.zmax.app.ui.WebViewActivity;
 import com.zmax.app.ui.base.BaseSlidingFragmentActivity.HotelBookVisivleCallback;
 import com.zmax.app.utils.Constant;
+import com.zmax.app.utils.Constant.LOAD_STATE;
 import com.zmax.app.utils.DateTimeUtils;
+import com.zmax.app.utils.Log;
 import com.zmax.app.utils.Utility;
 import com.zmax.app.widget.VerticalViewPager;
 import com.zmax.app.widget.VerticalViewPager.OnPageChangeListener;
@@ -50,9 +52,12 @@ public class HotelBookFragment extends Fragment implements OnPageChangeListener,
 	private GetHotelListTask getHotelListTask;
 	
 	private DialogFragment progressDialog;
-
+	
+	public static  LOAD_STATE state=LOAD_STATE.FAILED;;
+	
 	public HotelBookFragment() {
-		setRetainInstance(true);
+		state = LOAD_STATE.FAILED;
+		Log.i("@@");
 	}
 	
 	@Override
@@ -80,14 +85,15 @@ public class HotelBookFragment extends Fragment implements OnPageChangeListener,
 		super.onActivityCreated(savedInstanceState);
 		progressDialog = ProgressDialogFragment.createBuilder(getActivity(), getFragmentManager()).setMessage("正在加载中...").setTitle("提示")
 				.setCancelable(true).show();
+		state = LOAD_STATE.LOADING;
 		getHotelListTask = new GetHotelListTask(getActivity(), new GetHotelListTask.TaskCallBack() {
-			
 			@Override
 			public void onCallBack(HotelList hotelList, HotelList upcomingHotelList) {
 				if (getActivity() == null) return;
 				if (progressDialog != null && progressDialog.getActivity() != null) progressDialog.dismiss();
-				isLoaded = true;
+				
 				if (hotelList != null && hotelList.status == 200) {
+					state = LOAD_STATE.SUCCESS;
 					List<Hotel> _hotelList = hotelList.hotels;
 					List<Hotel> _upcomingHotelList = upcomingHotelList == null ? null : upcomingHotelList.hotels;
 					initData(_hotelList, _upcomingHotelList);
@@ -96,6 +102,7 @@ public class HotelBookFragment extends Fragment implements OnPageChangeListener,
 					if (_hotelList == null || _hotelList.isEmpty()) Utility.toastNoMoreResult(getActivity());
 				}
 				else {
+					state = LOAD_STATE.FAILED;
 					if (!NetWorkHelper.checkNetState(getActivity())) {
 						Utility.toastNetworkFailed(getActivity());
 					}
@@ -109,9 +116,7 @@ public class HotelBookFragment extends Fragment implements OnPageChangeListener,
 		});
 		getHotelListTask.execute(Constant.CUR_CITY, "1", "" + Constant.PER_NUM_GET_HOTELLIST);
 	}
-	
-	private boolean isLoaded = false;
-	
+ 
 	private void initPagerIndicator(int size, LinearLayout indicator) {
 		if (size <= 0) return;
 		LayoutInflater inflater = getActivity().getLayoutInflater();
@@ -149,9 +154,10 @@ public class HotelBookFragment extends Fragment implements OnPageChangeListener,
 	@Override
 	public void onPageSelected(int position) {
 		switchInidcator(position);
-//		if (adapter.getItem(position) instanceof PagerAdapter.IPagerDisplay) {
-//			((PagerAdapter.IPagerDisplay) adapter.getItem(position)).onDisplay();
-//		}
+		// if (adapter.getItem(position) instanceof PagerAdapter.IPagerDisplay)
+		// {
+		// ((PagerAdapter.IPagerDisplay) adapter.getItem(position)).onDisplay();
+		// }
 	}
 	
 	@Override
