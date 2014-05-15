@@ -4,6 +4,7 @@ import java.util.List;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -39,9 +40,10 @@ public class ActListFragment extends Fragment implements IXListViewListener, OnI
 	private GetActListTask getActListTask;
 	private int curPage = 1;
 	private DialogFragment progressDialog;
+	private Handler handler = new Handler();
 	
 	public ActListFragment() {
-		setRetainInstance(true);
+		// setRetainInstance(true);
 		Log.i("@@");
 	}
 	
@@ -135,8 +137,16 @@ public class ActListFragment extends Fragment implements IXListViewListener, OnI
 	}
 	
 	private void getActList(int page) {
-		progressDialog = ProgressDialogFragment.createBuilder(getActivity(), getFragmentManager()).setMessage("正在加载中...").setTitle("提示")
-				.setCancelable(true).show();
+		handler.postDelayed(new Runnable() {
+			
+			@Override
+			public void run() {
+				if (!isLoaded)
+					progressDialog = ProgressDialogFragment.createBuilder(getActivity(), getFragmentManager()).setMessage("正在加载中...")
+							.setTitle("提示").setCancelable(true).show();
+			}
+		}, 350);
+		
 		getActListTask = new GetActListTask(getActivity(), new GetActListTask.TaskCallBack() {
 			
 			@Override

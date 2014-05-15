@@ -173,13 +173,6 @@ public class BaseSlidingFragmentActivity extends SlidingFragmentActivity impleme
 		}
 		getSlidingMenu().showContent();
 		
-		handler.postDelayed(new Runnable() {
-			@Override
-			public void run() {
-				// getSlidingMenu().showContent();
-			}
-		}, 100);
-		
 	}
 	
 	public void showLogoutView() {
@@ -373,9 +366,11 @@ public class BaseSlidingFragmentActivity extends SlidingFragmentActivity impleme
 		}
 		
 		private void detachOld(Fragment fragment) {
-			if (fragment != null && !fragment.isDetached()) {
+			// if (fragment != null && !fragment.isDetached()) {
+			if (fragment != null) {
+				Log.i("@@");
 				FragmentTransaction ft = mActivity.getSupportFragmentManager().beginTransaction();
-				ft.detach(fragment);
+				ft.remove(fragment);
 				ft.commit();
 			}
 		}
