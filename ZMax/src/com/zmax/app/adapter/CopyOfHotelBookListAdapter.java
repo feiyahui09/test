@@ -11,14 +11,15 @@ import android.view.ViewGroup;
 
 import com.zmax.app.model.Hotel;
 import com.zmax.app.ui.fragment.HotelBookItemFragment;
+import com.zmax.app.ui.fragment.HotelBookLastItemFragment;
 import com.zmax.app.widget.FragmentStatePagerAdapter;
 
 public class CopyOfHotelBookListAdapter extends FragmentStatePagerAdapter {
 	
 	private Context mContext;
 	
-	public ArrayList<Hotel> mHotels = new ArrayList<Hotel>();;
-
+	private ArrayList<Hotel> mHotels = new ArrayList<Hotel>();;
+	private List<Hotel> readlUpcomingHotelList = new ArrayList<Hotel>();
 	private Activity mActivity;
 	
 	public CopyOfHotelBookListAdapter(FragmentActivity activity) {
@@ -30,13 +31,20 @@ public class CopyOfHotelBookListAdapter extends FragmentStatePagerAdapter {
 		mHotels.clear();
 	}
 	
+	@Deprecated
 	public void addItem(Fragment fragment) {
-//		mFragments.add(fragment);
-//		notifyDataSetChanged();
+		// mFragments.add(fragment);
+		// notifyDataSetChanged();
 	}
 	
 	public void addItem(Hotel hotel) {
 		mHotels.add(hotel);
+		notifyDataSetChanged();
+	}
+	
+	public void addItem(Hotel faslehotel, List<Hotel> readlUpcomingHotelList) {
+		mHotels.add(faslehotel);
+		this.readlUpcomingHotelList = readlUpcomingHotelList;
 		notifyDataSetChanged();
 	}
 	
@@ -49,7 +57,9 @@ public class CopyOfHotelBookListAdapter extends FragmentStatePagerAdapter {
 	
 	@Override
 	public Fragment getItem(int arg0) {
-		return   HotelBookItemFragment.newInstance(mHotels.get(arg0));
+		if (readlUpcomingHotelList != null && !readlUpcomingHotelList.isEmpty() && arg0 == mHotels.size() - 1)
+			return new HotelBookLastItemFragment(readlUpcomingHotelList);
+		return HotelBookItemFragment.newInstance(mHotels.get(arg0));
 	}
 	
 	@Override
@@ -57,10 +67,10 @@ public class CopyOfHotelBookListAdapter extends FragmentStatePagerAdapter {
 		return mHotels.size();
 	}
 	
-//	@Override
-//	public int getItemPosition(Object object) {
-//		return POSITION_NONE;
-//	}
+	// @Override
+	// public int getItemPosition(Object object) {
+	// return POSITION_NONE;
+	// }
 	
 	@Override
 	public void destroyItem(ViewGroup container, int position, Object object) {

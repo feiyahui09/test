@@ -66,7 +66,7 @@ public class NetAccessor {
 		try {
 			String jsonString = HttpUtils.getByHttpClient(context, Constant.ZMAX_URL + "events", null, new BasicNameValuePair("city_name",
 					city_name), new BasicNameValuePair("page_num", page_num), new BasicNameValuePair("per", per));
-			Log.d("  responeString -->\n" + jsonString);
+		//	Log.d("  responeString -->\n" + jsonString);
 			if (!TextUtils.isEmpty(jsonString)) {
 				actList = JsonMapperUtils.toObject(jsonString, ActList.class);
 			}

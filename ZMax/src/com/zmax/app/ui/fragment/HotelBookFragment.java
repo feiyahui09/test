@@ -53,7 +53,7 @@ public class HotelBookFragment extends Fragment implements OnPageChangeListener,
 	
 	private DialogFragment progressDialog;
 	
-	public static  LOAD_STATE state=LOAD_STATE.FAILED;;
+	public static LOAD_STATE state = LOAD_STATE.FAILED;;
 	
 	public HotelBookFragment() {
 		state = LOAD_STATE.FAILED;
@@ -116,16 +116,14 @@ public class HotelBookFragment extends Fragment implements OnPageChangeListener,
 		});
 		getHotelListTask.execute(Constant.CUR_CITY, "1", "" + Constant.PER_NUM_GET_HOTELLIST);
 	}
- 
+	
 	private void initPagerIndicator(int size, LinearLayout indicator) {
 		if (size <= 0) return;
 		LayoutInflater inflater = getActivity().getLayoutInflater();
 		for (int i = 0; i < size; i++) {
 			View view = inflater.inflate(R.layout.vpager_indicator_item, null);
 			((ImageView) view.findViewById(R.id.iv_img)).setImageResource(R.drawable.hotel_list_indicator_normal);
-			
 			indicator.addView(view);
-			
 		}
 		switchInidcator(0);
 	}
@@ -206,8 +204,14 @@ public class HotelBookFragment extends Fragment implements OnPageChangeListener,
 		// adapter.addViews(views);
 		
 		adapter.addAll(hotelList);
-		
-		initPagerIndicator(hotelList.size(), indicator);
+		if (upcomingHotelList == null || upcomingHotelList.isEmpty()) {
+			initPagerIndicator(hotelList.size(), indicator);
+		}
+		else {
+			Hotel falseHotel = new Hotel();
+			adapter.addItem(falseHotel,upcomingHotelList);
+			initPagerIndicator(hotelList.size() + 1, indicator);
+		}
 		pager.setCurrentItem(0);
 		
 	}
