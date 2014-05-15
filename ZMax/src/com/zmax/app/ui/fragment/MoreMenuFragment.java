@@ -81,6 +81,7 @@ public class MoreMenuFragment extends Fragment implements OnClickListener {
 		
 	} // the meat of switching the above fragment
 	
+	@Deprecated
 	private void switchFragment(Fragment fragment) {
 		if (getActivity() == null) return;
 		

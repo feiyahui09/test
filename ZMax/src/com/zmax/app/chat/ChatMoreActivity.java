@@ -59,7 +59,9 @@ public class ChatMoreActivity extends BaseActivity {
 		btn_quit.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				startActivity(new Intent(mContext, MainActivity.class));
+				Intent intent=new Intent(mContext, MainActivity.class);
+				intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+				startActivity(intent);
 				finish();
 			}
 		});

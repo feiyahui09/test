@@ -28,6 +28,8 @@ import com.zmax.app.utils.Utility;
 import com.zmax.app.widget.XListView;
 import com.zmax.app.widget.XListView.IXListViewListener;
 
+import eu.inmite.android.lib.dialogs.ProgressDialogFragment;
+
 public class ActListFragment extends Fragment implements IXListViewListener, OnItemClickListener {
 	
 	protected XListView listview;
@@ -88,7 +90,7 @@ public class ActListFragment extends Fragment implements IXListViewListener, OnI
 		 * }
 		 * }
 		 */
-		if (!isLoaded) onRefresh();
+		onRefresh();
 		Log.i("@@");
 		
 	}
@@ -133,9 +135,8 @@ public class ActListFragment extends Fragment implements IXListViewListener, OnI
 	}
 	
 	private void getActList(int page) {
-		// progressDialog = ProgressDialogFragment.createBuilder(getActivity(),
-		// getFragmentManager()).setMessage("正在加载中...").setTitle("提示")
-		// .setCancelable(true).show();
+		progressDialog = ProgressDialogFragment.createBuilder(getActivity(), getFragmentManager()).setMessage("正在加载中...").setTitle("提示")
+				.setCancelable(true).show();
 		getActListTask = new GetActListTask(getActivity(), new GetActListTask.TaskCallBack() {
 			
 			@Override
@@ -192,7 +193,7 @@ public class ActListFragment extends Fragment implements IXListViewListener, OnI
 			Log.i("[totalMemory]:  " + Runtime.getRuntime().totalMemory() / 1000 + " k");
 			Log.i("[freeMemory]:   " + Runtime.getRuntime().freeMemory() / 1000 + " k");
 			ImageLoader.getInstance().clearMemoryCache();
-			 System.gc();
+			System.gc();
 			
 			Log.i("after  [maxMemory]:  " + Runtime.getRuntime().maxMemory() / 1000 + " k");
 			Log.i("after  [totalMemory]:  " + Runtime.getRuntime().totalMemory() / 1000 + " k");

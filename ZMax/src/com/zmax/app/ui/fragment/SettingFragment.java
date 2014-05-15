@@ -79,6 +79,8 @@ public class SettingFragment extends Fragment implements OnClickListener {
 		super.onSaveInstanceState(outState);
 	}
 	
+	boolean isChechUpdateFinished = true;
+	
 	@Override
 	public void onClick(View v) {
 		Intent intent = new Intent();
@@ -89,7 +91,7 @@ public class SettingFragment extends Fragment implements OnClickListener {
 				startActivity(intent);
 				break;
 			case R.id.btn_check_update:
-				checkUpdate();
+				if (isChechUpdateFinished) checkUpdate();
 				break;
 			case R.id.btn_welcome:
 				intent.setClass(getActivity(), WelcomeActivity.class);
@@ -122,16 +124,24 @@ public class SettingFragment extends Fragment implements OnClickListener {
 		
 	}
 	
+	@Override
+	public void onResume() {
+		super.onResume();
+		isChechUpdateFinished = true;
+	}
+	
 	private void checkUpdate() {
 		if (!NetWorkHelper.checkNetState(getActivity())) {
 			Utility.toastNetworkFailed(getActivity());
 			return;
-			
 		}
+		
+		isChechUpdateFinished = false;
 		checkUpdateTask = new CheckUpdateTask(getActivity(), new CheckUpdateTask.TaskCallBack() {
 			
 			@Override
 			public void onCallBack(final Update result) {
+				isChechUpdateFinished = true;
 				if (getActivity() == null) return;
 				if (result == null) return;
 				if (result.status == 200) {

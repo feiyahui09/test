@@ -68,7 +68,7 @@ public class MainActivity extends BaseSlidingFragmentActivity implements ISimple
 					// DefaultShared.putString(Constant.SPFKEY.CITY_LOCATION_KEY,
 					// cityStr);
 					// switchContent(new ActListFragment());
-					handleSeleceted(R.id.btn_activities,true);
+					handleSeleceted(R.id.btn_activities, true);
 					
 					Toast.makeText(mContext, "   " + result.province + cityStr, 2222).show();
 				}
@@ -77,7 +77,7 @@ public class MainActivity extends BaseSlidingFragmentActivity implements ISimple
 					// DefaultShared.putString(Constant.SPFKEY.CITY_LOCATION_KEY,
 					// "");
 					// switchContent(new ActListFragment());
-					handleSeleceted(R.id.btn_activities,true);
+					handleSeleceted(R.id.btn_activities, true);
 					
 					// 显示默认列表
 					Toast.makeText(mContext, "定位失败!  为您显示默认城市信息！", 2222).show();
@@ -129,7 +129,7 @@ public class MainActivity extends BaseSlidingFragmentActivity implements ISimple
 	// }
 	// });
 	// }
-	
+	@Deprecated
 	@Override
 	public void switchContent(Fragment fragment) {
 		// TODO Auto-generated method stub
@@ -182,7 +182,7 @@ public class MainActivity extends BaseSlidingFragmentActivity implements ISimple
 			case Constant.DialogCode.TYPE_TOKEN_ERROR:
 				Constant.saveLogin(null);
 				// switchContent(new PlayInZmaxLoginFragment());
-				handleSeleceted(R.id.ll_menu_playzmax,true);
+				handleSeleceted(R.id.ll_menu_playzmax, true);
 				break;
 			
 			default:
@@ -210,7 +210,7 @@ public class MainActivity extends BaseSlidingFragmentActivity implements ISimple
 		boolean shouldDo = false;
 		if (getIntent().getAction() != null && getIntent().getAction().equals(Constant.DialogCode.ACTION_BACK_LOGIN)) {
 			// switchContent(new PlayInZmaxLoginFragment());
-			handleSeleceted(R.id.ll_menu_playzmax,true);
+			handleSeleceted(R.id.ll_menu_playzmax, true);
 			
 			shouldDo = true;
 		}

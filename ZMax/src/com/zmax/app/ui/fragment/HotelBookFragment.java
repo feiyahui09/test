@@ -7,8 +7,8 @@ import java.util.Map;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentStatePagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -21,10 +21,8 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
-import com.nostra13.universalimageloader.core.ImageLoader;
 import com.zmax.app.R;
 import com.zmax.app.adapter.CopyOfHotelBookListAdapter;
-import com.zmax.app.adapter.HotelBookListAdapter;
 import com.zmax.app.manage.DataManage;
 import com.zmax.app.model.Hotel;
 import com.zmax.app.model.HotelList;
@@ -35,9 +33,10 @@ import com.zmax.app.ui.base.BaseSlidingFragmentActivity.HotelBookVisivleCallback
 import com.zmax.app.utils.Constant;
 import com.zmax.app.utils.DateTimeUtils;
 import com.zmax.app.utils.Utility;
-import com.zmax.app.widget.PagerAdapter;
 import com.zmax.app.widget.VerticalViewPager;
 import com.zmax.app.widget.VerticalViewPager.OnPageChangeListener;
+
+import eu.inmite.android.lib.dialogs.ProgressDialogFragment;
 
 public class HotelBookFragment extends Fragment implements OnPageChangeListener, OnItemClickListener, HotelBookVisivleCallback {
 	
@@ -50,6 +49,8 @@ public class HotelBookFragment extends Fragment implements OnPageChangeListener,
 	
 	private GetHotelListTask getHotelListTask;
 	
+	private DialogFragment progressDialog;
+
 	public HotelBookFragment() {
 		setRetainInstance(true);
 	}
@@ -77,12 +78,14 @@ public class HotelBookFragment extends Fragment implements OnPageChangeListener,
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-		if (isLoaded) return;
+		progressDialog = ProgressDialogFragment.createBuilder(getActivity(), getFragmentManager()).setMessage("正在加载中...").setTitle("提示")
+				.setCancelable(true).show();
 		getHotelListTask = new GetHotelListTask(getActivity(), new GetHotelListTask.TaskCallBack() {
 			
 			@Override
 			public void onCallBack(HotelList hotelList, HotelList upcomingHotelList) {
 				if (getActivity() == null) return;
+				if (progressDialog != null && progressDialog.getActivity() != null) progressDialog.dismiss();
 				isLoaded = true;
 				if (hotelList != null && hotelList.status == 200) {
 					List<Hotel> _hotelList = hotelList.hotels;

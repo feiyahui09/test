@@ -32,7 +32,7 @@ public class NetErrorFragment extends Fragment {
 		});
 		return view;
 	}
-	
+	@Deprecated
 	private void switchFragment(Fragment fragment) {
 		
 		if (getActivity() == null) return;
