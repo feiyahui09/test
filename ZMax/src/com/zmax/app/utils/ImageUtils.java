@@ -56,6 +56,8 @@ public class ImageUtils {
 	/** 请求裁剪 */
 	public static final int REQUEST_CODE_GETIMAGE_BYCROP = 2;
 	
+	public static final int REQUEST_CODE_GETIMAGE_BYCAMERA_KITKAT = 3;
+
 	/**
 	 * 写图片文件 在Android系统中，文件保存在 /data/data/PACKAGE_NAME/files 目录下
 	 * 
@@ -665,4 +667,28 @@ public class ImageUtils {
 		}
 		return (b[0] == 0x42) && (b[1] == 0x4d);
 	}
+	
+	/** 
+	 * @param uri The Uri to check. 
+	 * @return Whether the Uri authority is ExternalStorageProvider. 
+	 */
+	public static boolean isExternalStorageDocument(Uri uri) {  
+	    return "com.android.externalstorage.documents".equals(uri.getAuthority());  
+	}  
+	  
+	/** 
+	 * @param uri The Uri to check. 
+	 * @return Whether the Uri authority is DownloadsProvider. 
+	 */  
+	public static boolean isDownloadsDocument(Uri uri) {  
+	    return "com.android.providers.downloads.documents".equals(uri.getAuthority());  
+	}  
+	  
+	/** 
+	 * @param uri The Uri to check. 
+	 * @return Whether the Uri authority is MediaProvider. 
+	 */  
+	public static boolean isMediaDocument(Uri uri) {  
+	    return "com.android.providers.media.documents".equals(uri.getAuthority());  
+	} 
 }

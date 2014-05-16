@@ -39,7 +39,7 @@
             android:layout_marginBottom="5dip"
             android:background="@drawable/chat_list_item_left_bg"
             android:gravity="center"
-            android:scaleType="centerCrop" />
+            android:scaleType="center" />
     </LinearLayout>
 
 </RelativeLayout>
