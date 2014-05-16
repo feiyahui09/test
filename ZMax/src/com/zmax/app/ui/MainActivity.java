@@ -3,6 +3,7 @@ package com.zmax.app.ui;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
@@ -32,23 +33,22 @@ public class MainActivity extends BaseSlidingFragmentActivity implements ISimple
 	private GetCityLocationTask locationTask;
 	private DialogFragment progressDialog;
 	public static final int REQUEST_PROGRESS = 1;
-	
-	private class ReponsiveReceiver extends BroadcastReceiver {
-		
+	BroadcastReceiver receiver = new BroadcastReceiver() {
 		@Override
 		public void onReceive(Context context, Intent intent) {
 			
+			Toast.makeText(context, TextUtils.isEmpty(Constant.CUR_CITY) ? "定位失败!  为您显示默认城市信息！" : Constant.CUR_CITY, 2222).show();
+			handleSeleceted(R.id.btn_activities, true);
+			
 		}
-	}
+	};
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		mContext = this;
-		if (!handleIntent()) {
-			initLocate();
-		}
+		handleIntent();
 	}
 	
 	private void initLocate() {
@@ -94,7 +94,7 @@ public class MainActivity extends BaseSlidingFragmentActivity implements ISimple
 		super.onPause();
 		if (locationTask != null) locationTask.cancel(true);
 		if (progressDialog != null && progressDialog.getActivity() != null) progressDialog.dismiss();
-		
+		unregisterReceiver(receiver);
 	}
 	
 	// public void showLogoutView() {
@@ -203,6 +203,13 @@ public class MainActivity extends BaseSlidingFragmentActivity implements ISimple
 		Log.e("@@");
 		setIntent(intent);
 		handleIntent();
+	}
+	
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		registerReceiver(receiver, new IntentFilter(Constant.FEEDBACK_SENDED_ACTION));
 	}
 	
 	private boolean handleIntent() {

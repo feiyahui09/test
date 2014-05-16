@@ -8,6 +8,7 @@ import android.view.animation.Animation.AnimationListener;
 import android.widget.RelativeLayout;
 
 import com.zmax.app.R;
+import com.zmax.app.manage.DataInitalService;
 import com.zmax.app.ui.base.BaseFragmentActivity;
 import com.zmax.app.utils.Constant;
 import com.zmax.app.utils.DefaultShared;
@@ -40,6 +41,8 @@ public class FlashActivity extends BaseFragmentActivity {
 			}
 			
 		});
+		
+		startService(new Intent(this, DataInitalService.class));
 	}
 	
 	private void goNext() {

@@ -1,27 +1,19 @@
 package com.zmax.app.manage;
 
-import java.util.List;
-
-import com.zmax.app.model.Act;
-import com.zmax.app.model.ActList;
-import com.zmax.app.model.CityLocation;
-import com.zmax.app.model.FeeBack;
-import com.zmax.app.net.NetAccessor;
-import com.zmax.app.net.NetWorkHelper;
-import com.zmax.app.ui.fragment.ActListFragment;
-import com.zmax.app.utils.Constant;
-import com.zmax.app.utils.Utility;
-
 import android.app.IntentService;
 import android.content.Intent;
 import android.os.Handler;
 import android.text.TextUtils;
 import android.widget.Toast;
 
+import com.zmax.app.model.CityLocation;
+import com.zmax.app.net.NetAccessor;
+import com.zmax.app.utils.Constant;
+
 public class DataInitalService extends IntentService {
 	public static final String CONTACT_CONTENT = "contact_content";
 	public static final String ADVISE_CONTENT = "advise_content";
-	Handler handler;
+	Handler handler=new Handler();
 	
 	public DataInitalService() {
 		this("DataInitalService");
@@ -29,10 +21,7 @@ public class DataInitalService extends IntentService {
 	
 	public DataInitalService(String name) {
 		super(name);
-		handler = new Handler(getMainLooper());
-		
 	}
-	
 	@Override
 	protected void onHandleIntent(Intent intent) {
 		Constant.isHotellistEnd = false;
@@ -59,7 +48,7 @@ public class DataInitalService extends IntentService {
 			
 			@Override
 			public void run() {
-				Toast.makeText(DataInitalService.this, tmp, 2222).show();
+			//	Toast.makeText(DataInitalService.this, tmp, 2222).show();
 			}
 		});
 		
@@ -106,6 +95,6 @@ public class DataInitalService extends IntentService {
 		// }
 		//
 		Intent it = new Intent(Constant.FEEDBACK_SENDED_ACTION);
-		sendBroadcast(it);
+		sendStickyBroadcast(it);
 	}
 }
