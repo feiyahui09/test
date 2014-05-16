@@ -18,8 +18,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.sothree.slidinguppanel.SlidingUpPanelLayout;
-import com.sothree.slidinguppanel.SlidingUpPanelLayout.PanelSlideListener;
 import com.zmax.app.R;
 import com.zmax.app.model.Light;
 import com.zmax.app.net.NetWorkHelper;
@@ -27,6 +25,8 @@ import com.zmax.app.task.SetLightTask;
 import com.zmax.app.ui.RoomControlActivity.VerticalChangedCallback;
 import com.zmax.app.utils.Log;
 import com.zmax.app.utils.Utility;
+import com.zmax.app.widget.SlidingUpPanelLayout;
+import com.zmax.app.widget.SlidingUpPanelLayout.PanelSlideListener;
 
 public class RoomControlLightingFragment extends Fragment {
 	/*

@@ -2,10 +2,7 @@ package com.zmax.app.ui.fragment;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
-
-import org.codehaus.jackson.map.ser.ScalarSerializerBase;
 
 import android.content.Context;
 import android.graphics.Typeface;
@@ -20,19 +17,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.sothree.slidinguppanel.SlidingUpPanelLayout;
-import com.sothree.slidinguppanel.SlidingUpPanelLayout.PanelSlideListener;
 import com.zmax.app.R;
-import com.zmax.app.adapter.RoomControlAdapter;
-import com.zmax.app.chat.ChatIndexActivity;
 import com.zmax.app.model.AirCondition;
 import com.zmax.app.net.NetWorkHelper;
 import com.zmax.app.task.SetAirConditionTask;
-import com.zmax.app.ui.RoomControlActivity.PageChangedCallback;
 import com.zmax.app.ui.RoomControlActivity.VerticalChangedCallback;
 import com.zmax.app.utils.Log;
 import com.zmax.app.utils.Utility;
-import com.zmax.app.widget.VerticalViewPager;
+import com.zmax.app.widget.SlidingUpPanelLayout;
+import com.zmax.app.widget.SlidingUpPanelLayout.PanelSlideListener;
 
 public class RoomControlAirConditionFragment extends Fragment {
 	

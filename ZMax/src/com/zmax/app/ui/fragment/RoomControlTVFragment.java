@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
@@ -19,18 +18,15 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.sothree.slidinguppanel.SlidingUpPanelLayout;
-import com.sothree.slidinguppanel.SlidingUpPanelLayout.PanelSlideListener;
 import com.zmax.app.R;
-import com.zmax.app.adapter.RoomControlAdapter;
 import com.zmax.app.model.Television;
 import com.zmax.app.net.NetWorkHelper;
 import com.zmax.app.task.SetTelevisionTask;
-import com.zmax.app.ui.RoomControlActivity.PageChangedCallback;
 import com.zmax.app.ui.RoomControlActivity.VerticalChangedCallback;
 import com.zmax.app.utils.Log;
 import com.zmax.app.utils.Utility;
-import com.zmax.app.widget.VerticalViewPager;
+import com.zmax.app.widget.SlidingUpPanelLayout;
+import com.zmax.app.widget.SlidingUpPanelLayout.PanelSlideListener;
 
 public class RoomControlTVFragment extends Fragment {
 	
