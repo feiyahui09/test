@@ -84,16 +84,14 @@ public class ActListFragment extends Fragment implements IXListViewListener, OnI
 		// TODO Auto-generated method stub
 		super.onActivityCreated(savedInstanceState);
 		int index = 0, top = 0;
-		/*
-		 * if (savedInstanceState != null) {
-		 * // Restore last state for checked position.
-		 * index = savedInstanceState.getInt("index", -1);
-		 * top = savedInstanceState.getInt("top", 0);
-		 * if (index != -1) {
-		 * listview.setSelectionFromTop(index, top);
-		 * }
-		 * }
-		 */
+		handler.postDelayed(new Runnable() {
+			@Override
+			public void run() {
+				if (state == LOAD_STATE.LOADING&&getActivity()!=null)
+					progressDialog = ProgressDialogFragment.createBuilder(getActivity(), getFragmentManager()).setMessage("正在加载中...")
+							.setTitle("提示").setCancelable(true).show();
+			}
+		}, 350);
 		onRefresh();
 		Log.i("@@");
 		
@@ -138,14 +136,7 @@ public class ActListFragment extends Fragment implements IXListViewListener, OnI
 	
 	private void getActList(int page) {
 		state = LOAD_STATE.LOADING;
-		handler.postDelayed(new Runnable() {
-			@Override
-			public void run() {
-				if (state == LOAD_STATE.LOADING)
-					progressDialog = ProgressDialogFragment.createBuilder(getActivity(), getFragmentManager()).setMessage("正在加载中...")
-							.setTitle("提示").setCancelable(true).show();
-			}
-		}, 350);
+	
 		
 		getActListTask = new GetActListTask(getActivity(), new GetActListTask.TaskCallBack() {
 			

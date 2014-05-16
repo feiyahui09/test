@@ -36,8 +36,8 @@ public class MainActivity extends BaseSlidingFragmentActivity implements ISimple
 	BroadcastReceiver receiver = new BroadcastReceiver() {
 		@Override
 		public void onReceive(Context context, Intent intent) {
-			
-			Toast.makeText(context, TextUtils.isEmpty(Constant.CUR_CITY) ? "定位失败!  为您显示默认城市信息！" : Constant.CUR_CITY, 2222).show();
+			if (progressDialog != null && progressDialog.getActivity() != null) progressDialog.dismiss();
+			Toast.makeText(context, TextUtils.isEmpty(Constant.CUR_CITY) ? "定位失败!  为您显示默认城市信息！" : Constant.CUR_CITY, 1222).show();
 			handleSeleceted(R.id.btn_activities, true);
 			
 		}
@@ -48,7 +48,10 @@ public class MainActivity extends BaseSlidingFragmentActivity implements ISimple
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		mContext = this;
-		handleIntent();
+		if (!handleIntent()) {
+			progressDialog = ProgressDialogFragment.createBuilder(this, getSupportFragmentManager()).setMessage("正在定位中...")
+					.setRequestCode(REQUEST_PROGRESS).setTitle("提示").setCancelable(true).show();
+		}
 	}
 	
 	private void initLocate() {
@@ -95,6 +98,7 @@ public class MainActivity extends BaseSlidingFragmentActivity implements ISimple
 		if (locationTask != null) locationTask.cancel(true);
 		if (progressDialog != null && progressDialog.getActivity() != null) progressDialog.dismiss();
 		unregisterReceiver(receiver);
+		removeStickyBroadcast(new Intent(Constant.FEEDBACK_SENDED_ACTION));
 	}
 	
 	// public void showLogoutView() {
