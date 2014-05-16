@@ -46,11 +46,9 @@ public class MainActivity extends BaseSlidingFragmentActivity implements ISimple
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		mContext = this;
-		handleSeleceted(R.id.ll_menu_playzmax, true);
-
-//		if (!handleIntent()) {
-//			initLocate();
-//		}
+		if (!handleIntent()) {
+			initLocate();
+		}
 	}
 	
 	private void initLocate() {

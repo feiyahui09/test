@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_marginBottom="@dimen/act_detail_margin_top"
-    android:layout_marginLeft="@dimen/act_detail_margin_left"
-    android:layout_marginRight="@dimen/act_detail_margin_left"
-    android:layout_marginTop="@dimen/act_detail_margin_top" >
+    android:layout_height="match_parent" >
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginBottom="12dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="20dp"
         android:background="@drawable/act_detial_envelope_bg_repeat"
         android:orientation="vertical"
-        android:paddingBottom="@dimen/act_detail_inner_padding_top"
-        android:paddingLeft="@dimen/act_detail_inner_padding_left"
-        android:paddingRight="@dimen/act_detail_inner_padding_left"
-        android:paddingTop="@dimen/act_detail_inner_padding_top"
+      android:paddingBottom="10dp"
+        android:paddingLeft="14dp"
+        android:paddingRight="14dp"
+        android:paddingTop="20dp"
         android:scrollbars="none" >
 
         <LinearLayout

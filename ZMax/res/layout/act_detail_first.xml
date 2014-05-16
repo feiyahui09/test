@@ -6,9 +6,9 @@
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_marginBottom="@dimen/act_detail_margin_top"
-        android:layout_marginLeft="@dimen/act_detail_margin_left"
-        android:layout_marginRight="@dimen/act_detail_margin_left"
+        android:layout_marginLeft="17dp"
+        android:layout_marginRight="17dp"
+        android:layout_marginTop="20dp"
         android:background="@drawable/act_detial_index_bg_repeat" >
 
         <ImageView
