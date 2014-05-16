@@ -46,12 +46,13 @@ public class MainActivity extends BaseSlidingFragmentActivity implements ISimple
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		mContext = this;
-		if (!handleIntent()) {
-			initLocate();
-		}
+		handleSeleceted(R.id.ll_menu_playzmax, true);
+
+//		if (!handleIntent()) {
+//			initLocate();
+//		}
 	}
 	
-	@Deprecated
 	private void initLocate() {
 		progressDialog = ProgressDialogFragment.createBuilder(this, getSupportFragmentManager()).setMessage("正在定位中...")
 				.setRequestCode(REQUEST_PROGRESS).setTitle("提示").setCancelable(true).show();
@@ -211,7 +212,6 @@ public class MainActivity extends BaseSlidingFragmentActivity implements ISimple
 		if (getIntent().getAction() != null && getIntent().getAction().equals(Constant.DialogCode.ACTION_BACK_LOGIN)) {
 			// switchContent(new PlayInZmaxLoginFragment());
 			handleSeleceted(R.id.ll_menu_playzmax, true);
-			
 			shouldDo = true;
 		}
 		return shouldDo;

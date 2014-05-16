@@ -1,31 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content" >
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:paddingBottom="10dp" >
+
+    <include layout="@layout/room_control_behind_indicator" />
 
     <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_marginLeft="3dp"
-        android:layout_marginRight="3dp"
-        android:layout_marginTop="4dp"
-        android:background="@drawable/room_control_tv_control_bg"
-        android:gravity="center_horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/room_control_tv_control_square_bg"
         android:orientation="vertical"
-        android:paddingBottom="10dp"
-        android:paddingTop="10dp" >
-
-        <include layout="@layout/room_control_behind_indicator" />
+        android:paddingLeft="32dp"
+        android:paddingRight="32dp" >
 
         <RelativeLayout
             android:id="@+id/rg_lighting_model"
             android:layout_width="288dp"
             android:layout_height="111dp"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"
             android:background="@drawable/room_control_air_control_display_bg"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp" >
+            android:paddingLeft="14dp"
+            android:paddingRight="14dp" >
 
             <LinearLayout
                 android:layout_width="60dp"
@@ -92,9 +89,7 @@
 
         <RelativeLayout
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp" >
+            android:layout_height="wrap_content" >
 
             <ImageButton
                 android:id="@+id/ib_on"
@@ -112,38 +107,7 @@
                 android:textSize="12sp" />
         </RelativeLayout>
 
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:background="@drawable/room_control_air_control_circle_bg"
-            android:visibility="gone" >
-        </RelativeLayout>
-
-        <!--
-         <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:gravity="center_vertical"
-        android:orientation="horizontal" >
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/room_control_air_control_wind_weak" />
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/room_control_air_control_wind_bg" />
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/room_control_air_control_wind_strong" />
-    </LinearLayout>
-        -->
+  
 
         <RelativeLayout
             android:layout_width="fill_parent"
@@ -222,4 +186,4 @@
         </RelativeLayout>
     </LinearLayout>
 
-</RelativeLayout>
+</LinearLayout>

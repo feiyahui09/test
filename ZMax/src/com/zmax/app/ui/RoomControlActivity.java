@@ -65,6 +65,18 @@ public class RoomControlActivity extends BaseFragmentActivity implements ISimple
 		setContentView(R.layout.room_control);
 		initHeader();
 		init();
+		updateRoomState();
+	}
+	
+	@Override
+	protected void onRestart() {
+		// TODO Auto-generated method stub
+		super.onRestart();
+		updateRoomState();
+	}
+	
+	private void updateRoomState() {
+		
 		progressDialog = ProgressDialogFragment.createBuilder(this, getSupportFragmentManager()).setMessage("正在加载中...").setTitle("提示")
 				.setCancelable(true).show();
 		getRoomStatusTask = new GetRoomStatusTask(this, new GetRoomStatusTask.TaskCallBack() {
@@ -170,8 +182,6 @@ public class RoomControlActivity extends BaseFragmentActivity implements ISimple
 		adapter.addTab(new RoomControlLightingFragment(callback, result.light));
 		adapter.addTab(new RoomControlAirConditionFragment(callback, result.airCondition));
 		adapter.addTab(new RoomControlTVFragment(callback, result.television));
-		// adapter.addTab(new RoomControlCurtainFragment(callback));
-		// adapter.addTab(new RoomControlWakeUpFragment(callback));
 		adapter.notifyDataSetChanged();
 		pager.setCurrentItem(0);
 	}

@@ -20,6 +20,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.sothree.slidinguppanel.SlidingUpPanelLayout;
+import com.sothree.slidinguppanel.SlidingUpPanelLayout.PanelSlideListener;
 import com.zmax.app.R;
 import com.zmax.app.adapter.RoomControlAdapter;
 import com.zmax.app.chat.ChatIndexActivity;
@@ -36,19 +38,14 @@ public class RoomControlAirConditionFragment extends Fragment {
 	
 	protected View view;
 	
-	private VerticalViewPager vpager;
-	
-	private RoomControlAdapter adapter;
-	
 	private VerticalChangedCallback callback;
 	
 	private SetAirConditionTask task;
 	private AirCondition airCondition;
 	private boolean isEnable;
+	private SlidingUpPanelLayout mLayout;
 	
-	public RoomControlAirConditionFragment(VerticalChangedCallback callback) {
-		this.callback = callback;
-		setRetainInstance(true);
+	public RoomControlAirConditionFragment() {
 	}
 	
 	public RoomControlAirConditionFragment(VerticalChangedCallback callback, AirCondition airCondition) {
@@ -59,35 +56,79 @@ public class RoomControlAirConditionFragment extends Fragment {
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		view = inflater.inflate(R.layout.room_control_fragment, null);
-		vpager = (VerticalViewPager) view.findViewById(R.id.vpager);
-		adapter = new RoomControlAdapter(getActivity(), null);
-		vpager.setAdapter(adapter);
-		adapter.addViews(getAirconditionView(getActivity(), inflater));
-		vpager.setOnPageChangeListener(new VerticalViewPager.OnPageChangeListener() {
+		view = inflater.inflate(R.layout.room_control_aircondition, null);
+		// above
+		ImageView big_icon = ((ImageView) view.findViewById(R.id.iv_big_logo));
+		big_icon.setImageResource(R.drawable.room_control_above_aircondition);
+		TextView tv_mode = (TextView) view.findViewById(R.id.tv_mode_tile);
+		tv_mode.setText("空调");
+		TextView tv_mode_detail = ((TextView) view.findViewById(R.id.tv_mode_detail));
+		tv_mode_detail.setVisibility(View.GONE);
+		
+		// behind
+		
+		Typeface fontFace = Typeface.createFromAsset(getActivity().getAssets(), "font.TTF");
+		View ib_on, btn_schema, ib_tmp_up, ib_wind_down, ib_tmp_down, ib_wind_up, tv_temp_add, tv_wind_minus, tv_temp_minus, tv_wind_add;
+		tv_temperature = (TextView) view.findViewById(R.id.tv_temperature);
+		tv_air_blower = (TextView) view.findViewById(R.id.tv_air_blower);
+		tv_schema = (TextView) view.findViewById(R.id.tv_schema);
+		tv_temperature.setTypeface(fontFace);
+		tv_temperature.setText("26");
+		
+		ib_on = view.findViewById(R.id.ib_on);
+		btn_schema = view.findViewById(R.id.btn_schema);
+		ib_tmp_up = view.findViewById(R.id.ib_tmp_up);
+		ib_wind_down = view.findViewById(R.id.ib_wind_down);
+		ib_tmp_down = view.findViewById(R.id.ib_tmp_down);
+		ib_wind_up = view.findViewById(R.id.ib_wind_up);
+		tv_temp_add = view.findViewById(R.id.tv_temp_add);
+		tv_wind_minus = view.findViewById(R.id.tv_wind_minus);
+		tv_temp_minus = view.findViewById(R.id.tv_temp_minus);
+		tv_wind_add = view.findViewById(R.id.tv_wind_add);
+		
+		ib_on.setOnClickListener(onClickListener);
+		btn_schema.setOnClickListener(onClickListener);
+		ib_tmp_up.setOnClickListener(onClickListener);
+		ib_wind_down.setOnClickListener(onClickListener);
+		ib_tmp_down.setOnClickListener(onClickListener);
+		ib_wind_up.setOnClickListener(onClickListener);
+		
+		initData();
+		final TextView tv_hint_above = (TextView) view.findViewById(R.id.tv_hint_above);
+		final ImageView iv_hint_above = (ImageView) view.findViewById(R.id.iv_hint_above);
+		mLayout = (SlidingUpPanelLayout) view.findViewById(R.id.sliding_layout);
+		mLayout.setPanelSlideListener(new PanelSlideListener() {
+			@Override
+			public void onPanelSlide(View panel, float slideOffset) {
+				// Log.i("onPanelSlide, offset " + slideOffset);
+			}
 			
 			@Override
-			public void onPageSelected(int position) {
+			public void onPanelExpanded(View panel) {
+				Log.i("onPanelExpanded");
 				if (callback != null) {
-					
-					callback.onCallBack(position == 0 ? true : false);
+					callback.onCallBack(false);
 				}
-				
+				iv_hint_above.setBackgroundResource(R.drawable.room_control_behind_trigle);
+				tv_hint_above.setText(getActivity().getString(R.string.slide_down_hint));
 			}
 			
 			@Override
-			public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-				// TODO Auto-generated method stub
-				
+			public void onPanelCollapsed(View panel) {
+				Log.i("onPanelCollapsed");
+				if (callback != null) {
+					callback.onCallBack(true);
+				}
+				iv_hint_above.setBackgroundResource(R.drawable.room_control_above_triangle);
+				tv_hint_above.setText(getActivity().getString(R.string.slide_up_hint));
 			}
 			
 			@Override
-			public void onPageScrollStateChanged(int state) {
-				// TODO Auto-generated method stub
+			public void onPanelAnchored(View panel) {
+				Log.i("onPanelAnchored");
 				
 			}
 		});
-		
 		return view;
 	}
 	
@@ -96,21 +137,7 @@ public class RoomControlAirConditionFragment extends Fragment {
 		super.onSaveInstanceState(outState);
 	}
 	
-	@Override
-	public void setUserVisibleHint(boolean isVisibleToUser) {
-		super.setUserVisibleHint(isVisibleToUser);
-		if (isVisibleToUser) {
-			// 相当于Fragment的onResume
-			if (callback != null) {
-				if (adapter != null && adapter.getCount() > 0)
-					callback.onCallBack(vpager.getCurrentItem() == 0 ? true : false);
-				else
-					callback.onCallBack(true);
-				
-			}
-		}
-	}
-	
+	@Deprecated
 	public List<View> getAirconditionView(final FragmentActivity fragmentActivity, LayoutInflater inflater) {
 		
 		List<View> mList = new ArrayList<View>();
@@ -120,6 +147,7 @@ public class RoomControlAirConditionFragment extends Fragment {
 		return mList;
 	}
 	
+	@Deprecated
 	private View getAbove(LayoutInflater inflater) {
 		final View view = inflater.inflate(R.layout.room_control_above, null);
 		ImageView big_icon = ((ImageView) view.findViewById(R.id.iv_big_logo));
@@ -133,6 +161,7 @@ public class RoomControlAirConditionFragment extends Fragment {
 	
 	TextView tv_temperature, tv_air_blower, tv_schema;
 	
+	@Deprecated
 	private View geAirconditionBehind(LayoutInflater inflater, Context context) {
 		
 		Typeface fontFace = Typeface.createFromAsset(context.getAssets(), "font.TTF");

@@ -19,6 +19,8 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.sothree.slidinguppanel.SlidingUpPanelLayout;
+import com.sothree.slidinguppanel.SlidingUpPanelLayout.PanelSlideListener;
 import com.zmax.app.R;
 import com.zmax.app.adapter.RoomControlAdapter;
 import com.zmax.app.model.Television;
@@ -26,27 +28,24 @@ import com.zmax.app.net.NetWorkHelper;
 import com.zmax.app.task.SetTelevisionTask;
 import com.zmax.app.ui.RoomControlActivity.PageChangedCallback;
 import com.zmax.app.ui.RoomControlActivity.VerticalChangedCallback;
+import com.zmax.app.utils.Log;
 import com.zmax.app.utils.Utility;
 import com.zmax.app.widget.VerticalViewPager;
 
 public class RoomControlTVFragment extends Fragment {
 	
 	protected View view;
-	private VerticalViewPager vpager;
-	private RoomControlAdapter adapter;
 	private VerticalChangedCallback callback;
-	private PageChangedCallback pageChangedCallback;
 	private SetTelevisionTask task;
 	
 	private Television television;
 	private boolean isEnable;
+	private SlidingUpPanelLayout mLayout;
 	
 	/**
 	 * behind views
 	 */
-	public RoomControlTVFragment(VerticalChangedCallback callback) {
-		this.callback = callback;
-		setRetainInstance(true);
+	public RoomControlTVFragment() {
 	}
 	
 	public RoomControlTVFragment(VerticalChangedCallback callback, Television television) {
@@ -57,30 +56,112 @@ public class RoomControlTVFragment extends Fragment {
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		view = inflater.inflate(R.layout.room_control_fragment, null);
-		vpager = (VerticalViewPager) view.findViewById(R.id.vpager);
-		adapter = new RoomControlAdapter(getActivity(), null);
-		vpager.setAdapter(adapter);
-		adapter.addViews(getTVView(getActivity(), inflater));
-		vpager.setOnPageChangeListener(new VerticalViewPager.OnPageChangeListener() {
-			
+		view = inflater.inflate(R.layout.room_control_tv, null);
+		// above
+		ImageView big_icon = ((ImageView) view.findViewById(R.id.iv_big_logo));
+		big_icon.setImageResource(R.drawable.room_control_above_tv);
+		TextView tv_mode = (TextView) view.findViewById(R.id.tv_mode_tile);
+		tv_mode.setText("电视");
+		TextView tv_mode_detail = ((TextView) view.findViewById(R.id.tv_mode_detail));
+		tv_mode_detail.setVisibility(View.GONE);
+		
+		// behind
+		final LinearLayout ll_digital, ll_orient;
+		RadioGroup rg_model;
+		RadioButton rb_orient, rb_digital;
+		View ib_on, btn_at, btn_volu, btn_chd, btn_vold, btn_chu, btn_no_0, btn_no_1, btn_no_2, btn_no_3, btn_no_4, btn_no_5, btn_no_6, btn_no_7, btn_no_8, btn_no_9;
+		CheckBox cb_sil;
+		
+		cb_sil = (CheckBox) view.findViewById(R.id.cb_sil);
+		ll_digital = (LinearLayout) view.findViewById(R.id.ll_digital);
+		ll_orient = (LinearLayout) view.findViewById(R.id.ll_orient);
+		rg_model = ((RadioGroup) view.findViewById(R.id.rg_model));
+		rb_orient = ((RadioButton) view.findViewById(R.id.rb_orient));
+		rb_digital = ((RadioButton) view.findViewById(R.id.rb_digital));
+		
+		ib_on = view.findViewById(R.id.ib_on);
+		btn_at = view.findViewById(R.id.btn_at);
+		btn_volu = view.findViewById(R.id.btn_volu);
+		btn_chd = view.findViewById(R.id.btn_chd);
+		btn_vold = view.findViewById(R.id.btn_vold);
+		btn_chu = view.findViewById(R.id.btn_chu);
+		btn_no_0 = view.findViewById(R.id.btn_no_0);
+		btn_no_1 = view.findViewById(R.id.btn_no_1);
+		btn_no_2 = view.findViewById(R.id.btn_no_2);
+		btn_no_3 = view.findViewById(R.id.btn_no_3);
+		btn_no_4 = view.findViewById(R.id.btn_no_4);
+		btn_no_5 = view.findViewById(R.id.btn_no_5);
+		btn_no_6 = view.findViewById(R.id.btn_no_6);
+		btn_no_7 = view.findViewById(R.id.btn_no_7);
+		btn_no_8 = view.findViewById(R.id.btn_no_8);
+		btn_no_9 = view.findViewById(R.id.btn_no_9);
+		
+		ib_on.setOnClickListener(onClickListener);
+		btn_at.setOnClickListener(onClickListener);
+		btn_volu.setOnClickListener(onClickListener);
+		btn_chd.setOnClickListener(onClickListener);
+		btn_vold.setOnClickListener(onClickListener);
+		btn_chu.setOnClickListener(onClickListener);
+		btn_no_0.setOnClickListener(onClickListener);
+		btn_no_1.setOnClickListener(onClickListener);
+		btn_no_2.setOnClickListener(onClickListener);
+		btn_no_3.setOnClickListener(onClickListener);
+		btn_no_4.setOnClickListener(onClickListener);
+		btn_no_5.setOnClickListener(onClickListener);
+		btn_no_6.setOnClickListener(onClickListener);
+		btn_no_7.setOnClickListener(onClickListener);
+		btn_no_8.setOnClickListener(onClickListener);
+		btn_no_9.setOnClickListener(onClickListener);
+		cb_sil.setOnClickListener(onClickListener);
+		
+		rg_model.setOnCheckedChangeListener(new android.widget.RadioGroup.OnCheckedChangeListener() {
 			@Override
-			public void onPageSelected(int position) {
-				if (callback != null) {
-					callback.onCallBack(position == 0 ? true : false);
+			public void onCheckedChanged(RadioGroup group, int checkedId) {
+				if (checkedId == R.id.rb_digital) {
+					ll_digital.setVisibility(View.VISIBLE);
+					ll_orient.setVisibility(View.GONE);
 				}
-				
+				else if (checkedId == R.id.rb_orient) {
+					ll_digital.setVisibility(View.GONE);
+					ll_orient.setVisibility(View.VISIBLE);
+				}
+			}
+		});
+		rb_orient.setChecked(true);
+		initData();
+		
+		mLayout = (SlidingUpPanelLayout) view.findViewById(R.id.sliding_layout);
+		final TextView		tv_hint_above = (TextView) view.findViewById(R.id.tv_hint_above);
+		final 	ImageView 	iv_hint_above = (ImageView) view.findViewById(R.id.iv_hint_above);
+		mLayout.setPanelSlideListener(new PanelSlideListener() {
+			@Override
+			public void onPanelSlide(View panel, float slideOffset) {
+				// Log.i("onPanelSlide, offset " + slideOffset);
 			}
 			
 			@Override
-			public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-				// TODO Auto-generated method stub
-				
+			public void onPanelExpanded(View panel) {
+				Log.i("onPanelExpanded");
+				if (callback != null) {
+					callback.onCallBack(false);
+				}
+				iv_hint_above.setBackgroundResource(R.drawable.room_control_behind_trigle);
+				tv_hint_above.setText(getActivity().getString(R.string.slide_down_hint));
 			}
 			
 			@Override
-			public void onPageScrollStateChanged(int state) {
-				// TODO Auto-generated method stub
+			public void onPanelCollapsed(View panel) {
+				Log.i("onPanelCollapsed");
+				if (callback != null) {
+					callback.onCallBack(true);
+				}
+				iv_hint_above.setBackgroundResource(R.drawable.room_control_above_triangle);
+				tv_hint_above.setText(getActivity().getString(R.string.slide_up_hint));
+			}
+			
+			@Override
+			public void onPanelAnchored(View panel) {
+				Log.i("onPanelAnchored");
 				
 			}
 		});
@@ -98,21 +179,7 @@ public class RoomControlTVFragment extends Fragment {
 		super.onSaveInstanceState(outState);
 	}
 	
-	@Override
-	public void setUserVisibleHint(boolean isVisibleToUser) {
-		super.setUserVisibleHint(isVisibleToUser);
-		if (isVisibleToUser) {
-			// 相当于Fragment的onResume
-			if (callback != null) {
-				if (adapter != null && adapter.getCount() > 0)
-					callback.onCallBack(vpager.getCurrentItem() == 0 ? true : false);
-				else
-					callback.onCallBack(true);
-				
-			}
-		}
-	}
-	
+	@Deprecated
 	public List<View> getTVView(final FragmentActivity fragmentActivity, LayoutInflater inflater) {
 		
 		List<View> mList = new ArrayList<View>();
@@ -122,6 +189,7 @@ public class RoomControlTVFragment extends Fragment {
 		return mList;
 	}
 	
+	@Deprecated
 	private View getAbove(LayoutInflater inflater) {
 		final View view = inflater.inflate(R.layout.room_control_above, null);
 		ImageView big_icon = ((ImageView) view.findViewById(R.id.iv_big_logo));
@@ -134,6 +202,7 @@ public class RoomControlTVFragment extends Fragment {
 		return view;
 	}
 	
+	@Deprecated
 	private View getTVBehind(LayoutInflater inflater) {
 		final LinearLayout ll_digital, ll_orient;
 		RadioGroup rg_model;
