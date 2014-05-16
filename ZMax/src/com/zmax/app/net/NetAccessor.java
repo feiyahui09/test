@@ -245,11 +245,10 @@ public class NetAccessor {
 		return feeBack;
 	}
 	
-	public static Login loginPlayZMAX(Context context, String pms_hotel_id, String room_num, String id_number, String password) {
+	public static Login loginPlayZMAX(Context context , String room_num, String id_number, String password) {
 		Login login = null;
 		try {
-			String jsonString = HttpUtils.postByHttpClient(context, Constant.ZMAX_URL + "users/login", null, new BasicNameValuePair(
-					"pms_hotel_id", pms_hotel_id), new BasicNameValuePair("room_num", room_num), new BasicNameValuePair("id_number",
+			String jsonString = HttpUtils.postByHttpClient(context, Constant.ZMAX_URL + "users/login", null,  new BasicNameValuePair("room_num", room_num), new BasicNameValuePair("id_number",
 					id_number), new BasicNameValuePair("password", password));
 			Log.d("  responeString -->\n" + jsonString);
 			login = JsonMapperUtils.toObject(jsonString, Login.class);

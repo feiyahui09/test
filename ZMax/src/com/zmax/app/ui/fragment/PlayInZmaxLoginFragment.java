@@ -73,7 +73,7 @@ public class PlayInZmaxLoginFragment extends Fragment {
 				else if (et_namecard.getText().toString().trim().length() != 4)
 					Utility.toastResult(getActivity(), "请填入身份证后四位！");
 				else
-					goPlayZmax(selected_pms_hotel_id, et_room_number.getText().toString().trim(), et_namecard.getText().toString().trim(),
+					goPlayZmax( et_room_number.getText().toString().trim(), et_namecard.getText().toString().trim(),
 							et_password.getText().toString().trim());
 			}
 		});
@@ -96,45 +96,43 @@ public class PlayInZmaxLoginFragment extends Fragment {
 		// TODO Auto-generated method stub
 		super.onActivityCreated(savedInstanceState);
 		Log.i("@@");
-		
-		// ((MainActivity) getActivity()).hideLogoutView(true);
-		
-		final List<Hotel> hotels = getHotels();
-		if (hotels != null && !hotels.isEmpty()) {
-			sp_hotels.setEnabled(true);
-			fromHotelsSpinner(hotels);
-		}
-		else {
-			sp_hotels.setEnabled(false);
-			getHotelListTask = new GetHotelListTask(getActivity(), new GetHotelListTask.TaskCallBack() {
-				@Override
-				public void onCallBack(HotelList hotelList, HotelList upcomingHotelList) {
-					if (getActivity() == null) return;
-					if (hotelList != null && hotelList.status == 200) {
-						fromHotelsSpinner(hotelList.hotels);
-						saveHotel(hotelList.hotels, false);
-						if (hotelList.hotels == null || hotelList.hotels.isEmpty()) {
-							Utility.toastResult(getActivity(), "没有已开业酒店可选！");
-							sp_hotels.setEnabled(false);
-						}
-						
-					}
-					else {
-						if (!NetWorkHelper.checkNetState(getActivity())) {
-							Utility.toastNetworkFailed(getActivity());
-						}
-						else if (hotelList != null)
-							Utility.toastResult(getActivity(), hotelList.message);
-						else
-							Utility.toastFailedResult(getActivity());
-					}
-				}
-			});
-			getHotelListTask.execute(Constant.CUR_CITY, "1", "" + Constant.PER_NUM_GET_HOTELLIST);
-		}
+		sp_hotels.setVisibility(View.GONE);
+//		final List<Hotel> hotels = getHotels();
+//		if (hotels != null && !hotels.isEmpty()) {
+//			sp_hotels.setEnabled(true);
+//			fromHotelsSpinner(hotels);
+//		}
+//		else {
+//			sp_hotels.setEnabled(false);
+//			getHotelListTask = new GetHotelListTask(getActivity(), new GetHotelListTask.TaskCallBack() {
+//				@Override
+//				public void onCallBack(HotelList hotelList, HotelList upcomingHotelList) {
+//					if (getActivity() == null) return;
+//					if (hotelList != null && hotelList.status == 200) {
+//						fromHotelsSpinner(hotelList.hotels);
+//						saveHotel(hotelList.hotels, false);
+//						if (hotelList.hotels == null || hotelList.hotels.isEmpty()) {
+//							Utility.toastResult(getActivity(), "没有已开业酒店可选！");
+//							sp_hotels.setEnabled(false);
+//						}
+//						
+//					}
+//					else {
+//						if (!NetWorkHelper.checkNetState(getActivity())) {
+//							Utility.toastNetworkFailed(getActivity());
+//						}
+//						else if (hotelList != null)
+//							Utility.toastResult(getActivity(), hotelList.message);
+//						else
+//							Utility.toastFailedResult(getActivity());
+//					}
+//				}
+//			});
+//			getHotelListTask.execute(Constant.CUR_CITY, "1", "" + Constant.PER_NUM_GET_HOTELLIST);
+//		}
 	}
 	
-	private void goPlayZmax(String pms_hotel_id, String room_num, String id_number, String password) {
+	private void goPlayZmax( String room_num, String id_number, String password) {
 		if (!NetWorkHelper.checkNetState(getActivity())) {
 			Utility.toastNetworkFailed(getActivity());
 			return;
@@ -160,7 +158,7 @@ public class PlayInZmaxLoginFragment extends Fragment {
 				}
 			}
 		});
-		loginPlayZmaxTask.execute(pms_hotel_id, room_num, id_number, password);
+		loginPlayZmaxTask.execute(  room_num, id_number, password);
 		
 	}
 	
