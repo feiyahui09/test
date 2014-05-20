@@ -2,8 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" 
-    android:paddingBottom="68dp">
+    android:orientation="vertical"
+    android:paddingBottom="68dp" >
 
     <ImageView
         android:id="@+id/iv_big_logo"
@@ -28,7 +28,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/iv_shawdow"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="44dp"
+        android:layout_marginTop="@dimen/room_control_above_tv_marginTop"
         android:text="灯光模式"
         android:textColor="#5d5d5d"
         android:textSize="22sp" />
@@ -39,11 +39,9 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/tv_mode_tile"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="@dimen/room_control_above_tv_secondary_marginTop"
         android:text="当前灯光模式：明亮模式"
         android:textColor="#5d5d5d"
         android:textSize="14sp" />
-
- 
 
 </RelativeLayout>

@@ -22,6 +22,7 @@ import com.zmax.app.model.Documents;
 import com.zmax.app.ui.base.BaseActivity;
 import com.zmax.app.utils.Constant;
 import com.zmax.app.utils.Log;
+import com.zmax.app.utils.PhoneUtil;
 import com.zmax.app.utils.Utility;
 import com.zmax.app.widget.HTML5WebView;
 
@@ -51,15 +52,16 @@ public class WebViewActivity extends BaseActivity {
 		wv_content = new HTML5WebView(this);
 		String action = getIntent().getAction();
 		
-		pLayout.addView(getHeader());
+		pLayout.addView(getHeader(),
+				new LayoutParams(LayoutParams.MATCH_PARENT, PhoneUtil.dip2px(context, PhoneUtil.getScreenW(context) > 480 ? 48 : 36)));
 		pLayout.addView(wv_content.getLayout());
 		setContentView(pLayout);
-	 
+		
 		if (action.equals(Constant.WAP.ACTION_HOTEL)) {
-		 	initHotelDetal();
+			initHotelDetal();
 		}
 		else if (action.equals(Constant.WAP.ACTION_MENBER)) {
-		 	initMember();
+			initMember();
 		}
 	}
 	

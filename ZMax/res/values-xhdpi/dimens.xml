@@ -32,6 +32,9 @@
     <dimen name="top_second_heigth">44dp</dimen>
     <!-- index-act -->
     <dimen name="index_act_list_item_size">261dp</dimen>
+        <dimen name="index_act_list_item_tv_name_width">150dp</dimen>
+        <dimen name="index_act_list_item_tv_city_width">60dp</dimen>
+        
     <!-- index-hotel -->
     <dimen name="hotel_book_title_marginTop">40dp</dimen>
     <dimen name="hotel_book_center_logo_marginTop">20dp</dimen>
@@ -46,7 +49,6 @@
     <dimen name="act_detail_inner_padding_top">20dp</dimen>
     <dimen name="act_detail_inner_padding_left">14dp</dimen>
     <dimen name="act_detail_inner_padding_bottom">10dp</dimen>
-    
     <dimen name="act_detail_index_marginTop">90dp</dimen>
     <dimen name="act_detail_index_secondary_marginTop">120dp</dimen>
 
@@ -58,18 +60,35 @@
     <dimen name="act_detail_second_title_margin_bottom">28dp</dimen>
     <dimen name="act_detail_second_item_size">300dp</dimen>
 
-    <!-- room control -->
+    <!-- room control above -->
     <dimen name="room_control_above_indicator_marginTop">233dp</dimen>
     <dimen name="room_control_above_marginTop">107dp</dimen>
-    <!-- room control tv -->
+    <dimen name="room_control_above_indicator_marginLeft">17dp</dimen>
+    <dimen name="room_control_above_panel_height">68dp</dimen>
+    <dimen name="room_control_above_panel_paralaxOffset">100dp</dimen>
+    <dimen name="room_control_above_panel_marginTop">13dp</dimen>
+    <dimen name="room_control_above_panel_secondary_marginTop">8dp</dimen>
+    <dimen name="room_control_above_tv_marginTop">44dp</dimen>
+    <dimen name="room_control_above_tv_secondary_marginTop">20dp</dimen>
+    <dimen name="room_control_indicator_marginLeft">0dp</dimen>
+    
+    <!-- room control  light -->
+    <dimen name="room_control_light_panel_marginTop">60dp</dimen>
+    <dimen name="room_control_light_iv_size">290dp</dimen>
+    <dimen name="room_control_light_paddingBottom">22dp</dimen>
+    <dimen name="room_control_light_marginBottom">10dp</dimen>
 
-    <dimen name="room_control_tv_behind_padding_left">30dp</dimen>
-    <dimen name="room_control_tv_behind_padding_bottom">30dp</dimen>
-    <dimen name="room_control_tv_behind_control_bg_height">210dp</dimen>
-    <dimen name="room_control_tv_behind_control_bg_margin_top">47dp</dimen>
+    <!-- room control tv -->
+    <dimen name="room_control_tv_paddingLeft">32dp</dimen>
+    <dimen name="room_control_tv_paddingBottom">42dp</dimen>
+    <dimen name="room_control_tv_control_bg_height">210dp</dimen>
+    
+    <!-- room control air condition  -->
+    <dimen name="room_control_air_circle_size">210dp</dimen>
+    
+    
     <!-- playzmax -->
     <dimen name="play_login_et_padding_left">25dp</dimen>
-    <!-- <dimen name="play_login_et_height">41dp</dimen> -->
     <dimen name="play_login_et_textSize">14sp</dimen>
     <dimen name="play_login_et_marginTop">8dp</dimen>
     <dimen name="play_login_btn_size">90dp</dimen>

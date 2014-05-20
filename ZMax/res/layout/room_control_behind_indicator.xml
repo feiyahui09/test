@@ -2,7 +2,9 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/room_control_behind_indicator"
     android:layout_width="fill_parent"
-    android:layout_height="68dp"
+    android:layout_height="@dimen/room_control_above_panel_height"
+    android:layout_marginLeft="@dimen/room_control_indicator_marginLeft"
+    android:layout_marginRight="@dimen/room_control_indicator_marginLeft"
     android:background="@drawable/room_control_above_bottom_bg_" >
 
     <ImageView
@@ -10,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="13dp"
+        android:layout_marginTop="@dimen/room_control_above_panel_marginTop"
         android:background="@drawable/room_control_above_triangle"
         android:gravity="center_horizontal" />
 
@@ -19,7 +21,7 @@
         style="@style/room_control_small_textview"
         android:layout_below="@+id/iv_hint_above"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="@dimen/room_control_above_panel_secondary_marginTop"
         android:gravity="center_horizontal"
         android:text="往上滑动显示面板"
         android:textColor="#999999"

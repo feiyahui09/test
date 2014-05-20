@@ -19,7 +19,7 @@
 
         <TextView
             android:id="@+id/tv_name"
-            android:layout_width="150dp"
+            android:layout_width="@dimen/index_act_list_item_tv_name_width"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="41dp"
@@ -31,7 +31,7 @@
 
         <TextView
             android:id="@+id/tv_city"
-            android:layout_width="60dp"
+            android:layout_width="@dimen/index_act_list_item_tv_city_width"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"

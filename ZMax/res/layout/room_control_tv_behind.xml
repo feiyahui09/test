@@ -10,9 +10,9 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/room_control_tv_control_square_bg"
-        android:paddingLeft="32dp"
-        android:paddingBottom="42dp"
-        android:paddingRight="32dp" >
+        android:paddingLeft="@dimen/room_control_tv_paddingLeft"
+        android:paddingBottom="@dimen/room_control_tv_paddingBottom"
+        android:paddingRight="@dimen/room_control_tv_paddingLeft" >
 
         <LinearLayout
             android:id="@+id/ll_orient"
@@ -50,8 +50,8 @@
             </RelativeLayout>
 
             <RelativeLayout
-                android:layout_width="@dimen/room_control_tv_behind_control_bg_height"
-                android:layout_height="@dimen/room_control_tv_behind_control_bg_height"
+                android:layout_width="@dimen/room_control_tv_control_bg_height"
+                android:layout_height="@dimen/room_control_tv_control_bg_height"
                 android:layout_gravity="center"
                 android:layout_marginTop="47dp"
                 android:background="@drawable/room_control_tv_control_digital_bg" >

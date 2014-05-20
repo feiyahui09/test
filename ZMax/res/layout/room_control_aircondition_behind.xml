@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:gravity="center_horizontal"
     android:orientation="vertical"
-    android:paddingBottom="10dp" >
+  >
 
     <include layout="@layout/room_control_behind_indicator" />
 
@@ -13,12 +13,12 @@
         android:layout_height="match_parent"
         android:background="@drawable/room_control_tv_control_square_bg"
         android:orientation="vertical"
-        android:paddingLeft="32dp"
-        android:paddingRight="32dp" >
+        android:paddingLeft="@dimen/room_control_tv_paddingLeft"
+        android:paddingRight="@dimen/room_control_tv_paddingLeft" >
 
         <RelativeLayout
             android:id="@+id/rg_lighting_model"
-            android:layout_width="288dp"
+            android:layout_width="fill_parent"
             android:layout_height="111dp"
             android:background="@drawable/room_control_air_control_display_bg"
             android:paddingLeft="14dp"
@@ -116,8 +116,8 @@
 
             <RelativeLayout
                 android:id="@+id/rl_circle"
-                android:layout_width="210dp"
-                android:layout_height="210dp"
+                android:layout_width="@dimen/room_control_air_circle_size"
+                android:layout_height="@dimen/room_control_air_circle_size"
                 android:layout_centerInParent="true"
                 android:layout_gravity="center"
                 android:background="@drawable/room_control_air_control_circle_bg"

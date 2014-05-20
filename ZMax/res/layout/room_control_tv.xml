@@ -12,8 +12,8 @@
         android:gravity="bottom"
         sothree:dragView="@+id/room_control_behind_indicator"
         sothree:overlay="true"
-        sothree:panelHeight="68dp"
-        sothree:paralaxOffset="100dp"
+        sothree:panelHeight="@dimen/room_control_above_panel_height"
+        sothree:paralaxOffset="@dimen/room_control_above_panel_paralaxOffset"
         sothree:shadowHeight="0dp" >
 
         <include layout="@layout/room_control_above" >
