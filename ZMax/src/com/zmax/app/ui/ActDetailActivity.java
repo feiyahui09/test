@@ -29,6 +29,7 @@ import com.zmax.app.ui.fragment.ActDetailSecondFragment;
 import com.zmax.app.ui.fragment.ActDetailThirdFragment;
 import com.zmax.app.utils.Constant;
 import com.zmax.app.utils.DateTimeUtils;
+import com.zmax.app.utils.Log;
 import com.zmax.app.utils.ShareUtils;
 import com.zmax.app.utils.StackBlurManager;
 import com.zmax.app.utils.Utility;
@@ -84,7 +85,10 @@ public class ActDetailActivity extends BaseFragmentActivity {
 	protected void onSaveInstanceState(Bundle outState) {
 		// TODO Auto-generated method stub
 		super.onSaveInstanceState(outState);
-		if (detailContent != null) outState.putSerializable("detailContent", detailContent);
+		if (detailContent != null) {
+			Log.i("savedInstanceState  begin");
+			outState.putSerializable("detailContent", detailContent);
+		}
 	}
 	
 	private void init(Bundle savedInstanceState) {
@@ -131,9 +135,15 @@ public class ActDetailActivity extends BaseFragmentActivity {
 		int actid = getIntent().getIntExtra(Constant.Acts.ID_KEY, -1);
 		
 		if (savedInstanceState != null && savedInstanceState.containsKey("detailContent")) {
+			Log.i("savedInstanceState used");
 			initData((ActDetailContent) savedInstanceState.getSerializable("detailContent"));
 		}
-		else if (actid > 0) getActDetailTask.execute(String.valueOf(actid));
+		else if (actid > 0) {
+			getActDetailTask.execute(String.valueOf(actid));
+			Log.i("savedInstanceState not used");
+			
+		}
+		
 	}
 	
 	private void initData(ActDetailContent result) {
