@@ -19,13 +19,14 @@ import com.zmax.app.model.Hotel;
 import com.zmax.app.ui.WebViewActivity;
 import com.zmax.app.utils.Constant;
 import com.zmax.app.utils.Log;
+import com.zmax.app.utils.Utility;
 import com.zmax.app.widget.PagerAdapter;
 
 public class HotelBookItemFragment extends Fragment implements PagerAdapter.IPagerDisplay {
 	Hotel hotel;
 	ImageView iv_img;
 	
-	public static   HotelBookItemFragment newInstance(Hotel hotel) {
+	public static HotelBookItemFragment newInstance(Hotel hotel) {
 		
 		HotelBookItemFragment fragment = new HotelBookItemFragment();
 		Bundle bundle = new Bundle();
@@ -56,7 +57,7 @@ public class HotelBookItemFragment extends Fragment implements PagerAdapter.IPag
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-		ImageLoader.getInstance().displayImage(hotel.poster, iv_img);
+		ImageLoader.getInstance().displayImage(Utility.getImgUrlOnDensity(getActivity(),hotel.poster), iv_img);
 		
 	}
 	

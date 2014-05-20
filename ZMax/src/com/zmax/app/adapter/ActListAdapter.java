@@ -9,7 +9,6 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -18,7 +17,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.zmax.app.R;
 import com.zmax.app.model.Act;
 import com.zmax.app.utils.DateTimeUtils;
-import com.zmax.app.utils.PhoneUtil;
+import com.zmax.app.utils.Utility;
 
 public class ActListAdapter extends BaseAdapter {
 	
@@ -111,8 +110,10 @@ public class ActListAdapter extends BaseAdapter {
 		if (convertView == null) {
 			holder = new ViewHolder();
 			convertView = mInflater.inflate(R.layout.act_list_item_even, null);
-//			convertView
-//					.setLayoutParams(new AbsListView.LayoutParams(AbsListView.LayoutParams.FILL_PARENT, PhoneUtil.dip2px(mContext, 261)));
+			// convertView
+			// .setLayoutParams(new
+			// AbsListView.LayoutParams(AbsListView.LayoutParams.FILL_PARENT,
+			// PhoneUtil.dip2px(mContext, 261)));
 			holder.img_thu = (ImageView) convertView.findViewById(R.id.iv_img);
 			holder.tv_date = (TextView) convertView.findViewById(R.id.tv_date);
 			holder.tv_name = (TextView) convertView.findViewById(R.id.tv_name);
@@ -122,7 +123,7 @@ public class ActListAdapter extends BaseAdapter {
 		else {
 			holder = (ViewHolder) convertView.getTag(R.id.item_even);
 		}
-		ImageLoader.getInstance().displayImage(act.poster, holder.img_thu);
+		ImageLoader.getInstance().displayImage(Utility.getImgUrlOnDensity(mContext,act.poster), holder.img_thu);
 		holder.tv_city.setText("" + act.cities);
 		act.duration = fromDateStr(act.start_date, act.end_date);
 		holder.tv_date.setText("" + fromDateStrSimple(act.start_date, act.end_date));
@@ -137,8 +138,10 @@ public class ActListAdapter extends BaseAdapter {
 		if (convertView == null) {
 			holder = new ViewHolder();
 			convertView = mInflater.inflate(R.layout.act_list_item_odd, null);
-//			convertView
-//					.setLayoutParams(new AbsListView.LayoutParams(AbsListView.LayoutParams.FILL_PARENT, PhoneUtil.dip2px(mContext, 261)));
+			// convertView
+			// .setLayoutParams(new
+			// AbsListView.LayoutParams(AbsListView.LayoutParams.FILL_PARENT,
+			// PhoneUtil.dip2px(mContext, 261)));
 			holder.img_thu = (ImageView) convertView.findViewById(R.id.iv_img);
 			holder.tv_date = (TextView) convertView.findViewById(R.id.tv_date);
 			holder.tv_name = (TextView) convertView.findViewById(R.id.tv_name);
@@ -150,7 +153,7 @@ public class ActListAdapter extends BaseAdapter {
 		else {
 			holder = (ViewHolder) convertView.getTag(R.id.item_odd);
 		}
-		ImageLoader.getInstance().displayImage(act.poster, holder.img_thu);
+		ImageLoader.getInstance().displayImage(Utility.getImgUrlOnDensity(mContext,act.poster), holder.img_thu);
 		holder.tv_city.setText("" + act.cities);
 		act.duration = fromDateStr(act.start_date, act.end_date);
 		holder.tv_date.setText("" + fromDateStrSimple(act.start_date, act.end_date));
@@ -179,7 +182,7 @@ public class ActListAdapter extends BaseAdapter {
 		if (TextUtils.equals(end_dateString, start_date))
 			dateStr = start_date;
 		else
-			dateStr = start_date +  " 至  " + end_dateString;
+			dateStr = start_date + " 至  " + end_dateString;
 		return dateStr;
 	}
 	

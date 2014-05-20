@@ -4,11 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.text.SpannableString;
 import android.view.Gravity;
@@ -18,13 +16,10 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.FrameLayout.LayoutParams;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.assist.ImageLoadingListener;
@@ -32,7 +27,7 @@ import com.zmax.app.R;
 import com.zmax.app.utils.Constant;
 import com.zmax.app.utils.EmotionUtils;
 import com.zmax.app.utils.Log;
-import com.zmax.app.utils.PhoneUtil;
+import com.zmax.app.utils.Utility;
 import com.zmax.app.widget.WebImageViewer;
 
 /**
@@ -172,7 +167,8 @@ public class ChatListAdapter extends BaseAdapter {
 			case VALUE_LEFT_IMAGE:
 				holder.tvLeftName.setText(chatMsg.from);
 				holder.ivLeftIcon.setImageResource(chatMsg.gender == 0 ? R.drawable.chat_female_icon : R.drawable.chat_male_icon);
-				ImageLoader.getInstance().displayImage(getShrinkImg(chatMsg.msg.content), holder.ivLeftImage);
+				ImageLoader.getInstance().displayImage(Utility.getImgUrlOnDensity(context,
+						getShrinkImg(chatMsg.msg.content)), holder.ivLeftImage);
 				holder.ivLeftImage.setOnClickListener(new OnClickListener() {
 					@Override
 					public void onClick(View v) {

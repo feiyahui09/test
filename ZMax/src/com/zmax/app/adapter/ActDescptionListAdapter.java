@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.zmax.app.R;
 import com.zmax.app.model.ActDetailDescription;
+import com.zmax.app.utils.Utility;
 
 public class ActDescptionListAdapter extends BaseAdapter {
 	
@@ -74,7 +75,7 @@ public class ActDescptionListAdapter extends BaseAdapter {
 			holder = (ViewHolder) convertView.getTag();
 		}
 		holder.tv_des_content.setText(""+item.content);
-		ImageLoader.getInstance().displayImage(item.image_path, holder.iv_img);
+		ImageLoader.getInstance().displayImage(Utility.getImgUrlOnDensity(mContext,item.image_path), holder.iv_img);
 		return convertView;
 	}
 	

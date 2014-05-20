@@ -138,4 +138,10 @@ public class Utility {
 		Log.i(" ChatThumbImgSize:" + sw);
 		return sw;
 	}
+	
+	public static String getImgUrlOnDensity(Context context,String imgurl) {
+		if (PhoneUtil.isLowDensity(context)) imgurl = imgurl + "_m";
+		Log.i(imgurl);
+		return imgurl;
+	}
 }

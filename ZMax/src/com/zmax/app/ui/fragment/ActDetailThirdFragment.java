@@ -68,10 +68,9 @@ public class ActDetailThirdFragment extends Fragment implements RefreshDataCallB
 		super.onSaveInstanceState(outState);
 	}
 	
-	
 	@Override
 	public void onDataRefresh(ActDetailContent detailContent) {
-		if (detailContent == null ) return;
+		if (detailContent == null) return;
 		tv_begin_time.setText(detailContent.event_begin);
 		// ImageLoader.getInstance().displayImage("http://www.120ask.com/static/upload/clinic/index/big/201212/big_201212241738148789.jpg",
 		// iv_img);
@@ -96,8 +95,8 @@ public class ActDetailThirdFragment extends Fragment implements RefreshDataCallB
 			return;
 		}
 		adapter.clear();
-		int value=PhoneUtil.getScreenW(getActivity())>480?2:1;
-		if (detailHotels.size() >value) {
+		int value = PhoneUtil.isLowDensity(getActivity()) ? 1 : 2;
+		if (detailHotels.size() > value) {
 			btn_more.setVisibility(View.VISIBLE);
 			btn_more.setText(String.format("查看其余%d家分店", detailHotels.size() - value));
 			adapter.appendToList(detailHotels.subList(0, value));

@@ -51,9 +51,8 @@ public class WebViewActivity extends BaseActivity {
 		pLayout.setOrientation(LinearLayout.VERTICAL);
 		wv_content = new HTML5WebView(this);
 		String action = getIntent().getAction();
-		
 		pLayout.addView(getHeader(),
-				new LayoutParams(LayoutParams.MATCH_PARENT, PhoneUtil.dip2px(context, PhoneUtil.getScreenW(context) > 480 ? 48 : 36)));
+				new LayoutParams(LayoutParams.MATCH_PARENT, PhoneUtil.dip2px(context, PhoneUtil.isLowDensity(context) ? 36 : 48)));
 		pLayout.addView(wv_content.getLayout());
 		setContentView(pLayout);
 		

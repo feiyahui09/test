@@ -4,6 +4,7 @@ import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.util.Enumeration;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -13,6 +14,7 @@ import android.net.NetworkInfo;
 import android.os.Build;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
+import android.util.DisplayMetrics;
 import android.view.WindowManager;
 
 public class PhoneUtil {
@@ -255,5 +257,18 @@ public class PhoneUtil {
 		catch (Exception e) {
 		}
 		return null;
+	}
+	
+	public static float getDensity(Activity act) {
+		DisplayMetrics displayMetrics = new DisplayMetrics();
+		act.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+		return displayMetrics.scaledDensity;
+	}
+	
+	public static boolean isLowDensity(Context context) {
+		DisplayMetrics displayMetrics = new DisplayMetrics();
+		((Activity) context).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+		if (displayMetrics.scaledDensity <= 1.5) return true;
+		return false;
 	}
 }
