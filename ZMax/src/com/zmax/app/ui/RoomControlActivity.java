@@ -91,7 +91,7 @@ public class RoomControlActivity extends BaseFragmentActivity implements ISimple
 				}
 				else if (result.status == 401) {
 					
-					Utility.showTokenErrorDialog(RoomControlActivity.this, result.message);
+					Utility.showTokenErrorDialog(RoomControlActivity.this, ""+result.message);
 				}
 				else if (result.status != 200)
 					Toast.makeText(mContext, "" + result.message, 450).show();

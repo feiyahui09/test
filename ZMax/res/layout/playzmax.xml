@@ -122,35 +122,36 @@
 
         <Button
             android:id="@+id/btn_act"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/play_btn_size"
+            android:layout_height="@dimen/play_btn_size"
             android:layout_alignParentRight="true"
-            android:layout_marginTop="49dp"
+            android:layout_marginTop="@dimen/play_btn_small_marginTop"
             android:background="@drawable/playzmax_act_btn_sel" />
 
         <Button
             android:id="@+id/btn_chat"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/play_btn_size"
+            android:layout_height="@dimen/play_btn_size"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="139dp"
+            android:layout_marginTop="@dimen/play_btn_marginTop"
             android:background="@drawable/playzmax_chat_btn_sel" />
 
         <Button
             android:id="@+id/btn_room"
+            android:layout_width="@dimen/play_btn_size"
+            android:layout_height="@dimen/play_btn_size"
+            android:layout_marginTop="@dimen/play_btn_small_marginTop"
+            android:background="@drawable/playzmax_room_btn_sel" />
+
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="49dp"
-            android:background="@drawable/playzmax_room_btn_sel" />
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="5dp"
+            android:text="ZMAX酒店欢迎您的到来，祝您假期愉快！"
+            android:textColor="#666666"
+            android:textSize="14sp" />
     </RelativeLayout>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="50dp"
-        android:text="ZMAX酒店欢迎您的到来，祝您假期愉快！"
-        android:textColor="#666666"
-        android:textSize="14sp" />
 
 </LinearLayout>

@@ -29,19 +29,20 @@
             android:id="@+id/sp_hotels"
             style="@style/playzmax_login_edittext"
             android:background="@drawable/playzmax_login_spinner_bg"
-            android:drawSelectorOnTop="false" />
+            android:drawSelectorOnTop="false"
+            android:visibility="gone" />
 
         <EditText
             android:id="@+id/et_room_number"
             style="@style/playzmax_login_edittext"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="@dimen/play_login_et_marginTop"
             android:hint="房间号"
             android:textCursorDrawable="@null" />
 
         <EditText
             android:id="@+id/et_namecard"
             style="@style/playzmax_login_edittext"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="@dimen/play_login_et_marginTop"
             android:hint="身份证号后四位"
             android:maxLength="4"
             android:textCursorDrawable="@null" />
@@ -49,7 +50,7 @@
         <EditText
             android:id="@+id/et_password"
             style="@style/playzmax_login_edittext"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="@dimen/play_login_et_marginTop"
             android:hint="密码"
             android:password="true"
             android:textCursorDrawable="@null" />
@@ -58,7 +59,7 @@
             android:id="@+id/btn_login"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="25dp"
+            android:layout_marginTop="@dimen/play_login_btn_marginTop"
             android:background="@drawable/playzmax_login_btn_sel"
             android:text="酒店授权"
             android:textColor="#434343"
@@ -69,7 +70,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="33dp"
+        android:layout_marginTop="@dimen/play_login_bottom_logo_marginTop"
         android:background="@drawable/playzmax_login_bottom_logo_bg" />
 
 </LinearLayout>

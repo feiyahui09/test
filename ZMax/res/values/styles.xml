@@ -21,17 +21,17 @@
         <item name="sdlDialogStyle">@style/DialogStyleDark</item>
     </style>
 
-	<style name="DialogStyleDark">
-		<item name="dialogBackground">@drawable/sdl_background_dark</item>
-		<item name="titleTextColor">@color/sdl_title_text_dark</item>
-		<item name="titleSeparatorColor">@color/sdl_title_separator_dark</item>
-		<item name="messageTextColor">@color/sdl_message_text_dark</item>
-		<item name="buttonTextColor">@color/sdl_button_text_dark</item>
-		<item name="buttonSeparatorColor">@color/sdl_button_separator_dark</item>
-		<item name="buttonBackgroundColorNormal">@color/sdl_button_normal_dark</item>
-		<item name="buttonBackgroundColorPressed">@color/sdl_button_pressed_dark</item>
-		<item name="buttonBackgroundColorFocused">@color/sdl_button_focused_dark</item>
-	</style>
+    <style name="DialogStyleDark">
+        <item name="dialogBackground">@drawable/sdl_background_dark</item>
+        <item name="titleTextColor">@color/sdl_title_text_dark</item>
+        <item name="titleSeparatorColor">@color/sdl_title_separator_dark</item>
+        <item name="messageTextColor">@color/sdl_message_text_dark</item>
+        <item name="buttonTextColor">@color/sdl_button_text_dark</item>
+        <item name="buttonSeparatorColor">@color/sdl_button_separator_dark</item>
+        <item name="buttonBackgroundColorNormal">@color/sdl_button_normal_dark</item>
+        <item name="buttonBackgroundColorPressed">@color/sdl_button_pressed_dark</item>
+        <item name="buttonBackgroundColorFocused">@color/sdl_button_focused_dark</item>
+    </style>
 
     <style name="ShareDialog" parent="@android:Theme.Dialog">
         <item name="android:windowFrame">@null</item>
@@ -158,12 +158,15 @@
 
     <style name="playzmax_login_edittext">
         <item name="android:layout_gravity">center_horizontal</item>
-        <item name="android:layout_width">294dp</item>
-        <item name="android:layout_height">40dp</item>
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">#a0a09f</item>
         <item name="android:textColorHint">#a0a09f</item>
         <item name="android:textSize">14sp</item>
         <item name="android:ellipsize">end</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:layout_marginRight">15dp</item>
+        <item name="android:layout_marginLeft">15dp</item>
         <item name="android:singleLine">true</item>
         <item name="android:paddingLeft">25dp</item>
         <item name="android:background">@drawable/playzmax_login_et_bg</item>

@@ -7,7 +7,7 @@
 
     <RelativeLayout
         android:layout_width="fill_parent"
-        android:layout_height="300dp" >
+        android:layout_height="@dimen/act_detail_second_item_size" >
 
         <ImageView
             android:id="@+id/iv_img"

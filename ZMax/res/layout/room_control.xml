@@ -18,7 +18,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_marginRight="17dp"
-        android:layout_marginTop="233dp"
+        android:layout_marginTop="@dimen/room_control_above_indicator_marginTop"
         android:background="@drawable/room_control_indicator_right"
         android:scaleType="center"
         android:visibility="gone" />
@@ -29,7 +29,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_marginLeft="17dp"
-        android:layout_marginTop="233dp"
+        android:layout_marginTop="@dimen/room_control_above_indicator_marginTop"
         android:background="@drawable/room_control_indicator_left"
         android:scaleType="center"
         android:visibility="gone" />

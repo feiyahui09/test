@@ -4,4 +4,4 @@
     style="@style/playzmax_login_edittext"
     android:background="@drawable/playzmax_login_dropdown_spinner_item"
     android:gravity="center_vertical"
-    android:paddingLeft="@dimen/playzmax_login_padding_left" />
+    android:paddingLeft="@dimen/play_login_et_padding_left" />

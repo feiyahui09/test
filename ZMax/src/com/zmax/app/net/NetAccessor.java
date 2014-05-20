@@ -271,7 +271,7 @@ public class NetAccessor {
 	public static Light setLight(Context context, String pattern) {
 		Light light = null;
 		try {
-			String jsonString = HttpUtils.postByHttpClient(context, Constant.ZMAX_URL + "devices/light", Constant.getLogin().auth_token,
+			String jsonString = HttpUtils.postByHttpClient(context, Constant.ZMAX_URL + "devices/scene/regular/switch", Constant.getLogin().auth_token,
 					new BasicNameValuePair("pattern", pattern));
 			Log.d("  responeString -->\n" + jsonString);
 			if (!TextUtils.isEmpty(jsonString)) {
@@ -396,7 +396,7 @@ public class NetAccessor {
 	public static Light getLight(Context context) throws Exception {
 		Light airCondition = null;
 		try {
-			String jsonString = HttpUtils.getByHttpClient(context, Constant.ZMAX_URL + "devices/light", Constant.getLogin().auth_token);
+			String jsonString = HttpUtils.getByHttpClient(context, Constant.ZMAX_URL + "devices/scene", Constant.getLogin().auth_token);
 			Log.d("  responeString -->\n" + jsonString);
 			if (!TextUtils.isEmpty(jsonString)) {
 				airCondition = JsonMapperUtils.toObject(jsonString, Light.class);

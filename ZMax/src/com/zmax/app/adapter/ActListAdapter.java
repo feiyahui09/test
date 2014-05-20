@@ -111,8 +111,8 @@ public class ActListAdapter extends BaseAdapter {
 		if (convertView == null) {
 			holder = new ViewHolder();
 			convertView = mInflater.inflate(R.layout.act_list_item_even, null);
-			convertView
-					.setLayoutParams(new AbsListView.LayoutParams(AbsListView.LayoutParams.FILL_PARENT, PhoneUtil.dip2px(mContext, 261)));
+//			convertView
+//					.setLayoutParams(new AbsListView.LayoutParams(AbsListView.LayoutParams.FILL_PARENT, PhoneUtil.dip2px(mContext, 261)));
 			holder.img_thu = (ImageView) convertView.findViewById(R.id.iv_img);
 			holder.tv_date = (TextView) convertView.findViewById(R.id.tv_date);
 			holder.tv_name = (TextView) convertView.findViewById(R.id.tv_name);
@@ -137,8 +137,8 @@ public class ActListAdapter extends BaseAdapter {
 		if (convertView == null) {
 			holder = new ViewHolder();
 			convertView = mInflater.inflate(R.layout.act_list_item_odd, null);
-			convertView
-					.setLayoutParams(new AbsListView.LayoutParams(AbsListView.LayoutParams.FILL_PARENT, PhoneUtil.dip2px(mContext, 261)));
+//			convertView
+//					.setLayoutParams(new AbsListView.LayoutParams(AbsListView.LayoutParams.FILL_PARENT, PhoneUtil.dip2px(mContext, 261)));
 			holder.img_thu = (ImageView) convertView.findViewById(R.id.iv_img);
 			holder.tv_date = (TextView) convertView.findViewById(R.id.tv_date);
 			holder.tv_name = (TextView) convertView.findViewById(R.id.tv_name);

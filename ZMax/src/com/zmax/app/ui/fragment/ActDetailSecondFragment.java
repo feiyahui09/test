@@ -46,8 +46,7 @@ public class ActDetailSecondFragment extends Fragment implements OnItemClickList
 	
 	@Override
 	public void onDataRefresh(ActDetailContent detailContent) {
-		if (detailContent == null || isInitialized) return;
-		isInitialized = true;
+		if (detailContent == null    ) return;
 		adapter.appendToList(detailContent.description_items);
 		listview.setAdapter(adapter);
 	}

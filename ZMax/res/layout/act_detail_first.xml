@@ -6,9 +6,9 @@
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_marginLeft="17dp"
-        android:layout_marginRight="17dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginLeft="@dimen/act_detail_margin_left"
+        android:layout_marginRight="@dimen/act_detail_margin_left"
+        android:layout_marginTop="@dimen/act_detail_margin_top"
         android:background="@drawable/act_detial_index_bg_repeat" >
 
         <ImageView
@@ -16,7 +16,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="90dp"
+            android:layout_marginTop="@dimen/act_detail_index_marginTop"
             android:background="@drawable/act_detial_index_logo" />
 
         <TextView
@@ -37,8 +37,8 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/act_detail_title"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="@dimen/act_detail_index_envelope_title_city_margin_bottom"
-            android:layout_marginTop="120dp"
+            android:layout_marginBottom="7dp"
+            android:layout_marginTop="@dimen/act_detail_index_secondary_marginTop"
             android:gravity="center"
             android:text="武汉"
             android:textColor="#595959"

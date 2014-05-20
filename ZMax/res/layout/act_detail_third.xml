@@ -6,16 +6,16 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="12dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginTop="20dp"
+       android:paddingBottom="@dimen/act_detail_inner_padding_bottom"
+        android:paddingLeft="@dimen/act_detail_inner_padding_left"
+        android:paddingRight="@dimen/act_detail_inner_padding_left"
+        android:paddingTop="@dimen/act_detail_inner_padding_top"
         android:background="@drawable/act_detial_envelope_bg_repeat"
         android:orientation="vertical"
-      android:paddingBottom="10dp"
-        android:paddingLeft="14dp"
-        android:paddingRight="14dp"
-        android:paddingTop="20dp"
+        android:layout_marginBottom="@dimen/act_detail_margin_bottom"
+        android:layout_marginLeft="@dimen/act_detail_margin_left"
+        android:layout_marginRight="@dimen/act_detail_margin_left"
+        android:layout_marginTop="@dimen/act_detail_margin_top"
         android:scrollbars="none" >
 
         <LinearLayout
@@ -39,8 +39,8 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="@dimen/act_detail_third_time_banner_margin_bottom"
-                android:layout_marginTop="@dimen/act_detail_third_time_banner_margin_top"
+                android:layout_marginBottom="6dp"
+                android:layout_marginTop="10dp"
                 android:background="@drawable/act_detial_time_banner"
                 android:gravity="center_horizontal"
                 android:paddingTop="2dp"
@@ -107,7 +107,7 @@
             <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/act_detail_third_time_minuter_margin_top"
+                android:layout_marginTop="12dp"
                 android:gravity="center"
                 android:orientation="horizontal" >
 
@@ -136,8 +136,8 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="@dimen/act_detail_third_hotel_banner_margin_bottom"
-                android:layout_marginTop="@dimen/act_detail_third_hotel_banner_margin_top"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
                 android:background="@drawable/act_detial_hotel_banner"
                 android:gravity="center_horizontal"
                 android:paddingTop="2dp"

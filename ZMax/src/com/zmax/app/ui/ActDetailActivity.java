@@ -76,11 +76,18 @@ public class ActDetailActivity extends BaseFragmentActivity {
 		// Log.i("after  [freeMemory]:   " + Runtime.getRuntime().freeMemory() /
 		// 1000 + " k");
 		
-		init();
+		init(savedInstanceState);
 		initHeader();
 	}
 	
-	private void init() {
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+		// TODO Auto-generated method stub
+		super.onSaveInstanceState(outState);
+		if (detailContent != null) outState.putSerializable("detailContent", detailContent);
+	}
+	
+	private void init(Bundle savedInstanceState) {
 		city = getIntent().getStringExtra(Constant.Acts.CITY_KEY);
 		date = getIntent().getStringExtra(Constant.Acts.DATE_KEY);
 		
@@ -98,31 +105,7 @@ public class ActDetailActivity extends BaseFragmentActivity {
 		adapter.addTab(new ActDetailSecondFragment());
 		adapter.addTab(new ActDetailThirdFragment());
 		pager.setOffscreenPageLimit(3);
-		pager.setOnPageChangeListener(new OnPageChangeListener() {
-			
-			@Override
-			public void onPageSelected(int position) {
-				curPosition = position;
-				Fragment fragment = adapter.getItem(position);
-				
-				if (fragment instanceof RefreshDataCallBack) {
-					if (detailContent != null) ((RefreshDataCallBack) fragment).onDataRefresh(detailContent);
-					
-				}
-			}
-			
-			@Override
-			public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void onPageScrollStateChanged(int state) {
-				// TODO Auto-generated method stub
-				
-			}
-		});
+		
 		if (!NetWorkHelper.checkNetState(this)) {
 			Utility.toastNetworkFailed(this);
 			return;
@@ -137,58 +120,7 @@ public class ActDetailActivity extends BaseFragmentActivity {
 				
 				if (result != null && result.status == 200 && result.event != null) {
 					detailContent = result.event;
-					Handler handler = new Handler();
-					// 延迟刷新界面，确保fragment刷新在activitycreated后
-					handler.postDelayed(new Runnable() {
-						
-						@Override
-						public void run() {
-							// initData(detailContent);
-						}
-					}, 2000);
-					
-					ImageLoader.getInstance().loadImage(detailContent.poster, new ImageLoadingListener() {
-						
-						@Override
-						public void onLoadingStarted(String imageUri, View view) {
-							// TODO Auto-generated method stub
-							
-						}
-						
-						@Override
-						public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
-							// TODO Auto-generated method stub
-							
-						}
-						
-						@Override
-						public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-							try {
-								
-								if (Build.VERSION.SDK_INT >= 16) {
-									ll_bg.setBackground(new BitmapDrawable(StackBlurManager.fastblur(ActDetailActivity.this, loadedImage,
-											11)));
-								}
-								else {
-									ll_bg.setBackgroundDrawable(new BitmapDrawable(StackBlurManager.fastblur(ActDetailActivity.this,
-											loadedImage, 11)));
-								}
-							}
-							catch (Exception e) {
-								e.printStackTrace();
-							}
-							catch (Error e) {
-								e.printStackTrace();
-							}
-							
-						}
-						
-						@Override
-						public void onLoadingCancelled(String imageUri, View view) {
-							// TODO Auto-generated method stub
-							
-						}
-					});
+					initData(detailContent);
 				}
 				else
 					Utility.toastFailedResult(ActDetailActivity.this);
@@ -197,18 +129,68 @@ public class ActDetailActivity extends BaseFragmentActivity {
 		});
 		
 		int actid = getIntent().getIntExtra(Constant.Acts.ID_KEY, -1);
-		if (actid > 0) getActDetailTask.execute(String.valueOf(actid));
+		
+		if (savedInstanceState != null && savedInstanceState.containsKey("detailContent")) {
+			initData((ActDetailContent) savedInstanceState.getSerializable("detailContent"));
+		}
+		else if (actid > 0) getActDetailTask.execute(String.valueOf(actid));
 	}
 	
 	private void initData(ActDetailContent result) {
-		// pager.setCurrentItem(curPosition);
-		
-		for (int i = 0; i < adapter.getCount(); i++) {
-			Fragment fragment = adapter.getItem(i);
-			if (fragment instanceof RefreshDataCallBack) {
-				((RefreshDataCallBack) fragment).onDataRefresh(detailContent);
+		Handler handler = new Handler();
+		// 延迟刷新界面，确保fragment刷新在activitycreated后
+		handler.postDelayed(new Runnable() {
+			@Override
+			public void run() {
+				for (int i = 0; i < adapter.getCount(); i++) {
+					Fragment fragment = adapter.getItem(i);
+					if (fragment instanceof RefreshDataCallBack) {
+						((RefreshDataCallBack) fragment).onDataRefresh(detailContent);
+					}
+				}
 			}
-		}
+		}, 200);
+		
+		ImageLoader.getInstance().loadImage(detailContent.poster, new ImageLoadingListener() {
+			
+			@Override
+			public void onLoadingStarted(String imageUri, View view) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+				try {
+					
+					if (Build.VERSION.SDK_INT >= 16) {
+						ll_bg.setBackground(new BitmapDrawable(StackBlurManager.fastblur(ActDetailActivity.this, loadedImage, 11)));
+					}
+					else {
+						ll_bg.setBackgroundDrawable(new BitmapDrawable(StackBlurManager.fastblur(ActDetailActivity.this, loadedImage, 11)));
+					}
+				}
+				catch (Exception e) {
+					e.printStackTrace();
+				}
+				catch (Error e) {
+					e.printStackTrace();
+				}
+				
+			}
+			
+			@Override
+			public void onLoadingCancelled(String imageUri, View view) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
 	}
 	
 	private void initHeader() {
@@ -233,10 +215,13 @@ public class ActDetailActivity extends BaseFragmentActivity {
 		});
 		
 	}
-	String pattern="#ZMAX客户端#我在ZMAX发现一个很棒的活动【%s,将于%s在%s举行】，更多好玩的活动尽在ZMAX APP，快来下载吧~%s";
-	private void initShareContent(){
-		Constant.Share.SHARE_CONTENT=String.format(pattern, detailContent.name,DateTimeUtils.friendly_time(detailContent.start_date),city,Constant.Share.SHARE_URL);
-		Constant.Share.SHARE_TITLE="ZMAX活动分享";
+	
+	String pattern = "#ZMAX客户端#我在ZMAX发现一个很棒的活动【%s,将于%s在%s举行】，更多好玩的活动尽在ZMAX APP，快来下载吧~%s";
+	
+	private void initShareContent() {
+		Constant.Share.SHARE_CONTENT = String.format(pattern, detailContent.name, DateTimeUtils.friendly_time(detailContent.start_date),
+				city, Constant.Share.SHARE_URL);
+		Constant.Share.SHARE_TITLE = "ZMAX活动分享";
 	}
 	
 }
