@@ -65,8 +65,7 @@ public class RoomControlActivity extends BaseFragmentActivity implements ISimple
 		setContentView(R.layout.room_control);
 		initHeader();
 		init();
-		initData(new RoomStatus());
-//		updateRoomState();
+		updateRoomState();
 	}
 	
 	@Override
