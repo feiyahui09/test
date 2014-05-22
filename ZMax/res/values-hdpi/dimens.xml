@@ -97,5 +97,8 @@
     <dimen name="play_btn_marginTop">107dp</dimen>
     <dimen name="play_btn_small_marginTop">37dp</dimen>
     <dimen name="play_btn_size">133dp</dimen>
-
+	
+    <!-- feedback -->
+    <dimen name="feedback_contact_height">35dp</dimen>
+    <dimen name="feedback_advise_height">160dp</dimen>
 </resources>

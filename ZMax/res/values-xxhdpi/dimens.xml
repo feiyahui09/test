@@ -32,9 +32,9 @@
     <dimen name="top_second_heigth">44dp</dimen>
     <!-- index-act -->
     <dimen name="index_act_list_item_size">261dp</dimen>
-        <dimen name="index_act_list_item_tv_name_width">150dp</dimen>
-        <dimen name="index_act_list_item_tv_city_width">60dp</dimen>
-        
+    <dimen name="index_act_list_item_tv_name_width">150dp</dimen>
+    <dimen name="index_act_list_item_tv_city_width">60dp</dimen>
+
     <!-- index-hotel -->
     <dimen name="hotel_book_title_marginTop">40dp</dimen>
     <dimen name="hotel_book_center_logo_marginTop">20dp</dimen>
@@ -71,7 +71,7 @@
     <dimen name="room_control_above_tv_marginTop">44dp</dimen>
     <dimen name="room_control_above_tv_secondary_marginTop">20dp</dimen>
     <dimen name="room_control_indicator_marginLeft">0dp</dimen>
-    
+
     <!-- room control  light -->
     <dimen name="room_control_light_panel_marginTop">60dp</dimen>
     <dimen name="room_control_light_iv_size">290dp</dimen>
@@ -82,11 +82,10 @@
     <dimen name="room_control_tv_paddingLeft">32dp</dimen>
     <dimen name="room_control_tv_paddingBottom">42dp</dimen>
     <dimen name="room_control_tv_control_bg_height">210dp</dimen>
-    
-    <!-- room control air condition  -->
+
+    <!-- room control air condition -->
     <dimen name="room_control_air_circle_size">210dp</dimen>
-    
-    
+
     <!-- playzmax -->
     <dimen name="play_login_et_padding_left">25dp</dimen>
     <dimen name="play_login_et_textSize">14sp</dimen>
@@ -102,5 +101,8 @@
     <!-- chat -->
 
     <dimen name="chat_list_profile_size">48dp</dimen>
+    <!-- feedback -->
+    <dimen name="feedback_contact_height">40dp</dimen>
+    <dimen name="feedback_advise_height">230dp</dimen>
 
 </resources>
