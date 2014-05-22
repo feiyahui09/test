@@ -41,11 +41,11 @@ public class ActListFragment extends Fragment implements IXListViewListener, OnI
 	private GetActListTask getActListTask;
 	private int curPage = 1;
 	private DialogFragment progressDialog;
-	public static LOAD_STATE state = LOAD_STATE.FAILED;
+	public static LOAD_STATE state = LOAD_STATE.INITIAL;
 	private Handler handler = new Handler();
 	
 	public ActListFragment() {
-		state = LOAD_STATE.FAILED;
+		state = LOAD_STATE.INITIAL;
 		Log.i("@@");
 	}
 	
@@ -87,7 +87,7 @@ public class ActListFragment extends Fragment implements IXListViewListener, OnI
 		handler.postDelayed(new Runnable() {
 			@Override
 			public void run() {
-				if (state == LOAD_STATE.LOADING&&getActivity()!=null)
+				if (state == LOAD_STATE.LOADING && getActivity() != null)
 					progressDialog = ProgressDialogFragment.createBuilder(getActivity(), getFragmentManager()).setMessage("正在加载中...")
 							.setTitle("提示").setCancelable(true).show();
 			}
@@ -136,7 +136,6 @@ public class ActListFragment extends Fragment implements IXListViewListener, OnI
 	
 	private void getActList(int page) {
 		state = LOAD_STATE.LOADING;
-	
 		
 		getActListTask = new GetActListTask(getActivity(), new GetActListTask.TaskCallBack() {
 			
@@ -146,8 +145,8 @@ public class ActListFragment extends Fragment implements IXListViewListener, OnI
 					return;
 				}
 				if (progressDialog != null && progressDialog.getActivity() != null) progressDialog.dismiss();
+				state = LOAD_STATE.SUCCESS;
 				if (result != null && result.status == 200) {
-					state = LOAD_STATE.SUCCESS;
 					final List<Act> actList = result.events;
 					if (curPage == 1) {
 						adapter.Clear();
@@ -169,8 +168,13 @@ public class ActListFragment extends Fragment implements IXListViewListener, OnI
 					}
 				}
 				else {
-					state = LOAD_STATE.FAILED;
-					if (curPage == 1) adapter.appendToList(DataManage.getIndexActlist4DB());
+					if (curPage == 1) {
+						List<Act> old = DataManage.getIndexActlist4DB();
+						if (old == null || old.size() == 0)
+							state = LOAD_STATE.INITIAL;
+						else
+							adapter.appendToList(old);
+					}
 					if (!NetWorkHelper.checkNetState(getActivity())) {
 						Utility.toastNetworkFailed(getActivity());
 					}

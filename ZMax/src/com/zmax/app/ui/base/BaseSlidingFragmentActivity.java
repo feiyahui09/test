@@ -224,10 +224,10 @@ public class BaseSlidingFragmentActivity extends SlidingFragmentActivity impleme
 				// else if (checkedId == R.id.btn_activities) switchContent(new
 				// ActListFragment());
 				if (checkedId == R.id.btn_hotel_book) {
-					handleSeleceted(checkedId, HotelBookFragment.state==LOAD_STATE.FAILED);
+					handleSeleceted(checkedId, HotelBookFragment.state==LOAD_STATE.INITIAL);
 				}
 				else if (checkedId == R.id.btn_activities) {
-					handleSeleceted(checkedId, ActListFragment.state==LOAD_STATE.FAILED);
+					handleSeleceted(checkedId, ActListFragment.state==LOAD_STATE.INITIAL);
 				}
 			}
 		});

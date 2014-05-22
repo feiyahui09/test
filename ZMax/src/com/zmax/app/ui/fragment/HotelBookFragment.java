@@ -53,10 +53,10 @@ public class HotelBookFragment extends Fragment implements OnPageChangeListener,
 	
 	private DialogFragment progressDialog;
 	
-	public static LOAD_STATE state = LOAD_STATE.FAILED;;
+	public static LOAD_STATE state = LOAD_STATE.INITIAL;;
 	
 	public HotelBookFragment() {
-		state = LOAD_STATE.FAILED;
+		state = LOAD_STATE.INITIAL;
 		Log.i("@@");
 	}
 	
@@ -91,9 +91,8 @@ public class HotelBookFragment extends Fragment implements OnPageChangeListener,
 			public void onCallBack(HotelList hotelList, HotelList upcomingHotelList) {
 				if (getActivity() == null) return;
 				if (progressDialog != null && progressDialog.getActivity() != null) progressDialog.dismiss();
-				
+				state = LOAD_STATE.SUCCESS;
 				if (hotelList != null && hotelList.status == 200) {
-					state = LOAD_STATE.SUCCESS;
 					List<Hotel> _hotelList = hotelList.hotels;
 					List<Hotel> _upcomingHotelList = upcomingHotelList == null ? null : upcomingHotelList.hotels;
 					initData(_hotelList, _upcomingHotelList);
@@ -102,7 +101,6 @@ public class HotelBookFragment extends Fragment implements OnPageChangeListener,
 					if (_hotelList == null || _hotelList.isEmpty()) Utility.toastNoMoreResult(getActivity());
 				}
 				else {
-					state = LOAD_STATE.FAILED;
 					if (!NetWorkHelper.checkNetState(getActivity())) {
 						Utility.toastNetworkFailed(getActivity());
 					}
@@ -110,7 +108,10 @@ public class HotelBookFragment extends Fragment implements OnPageChangeListener,
 						Utility.toastResult(getActivity(), hotelList.message);
 					else
 						Utility.toastFailedResult(getActivity());
-					initData(DataManage.getIndexHotellist4DB(false), DataManage.getIndexHotellist4DB(true));
+					
+					List<Hotel> old = DataManage.getIndexHotellist4DB(false);
+					if (old == null || old.size() == 0) state = LOAD_STATE.INITIAL;
+					initData(old, DataManage.getIndexHotellist4DB(true));
 				}
 			}
 		});
@@ -209,7 +210,7 @@ public class HotelBookFragment extends Fragment implements OnPageChangeListener,
 		}
 		else {
 			Hotel falseHotel = new Hotel();
-			adapter.addItem(falseHotel,upcomingHotelList);
+			adapter.addItem(falseHotel, upcomingHotelList);
 			initPagerIndicator(hotelList.size() + 1, indicator);
 		}
 		pager.setCurrentItem(0);

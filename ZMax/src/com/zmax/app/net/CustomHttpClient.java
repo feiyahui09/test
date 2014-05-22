@@ -199,15 +199,15 @@ public class CustomHttpClient {
 					+ "AppleWebKit/553.1(KHTML,like Gecko) Version/4.0 Mobile Safari/533.1");
 			// 超时设置
 			/* 从连接池中取连接的超时时间 */
-			ConnManagerParams.setTimeout(params, 1000);
+			ConnManagerParams.setTimeout(params, 7000);
 			/* 连接超时 */
-			int ConnectionTimeOut = 3000;
+			int ConnectionTimeOut = 7000;
 			if (!HttpUtils.isWifiDataEnable(context)) {
-				ConnectionTimeOut = 8000;
+				ConnectionTimeOut = 10000;
 			}
 			HttpConnectionParams.setConnectionTimeout(params, ConnectionTimeOut);
 			/* 请求超时 */
-			HttpConnectionParams.setSoTimeout(params, 4000);
+			HttpConnectionParams.setSoTimeout(params, 7000);
 			// 设置我们的HttpClient支持HTTP和HTTPS两种模式
 			SchemeRegistry schReg = new SchemeRegistry();
 			schReg.register(new Scheme("http", PlainSocketFactory.getSocketFactory(), 80));
