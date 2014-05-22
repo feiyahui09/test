@@ -428,7 +428,6 @@ public class ChatRoomActivity extends BaseFragmentActivity implements OnClickLis
 						theOrgin = thePath;
 					}
 					
-					
 					final boolean isKitKat = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
 					
 					// DocumentProvider
@@ -440,7 +439,7 @@ public class ChatRoomActivity extends BaseFragmentActivity implements OnClickLis
 							final String type = split[0];
 							
 							if ("primary".equalsIgnoreCase(type)) {
-								theOrgin= Environment.getExternalStorageDirectory() + "/" + split[1];
+								theOrgin = Environment.getExternalStorageDirectory() + "/" + split[1];
 							}
 							
 							// TODO handle non-primary volumes
@@ -452,7 +451,7 @@ public class ChatRoomActivity extends BaseFragmentActivity implements OnClickLis
 							final Uri contentUri = ContentUris.withAppendedId(Uri.parse("content://downloads/public_downloads"),
 									Long.valueOf(id));
 							
-							theOrgin= getDataColumn(mContext, contentUri, null, null);
+							theOrgin = getDataColumn(mContext, contentUri, null, null);
 						}
 						// MediaProvider
 						else if (ImageUtils.isMediaDocument(thisUri)) {
@@ -474,7 +473,7 @@ public class ChatRoomActivity extends BaseFragmentActivity implements OnClickLis
 							final String selection = "_id=?";
 							final String[] selectionArgs = new String[] { split[1] };
 							
-							theOrgin= getDataColumn(mContext, contentUri, selection, selectionArgs);
+							theOrgin = getDataColumn(mContext, contentUri, selection, selectionArgs);
 						}
 						
 					}
@@ -561,38 +560,40 @@ public class ChatRoomActivity extends BaseFragmentActivity implements OnClickLis
 			};
 		}.start();
 	}
-	/** 
-	 * Get the value of the data column for this Uri. This is useful for 
-	 * MediaStore Uris, and other file-based ContentProviders. 
+	
+	/**
+	 * Get the value of the data column for this Uri. This is useful for
+	 * MediaStore Uris, and other file-based ContentProviders.
 	 * 
-	 * @param context The context. 
-	 * @param uri The Uri to query. 
-	 * @param selection (Optional) Filter used in the query. 
-	 * @param selectionArgs (Optional) Selection arguments used in the query. 
-	 * @return The value of the _data column, which is typically a file path. 
-	 */  
-	public static String getDataColumn(Context context, Uri uri, String selection,  
-	        String[] selectionArgs) {  
-	  
-	    Cursor cursor = null;  
-	    final String column = "_data";  
-	    final String[] projection = {  
-	            column  
-	    };  
-	  
-	    try {  
-	        cursor = context.getContentResolver().query(uri, projection, selection, selectionArgs,  
-	                null);  
-	        if (cursor != null && cursor.moveToFirst()) {  
-	            final int index = cursor.getColumnIndexOrThrow(column);  
-	            return cursor.getString(index);  
-	        }  
-	    } finally {  
-	        if (cursor != null)  
-	            cursor.close();  
-	    }  
-	    return null;  
-	}  
+	 * @param context
+	 *            The context.
+	 * @param uri
+	 *            The Uri to query.
+	 * @param selection
+	 *            (Optional) Filter used in the query.
+	 * @param selectionArgs
+	 *            (Optional) Selection arguments used in the query.
+	 * @return The value of the _data column, which is typically a file path.
+	 */
+	public static String getDataColumn(Context context, Uri uri, String selection, String[] selectionArgs) {
+		
+		Cursor cursor = null;
+		final String column = "_data";
+		final String[] projection = { column };
+		
+		try {
+			cursor = context.getContentResolver().query(uri, projection, selection, selectionArgs, null);
+			if (cursor != null && cursor.moveToFirst()) {
+				final int index = cursor.getColumnIndexOrThrow(column);
+				return cursor.getString(index);
+			}
+		}
+		finally {
+			if (cursor != null) cursor.close();
+		}
+		return null;
+	}
+	
 	private void show(ChatMsg chatMsg) {
 		adapter.addItem(chatMsg);
 		/**
@@ -801,6 +802,23 @@ public class ChatRoomActivity extends BaseFragmentActivity implements OnClickLis
 							.setTitle("提示").setMessage(_msg).setRequestCode(Constant.DialogCode.TYPE_FORBIDDEN).show();
 				}
 			});
+		}
+		
+		@Override
+		public void onKick(JSONObject body) {
+			int code = body.optInt("code");
+			
+			if (code != 503) return;
+			final String msg = body.optString("message");
+			handler.post(new Runnable() {
+				@Override
+				public void run() {
+					String _msg = TextUtils.isEmpty(msg) ? "聊天室正在维护中,请稍后再试！" : msg;
+					dialog = SimpleDialogFragment.createBuilder(mContext, getSupportFragmentManager()).setPositiveButtonText("确定")
+							.setTitle("提示").setMessage(_msg).setRequestCode(Constant.DialogCode.TYPE_FORBIDDEN).show();
+				}
+			});
+			
 		}
 	};
 	

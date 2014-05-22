@@ -249,7 +249,7 @@ public class NetAccessor {
 		Login login = null;
 		try {
 			String jsonString = HttpUtils.postByHttpClient(context, Constant.ZMAX_URL + "users/login", null,  new BasicNameValuePair("room_num", room_num), new BasicNameValuePair("id_number",
-					id_number), new BasicNameValuePair("password", password));
+					id_number), new BasicNameValuePair("auth_code", password));
 			Log.d("  responeString -->\n" + jsonString);
 			login = JsonMapperUtils.toObject(jsonString, Login.class);
 		}

@@ -79,6 +79,15 @@ public class ChatHelper {
 							}
 						}
 					});
+					client.on("onKick", new DataListener() {
+						public void receiveData(DataEvent event) {
+							JSONObject msg = event.getMessage();
+							Log.i("onKick: " + msg.toString());
+							if (clientCallback != null) {
+								clientCallback.onKick(msg.optJSONObject ("body"));
+							}
+						}
+					});
 				}
 				catch (Exception e) {
 					if (clientCallback != null) clientCallback.onEnterFailed(e);

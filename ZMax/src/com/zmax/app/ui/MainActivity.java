@@ -218,10 +218,15 @@ public class MainActivity extends BaseSlidingFragmentActivity implements ISimple
 	
 	private boolean handleIntent() {
 		boolean shouldDo = false;
-		if (getIntent().getAction() != null && getIntent().getAction().equals(Constant.DialogCode.ACTION_BACK_LOGIN)) {
+		if (getIntent().getAction() != null )
+			if( getIntent().getAction().equals(Constant.DialogCode.ACTION_BACK_LOGIN)) {
 			// switchContent(new PlayInZmaxLoginFragment());
+			handleSeleceted(R.id.ll_menu_playzmax, true);
+			shouldDo = true;
+		}else if(getIntent().getAction().equals(Constant.DialogCode.ACTION_BACK_INDEX)){
 			handleSeleceted(R.id.btn_activities, true);
 			shouldDo = true;
+			
 		}
 		return shouldDo;
 	}

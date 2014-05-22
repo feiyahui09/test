@@ -61,6 +61,7 @@ public class ChatMoreActivity extends BaseActivity {
 			public void onClick(View v) {
 				Intent intent=new Intent(mContext, MainActivity.class);
 				intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+				intent.setAction(Constant.DialogCode.ACTION_BACK_INDEX);
 				startActivity(intent);
 				finish();
 			}

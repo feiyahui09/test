@@ -12,6 +12,9 @@ public interface ClientCallback {
 	
 	public void onChat(String bodyMsg);
 	
+	public void onKick(JSONObject 	bodyMsg);
+
+	
 	public void onSendFailed(Exception e);
 	
 	public void onForbidden(String  errorMessage);

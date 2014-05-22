@@ -64,7 +64,8 @@ public class Constant {
 		
 		public static final int TYPE_TOKEN_ERROR = 404;
 		public static final String ACTION_BACK_LOGIN = "action_back_login";
-		
+		public static final String ACTION_BACK_INDEX = "action_back_index";
+
 	}
 	
 	public static class Documents {
