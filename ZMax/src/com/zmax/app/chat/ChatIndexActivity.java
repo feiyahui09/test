@@ -183,6 +183,7 @@ public class ChatIndexActivity extends BaseFragmentActivity implements ISimpleDi
 				Constant.saveLogin(null);
 				Intent intent = new Intent(mContext, MainActivity.class);
 				intent.setAction(Constant.DialogCode.ACTION_BACK_LOGIN);
+				intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 				startActivity(intent);
 				finish();
 				break;

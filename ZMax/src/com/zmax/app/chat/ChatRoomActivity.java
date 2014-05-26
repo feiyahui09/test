@@ -893,6 +893,7 @@ public class ChatRoomActivity extends BaseFragmentActivity implements OnClickLis
 			case Constant.DialogCode.TYPE_TOKEN_ERROR:
 				Constant.saveLogin(null);
 				Intent intent = new Intent(mContext, MainActivity.class);
+				intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 				intent.setAction(Constant.DialogCode.ACTION_BACK_LOGIN);
 				startActivity(intent);
 				finish();

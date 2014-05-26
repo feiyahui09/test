@@ -47,12 +47,14 @@ public class FlashActivity extends BaseFragmentActivity {
 	
 	private void goNext() {
 		if (DefaultShared.getBoolean("IS_FIRST_INSTALLED", true)) {
-			Intent  intent=new Intent(this, WelcomeActivity.class);
+			Intent intent = new Intent(this, WelcomeActivity.class);
 			intent.setAction(Constant.ACTION_WELCOME_FROM_INDEX);
 			startActivity(intent);
 		}
 		else {
-			startActivity(new Intent(this, MainActivity.class));
+			Intent intent = new Intent(this, MainActivity.class);
+			intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			startActivity(intent);
 		}
 		DefaultShared.putBoolean("IS_FIRST_INSTALLED", false);
 		finish();

@@ -52,12 +52,12 @@ public class CustomHttpClient {
 	
 	/**
 	 * HttpClient post方法
-	 * 
 	 * @param url
 	 * @param nameValuePairs
+	 * 
 	 * @return
 	 */
-	public static String PostFromWebByHttpClient(Context context, String url, String header, NameValuePair... nameValuePairs) {
+	public static String PostFromWebByHttpClient(Context context, String url, NameValuePair... nameValuePairs) {
 		try {
 			List<NameValuePair> params = new ArrayList<NameValuePair>();
 			if (nameValuePairs != null) {
@@ -69,8 +69,6 @@ public class CustomHttpClient {
 			HttpPost httpPost = new HttpPost(url);
 			Log.d(url.toString());
 			Log.d(params.toString());
-			if (!TextUtils.isEmpty(header)) httpPost.setHeader(ZMAX_AUTH_TOKEN_KEY, header);
-			Log.d("ZMAX_AUTH_TOKEN_KEY:"+header);
 			httpPost.setEntity(urlEncoded);
 			HttpClient client = getHttpClient(context);
 			HttpResponse response = client.execute(httpPost);
@@ -131,7 +129,7 @@ public class CustomHttpClient {
 		}
 	}
 	
-	public static String getFromWebByHttpClient(Context context, String url, String header, NameValuePair... nameValuePairs)
+	public static String getFromWebByHttpClient(Context context, String url, NameValuePair... nameValuePairs)
 			throws Exception {
 		try {
 			// http地址
@@ -152,7 +150,6 @@ public class CustomHttpClient {
 			
 			// HttpGet连接对象
 			HttpGet httpRequest = new HttpGet(sb.toString());
-			if (!TextUtils.isEmpty(header)) httpRequest.setHeader(ZMAX_AUTH_TOKEN_KEY, header);
 			// 取得HttpClient对象
 			HttpClient httpclient = getHttpClient(context);
 			// 请求HttpClient，取得HttpResponse
@@ -199,9 +196,9 @@ public class CustomHttpClient {
 					+ "AppleWebKit/553.1(KHTML,like Gecko) Version/4.0 Mobile Safari/533.1");
 			// 超时设置
 			/* 从连接池中取连接的超时时间 */
-			ConnManagerParams.setTimeout(params, 7000);
+			ConnManagerParams.setTimeout(params, 10000);
 			/* 连接超时 */
-			int ConnectionTimeOut = 7000;
+			int ConnectionTimeOut = 8000;
 			if (!HttpUtils.isWifiDataEnable(context)) {
 				ConnectionTimeOut = 10000;
 			}

@@ -50,7 +50,9 @@ public class WelcomeActivity extends BaseFragmentActivity {
 			@Override
 			public void onStartAPP() {
 				if (getIntent().getAction() != null && getIntent().getAction().equals(Constant.ACTION_WELCOME_FROM_INDEX)) {
-					startActivity(new Intent(WelcomeActivity.this, MainActivity.class));
+					Intent intent = new Intent(WelcomeActivity.this, MainActivity.class);
+					intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+					startActivity(intent);
 					finish();
 				}
 				else {
