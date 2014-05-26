@@ -2,6 +2,7 @@ package com.zmax.app.net;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
@@ -126,7 +127,7 @@ public class NetAccessor {
 	public static BaseModel vetfityNameDup(Context context, String user_id, String gender, String nick_name) {
 		BaseModel result = null;
 		try {
-			String req_time = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+			String req_time = new SimpleDateFormat("yyyyMMddHHmmss", Locale.CHINA).format(new Date());
 			
 			String jsonString = HttpUtils.postByHttpClient(context, Constant.ZMAX_URL + "chat/user_info", new BasicNameValuePair("user_id",
 					user_id + ""), new BasicNameValuePair("gender", gender + ""), new BasicNameValuePair("nick_name", nick_name),
@@ -281,7 +282,7 @@ public class NetAccessor {
 	public static Light setLight(Context context, String pattern) {
 		Light light = null;
 		try {
-			String req_time = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+			String req_time = new SimpleDateFormat("yyyyMMddHHmmss", Locale.CHINA).format(new Date());
 			
 			String jsonString = HttpUtils.postByHttpClient(context, Constant.ZMAX_URL + "devices/scene/regular/switch",
 					new BasicNameValuePair("pattern", pattern), new BasicNameValuePair("Zmax-Auth-Token", Constant.getLogin().auth_token),
@@ -312,7 +313,7 @@ public class NetAccessor {
 	public static Television setTelevision(Context context, String push_button) {
 		Television television = null;
 		try {
-			String req_time = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+			String req_time = new SimpleDateFormat("yyyyMMddHHmmss", Locale.CHINA).format(new Date());
 			
 			String jsonString = HttpUtils.postByHttpClient(context, Constant.ZMAX_URL + "devices/television", new BasicNameValuePair(
 					"push_button", push_button), new BasicNameValuePair("Zmax-Auth-Token", Constant.getLogin().auth_token),
@@ -349,7 +350,7 @@ public class NetAccessor {
 	public static AirCondition setAirCondition(Context context, String opera_type, String opera_data) {
 		AirCondition airCondition = null;
 		try {
-			String req_time = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+			String req_time = new SimpleDateFormat("yyyyMMddHHmmss", Locale.CHINA).format(new Date());
 			
 			String jsonString = HttpUtils.postByHttpClient(context, Constant.ZMAX_URL + "devices/air_condiction", new BasicNameValuePair(
 					"opera_type", opera_type), new BasicNameValuePair("opera_data", opera_data), new BasicNameValuePair("Zmax-Auth-Token",
@@ -373,7 +374,7 @@ public class NetAccessor {
 		AirCondition airCondition = null;
 		try {
 			airCondition = new AirCondition();
-			String req_time = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+			String req_time = new SimpleDateFormat("yyyyMMddHHmmss", Locale.CHINA).format(new Date());
 			
 			String jsonString = HttpUtils.getByHttpClient(context, Constant.ZMAX_URL + "devices/air_condiction", new BasicNameValuePair(
 					"Zmax-Auth-Token", Constant.getLogin().auth_token), new BasicNameValuePair("pms_hotel_id",
@@ -401,7 +402,7 @@ public class NetAccessor {
 		Television television = null;
 		try {
 			television = new Television();
-			String req_time = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+			String req_time = new SimpleDateFormat("yyyyMMddHHmmss", Locale.CHINA).format(System.currentTimeMillis());
 			String jsonString = HttpUtils.getByHttpClient(context, Constant.ZMAX_URL + "devices/television", new BasicNameValuePair(
 					"Zmax-Auth-Token", Constant.getLogin().auth_token), new BasicNameValuePair("pms_hotel_id",
 					Constant.getLogin().pms_hotel_id), new BasicNameValuePair("auth_time", req_time), new BasicNameValuePair("publich_key",
@@ -427,7 +428,7 @@ public class NetAccessor {
 	public static Light getLight(Context context) throws Exception {
 		Light airCondition = null;
 		try {
-			String req_time = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+			String req_time = new SimpleDateFormat("yyyyMMddHHmmss" ).format(new Date());
 			String jsonString = HttpUtils.getByHttpClient(context, Constant.ZMAX_URL + "devices/scene", new BasicNameValuePair(
 					"Zmax-Auth-Token", Constant.getLogin().auth_token), new BasicNameValuePair("pms_hotel_id",
 					Constant.getLogin().pms_hotel_id), new BasicNameValuePair("auth_time", req_time), new BasicNameValuePair("publich_key",

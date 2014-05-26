@@ -7,6 +7,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.http.HttpEntity;
@@ -131,7 +132,7 @@ public class Uploader {
 		File file = new File(fileName);
 		build.addPart("pic", new FileBody(file));
 		build.addTextBody("pms_hotel_id", Constant.getLogin().pms_hotel_id);
-		String req_time = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+		String req_time = new SimpleDateFormat("yyyyMMddHHmmss", Locale.CHINA).format(new Date());
 		build.addTextBody("auth_time", req_time);
 		build.addTextBody("Zmax-Auth-Token", Constant.getLogin().auth_token);
 		build.addTextBody("publich_key", EncoderHandler.getPublicKey(Constant.getLogin().pms_hotel_id, req_time));
