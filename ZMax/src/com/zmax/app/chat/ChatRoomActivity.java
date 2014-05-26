@@ -384,7 +384,7 @@ public class ChatRoomActivity extends BaseFragmentActivity implements OnClickLis
 									Utility.toastResult(mContext, "上传失败，请稍后再试！");
 							}
 							else if (result.status != 200) {
-								Utility.toastResult(mContext, result.message);
+								Utility.toastResult(mContext, result.error);
 							}
 							else {
 								Utility.toastResult(mContext, "图片上传成功！");

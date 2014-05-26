@@ -13,6 +13,9 @@
 	<classpathentry exported="true" kind="lib" path="libs/socketio.jar"/>
 	<classpathentry exported="true" kind="lib" path="libs/httpmime-4.3.3.jar"/>
 	<classpathentry exported="true" kind="lib" path="libs/commons-io-2.4.jar"/>
+	<classpathentry exported="true" kind="lib" path="libs/httpclient-4.3.3.jar"/>
+	<classpathentry exported="true" kind="lib" path="libs/httpclient-cache-4.3.3.jar"/>
+	<classpathentry exported="true" kind="lib" path="libs/httpcore-4.3.2.jar"/>
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.DEPENDENCIES"/>
 	<classpathentry kind="src" path="gen"/>
 	<classpathentry exported="true" kind="lib" path="/Users/fyf/git/zmax/OneKeyShare/bin/onekeyshare.jar" sourcepath="/OneKeyShare/src"/>
