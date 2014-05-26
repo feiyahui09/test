@@ -119,7 +119,7 @@ public class Constant {
     }
 
     public static final int PER_NUM_GET_ACTLIST = 5;
-    public static final int PER_NUM_GET_HOTELLIST = 40;
+    public static final int PER_NUM_GET_HOTELLIST = 100;
 
     public static class SPFKEY {
         public static final String LOGIN_INFO_KEY = "login_info_key";

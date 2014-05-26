@@ -30,7 +30,8 @@ public class HotelBookLastItemFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View view = getActivity().getLayoutInflater().inflate(R.layout.hotel_book_list_upcoming, null);
-		ListView listView = (ListView) view.findViewById(R.id.list_view);
+
+        ListView listView = (ListView) view.findViewById(R.id.list_view);
 		
 		List<Map<String, String>> lists = new ArrayList<Map<String, String>>();
 		for (int i = 0; i < hotels.size(); i++) {

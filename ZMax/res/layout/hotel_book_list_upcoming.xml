@@ -5,7 +5,7 @@
     android:background="@drawable/hotel_book_upcoming_bg" 
     android:paddingBottom="10dp">
 
-    <ListView
+    <com.zmax.app.widget.SmartListView
         android:id="@+id/list_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
