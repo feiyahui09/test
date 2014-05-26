@@ -7,41 +7,39 @@
 
     <ImageView
         android:id="@+id/iv_big_logo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/room_control_above_marginTop"
-        android:scaleType="center" />
+        android:scaleType="center" android:layout_above="@+id/iv_shawdow"/>
 
     <ImageView
         android:id="@+id/iv_shawdow"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/iv_big_logo"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="32dp"
-        android:background="@drawable/room_control_above_shadow" />
+        android:background="@drawable/room_control_above_shadow" android:layout_above="@+id/tv_mode_tile"/>
 
     <TextView
         android:id="@+id/tv_mode_tile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/iv_shawdow"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/room_control_above_tv_marginTop"
         android:text="灯光模式"
         android:textColor="#5d5d5d"
-        android:textSize="22sp" />
+        android:layout_marginBottom="50dp"
+        android:textSize="22sp" android:layout_alignParentBottom="true"/>
 
     <TextView
         android:id="@+id/tv_mode_detail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_mode_tile"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/room_control_above_tv_secondary_marginTop"
         android:text="当前灯光模式：明亮模式"
-        android:textColor="#5d5d5d"
-        android:textSize="14sp" />
+        android:textColor="#5d5d5d" android:layout_marginBottom="8dp"
+        android:textSize="14sp" android:layout_alignParentBottom="true"/>
 
 </RelativeLayout>

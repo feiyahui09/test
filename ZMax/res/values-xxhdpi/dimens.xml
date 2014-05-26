@@ -73,7 +73,7 @@
     <dimen name="room_control_indicator_marginLeft">0dp</dimen>
 
     <!-- room control  light -->
-    <dimen name="room_control_light_panel_marginTop">60dp</dimen>
+    <dimen name="room_control_light_panel_marginTop">65dp</dimen>
     <dimen name="room_control_light_iv_size">290dp</dimen>
     <dimen name="room_control_light_paddingBottom">22dp</dimen>
     <dimen name="room_control_light_marginBottom">10dp</dimen>
