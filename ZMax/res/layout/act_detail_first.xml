@@ -9,7 +9,7 @@
         android:layout_marginLeft="@dimen/act_detail_margin_left"
         android:layout_marginRight="@dimen/act_detail_margin_left"
         android:layout_marginTop="@dimen/act_detail_margin_top"
-        android:background="@drawable/act_detial_index_bg_repeat" >
+        android:background="@drawable/act_detial_index_bg_repeat" android:id="@+id/rl_content">
 
         <ImageView
             android:id="@+id/iv_act_detial_index_logo"
@@ -63,6 +63,6 @@
         android:layout_centerHorizontal="true"
         android:layout_marginLeft="3dp"
         android:layout_marginRight="3dp"
-        android:background="@drawable/act_detial_envelope_fornt" />
+        android:background="@drawable/act_detial_envelope_fornt" android:id="@+id/iv_bottom"/>
 
 </RelativeLayout>
