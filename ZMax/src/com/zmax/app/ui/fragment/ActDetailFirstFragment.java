@@ -7,17 +7,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 import com.zmax.app.R;
-import com.zmax.app.model.ActDetail;
+import com.zmax.app.model.ActDetailContent;
 import com.zmax.app.ui.ActDetailActivity.RefreshDataCallBack;
 
-import java.util.logging.Handler;
-
-public class ActDetailFirstFragment extends Fragment {
+public class ActDetailFirstFragment extends Fragment implements RefreshDataCallBack {
     private android.os.Handler handler = new android.os.Handler();
     private TextView tv_city, tv_date;
     private String city, date;
@@ -30,13 +25,26 @@ public class ActDetailFirstFragment extends Fragment {
     }
 
     @Override
+    public void onDataRefresh(ActDetailContent detailContent) {
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                getAnimation();
+            }
+        }, 133)
+        ;
+
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.act_detail_first, null);
         tv_city = (TextView) v.findViewById(R.id.tv_city);
         tv_date = (TextView) v.findViewById(R.id.tv_date);
         rl_content = (View) v.findViewById(R.id.rl_content);
         iv_bottom = (View) v.findViewById(R.id.iv_bottom);
-
+        iv_bottom.setVisibility(View.GONE);
+        rl_content.setVisibility(View.GONE);
         if (getArguments().isEmpty()) {
             city = savedInstanceState.getString("city");
             date = savedInstanceState.getString("date");
@@ -63,17 +71,12 @@ public class ActDetailFirstFragment extends Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                getAnimation();
-            }
-        }, 333)
-        ;
 
     }
 
     private void getAnimation() {
+        iv_bottom.setVisibility(View.VISIBLE);
+        rl_content.setVisibility(View.VISIBLE);
         Animation contentAnimation = AnimationUtils.loadAnimation(getActivity(), R.anim.push_top_in);
         rl_content.startAnimation(contentAnimation);
 

@@ -100,5 +100,5 @@
 	
     <!-- feedback -->
     <dimen name="feedback_contact_height">35dp</dimen>
-    <dimen name="feedback_advise_height">160dp</dimen>
+    <dimen name="feedback_advise_height">125dp</dimen>
 </resources>

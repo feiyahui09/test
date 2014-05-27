@@ -103,6 +103,6 @@
     <dimen name="chat_list_profile_size">48dp</dimen>
     <!-- feedback -->
     <dimen name="feedback_contact_height">40dp</dimen>
-    <dimen name="feedback_advise_height">230dp</dimen>
+    <dimen name="feedback_advise_height">190dp</dimen>
 
 </resources>
