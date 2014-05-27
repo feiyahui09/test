@@ -102,14 +102,14 @@
             android:layout_width="fill_parent"
             android:layout_height="220dp"
             android:background="@color/white"
-            android:columnWidth="20dp"
+            android:columnWidth="42dp"
             android:fadingEdge="none"
             android:gravity="center"
             android:numColumns="6"
-            android:padding="30dp"
+            android:padding="1dp"
             android:scrollingCache="false"
             android:stretchMode="columnWidth"
-            android:verticalSpacing="10dp"
+            android:verticalSpacing="1dp"
             android:visibility="gone" />
     </LinearLayout>
 

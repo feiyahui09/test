@@ -96,7 +96,7 @@ public class PlayInZmaxFragment extends Fragment implements OnClickListener {
 		});
 		
 		tv_nick_name.setText(login.name);
-		tv_hotel.setText("ZMAX-" + login.hotel_location + login.hotel_name);
+		tv_hotel.setText("" + login.hotel_location + login.hotel_name);
 		tv_room_num.setText(login.room_num + "房");
 		
 		String startStr = login.start_time, endStr = login.end_time;

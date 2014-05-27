@@ -55,9 +55,14 @@ public class GridViewFaceAdapter extends BaseAdapter {
 		ImageView imageView;
 		if (convertView == null) {
 			imageView = new ImageView(mContext);
+
+            int padding =   PhoneUtil.dip2px(mContext, 10);
 			// 设置图片n×n显示
-			imageView.setLayoutParams(new GridView.LayoutParams(PhoneUtil.dip2px(mContext, Constant.Chat.EMOTION_DIMEN), PhoneUtil.dip2px(
-					mContext, Constant.Chat.EMOTION_DIMEN)));
+			imageView.setLayoutParams(new GridView.LayoutParams(PhoneUtil.dip2px(mContext, Constant.Chat.EMOTION_DIMEN)+padding+padding,
+                    PhoneUtil.dip2px(
+					mContext, Constant.Chat.EMOTION_DIMEN)+padding+padding));
+
+            imageView.setPadding(padding,padding,padding,padding);
 			// 设置显示比例类型
 			imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
 		}

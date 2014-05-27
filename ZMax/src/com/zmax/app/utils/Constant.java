@@ -103,7 +103,7 @@ public class Constant {
     public static class Chat {
         public static final String CHAT_SERVER_IP = "14.23.159.74";
         public static final int CHAT_SERVER_PORT = 3014;
-        public static final int EMOTION_DIMEN = 22;
+        public static final int EMOTION_DIMEN = 23;
         public static final String SELF_ID = "self_id";
 
         public static final String SELF_NAME = "self_name";
