@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Random;
 
+import android.graphics.Bitmap;
 import org.codehaus.jackson.map.ser.ToStringSerializer;
 
 import com.zmax.app.R;
@@ -121,7 +122,17 @@ public class Utility {
 			Toast.makeText(context, "无法浏览此网页", 500).show();
 		}
 	}
-	
+
+    public static void recycleBitmap(Bitmap bitmap){
+
+        if(bitmap != null && !bitmap.isRecycled()){
+            // 回收并且置为null
+            bitmap.recycle();
+            bitmap = null;
+        }
+        System.gc();
+
+    }
 	public static int getChatThumbImgSize(Context context) {
 		
 		int sw = PhoneUtil.getScreenW(context);

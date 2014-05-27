@@ -38,7 +38,7 @@
     <!-- index-hotel -->
     <dimen name="hotel_book_title_marginTop">40dp</dimen>
     <dimen name="hotel_book_center_logo_marginTop">20dp</dimen>
-    <dimen name="index_hotel_book_item_size">200dp</dimen>
+    <dimen name="index_hotel_book_item_size">190dp</dimen>
 
     <integer name="num_cols">1</integer>
 

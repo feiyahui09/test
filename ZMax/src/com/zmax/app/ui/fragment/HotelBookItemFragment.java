@@ -60,7 +60,7 @@ public class HotelBookItemFragment extends Fragment implements PagerAdapter.IPag
 		ImageLoader.getInstance().displayImage(Utility.getImgUrlOnDensity(getActivity(),hotel.poster), iv_img);
 		
 	}
-	
+
 	@Override
 	public void onDisplay() {
 		try {

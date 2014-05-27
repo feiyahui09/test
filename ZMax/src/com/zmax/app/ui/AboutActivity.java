@@ -88,4 +88,15 @@ public class AboutActivity extends BaseActivity {
 		}
 		return "v"+version;
 	}
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
 }
