@@ -82,7 +82,7 @@ public class ChatRoomActivity extends BaseFragmentActivity implements OnClickLis
 	private TextView tv_title;
 	private DialogFragment dialog;
 	UploadImgTask uploadImgTask;
-	
+
 	private static final long CHAT_MUTE_DURATION = 10 * 60 * 1000;// default 10
 	private static long last_chat_time = 0;
 	private static String self_user_name = "围观淡定哥";
@@ -658,17 +658,27 @@ public class ChatRoomActivity extends BaseFragmentActivity implements OnClickLis
 	private void showOrHideIMM() {
 		isIMMOrFaceShow = true;
 		if (iv_emotion.getTag() == null) {
-			// 显示表情
-			showFace();
 			// 隐藏软键盘
 			imm.hideSoftInputFromWindow(et_edit.getWindowToken(), 0);
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    // 显示表情
+                    showFace();
+                }
+            },250);
 		}
 		else {
 			// 隐藏表情
 			hideFace();
 			// 显示软键盘
-			imm.showSoftInput(et_edit, 0);
-			
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    imm.showSoftInput(et_edit, 0);
+                }
+            },200);
+
 		}
 	}
 	

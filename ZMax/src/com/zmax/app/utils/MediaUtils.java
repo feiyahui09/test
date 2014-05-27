@@ -54,6 +54,8 @@ public class MediaUtils
 		FORMAT_TO_CONTENTTYPE.put( "png", "photo" );
 		FORMAT_TO_CONTENTTYPE.put( "bmp", "photo" );
 		FORMAT_TO_CONTENTTYPE.put( "gif", "photo" );
+        FORMAT_TO_CONTENTTYPE.put( "ico", "photo" );
+        FORMAT_TO_CONTENTTYPE.put( "wbmp", "photo" );
 	}
 	
 	/**
