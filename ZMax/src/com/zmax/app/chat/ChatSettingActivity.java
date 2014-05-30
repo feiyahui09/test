@@ -1,9 +1,12 @@
 package com.zmax.app.chat;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.text.TextUtils;
 import android.view.MotionEvent;
 import android.view.View;
@@ -17,12 +20,19 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.zmax.app.R;
+import com.zmax.app.model.BaseModel;
+import com.zmax.app.model.VertifyNameResult;
+import com.zmax.app.net.NetWorkHelper;
+import com.zmax.app.task.ModifyChatUserInfoTask;
 import com.zmax.app.ui.base.BaseActivity;
 import com.zmax.app.utils.Constant;
 import com.zmax.app.utils.DefaultShared;
 import com.zmax.app.utils.Utility;
 
-public class ChatSettingActivity extends BaseActivity {
+import java.text.SimpleDateFormat;
+import java.util.logging.Handler;
+
+public class ChatSettingActivity extends FragmentActivity {
 	private RadioButton btn_man, btn_feman;
 	private Context mContext;
 	private Button btn_back, btn_save;
@@ -34,6 +44,7 @@ public class ChatSettingActivity extends BaseActivity {
 	private ImageView iv_clear;
 	private String gender = "男";
 	private String name;
+    private android.os.Handler handler=new android.os.Handler();
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -69,9 +80,9 @@ public class ChatSettingActivity extends BaseActivity {
 				gender = tv_gender.getText().toString().trim();
 				
 				Constant.modifyLogin(gender.equals("女") ? 0 : 1, name);
-				Utility.toastResult(mContext, "修改个人信息成功！！");
-				finish();
-				
+                goVertify(mContext,Constant.getLogin().user_id+"",Constant.getLogin().gender,
+                        Constant.getLogin().nick_name);
+
 			}
 		});
 		
@@ -167,5 +178,61 @@ public class ChatSettingActivity extends BaseActivity {
 		DefaultShared.putString(Constant.Chat.SELF_GENDER, gender);
 		DefaultShared.putString(Constant.Chat.SELF_NAME, name);
 	}
-	
+
+    private ProgressDialog progressDialog;
+    private ModifyChatUserInfoTask modifyChatUserInfoTask;
+    private void goVertify(final Context context, String _user_id, final int _gender, final String _nick_name) {
+        progressDialog = new ProgressDialog(context);
+        progressDialog.setTitle("提示");
+        progressDialog.setCancelable(true);
+        progressDialog.setMessage("正在检查昵称是否被使用！");
+        progressDialog.show();
+        modifyChatUserInfoTask = new ModifyChatUserInfoTask(context, new ModifyChatUserInfoTask.TaskCallBack() {
+            @Override
+            public void onCallBack(VertifyNameResult result) {
+                if (progressDialog != null && progressDialog.isShowing()) progressDialog.cancel();
+                if (result == null) {
+                    if (NetWorkHelper.checkNetState(context))
+                        Utility.toastNetworkFailed(context);
+                    else
+                        Utility.toastFailedResult(context);
+                }
+                else if (result.status == 401) {
+
+                    Utility.showTokenErrorDialog(ChatSettingActivity.this, result.message);
+                }
+                else if(result.status==403){
+                    try {
+                    Constant.SYN_TIME_INTERVAL = new SimpleDateFormat("yyyyMMddHHmmss").parse(result.sys_time).getTime()
+                            -System.currentTimeMillis();
+                    goVertify(mContext,Constant.getLogin().user_id+"",Constant.getLogin().gender,
+                            Constant.getLogin().nick_name);
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+
+                }
+                else if (result.status != 200) {
+                    Utility.toastResult(context, result.message);
+                }
+
+                else {
+                    Utility.toastResult(mContext, "恭喜！你可以使用该昵称！");
+                    // saveSelfInfo();
+                    Constant.modifyLogin(_gender, _nick_name);
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            startActivity(new Intent(mContext, ChatRoomActivity.class));
+                            finish();
+                        }
+                    }, 500);
+                }
+
+                finish();
+
+            }
+        });
+        modifyChatUserInfoTask.execute(Constant.getLogin().user_id + "", _gender + "", _nick_name);
+    }
 }

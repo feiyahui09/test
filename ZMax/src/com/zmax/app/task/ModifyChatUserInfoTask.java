@@ -4,9 +4,10 @@ import android.content.Context;
 import android.os.AsyncTask;
 
 import com.zmax.app.model.BaseModel;
+import com.zmax.app.model.VertifyNameResult;
 import com.zmax.app.net.NetAccessor;
 
-public class ModifyChatUserInfoTask extends AsyncTask<String, Void, BaseModel> {
+public class ModifyChatUserInfoTask extends AsyncTask<String, Void, VertifyNameResult> {
 	private Context context;
 	private TaskCallBack callBack;
 	
@@ -23,19 +24,19 @@ public class ModifyChatUserInfoTask extends AsyncTask<String, Void, BaseModel> {
 	}
 	
 	@Override
-	protected BaseModel doInBackground(String... params) {
-		BaseModel result = NetAccessor.vetfityNameDup(context, params[0], params[1], params[2]);
+	protected VertifyNameResult doInBackground(String... params) {
+        VertifyNameResult result = NetAccessor.vetfityNameDup(context, params[0], params[1], params[2]);
 		return result;
 	}
 	
 	@Override
-	protected void onPostExecute(BaseModel result) {
+	protected void onPostExecute(VertifyNameResult result) {
 		super.onPostExecute(result);
 		callBack.onCallBack(result);
 	}
 	
 	public interface TaskCallBack {
 		
-		public void onCallBack(BaseModel result);
+		public void onCallBack(VertifyNameResult result);
 	}
 }

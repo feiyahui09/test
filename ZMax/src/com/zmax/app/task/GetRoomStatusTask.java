@@ -38,15 +38,12 @@ public class GetRoomStatusTask extends AsyncTask<String, Void, RoomStatus> {
 			else {
 				result.status = result.light.status;
 				result.message = result.light.message;// result.light可能为空，但没关系，后面有处理
+                result.sys_time=result.light.sys_time;
 			}
 		}
 		
 		catch (Exception e) {
-			if (e.getMessage().equals(context.getString(R.string.tokenError))) {
-				result.status = 401;
-			}
-			else
-				result = null;
+			result = null;
 			e.printStackTrace();
 			
 		}

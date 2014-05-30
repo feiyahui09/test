@@ -26,6 +26,8 @@ public class ActDetailFirstFragment extends Fragment implements RefreshDataCallB
 
     @Override
     public void onDataRefresh(ActDetailContent detailContent) {
+        if (detailContent == null    ) return;
+
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {

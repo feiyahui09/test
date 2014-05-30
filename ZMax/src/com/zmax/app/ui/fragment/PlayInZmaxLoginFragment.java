@@ -151,9 +151,9 @@ public class PlayInZmaxLoginFragment extends Fragment {
 					if (!NetWorkHelper.checkNetState(getActivity())) {
 						Utility.toastNetworkFailed(getActivity());
 					}
-					else if (loginResult != null)
-						Utility.toastResult(getActivity(), loginResult.message);
-					else
+					else if (loginResult != null) {
+                        Utility.toastResult(getActivity(), loginResult.message);
+                    }else
 						Utility.toastFailedResult(getActivity());
 				}
 			}

@@ -155,4 +155,5 @@ public class Utility {
 		Log.i(imgurl);
 		return imgurl;
 	}
+
 }

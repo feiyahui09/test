@@ -23,6 +23,7 @@ import com.zmax.app.chat.ChatRoomActivity;
 import com.zmax.app.chat.ChatIndexActivity;
 import com.zmax.app.model.BaseModel;
 import com.zmax.app.model.Login;
+import com.zmax.app.model.VertifyNameResult;
 import com.zmax.app.net.NetWorkHelper;
 import com.zmax.app.task.ModifyChatUserInfoTask;
 import com.zmax.app.ui.ActsInHotelActivity;
@@ -204,7 +205,7 @@ public class PlayInZmaxFragment extends Fragment implements OnClickListener {
 		if (isShowProgress) progressDialog.show();
 		modifyChatUserInfoTask = new ModifyChatUserInfoTask(context, new ModifyChatUserInfoTask.TaskCallBack() {
 			@Override
-			public void onCallBack(BaseModel result) {
+			public void onCallBack(VertifyNameResult result) {
 				isNameDup = true;
 				if (progressDialog != null && progressDialog.isShowing()) progressDialog.cancel();
 				if (getActivity() == null) return;

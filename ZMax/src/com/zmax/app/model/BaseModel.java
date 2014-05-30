@@ -7,4 +7,6 @@ public class BaseModel implements Serializable {
 	private static final long serialVersionUID = 1L;
 	public int status;
 	public String message;
+    public String sys_time;
+
 }
