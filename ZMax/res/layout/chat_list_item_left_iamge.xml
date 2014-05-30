@@ -35,11 +35,9 @@
             android:id="@+id/iv_left_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
             android:layout_marginBottom="5dip"
             android:background="@drawable/chat_list_item_left_bg"
-            android:gravity="center"
-            android:scaleType="center" />
+            android:scaleType="fitCenter" />
     </LinearLayout>
 
 </RelativeLayout>
