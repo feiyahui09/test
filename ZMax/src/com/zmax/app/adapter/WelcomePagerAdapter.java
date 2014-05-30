@@ -6,10 +6,10 @@ import java.util.List;
 import android.app.Activity;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.view.ViewGroup;
+import com.zmax.app.widget.FragmentStatePagerAdapter;
 
-public class WelcomePagerAdapter extends FragmentPagerAdapter {
+public class WelcomePagerAdapter extends FragmentStatePagerAdapter {
 	
 	public ArrayList<Fragment> mFragments = new ArrayList<Fragment>();;
 	

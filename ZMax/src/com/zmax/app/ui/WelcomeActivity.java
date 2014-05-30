@@ -10,10 +10,11 @@ import com.zmax.app.ui.base.BaseFragmentActivity;
 import com.zmax.app.ui.fragment.WelcomeFragment;
 import com.zmax.app.utils.Constant;
 import com.zmax.app.utils.DefaultShared;
+import com.zmax.app.widget.VerticalViewPager;
 
 public class WelcomeActivity extends BaseFragmentActivity {
 	
-	private ViewPager pager;
+	private VerticalViewPager pager;
 	private WelcomePagerAdapter adapter;
 	
 	@Override
@@ -35,7 +36,7 @@ public class WelcomeActivity extends BaseFragmentActivity {
 	}
 	
 	private void init() {
-		pager = (ViewPager) findViewById(R.id.pager);
+		pager = (VerticalViewPager) findViewById(R.id.pager);
 		
 		adapter = new WelcomePagerAdapter(this);
 		pager.setAdapter(adapter);
@@ -46,7 +47,8 @@ public class WelcomeActivity extends BaseFragmentActivity {
 		
 		adapter.addTab(new WelcomeFragment(R.drawable.welcome_img_1));
 		adapter.addTab(new WelcomeFragment(R.drawable.welcome_img_2));
-		adapter.addTab(new WelcomeFragment(R.drawable.welcome_img_3, new StartAppCallBack() {
+        adapter.addTab(new WelcomeFragment(R.drawable.welcome_img_3));
+        adapter.addTab(new WelcomeFragment(R.drawable.welcome_img_4, new StartAppCallBack() {
 			@Override
 			public void onStartAPP() {
 				if (getIntent().getAction() != null && getIntent().getAction().equals(Constant.ACTION_WELCOME_FROM_INDEX)) {
