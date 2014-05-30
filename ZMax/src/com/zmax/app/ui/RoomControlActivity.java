@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.umeng.analytics.MobclickAgent;
 import com.zmax.app.R;
 import com.zmax.app.adapter.ActDetailAdapter;
 import com.zmax.app.model.RoomStatus;
@@ -22,6 +23,7 @@ import com.zmax.app.ui.fragment.RoomControlAirConditionFragment;
 import com.zmax.app.ui.fragment.RoomControlLightingFragment;
 import com.zmax.app.ui.fragment.RoomControlTVFragment;
 import com.zmax.app.utils.Constant;
+import com.zmax.app.utils.DefaultShared;
 import com.zmax.app.utils.Utility;
 import com.zmax.app.widget.SmartViewPager;
 import eu.inmite.android.lib.dialogs.ISimpleDialogListener;
@@ -245,5 +247,16 @@ public class RoomControlActivity extends BaseFragmentActivity implements ISimple
     public interface PageChangedCallback {
         public void onPageChanegdCallBack(int index);
     }
+    @Override
+    protected void onPause() {
+        // TODO Auto-generated method stub
+        super.onPause();
+        MobclickAgent.onPause(this);
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+    }
 }

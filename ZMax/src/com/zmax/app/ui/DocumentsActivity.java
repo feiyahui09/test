@@ -19,6 +19,7 @@ import android.widget.TextView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.assist.ImageLoadingListener;
+import com.umeng.analytics.MobclickAgent;
 import com.zmax.app.R;
 import com.zmax.app.model.Documents;
 import com.zmax.app.net.NetWorkHelper;
@@ -132,5 +133,16 @@ public class DocumentsActivity extends BaseActivity {
 	
 	public final static String WEB_STYLE = "<style> { line-height:150%;background-color:#ededed;color=#404040,font-family:SimSun; margin:0;padding:0;"
 			+ "word-wrap: break-word; } " + "p {color:#404040;} a {color:#3E62A6;}" + "img { max-width:100%; margin:0 auto; } ";
-	
+    @Override
+    protected void onPause() {
+        // TODO Auto-generated method stub
+        super.onPause();
+        MobclickAgent.onPause(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+    }
 }

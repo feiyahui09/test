@@ -21,6 +21,7 @@ import android.widget.Toast;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.assist.ImageLoadingListener;
+import com.umeng.analytics.MobclickAgent;
 import com.zmax.app.R;
 import com.zmax.app.model.Documents;
 import com.zmax.app.net.NetWorkHelper;
@@ -94,7 +95,18 @@ public class AboutActivity extends BaseActivity {
         super.onDestroy();
 
     }
+    @Override
+    protected void onPause() {
+        // TODO Auto-generated method stub
+        super.onPause();
+        MobclickAgent.onPause(this);
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+    }
     @Override
     public void onBackPressed() {
         super.onBackPressed();

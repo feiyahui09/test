@@ -17,13 +17,11 @@ import android.widget.LinearLayout.LayoutParams;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.umeng.analytics.MobclickAgent;
 import com.zmax.app.R;
 import com.zmax.app.model.Documents;
 import com.zmax.app.ui.base.BaseActivity;
-import com.zmax.app.utils.Constant;
-import com.zmax.app.utils.Log;
-import com.zmax.app.utils.PhoneUtil;
-import com.zmax.app.utils.Utility;
+import com.zmax.app.utils.*;
 import com.zmax.app.widget.HTML5WebView;
 
 public class WebViewActivity extends BaseActivity {
@@ -88,4 +86,15 @@ public class WebViewActivity extends BaseActivity {
 		});
 		return group;
 	}
-}
+    @Override
+    protected void onPause() {
+        // TODO Auto-generated method stub
+        super.onPause();
+        MobclickAgent.onPause(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+    }}

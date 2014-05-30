@@ -7,10 +7,12 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.umeng.analytics.MobclickAgent;
 import com.zmax.app.R;
 import com.zmax.app.adapter.HotelCommentListAdapter;
 import com.zmax.app.ui.base.BaseActivity;
 import com.zmax.app.utils.Constant;
+import com.zmax.app.utils.DefaultShared;
 import com.zmax.app.widget.XListView;
 
 public class HotelCommentActivity extends BaseActivity {
@@ -64,5 +66,18 @@ public class HotelCommentActivity extends BaseActivity {
 			}
 		});
 	}
+
+    @Override
+    protected void onPause() {
+        // TODO Auto-generated method stub
+        super.onPause();
+        MobclickAgent.onPause(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+    }
 	
 }

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 
+import com.umeng.analytics.MobclickAgent;
 import com.zmax.app.R;
 import com.zmax.app.adapter.WelcomePagerAdapter;
 import com.zmax.app.ui.base.BaseFragmentActivity;
@@ -32,10 +33,16 @@ public class WelcomeActivity extends BaseFragmentActivity {
 		// TODO Auto-generated method stub
 		super.onPause();
 		DefaultShared.putBoolean("IS_FIRST_INSTALLED", false);
-		
+        MobclickAgent.onPause(this);
 	}
-	
-	private void init() {
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+    }
+
+    private void init() {
 		pager = (VerticalViewPager) findViewById(R.id.pager);
 		
 		adapter = new WelcomePagerAdapter(this);
@@ -44,7 +51,7 @@ public class WelcomeActivity extends BaseFragmentActivity {
 	}
 	
 	private void initData() {
-		
+		if(1==1)throw  new NullPointerException();
 		adapter.addTab(new WelcomeFragment(R.drawable.welcome_img_1));
 		adapter.addTab(new WelcomeFragment(R.drawable.welcome_img_2));
         adapter.addTab(new WelcomeFragment(R.drawable.welcome_img_3));

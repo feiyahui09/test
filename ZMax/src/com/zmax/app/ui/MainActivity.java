@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Toast;
 
+import com.umeng.analytics.MobclickAgent;
 import com.zmax.app.R;
 import com.zmax.app.model.CityLocation;
 import com.zmax.app.task.GetCityLocationTask;
@@ -99,6 +100,7 @@ public class MainActivity extends BaseSlidingFragmentActivity implements ISimple
 		if (progressDialog != null && progressDialog.getActivity() != null) progressDialog.dismiss();
 		unregisterReceiver(receiver);
 		removeStickyBroadcast(new Intent(Constant.FEEDBACK_SENDED_ACTION));
+        MobclickAgent.onPause(this);
 	}
 	
 	// public void showLogoutView() {
@@ -214,8 +216,9 @@ public class MainActivity extends BaseSlidingFragmentActivity implements ISimple
 		// TODO Auto-generated method stub
 		super.onResume();
 		registerReceiver(receiver, new IntentFilter(Constant.FEEDBACK_SENDED_ACTION));
+        MobclickAgent.onResume(this);
 	}
-	
+
 	private boolean handleIntent() {
 		boolean shouldDo = false;
 		if (getIntent().getAction() != null )

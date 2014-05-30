@@ -18,6 +18,7 @@ import android.widget.LinearLayout;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.assist.ImageLoadingListener;
+import com.umeng.analytics.MobclickAgent;
 import com.zmax.app.R;
 import com.zmax.app.adapter.ActDetailAdapter;
 import com.zmax.app.model.ActDetail;
@@ -28,12 +29,7 @@ import com.zmax.app.ui.base.BaseFragmentActivity;
 import com.zmax.app.ui.fragment.ActDetailFirstFragment;
 import com.zmax.app.ui.fragment.ActDetailSecondFragment;
 import com.zmax.app.ui.fragment.ActDetailThirdFragment;
-import com.zmax.app.utils.Constant;
-import com.zmax.app.utils.DateTimeUtils;
-import com.zmax.app.utils.Log;
-import com.zmax.app.utils.ShareUtils;
-import com.zmax.app.utils.StackBlurManager;
-import com.zmax.app.utils.Utility;
+import com.zmax.app.utils.*;
 
 import eu.inmite.android.lib.dialogs.ProgressDialogFragment;
 
@@ -268,5 +264,16 @@ public class ActDetailActivity extends BaseFragmentActivity {
 				city, Constant.Share.SHARE_URL);
 		Constant.Share.SHARE_TITLE = "ZMAX活动分享";
 	}
-	
+    @Override
+    protected void onPause() {
+        // TODO Auto-generated method stub
+        super.onPause();
+        MobclickAgent.onPause(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+    }
 }

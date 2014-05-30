@@ -183,6 +183,10 @@
             android:enabled="true"
             android:process=":remote" >
         </service>
+
+        <meta-data android:value="538313e056240b3fb6009536" android:name="UMENG_APPKEY"></meta-data>
+        <meta-data android:value="channel_default" android:name="UMENG_CHANNEL"/>
+
     </application>
 
 </manifest>

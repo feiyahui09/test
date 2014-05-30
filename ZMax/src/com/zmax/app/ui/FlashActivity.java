@@ -1,23 +1,31 @@
 package com.zmax.app.ui;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 import android.widget.RelativeLayout;
 
+import com.umeng.analytics.MobclickAgent;
 import com.zmax.app.R;
 import com.zmax.app.manage.DataInitalService;
 import com.zmax.app.ui.base.BaseFragmentActivity;
 import com.zmax.app.utils.Constant;
 import com.zmax.app.utils.DefaultShared;
+import com.zmax.app.utils.Log;
 
 public class FlashActivity extends BaseFragmentActivity {
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
+        MobclickAgent.setDebugMode(false);
+        MobclickAgent.updateOnlineConfig( this );
+
 		RelativeLayout layout = new RelativeLayout(this);
 		setContentView(layout);
 		layout.setBackgroundResource(R.drawable.flash);
@@ -43,9 +51,23 @@ public class FlashActivity extends BaseFragmentActivity {
 		});
 		
 		startService(new Intent(this, DataInitalService.class));
-	}
-	
-	private void goNext() {
+     }
+
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
+    }
+
+    private void goNext() {
 		if (DefaultShared.getBoolean("IS_FIRST_INSTALLED", true)) {
 			Intent intent = new Intent(this, WelcomeActivity.class);
 			intent.setAction(Constant.ACTION_WELCOME_FROM_INDEX);
