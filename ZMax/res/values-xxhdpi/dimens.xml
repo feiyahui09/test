@@ -51,6 +51,7 @@
     <dimen name="act_detail_inner_padding_bottom">10dp</dimen>
     <dimen name="act_detail_index_marginTop">90dp</dimen>
     <dimen name="act_detail_index_secondary_marginTop">120dp</dimen>
+    <dimen name="act_detail_pointer_size">50dp</dimen>
 
     <!-- third -->
     <dimen name="act_detail_third_img_height">130dp</dimen>

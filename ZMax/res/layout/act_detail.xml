@@ -1,18 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/ll_bg"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/white"
-    android:orientation="vertical" >
+              android:id="@+id/ll_bg"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/white"
+              android:orientation="vertical">
 
-    <include layout="@layout/above_content_header" >
+    <include layout="@layout/above_content_header">
     </include>
 
-    <android.support.v4.view.ViewPager
-        android:id="@+id/pager"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" >
-    </android.support.v4.view.ViewPager>
+    <RelativeLayout
+            android:layout_height="match_parent"
+            android:layout_width="match_parent">
+
+        <android.support.v4.view.ViewPager
+                android:id="@+id/pager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+        </android.support.v4.view.ViewPager>
+
+        <ImageView
+                android:id="@+id/iv_left_pointer" android:layout_width="@dimen/act_detail_pointer_size" android:layout_height="@dimen/act_detail_pointer_size"
+                android:layout_centerInParent="true"
+                android:visibility="gone"
+
+                android:layout_alignParentLeft="true"
+                android:background="@drawable/act_detail_left_pointer"/>
+        <ImageView android:id="@+id/iv_right_pointer" android:layout_width="@dimen/act_detail_pointer_size" android:layout_height="@dimen/act_detail_pointer_size"
+                   android:background="@drawable/act_detail_right_pointer"
+                   android:layout_alignParentRight="true"
+                   android:visibility="visible"
+                   android:layout_centerInParent="true"/>
+    </RelativeLayout>
 
 </LinearLayout>

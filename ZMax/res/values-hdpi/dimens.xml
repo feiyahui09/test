@@ -50,6 +50,7 @@
     <dimen name="act_detail_inner_padding_bottom">8dp</dimen>
     <dimen name="act_detail_index_marginTop">61dp</dimen>
     <dimen name="act_detail_index_secondary_marginTop">84dp</dimen>
+    <dimen name="act_detail_pointer_size">37dp</dimen>
 
     <!-- third -->
     <dimen name="act_detail_third_img_height">100dp</dimen>

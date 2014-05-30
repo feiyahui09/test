@@ -12,6 +12,7 @@ import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -47,7 +48,7 @@ public class ActDetailActivity extends BaseFragmentActivity {
 	private String city, date;
 	private LinearLayout ll_bg;
 	private DialogFragment progressDialog;
-	
+	private ImageView iv_left,iv_right;
 	private int curPosition = 0;
 	
 	public interface RefreshDataCallBack {
@@ -94,7 +95,15 @@ public class ActDetailActivity extends BaseFragmentActivity {
 	private void init(Bundle savedInstanceState) {
 		city = getIntent().getStringExtra(Constant.Acts.CITY_KEY);
 		date = getIntent().getStringExtra(Constant.Acts.DATE_KEY);
-		
+
+        iv_left= (ImageView) findViewById(R.id.iv_left_pointer);
+        iv_right= (ImageView) findViewById(R.id.iv_right_pointer);
+        iv_left.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
 		ll_bg = (LinearLayout) findViewById(R.id.ll_bg);
 		pager = (ViewPager) findViewById(R.id.pager);
 		adapter = new ActDetailAdapter(this);
@@ -109,7 +118,32 @@ public class ActDetailActivity extends BaseFragmentActivity {
 		adapter.addTab(new ActDetailSecondFragment());
 		adapter.addTab(new ActDetailThirdFragment());
 		pager.setOffscreenPageLimit(3);
-		
+        pager.setOnPageChangeListener(new OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int i, float v, int i2) {
+
+            }
+
+            @Override
+            public void onPageSelected(int i) {
+
+                if(i==0){
+                    iv_right.setVisibility(View.VISIBLE);
+                    iv_left.setVisibility(View.GONE);
+                }else if(i==1){
+                    iv_right.setVisibility(View.VISIBLE);
+                    iv_left.setVisibility(View.VISIBLE);
+                }else if(i==2){
+                    iv_left.setVisibility(View.VISIBLE);
+                    iv_right.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int i) {
+
+            }
+        });
 		if (!NetWorkHelper.checkNetState(this)) {
 			Utility.toastNetworkFailed(this);
 			return;
