@@ -98,7 +98,7 @@ public class Constant {
 
         public static String SHARE_TITLE = "share_title";
         public static String SHARE_CONTENT = "share_content";
-        public static final String SHARE_URL = "www.zmaxhotels.cc";
+        public static final String SHARE_URL = "zmax.bestapp.us/app/download";
 
     }
 

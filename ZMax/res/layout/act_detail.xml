@@ -29,7 +29,7 @@
         <ImageView android:id="@+id/iv_right_pointer" android:layout_width="@dimen/act_detail_pointer_size" android:layout_height="@dimen/act_detail_pointer_size"
                    android:background="@drawable/act_detail_right_pointer"
                    android:layout_alignParentRight="true"
-                   android:visibility="visible"
+                   android:visibility="gone"
                    android:layout_centerInParent="true"/>
     </RelativeLayout>
 

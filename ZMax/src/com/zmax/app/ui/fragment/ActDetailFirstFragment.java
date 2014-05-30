@@ -10,6 +10,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 import com.zmax.app.R;
 import com.zmax.app.model.ActDetailContent;
+import com.zmax.app.ui.ActDetailActivity;
 import com.zmax.app.ui.ActDetailActivity.RefreshDataCallBack;
 
 public class ActDetailFirstFragment extends Fragment implements RefreshDataCallBack {
@@ -26,7 +27,7 @@ public class ActDetailFirstFragment extends Fragment implements RefreshDataCallB
 
     @Override
     public void onDataRefresh(ActDetailContent detailContent) {
-        if (detailContent == null    ) return;
+        if (detailContent == null) return;
 
         handler.postDelayed(new Runnable() {
             @Override
@@ -87,12 +88,20 @@ public class ActDetailFirstFragment extends Fragment implements RefreshDataCallB
         bottomAnimation.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
+                ((ActDetailActivity) getActivity()).hideOrShowPointer(false);
 
             }
 
             @Override
             public void onAnimationEnd(Animation animation) {
+
                 iv_bottom.setVisibility(View.GONE);
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        ((ActDetailActivity) getActivity()).hideOrShowPointer(true);
+                    }
+                }, 500);
             }
 
             @Override
