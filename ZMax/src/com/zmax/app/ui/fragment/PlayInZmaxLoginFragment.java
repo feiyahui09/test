@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
@@ -59,8 +60,9 @@ public class PlayInZmaxLoginFragment extends Fragment {
 		et_room_number = (EditText) view.findViewById(R.id.et_room_number);
 		et_namecard = (EditText) view.findViewById(R.id.et_namecard);
 		et_password = (EditText) view.findViewById(R.id.et_password);
-		
-		btn_login.setOnClickListener(new OnClickListener() {
+        imm = (InputMethodManager) getActivity().getSystemService(getActivity().INPUT_METHOD_SERVICE);
+
+        btn_login.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
@@ -72,26 +74,56 @@ public class PlayInZmaxLoginFragment extends Fragment {
 					Utility.toastResult(getActivity(), "密码不能为空哦！");
 				else if (et_namecard.getText().toString().trim().length() != 4)
 					Utility.toastResult(getActivity(), "请填入身份证后四位！");
-				else
-					goPlayZmax( et_room_number.getText().toString().trim(), et_namecard.getText().toString().trim(),
+				else{
+                    hideIMM();
+                    goPlayZmax( et_room_number.getText().toString().trim(), et_namecard.getText().toString().trim(),
 							et_password.getText().toString().trim());
+                }
 			}
 		});
 		sp_hotels = (Spinner) view.findViewById(R.id.sp_hotels);
 		Log.i("@@");
 		return view;
 	}
-	
-	@Override
+    private InputMethodManager imm;
+
+    @Override
 	public void onDestroyView() {
 		// TODO Auto-generated method stub
 		super.onDestroyView();
 		// ((MainActivity) getActivity()).hideLogoutView(false);
-		Log.i("@@");
+
+
 		
 	}
-	
-	@Override
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        Log.e("@@");
+        hideIMM();
+    }
+    private void hideIMM(){
+
+        try {
+            imm.hideSoftInputFromWindow(et_room_number.getWindowToken(), 0);
+            imm.hideSoftInputFromWindow(et_namecard.getWindowToken(), 0);
+            imm.hideSoftInputFromWindow(et_password.getWindowToken(), 0);
+        }catch (Exception e){
+
+            e.printStackTrace();
+        }
+
+
+    }
+
+
+    @Override
+    public void onStop() {
+        super.onStop();
+    }
+
+    @Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onActivityCreated(savedInstanceState);
