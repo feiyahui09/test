@@ -4,12 +4,19 @@
     android:layout_height="fill_parent"
     android:background="@drawable/hotel_book_upcoming_bg" 
     android:paddingBottom="10dp">
+    <TextView  android:id="@+id/tv_list" android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="待开业酒店"        android:layout_marginTop="93dp"
 
+            android:textColor="#F4F4F4"
+            android:textSize="22sp"
+            android:layout_centerHorizontal="true"/>
     <com.zmax.app.widget.SmartListView
         android:id="@+id/list_view"
+        android:layout_marginTop="23dp"
+        android:layout_below="@+id/tv_list"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="132dp"
         android:background="@android:color/transparent"
         android:cacheColorHint="#0000"
         android:listSelector="@android:color/transparent"

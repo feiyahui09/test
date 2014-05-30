@@ -178,8 +178,10 @@ public class ActDetailActivity extends BaseFragmentActivity {
 
     public void hideOrShowPointer(boolean isShow) {
         if (isShow) {
-            iv_right.setVisibility(View.VISIBLE);
-            iv_left.setVisibility(View.GONE);
+            if(curPosition==0) {
+                iv_right.setVisibility(View.VISIBLE);
+                iv_left.setVisibility(View.GONE);
+            }
         } else {
             iv_right.setVisibility(View.GONE);
             iv_left.setVisibility(View.GONE);
