@@ -23,6 +23,9 @@ import android.widget.Toast;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.jeremyfeinstein.slidingmenu.lib.app.SlidingFragmentActivity;
 import com.zmax.app.R;
+import com.zmax.app.model.BaseModel;
+import com.zmax.app.net.NetWorkHelper;
+import com.zmax.app.task.ZmaxLogOut;
 import com.zmax.app.ui.DocumentsActivity;
 import com.zmax.app.ui.fragment.AccountFragment;
 import com.zmax.app.ui.fragment.ActListFragment;
@@ -35,6 +38,7 @@ import com.zmax.app.ui.fragment.SettingFragment;
 import com.zmax.app.utils.Constant;
 import com.zmax.app.utils.Constant.LOAD_STATE;
 import com.zmax.app.utils.Log;
+import com.zmax.app.utils.Utility;
 
 /**
  * This activity is an example of a responsive Android UI. On phones, the
@@ -160,7 +164,21 @@ public class BaseSlidingFragmentActivity extends SlidingFragmentActivity impleme
 					hideLogoutView(false);
 				}
 				else if (item_id == R.id.ll_menu_playzmax + 100) {
-					showLogoutView();
+					new ZmaxLogOut(BaseSlidingFragmentActivity.this,new ZmaxLogOut.TaskCallBack() {
+                        @Override
+                        public void onCallBack(BaseModel result) {
+                            if(result!=null&&result.status==200){
+                                showLogoutView();
+                            }
+                            else {
+                                if(!NetWorkHelper.isNetworkAvailable(BaseSlidingFragmentActivity.this))
+                                    Utility.toastNetworkFailed(BaseSlidingFragmentActivity.this);
+                                else
+                                    Utility.toastResult(BaseSlidingFragmentActivity.this,result.message);
+
+                            }
+                        }
+                    }).execute(Constant.getLogin().auth_token);
 				}
 				else {
 					hideLogoutView(true);
@@ -178,6 +196,7 @@ public class BaseSlidingFragmentActivity extends SlidingFragmentActivity impleme
 	}
 	
 	public void showLogoutView() {
+        Log.e("showLogoutView");
 		btn_share.setVisibility(View.VISIBLE);
 		btn_share.setBackgroundResource(R.drawable.playzmax_quit_btn_sel);
 		
@@ -193,7 +212,9 @@ public class BaseSlidingFragmentActivity extends SlidingFragmentActivity impleme
 	}
 	
 	public void hideLogoutView(boolean isGone) {
-		if (isGone) {
+        Log.e("hideLogoutView   isGone =="+isGone);
+
+        if (isGone) {
 			btn_share.setVisibility(View.GONE);
 			return;
 		}

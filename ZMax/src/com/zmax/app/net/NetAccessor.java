@@ -236,7 +236,20 @@ public class NetAccessor {
         }
         return feeBack;
     }
-
+    public static BaseModel logOut(Context context, String token     ) {
+        BaseModel baseModel = null;
+        try {
+            String jsonString = HttpUtils.postByHttpClient(context, Constant.ZMAX_URL + "users/logout", new BasicNameValuePair("token",
+                    token) );
+            Log.d("  responeString -->\n" + jsonString);
+            baseModel = JsonMapperUtils.toObject(jsonString, BaseModel.class);
+        } catch (Exception e) {
+            baseModel = null;
+            Log.e("  Exception :" + e.toString());
+            e.printStackTrace();
+        }
+        return baseModel;
+    }
     public static Login loginPlayZMAX(Context context, String room_num, String id_number, String password) {
         Login login = null;
         try {
