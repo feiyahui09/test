@@ -165,18 +165,17 @@ public class BaseSlidingFragmentActivity extends SlidingFragmentActivity impleme
             @Override
             public void onClick(View v) {
 
-                new ZmaxLogOut(BaseSlidingFragmentActivity.this,new ZmaxLogOut.TaskCallBack() {
+                new ZmaxLogOut(BaseSlidingFragmentActivity.this, new ZmaxLogOut.TaskCallBack() {
                     @Override
                     public void onCallBack(BaseModel result) {
-                        if(result!=null&&result.status==200){
+                        if (result != null && result.status == 200) {
                             Constant.saveLogin(null);
                             handleSeleceted(R.id.ll_menu_playzmax, true);
-                        }
-                        else {
-                            if(!NetWorkHelper.isNetworkAvailable(BaseSlidingFragmentActivity.this))
+                        } else {
+                            if (!NetWorkHelper.isNetworkAvailable(BaseSlidingFragmentActivity.this))
                                 Utility.toastNetworkFailed(BaseSlidingFragmentActivity.this);
-                            else if(result!=null)
-                                Utility.toastResult(BaseSlidingFragmentActivity.this,result.message);
+                            else if (result != null)
+                                Utility.toastResult(BaseSlidingFragmentActivity.this, result.message);
 
                         }
                     }
@@ -207,7 +206,7 @@ public class BaseSlidingFragmentActivity extends SlidingFragmentActivity impleme
 
     private void initHeader() {
         /*
-		 * 头部tab切换 活动和预订酒店
+         * 头部tab切换 活动和预订酒店
 		 */
         rg_top_title = (RadioGroup) findViewById(R.id.above_content_second_header);
         rg_top_title.setOnCheckedChangeListener(new OnCheckedChangeListener() {
@@ -377,16 +376,21 @@ public class BaseSlidingFragmentActivity extends SlidingFragmentActivity impleme
                 Log.i("@@  " + mClass.getSimpleName() + " --  not instantiate,use old ");
                 ft.show(mFragment);
                 // ft.attach(mFragment);
-                ft.commit();
+                ft.commitAllowingStateLoss();
             }
 
         }
 
         public void onTabUnselected(Tab tab, FragmentTransaction ft) {
-            if (mFragment != null) {
-                // ft.detach(mFragment);
-                ft.hide(mFragment);
-                ft.commit();
+            try {
+                if (mFragment != null) {
+                    // ft.detach(mFragment);
+                    ft.hide(mFragment);
+                    ft.commitAllowingStateLoss();
+                }
+            } catch (Exception e) {
+
+                e.printStackTrace();
             }
 
         }

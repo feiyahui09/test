@@ -51,7 +51,6 @@ public class WelcomeActivity extends BaseFragmentActivity {
 	}
 	
 	private void initData() {
-		if(1==1)throw  new NullPointerException();
 		adapter.addTab(new WelcomeFragment(R.drawable.welcome_img_1));
 		adapter.addTab(new WelcomeFragment(R.drawable.welcome_img_2));
         adapter.addTab(new WelcomeFragment(R.drawable.welcome_img_3));
