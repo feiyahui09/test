@@ -134,11 +134,12 @@ public class ActDetailActivity extends BaseFragmentActivity {
 		
 		int actid = getIntent().getIntExtra(Constant.Acts.ID_KEY, -1);
 		
-		if (savedInstanceState != null && savedInstanceState.containsKey("detailContent")) {
-			Log.i("savedInstanceState used");
-			initData((ActDetailContent) savedInstanceState.getSerializable("detailContent"));
-		}
-		else if (actid > 0) {
+//		if (savedInstanceState != null && savedInstanceState.containsKey("detailContent")) {
+//			Log.i("savedInstanceState used");
+//			initData((ActDetailContent) savedInstanceState.getSerializable("detailContent"));
+//		}
+//		else
+        if (actid > 0) {
 			getActDetailTask.execute(String.valueOf(actid));
 			Log.i("savedInstanceState not used");
 			
