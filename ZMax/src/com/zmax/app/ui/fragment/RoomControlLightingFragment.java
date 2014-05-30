@@ -227,8 +227,8 @@ public class RoomControlLightingFragment extends Fragment {
 		public void onClick(View v) {
 			if (v.getId() == R.id.ib_previous) {
 				operaMode = (operaMode - 1 + 4) % 4;
-				// tv_mode_hint.setText(mode_names[operaMode]);
-				// tv_mode_detail.setText("当前灯光模式：" + mode_names[operaMode]);
+				tv_mode_hint.setText(mode_names[operaMode]);
+				tv_mode_detail.setText("当前灯光模式：" + mode_names[operaMode]);
 				iv_img.setImageResource(mode_imgs[operaMode]);
 			}
 			else if (v.getId() == R.id.ib_next) {
@@ -258,7 +258,9 @@ public class RoomControlLightingFragment extends Fragment {
 				}
 				else if (result.status == 200) {
 					curMode = operaMode;
-				}
+                    Utility.toastResult(getActivity(),  "已设置为"+ mode_names[operaMode]);
+
+                }
 				else if (result.status == 401) {
 					
 					Utility.showTokenErrorDialog(getActivity(), result.message);
