@@ -81,7 +81,7 @@ public class PlayInZmaxLoginFragment extends Fragment {
                 }
 			}
 		});
-		sp_hotels = (Spinner) view.findViewById(R.id.sp_hotels);
+
 		Log.i("@@");
 		return view;
 	}

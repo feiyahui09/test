@@ -250,4 +250,15 @@ public class SimpleDialogFragment extends BaseDialogFragment {
 			return args;
 		}
 	}
+
+    @Override
+    public void dismiss() {
+        try {
+            super.dismiss();
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+    }
 }

@@ -176,7 +176,7 @@ public class ActDetailActivity extends BaseFragmentActivity {
 
     }
 
-    public  void hideOrShowPointer(boolean isShow) {
+    public void hideOrShowPointer(boolean isShow) {
         if (isShow) {
             iv_right.setVisibility(View.VISIBLE);
             iv_left.setVisibility(View.GONE);
@@ -256,7 +256,6 @@ public class ActDetailActivity extends BaseFragmentActivity {
             @Override
             public void onClick(View v) {
                 initShareContent();
-                new ShareUtils().showShare(ActDetailActivity.this, false, null);
 
             }
         });
@@ -264,9 +263,16 @@ public class ActDetailActivity extends BaseFragmentActivity {
     }
 
     private void initShareContent() {
-        Constant.Share.SHARE_CONTENT = String.format(pattern, detailContent.name, DateTimeUtils.friendly_time(detailContent.start_date),
-                city, Constant.Share.SHARE_URL);
-        Constant.Share.SHARE_TITLE = "ZMAX活动分享";
+        try {
+            Constant.Share.SHARE_CONTENT = String.format(pattern, detailContent.name, DateTimeUtils.friendly_time(detailContent.start_date),
+                    city, Constant.Share.SHARE_URL);
+            Constant.Share.SHARE_TITLE = "ZMAX活动分享";
+            new ShareUtils().showShare(ActDetailActivity.this, false, null);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
     }
 
     @Override
