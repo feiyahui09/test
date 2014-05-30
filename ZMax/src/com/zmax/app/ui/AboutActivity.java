@@ -50,7 +50,9 @@ public class AboutActivity extends BaseActivity {
 	
 	private void init() {
 		context = this;
-		tv_version = (TextView) findViewById(R.id.tv_version);
+        tv_title= (TextView) findViewById(R.id.tv_title);
+        tv_title.setText("关于ZMAX");
+        tv_version = (TextView) findViewById(R.id.tv_version);
 		tv_version.setText(getVersionName());
 		btn_click_us = (Button) findViewById(R.id.btn_click_us);
 		btn_click_us.setOnClickListener(new OnClickListener() {
@@ -87,7 +89,7 @@ public class AboutActivity extends BaseActivity {
 			// TODO: handle exception
 			
 		}
-		return "v"+version;
+		return "ZMAX  "+version+"版";
 	}
 
     @Override

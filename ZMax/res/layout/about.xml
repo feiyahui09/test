@@ -1,47 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/about_bg" >
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/about_bg">
 
-    <include layout="@layout/detail_header" />
+    <include layout="@layout/detail_header"/>
 
+
+    <ImageView
+            android:id="@+id/iv_logo"
+            android:layout_marginTop="140dp"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/about_logo"  />
     <TextView
-        android:id="@+id/tv_version"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/above_content_header"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="244dp"
-        android:gravity="center"
-        android:text="v1.0"
-        android:textColor="#262626"
-        android:textSize="12sp" />
+            android:id="@+id/tv_version"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/iv_logo"
+            android:layout_marginTop="30dp"
+            android:layout_centerHorizontal="true"
+            android:gravity="center"
+            android:text="ZMAX 1.0版"
+            android:textColor="#F4F4F4"
+            android:textSize="14sp"/>
 
     <Button
-        android:id="@+id/btn_click_us"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_version"
-        android:layout_centerHorizontal="true"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginTop="88dp"
-        android:gravity="center"
-        android:textColor="@color/white"
-        android:textSize="20sp"
-        android:visibility="gone" >
+            android:id="@+id/btn_click_us"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_version"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="88dp"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:visibility="gone">
     </Button>
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="25dp"
-        android:gravity="center"
-        android:text="Copyright 2014 ZMAX版权所有"
-        android:textColor="#595959"
-        android:textSize="12sp" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="25dp"
+            android:gravity="center"
+            android:text="Copyright 2014 ZMAX版权所有"
+            android:textColor="#F4F4F4"
+            android:textSize="12sp"/>
 
 </RelativeLayout>
