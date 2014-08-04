@@ -15,7 +15,6 @@ public class SlidingPreferenceActivity extends PreferenceActivity implements Sli
 	/* (non-Javadoc)
 	 * @see android.app.Activity#onCreate(android.os.Bundle)
 	 */
-	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		mHelper = new SlidingActivityHelper(this);
 		super.onCreate(savedInstanceState);

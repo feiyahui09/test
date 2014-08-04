@@ -517,12 +517,12 @@ public class OnekeyShare extends FakeActivity implements
 
 			if (!started) {
 				started = true;
-				if (equals(callback)) {
-					int resId = getStringRes(getContext(), "sharing");
-					if (resId > 0) {
-						showNotification(2000, getContext().getString(resId));
-					}
-				}
+//				if (equals(callback)) {
+//					int resId = getStringRes(getContext(), "sharing");
+//					if (resId > 0) {
+//						showNotification(2000, getContext().getString(resId));
+//					}
+//				}
 				finish();
 			}
 			plat.setPlatformActionListener(callback);

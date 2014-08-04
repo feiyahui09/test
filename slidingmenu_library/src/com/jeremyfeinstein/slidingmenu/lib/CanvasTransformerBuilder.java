@@ -22,9 +22,7 @@ public class CanvasTransformerBuilder {
 		};
 	}
 
-	public CanvasTransformer zoom(final int openedX, final int closedX, 
-			final int openedY, final int closedY, 
-			final int px, final int py) {
+	public CanvasTransformer zoom(final int openedX, final int closedX, final int openedY, final int closedY, final int px, final int py) {
 		return zoom(openedX, closedX, openedY, closedY, px, py, lin);
 	}
 
@@ -62,20 +60,17 @@ public class CanvasTransformerBuilder {
 		return mTrans;
 	}
 
-	public CanvasTransformer translate(final int openedX, final int closedX, 
-			final int openedY, final int closedY) {
+	public CanvasTransformer translate(final int openedX, final int closedX, final int openedY, final int closedY) {
 		return translate(openedX, closedX, openedY, closedY, lin);
 	}
 
-	public CanvasTransformer translate(final int openedX, final int closedX, 
-			final int openedY, final int closedY, final Interpolator interp) {
+	public CanvasTransformer translate(final int openedX, final int closedX, final int openedY, final int closedY, final Interpolator interp) {
 		initTransformer();
 		mTrans = new CanvasTransformer() {
 			public void transformCanvas(Canvas canvas, float percentOpen) {
 				mTrans.transformCanvas(canvas, percentOpen);
 				float f = interp.getInterpolation(percentOpen);
-				canvas.translate((openedX - closedX) * f + closedX,
-						(openedY - closedY) * f + closedY);
+				canvas.translate((openedX - closedX) * f + closedX, (openedY - closedY) * f + closedY);
 			}			
 		};
 		return mTrans;

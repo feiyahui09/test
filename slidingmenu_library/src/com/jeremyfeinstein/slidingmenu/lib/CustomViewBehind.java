@@ -19,16 +19,28 @@ public class CustomViewBehind extends ViewGroup {
 
 	private static final String TAG = "CustomViewBehind";
 
+	//边缘滑动的临界值
 	private static final int MARGIN_THRESHOLD = 48; // dips
+	
+	//初始化触摸的模式
 	private int mTouchMode = SlidingMenu.TOUCHMODE_MARGIN;
 
+	//定义上方视图
 	private CustomViewAbove mViewAbove;
 
+	//定义内容视图
 	private View mContent;
 	private View mSecondaryContent;
+	
+	//定义滑动边缘的临界值
 	private int mMarginThreshold;
+	
+	//宽度的偏移量
 	private int mWidthOffset;
+	
 	private CanvasTransformer mTransformer;
+	
+	//是否能够使用子视图
 	private boolean mChildrenEnabled;
 
 	public CustomViewBehind(Context context) {
@@ -49,23 +61,38 @@ public class CustomViewBehind extends ViewGroup {
 		mTransformer = t;
 	}
 
+	/**
+	 * 设置宽度的偏移量
+	 */
 	public void setWidthOffset(int i) {
 		mWidthOffset = i;
 		requestLayout();
 	}
 	
+	/**
+	 * 设置边缘滑动的临界值
+	 */
 	public void setMarginThreshold(int marginThreshold) {
 		mMarginThreshold = marginThreshold;
 	}
 	
+	/**
+	 * 得到边缘滑动的临界值
+	 */
 	public int getMarginThreshold() {
 		return mMarginThreshold;
 	}
 
+	/**
+	 * 得到视图的宽度
+	 */
 	public int getBehindWidth() {
 		return mContent.getWidth();
 	}
 
+	/**
+	 * 设置视图的内容
+	 */
 	public void setContent(View v) {
 		if (mContent != null)
 			removeView(mContent);
@@ -73,13 +100,15 @@ public class CustomViewBehind extends ViewGroup {
 		addView(mContent);
 	}
 
+	/**
+	 * 得到视图的内容
+	 */
 	public View getContent() {
 		return mContent;
 	}
 
 	/**
-	 * Sets the secondary (right) menu for use when setMode is called with SlidingMenu.LEFT_RIGHT.
-	 * @param v the right menu
+	 * 设置右边滑动菜单的内容，当模式设置为LEFT_RIGHT模式时
 	 */
 	public void setSecondaryContent(View v) {
 		if (mSecondaryContent != null)
@@ -88,10 +117,16 @@ public class CustomViewBehind extends ViewGroup {
 		addView(mSecondaryContent);
 	}
 
+	/**
+	 * 得到右边滑动菜单的内容
+	 */
 	public View getSecondaryContent() {
 		return mSecondaryContent;
 	}
 
+	/**
+	 * 设置是否能够使用子视图
+	 */
 	public void setChildrenEnabled(boolean enabled) {
 		mChildrenEnabled = enabled;
 	}
@@ -145,15 +180,33 @@ public class CustomViewBehind extends ViewGroup {
 			mSecondaryContent.measure(contentWidth, contentHeight);
 	}
 
+	//定义模式的值
 	private int mMode;
+	
+	//是否能够使用渐入渐出效果
 	private boolean mFadeEnabled;
-	private final Paint mFadePaint = new Paint();
-	private float mScrollScale;
-	private Drawable mShadowDrawable;
-	private Drawable mSecondaryShadowDrawable;
-	private int mShadowWidth;
+	
+	//定义渐入渐出的值
 	private float mFadeDegree;
-
+	
+	//定义渐入渐出效果画笔
+	private final Paint mFadePaint = new Paint();
+	
+	//定义滑动缩放的值
+	private float mScrollScale;
+	
+	//定义滑动菜单的阴影
+	private Drawable mShadowDrawable;
+	
+	//定义右边滑动菜单的阴影图片
+	private Drawable mSecondaryShadowDrawable;
+	
+	//定义阴影的宽度
+	private int mShadowWidth;
+	
+	/**
+	 * 设置模式的值
+	 */
 	public void setMode(int mode) {
 		if (mode == SlidingMenu.LEFT || mode == SlidingMenu.RIGHT) {
 			if (mContent != null)
@@ -164,43 +217,70 @@ public class CustomViewBehind extends ViewGroup {
 		mMode = mode;
 	}
 
+	/**
+	 * 得到模式的值
+	 */
 	public int getMode() {
 		return mMode;
 	}
 
+	/**
+	 * 设置滑动缩放的值
+	 */
 	public void setScrollScale(float scrollScale) {
 		mScrollScale = scrollScale;
 	}
 
+	/**
+	 * 得到滑动缩放的值
+	 */
 	public float getScrollScale() {
 		return mScrollScale;
 	}
 
+	/**
+	 * 设置滑动菜单的阴影
+	 */
 	public void setShadowDrawable(Drawable shadow) {
 		mShadowDrawable = shadow;
 		invalidate();
 	}
 
+	/**
+	 * 设置右边滑动菜单的阴影
+	 */
 	public void setSecondaryShadowDrawable(Drawable shadow) {
 		mSecondaryShadowDrawable = shadow;
 		invalidate();
 	}
 
+	/**
+	 * 设置阴影的宽度
+	 */
 	public void setShadowWidth(int width) {
 		mShadowWidth = width;
 		invalidate();
 	}
 
+	/**
+	 * 设置能否使用渐入渐出效果
+	 */
 	public void setFadeEnabled(boolean b) {
 		mFadeEnabled = b;
 	}
 
+	/**
+	 * 设置渐入渐出的值
+	 */
 	public void setFadeDegree(float degree) {
 		if (degree > 1.0f || degree < 0.0f)
 			throw new IllegalStateException("The BehindFadeDegree must be between 0.0f and 1.0f");
 		mFadeDegree = degree;
 	}
 
+	/**
+	 * 得到菜单页面
+	 */
 	public int getMenuPage(int page) {
 		page = (page > 1) ? 2 : ((page < 1) ? 0 : page);
 		if (mMode == SlidingMenu.LEFT && page > 1) {
@@ -212,6 +292,9 @@ public class CustomViewBehind extends ViewGroup {
 		}
 	}
 
+	/**
+	 * 滑动下方视图到达的位置
+	 */
 	public void scrollBehindTo(View content, int x, int y) {
 		int vis = View.VISIBLE;		
 		if (mMode == SlidingMenu.LEFT) {
@@ -237,6 +320,9 @@ public class CustomViewBehind extends ViewGroup {
 		setVisibility(vis);
 	}
 
+	/**
+	 * 得到左边菜单的视图
+	 */
 	public int getMenuLeft(View content, int page) {
 		if (mMode == SlidingMenu.LEFT) {
 			switch (page) {
@@ -263,6 +349,9 @@ public class CustomViewBehind extends ViewGroup {
 		return content.getLeft();
 	}
 
+	/**
+	 * 得到左边框视图
+	 */
 	public int getAbsLeftBound(View content) {
 		if (mMode == SlidingMenu.LEFT || mMode == SlidingMenu.LEFT_RIGHT) {
 			return content.getLeft() - getBehindWidth();
@@ -272,6 +361,9 @@ public class CustomViewBehind extends ViewGroup {
 		return 0;
 	}
 
+	/**
+	 * 得到右边框视图
+	 */
 	public int getAbsRightBound(View content) {
 		if (mMode == SlidingMenu.LEFT) {
 			return content.getLeft();
@@ -281,6 +373,9 @@ public class CustomViewBehind extends ViewGroup {
 		return 0;
 	}
 
+	/**
+	 * 是否允许触摸屏幕的边缘
+	 */
 	public boolean marginTouchAllowed(View content, int x) {
 		int left = content.getLeft();
 		int right = content.getRight();
@@ -295,10 +390,16 @@ public class CustomViewBehind extends ViewGroup {
 		return false;
 	}
 
+	/**
+	 * 设置触摸模式的值
+	 */
 	public void setTouchMode(int i) {
 		mTouchMode = i;
 	}
 
+	/**
+	 * 是否允许通过触摸打开滑动菜单
+	 */
 	public boolean menuOpenTouchAllowed(View content, int currPage, float x) {
 		switch (mTouchMode) {
 		case SlidingMenu.TOUCHMODE_FULLSCREEN:
@@ -309,6 +410,9 @@ public class CustomViewBehind extends ViewGroup {
 		return false;
 	}
 
+	/**
+	 * 滑动菜单快速返回
+	 */
 	public boolean menuTouchInQuickReturn(View content, int currPage, float x) {
 		if (mMode == SlidingMenu.LEFT || (mMode == SlidingMenu.LEFT_RIGHT && currPage == 0)) {
 			return x >= content.getLeft();
@@ -318,6 +422,9 @@ public class CustomViewBehind extends ViewGroup {
 		return false;
 	}
 
+	/**
+	 * 是否允许关闭滑动菜单
+	 */
 	public boolean menuClosedSlideAllowed(float dx) {
 		if (mMode == SlidingMenu.LEFT) {
 			return dx > 0;
@@ -329,6 +436,9 @@ public class CustomViewBehind extends ViewGroup {
 		return false;
 	}
 
+	/**
+	 * 是否允许打开滑动菜单
+	 */
 	public boolean menuOpenSlideAllowed(float dx) {
 		if (mMode == SlidingMenu.LEFT) {
 			return dx < 0;
@@ -340,6 +450,9 @@ public class CustomViewBehind extends ViewGroup {
 		return false;
 	}
 
+	/**
+	 * 画滑动菜单的阴影
+	 */
 	public void drawShadow(View content, Canvas canvas) {
 		if (mShadowDrawable == null || mShadowWidth <= 0) return;
 		int left = 0;
@@ -359,6 +472,9 @@ public class CustomViewBehind extends ViewGroup {
 		mShadowDrawable.draw(canvas);
 	}
 
+	/**
+	 * 画出渐入渐出效果
+	 */
 	public void drawFade(View content, Canvas canvas, float openPercent) {
 		if (!mFadeEnabled) return;
 		final int alpha = (int) (mFadeDegree * 255 * Math.abs(1-openPercent));

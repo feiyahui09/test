@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_slidingmenu_library" default="compile.module.slidingmenu_library">
+  <dirname property="module.slidingmenu_library.basedir" file="${ant.file.module_slidingmenu_library}"/>
+  
+  <property name="module.jdk.home.slidingmenu_library" value="${jdk.home.android_api_19_platform}"/>
+  <property name="module.jdk.bin.slidingmenu_library" value="${jdk.bin.android_api_19_platform}"/>
+  <property name="module.jdk.classpath.slidingmenu_library" value="jdk.classpath.android_api_19_platform"/>
+  
+  <property name="compiler.args.slidingmenu_library" value="-encoding UTF-8 -source 1.6 ${compiler.args}"/>
+  
+  <property name="slidingmenu_library.output.dir" value="${module.slidingmenu_library.basedir}/../HuiChi_2.x/out/production/slidingmenu_library"/>
+  <property name="slidingmenu_library.testoutput.dir" value="${module.slidingmenu_library.basedir}/../HuiChi_2.x/out/test/slidingmenu_library"/>
+  
+  <path id="slidingmenu_library.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="slidingmenu_library.module.production.classpath">
+    <path refid="${module.jdk.classpath.slidingmenu_library}"/>
+    <path refid="library.android-support-v4.classpath"/>
+  </path>
+  
+  <path id="slidingmenu_library.runtime.production.module.classpath">
+    <pathelement location="${slidingmenu_library.output.dir}"/>
+    <path refid="library.android-support-v4.classpath"/>
+  </path>
+  
+  <path id="slidingmenu_library.module.classpath">
+    <path refid="${module.jdk.classpath.slidingmenu_library}"/>
+    <pathelement location="${slidingmenu_library.output.dir}"/>
+    <path refid="library.android-support-v4.classpath"/>
+  </path>
+  
+  <path id="slidingmenu_library.runtime.module.classpath">
+    <pathelement location="${slidingmenu_library.testoutput.dir}"/>
+    <pathelement location="${slidingmenu_library.output.dir}"/>
+    <path refid="library.android-support-v4.classpath"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.slidingmenu_library">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.slidingmenu_library">
+    <patternset refid="excluded.from.module.slidingmenu_library"/>
+  </patternset>
+  
+  <path id="slidingmenu_library.module.sourcepath">
+    <dirset dir="${module.slidingmenu_library.basedir}">
+      <include name="gen"/>
+      <include name="src"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.slidingmenu_library" depends="compile.module.slidingmenu_library.production,compile.module.slidingmenu_library.tests" description="Compile module slidingmenu_library"/>
+  
+  <target name="compile.module.slidingmenu_library.production" depends="register.custom.compilers" description="Compile module slidingmenu_library; production classes">
+    <mkdir dir="${slidingmenu_library.output.dir}"/>
+    <javac2 destdir="${slidingmenu_library.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.slidingmenu_library}/javac">
+      <compilerarg line="${compiler.args.slidingmenu_library}"/>
+      <bootclasspath refid="slidingmenu_library.module.bootclasspath"/>
+      <classpath refid="slidingmenu_library.module.production.classpath"/>
+      <src refid="slidingmenu_library.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.slidingmenu_library"/>
+    </javac2>
+    
+    <copy todir="${slidingmenu_library.output.dir}">
+      <fileset dir="${module.slidingmenu_library.basedir}/gen">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+      <fileset dir="${module.slidingmenu_library.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.slidingmenu_library.tests" depends="register.custom.compilers,compile.module.slidingmenu_library.production" description="compile module slidingmenu_library; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.slidingmenu_library" description="cleanup module">
+    <delete dir="${slidingmenu_library.output.dir}"/>
+    <delete dir="${slidingmenu_library.testoutput.dir}"/>
+  </target>
+</project>

@@ -3,6 +3,7 @@ package com.zmax.app.ui.fragment;
 import java.util.List;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.DialogFragment;
@@ -136,7 +137,7 @@ public class ActListFragment extends Fragment implements IXListViewListener, OnI
 	
 	private void getActList(int page) {
 		state = LOAD_STATE.LOADING;
-		
+
 		getActListTask = new GetActListTask(getActivity(), new GetActListTask.TaskCallBack() {
 			
 			@Override
