@@ -1,5 +1,14 @@
 package com.zmax.app.chat.promelo;
 
+import com.zmax.app.chat.ClientCallback;
+import io.socket.IOAcknowledge;
+import io.socket.IOCallback;
+import io.socket.SocketIO;
+import io.socket.SocketIOException;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -7,40 +16,26 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import android.widget.Toast;
-
-import com.zmax.app.chat.ChatHelper;
-import com.zmax.app.chat.ClientCallback;
-
-import io.socket.IOAcknowledge;
-import io.socket.IOCallback;
-import io.socket.SocketIO;
-import io.socket.SocketIOException;
-
 public class PomeloClient {
-	
+
 	private static final Logger logger = Logger.getLogger("org.netease.pomelo");
 	private final static String URLHEADER = "http://";
 	private final static String JSONARRAY_FLAG = "[";
+	ClientCallback clientCallback;
 	private int reqId;
 	private SocketIO socket;
 	private Map<Integer, DataCallBack> cbs;
 	private Map<String, List<DataListener>> listeners;
-	ClientCallback clientCallback;
-	
+
 	public PomeloClient(String url, int port) {
 		initSocket(url, port);
 		cbs = new HashMap<Integer, DataCallBack>();
 		listeners = new HashMap<String, List<DataListener>>();
 	}
-	
+
 	/**
 	 * Init the socket of pomelo client.
-	 * 
+	 *
 	 * @param url
 	 * @param port
 	 */
@@ -52,17 +47,15 @@ public class PomeloClient {
 		buff.append(port);
 		try {
 			socket = new SocketIO(buff.toString());
-		}
-		catch (MalformedURLException e) {
+		} catch (MalformedURLException e) {
 			throw new RuntimeException("please check your url format.");
 		}
 	}
-	
+
 	/**
 	 * Initialize pomelo client.
-	 * 
+	 *
 	 * @param clientCallback
-	 * 
 	 */
 	public void init(final IOCallback ioCallback, ClientCallback clientCallback) {
 		this.clientCallback = clientCallback;
@@ -71,23 +64,22 @@ public class PomeloClient {
 				logger.info("pomeloclient is connected.");
 				ioCallback.onConnect();
 			}
-			
+
 			public void onMessage(JSONObject json, IOAcknowledge ack) {
 				logger.warning("pomelo send message of string.");
 				ioCallback.onMessage(json, ack);
 			}
-			
+
 			// get messages from the server side
 			public void onMessage(String data, IOAcknowledge ack) {
-				if (data.indexOf(JSONARRAY_FLAG) == 0) {
+				if (data.indexOf(JSONARRAY_FLAG) == 0){
 					processMessageBatch(data);
-				}
-				else {
+				} else {
 					processMessage(data);
 				}
 				ioCallback.onMessage(data, ack);
 			}
-			
+
 			public void onError(SocketIOException socketIOException) {
 				logger.info("connection is terminated.");
 				emit("disconnect", null);
@@ -95,60 +87,56 @@ public class PomeloClient {
 				socketIOException.printStackTrace();
 				ioCallback.onError(socketIOException);
 			}
-			
+
 			public void onDisconnect() {
 				logger.info("connection is terminated.");
 				emit("disconnect", null);
 				socket = null;
 				ioCallback.onDisconnect();
 			}
-			
+
 			public void on(String event, IOAcknowledge ack, Object... args) {
 				logger.info("socket.io emit events.");
 				ioCallback.on(event, ack, args);
 			}
-			
+
 		});
 	}
-	
+
 	/**
 	 * Send message to the server side.
-	 * 
-	 * @param reqId
-	 *            request id
-	 * @param route
-	 *            request route
-	 * @param msg
-	 *            reqest message
+	 *
+	 * @param reqId request id
+	 * @param route request route
+	 * @param msg   reqest message
 	 */
 	private void sendMessage(int reqId, String route, JSONObject msg) {
 		socket.send(Protocol.encode(reqId, route, msg));
 	}
-	
+
 	/**
 	 * Client send request to the server and get response data.
-	 * 
+	 *
 	 * @param args
 	 */
 	public void request(Object... args) {
-		if (args.length < 2 || args.length > 3) {
+		if (args.length < 2 || args.length > 3){
 			throw new RuntimeException("the request arguments is error.");
 		}
 		// first argument must be string
-		if (!(args[0] instanceof String)) {
+		if (!(args[0] instanceof String)){
 			throw new RuntimeException("the route of request is error.");
 		}
-		
+
 		String route = args[0].toString();
 		JSONObject msg = null;
 		DataCallBack cb = null;
-		
-		if (args.length == 2) {
+
+		if (args.length == 2){
 			if (args[1] instanceof JSONObject)
 				msg = (JSONObject) args[1];
 			else if (args[1] instanceof DataCallBack) cb = (DataCallBack) args[1];
-		}
-		else {
+		} else {
 			msg = (JSONObject) args[1];
 			cb = (DataCallBack) args[2];
 		}
@@ -157,47 +145,46 @@ public class PomeloClient {
 		cbs.put(reqId, cb);
 		sendMessage(reqId, route, msg);
 	}
-	
+
 	/**
 	 * Notify the server without response
-	 * 
+	 *
 	 * @param route
 	 * @param msg
 	 */
 	public void inform(String route, JSONObject msg) {
 		request(route, msg);
 	}
-	
+
 	/**
 	 * Add timestamp to message.
-	 * 
+	 *
 	 * @param msg
 	 * @return msg
 	 */
 	private JSONObject filter(JSONObject msg) {
-		if (msg == null) {
+		if (msg == null){
 			msg = new JSONObject();
 		}
 		long date = System.currentTimeMillis();
 		try {
 			msg.put("timestamp", date);
-		}
-		catch (JSONException e) {
+		} catch (JSONException e) {
 			e.printStackTrace();
 		}
 		return msg;
 	}
-	
+
 	/**
 	 * Disconnect the connection with the server.
 	 */
 	public void disconnect() {
 		socket.disconnect();
 	}
-	
+
 	/**
 	 * Process the message from the server.
-	 * 
+	 *
 	 * @param msg
 	 */
 	private void processMessage(String msg) {
@@ -206,7 +193,7 @@ public class PomeloClient {
 		try {
 			jsonObject = new JSONObject(msg);
 			// request message
-			if (jsonObject.has("id")) {
+			if (jsonObject.has("id")){
 				id = jsonObject.getInt("id");
 				DataCallBack cb = cbs.get(id);
 				cb.responseData(jsonObject.getJSONObject("body"));
@@ -215,15 +202,14 @@ public class PomeloClient {
 			// broadcast message
 			else
 				emit(jsonObject.getString("route"), jsonObject);
-		}
-		catch (JSONException e) {
+		} catch (JSONException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	/**
 	 * Process message in batch.
-	 * 
+	 *
 	 * @param msgs
 	 */
 	private void processMessageBatch(String msgs) {
@@ -233,15 +219,14 @@ public class PomeloClient {
 			for (int i = 0; i < jsonArray.length(); i++) {
 				processMessage(jsonArray.getJSONObject(i).toString());
 			}
-		}
-		catch (JSONException e) {
+		} catch (JSONException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	/**
 	 * Add event listener and wait for broadcast message.
-	 * 
+	 *
 	 * @param route
 	 * @param listener
 	 */
@@ -251,28 +236,28 @@ public class PomeloClient {
 		list.add(listener);
 		listeners.put(route, list);
 	}
-	
+
 	/**
 	 * Touch off the event and call listeners corresponding route.
-	 * 
+	 *
 	 * @param route
 	 * @param message
 	 * @return true if call success, false if there is no listeners for this
-	 *         route.
+	 * route.
 	 */
 	private void emit(String route, JSONObject message) {
 		List<DataListener> list = listeners.get(route);
-		if (list == null) {
+		if (list == null){
 			logger.warning("there is no listeners.");
 			//禁止聊天的回调。。
-			if (clientCallback != null && message != null) {
+			if (clientCallback != null && message != null){
 				JSONObject body = message.optJSONObject("body");
 				if (body == null) return;
 				if ("401".equals(body.optString("code"))) clientCallback.onForbidden(body.optString("message"));
 			}
 			return;
 		}
-		
+
 		for (DataListener listener : list) {
 			DataEvent event = new DataEvent(this, message);
 			listener.receiveData(event);

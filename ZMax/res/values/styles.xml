@@ -167,10 +167,24 @@
         <item name="android:singleLine">true</item>
         <item name="android:layout_marginRight">15dp</item>
         <item name="android:layout_marginLeft">15dp</item>
-        <item name="android:singleLine">true</item>
         <item name="android:paddingLeft">25dp</item>
         <item name="android:background">@drawable/playzmax_login_et_bg</item>
     </style>
+
+	<style name="playzmax_login_dropdown_spinner_item">
+		<item name="android:layout_gravity">center_horizontal</item>
+		<item name="android:layout_width">fill_parent</item>
+		<item name="android:layout_height">wrap_content</item>
+		<item name="android:textColor">#a0a09f</item>
+		<item name="android:textColorHint">#a0a09f</item>
+		<item name="android:textSize">14sp</item>
+		<item name="android:ellipsize">end</item>
+		<item name="android:singleLine">true</item>
+		<item name="android:layout_marginRight">45dp</item>
+		<item name="android:layout_marginLeft">45dp</item>
+		<item name="android:paddingLeft">25dp</item>
+		<item name="android:background">@color/red</item>
+	</style>
 
     <style name="playzmax_login_sucess_textview">
         <item name="android:layout_gravity">center_horizontal</item>

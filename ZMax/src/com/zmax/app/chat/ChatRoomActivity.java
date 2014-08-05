@@ -118,7 +118,7 @@ public class ChatRoomActivity extends BaseFragmentActivity implements OnClickLis
 		btn_Share.setOnClickListener(this);
 		btn_Back.setOnClickListener(this);
 		
-		tv_title.setText("聊天室");
+		tv_title.setText("服务器");
 		et_edit = (EditText) findViewById(R.id.et_edit);
 		et_edit.setOnClickListener(this);
 		et_edit.setOnEditorActionListener(new OnEditorActionListener() {
@@ -709,7 +709,7 @@ public class ChatRoomActivity extends BaseFragmentActivity implements OnClickLis
 						@Override
 						public void run() {
 							if (dialog != null && dialog.getActivity() != null) dialog.dismiss();
-							Utility.toastResult(mContext, "欢迎进入聊天室!");
+							Utility.toastResult(mContext, "欢迎!");
 						}
 					});
 				}
@@ -817,7 +817,12 @@ public class ChatRoomActivity extends BaseFragmentActivity implements OnClickLis
 				}
 			});
 		}
-		
+
+		@Override
+		public void onDevise(JSONObject devise) {
+			Log.i("devise  "+devise.toString());
+		}
+
 		@Override
 		public void onKick(JSONObject body) {
 			int code = body.optInt("code");
@@ -827,7 +832,7 @@ public class ChatRoomActivity extends BaseFragmentActivity implements OnClickLis
 			handler.post(new Runnable() {
 				@Override
 				public void run() {
-					String _msg = TextUtils.isEmpty(msg) ? "聊天室正在维护中,请稍后再试！" : msg;
+					String _msg = TextUtils.isEmpty(msg) ? "服务器正在维护中,请稍后再试！" : msg;
 					dialog = SimpleDialogFragment.createBuilder(mContext, getSupportFragmentManager()).setPositiveButtonText("确定")
 							.setTitle("提示").setMessage(_msg).setRequestCode(Constant.DialogCode.TYPE_FORBIDDEN).show();
 				}
@@ -857,7 +862,7 @@ public class ChatRoomActivity extends BaseFragmentActivity implements OnClickLis
 				@Override
 				public void run() {
 					dialog = SimpleDialogFragment.createBuilder(mContext, getSupportFragmentManager()).setTitle("提示").setCancelable(false)
-							.setMessage("与聊天室连接超时！").setPositiveButtonText("确定").setRequestCode(Constant.DialogCode.TYPE_SOCKET_TIME_OUT)
+							.setMessage("与服务器连接超时！").setPositiveButtonText("确定").setRequestCode(Constant.DialogCode.TYPE_SOCKET_TIME_OUT)
 							.show();
 				}
 			});

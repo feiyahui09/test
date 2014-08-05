@@ -250,11 +250,12 @@ public class NetAccessor {
         }
         return baseModel;
     }
-    public static Login loginPlayZMAX(Context context, String room_num, String id_number, String password) {
+    public static Login loginPlayZMAX(Context context,  String pms_hotel_id,String room_num, String id_number) {
         Login login = null;
         try {
-            String jsonString = HttpUtils.postByHttpClient(context, Constant.ZMAX_URL + "users/login", new BasicNameValuePair("room_num",
-                    room_num), new BasicNameValuePair("id_number", id_number), new BasicNameValuePair("auth_code", password));
+            String jsonString = HttpUtils.postByHttpClient(context, Constant.ZMAX_URL + "users/login", new BasicNameValuePair(
+		            "pms_hotel_id", pms_hotel_id),new BasicNameValuePair("room_num",
+                    room_num), new BasicNameValuePair("id_number", id_number));
             Log.d("  responeString -->\n" + jsonString);
             login = JsonMapperUtils.toObject(jsonString, Login.class);
         } catch (Exception e) {

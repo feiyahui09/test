@@ -72,4 +72,8 @@ public class ActDetailAdapter extends FragmentPagerAdapter {
 		// TODO Auto-generated method stub
 		super.destroyItem(container, position, object);
 	}
+
+	public ArrayList<Fragment> getFragments() {
+		return mFragments;
+	}
 }

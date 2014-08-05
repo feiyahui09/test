@@ -18,5 +18,6 @@ public interface ClientCallback {
 	public void onSendFailed(Exception e);
 	
 	public void onForbidden(String  errorMessage);
-	
+
+	public void onDevise(JSONObject devise);
 }

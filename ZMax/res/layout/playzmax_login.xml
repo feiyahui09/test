@@ -30,7 +30,8 @@
             style="@style/playzmax_login_edittext"
             android:background="@drawable/playzmax_login_spinner_bg"
             android:drawSelectorOnTop="false"
-            android:visibility="gone" />
+            android:paddingLeft="0dp"
+            android:visibility="visible" />
 
         <EditText
             android:id="@+id/et_room_number"
@@ -43,8 +44,9 @@
             android:id="@+id/et_namecard"
             style="@style/playzmax_login_edittext"
             android:layout_marginTop="@dimen/play_login_et_marginTop"
-            android:hint="身份证号后四位"
-            android:maxLength="4"
+            android:hint="身份证号"
+            android:maxLength="18"
+            android:inputType="number"
             android:textCursorDrawable="@null" />
 
         <EditText
@@ -53,6 +55,7 @@
             android:layout_marginTop="@dimen/play_login_et_marginTop"
             android:hint="密码"
             android:password="true"
+            android:visibility="gone"
             android:textCursorDrawable="@null" />
 
         <Button
