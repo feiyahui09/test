@@ -15,7 +15,7 @@ import java.io.Serializable;
  * @author fyf
  * 
  */
-public class AirCondition implements Serializable {
+public class AirCondition  extends BaseModel implements Serializable {
 	private static final long serialVersionUID = 1L;
 	public int room_temperature;
 	public int setting_temperature;

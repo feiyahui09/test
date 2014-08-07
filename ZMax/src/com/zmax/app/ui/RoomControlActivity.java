@@ -63,9 +63,7 @@ public class RoomControlActivity extends BaseFragmentActivity implements ISimple
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.room_control);
 		initHeader();
-		init();
-		updateRoomState();
-
+		initChatPomelo();
 
 	}
 
@@ -87,6 +85,7 @@ public class RoomControlActivity extends BaseFragmentActivity implements ISimple
 							handler.post(new Runnable() {
 								@Override
 								public void run() {
+									init();
 									adapter.addTab(new RoomControlLightingFragment(callback, null));
 									adapter.addTab(new RoomControlAirConditionFragment(callback, null));
 									adapter.addTab(new RoomControlTVFragment(callback, null));
@@ -98,6 +97,12 @@ public class RoomControlActivity extends BaseFragmentActivity implements ISimple
 
 						@Override
 						public void onEnterFailed(Exception e) {
+							handler.post(new Runnable() {
+								@Override
+								public void run() {
+									init();
+								}
+							});
 
 						}
 
@@ -153,6 +158,12 @@ public class RoomControlActivity extends BaseFragmentActivity implements ISimple
 
 						@Override
 						public void onError(SocketIOException e) {
+							handler.post(new Runnable() {
+								@Override
+								public void run() {
+									init();
+								}
+							});
 
 						}
 					});
@@ -171,15 +182,15 @@ public class RoomControlActivity extends BaseFragmentActivity implements ISimple
 	protected void onRestart() {
 		// TODO Auto-generated method stub
 		super.onRestart();
-		updateRoomState();
 	}
 
+	@Deprecated
 	private void updateRoomState() {
 
 		progressDialog = ProgressDialogFragment.createBuilder(this, getSupportFragmentManager()).setMessage("正在加载中.." +
 				".").setTitle("提示")
 				.setCancelable(true).show();
-		initChatPomelo();
+
 		getRoomStatusTask = new GetRoomStatusTask(this, new GetRoomStatusTask.TaskCallBack() {
 			@Override
 			public void onCallBack(RoomStatus result) {
@@ -245,16 +256,16 @@ public class RoomControlActivity extends BaseFragmentActivity implements ISimple
 				curPageIndex = position;
 				showIndicator();
 				ArrayList<Fragment> fragments = adapter.getFragments();
-				for (int i = 0; i < fragments.size() ; i++) {
-					Fragment fragment=fragments.get(i);
+				for (int i = 0; i < fragments.size(); i++) {
+					Fragment fragment = fragments.get(i);
 					if (fragment instanceof IUpdateRoomState){
 						IUpdateRoomState iUpdateRoomState = (IUpdateRoomState) fragment;
-						if(i==position)
+						if (i == position)
 							iUpdateRoomState.onUpdateSelect();
 						else iUpdateRoomState.onUpdateUnselcet();
 					}
 				}
- 			}
+			}
 
 			@Override
 			public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -377,7 +388,7 @@ public class RoomControlActivity extends BaseFragmentActivity implements ISimple
 	public interface IUpdateRoomState {
 		public void onUpdateSelect();
 
-		public void onUpdateUnselcet( );
+		public void onUpdateUnselcet();
 
 	}
 

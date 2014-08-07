@@ -2,37 +2,37 @@ package com.zmax.app.ui.fragment;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.view.animation.AlphaAnimation;
-import android.view.animation.Animation;
 import android.widget.*;
 import com.zmax.app.R;
 import com.zmax.app.chat.ChatHelper;
 import com.zmax.app.chat.ClientCallback;
 import com.zmax.app.model.Light;
-import com.zmax.app.model.Television;
 import com.zmax.app.net.NetWorkHelper;
+import com.zmax.app.task.GetLightingStatusTask;
+import com.zmax.app.task.LOAD_STATUS_ENUM;
 import com.zmax.app.task.SetLightTask;
 import com.zmax.app.ui.RoomControlActivity;
 import com.zmax.app.ui.RoomControlActivity.VerticalChangedCallback;
+import com.zmax.app.utils.Constant;
 import com.zmax.app.utils.JsonMapperUtils;
 import com.zmax.app.utils.Log;
 import com.zmax.app.utils.Utility;
 import com.zmax.app.widget.SlidingUpPanelLayout;
 import com.zmax.app.widget.SlidingUpPanelLayout.PanelSlideListener;
+import eu.inmite.android.lib.dialogs.ProgressDialogFragment;
 import io.socket.IOAcknowledge;
 import io.socket.IOCallback;
 import io.socket.SocketIOException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.text.SimpleDateFormat;
 
 public class RoomControlLightingFragment extends Fragment implements RoomControlActivity.IUpdateRoomState {
 	public static String[] mode_names = {"明亮模式", "电视模式", "阅读模式", "睡眠模式"};
@@ -46,8 +46,9 @@ public class RoomControlLightingFragment extends Fragment implements RoomControl
 	 * parent view
 	 */
 	protected View view;
-	private Handler handler=new Handler();
 	VerticalChangedCallback callback;
+	String api_type = "GET";
+	private Handler handler = new Handler();
 	/* above views */
 	private ImageView big_icon;
 	private TextView tv_mode, tv_mode_detail;
@@ -80,8 +81,6 @@ public class RoomControlLightingFragment extends Fragment implements RoomControl
 			}
 		}
 	};
-
-
 	private ClientCallback clientCallback = new ClientCallback() {
 
 		@Override
@@ -101,19 +100,6 @@ public class RoomControlLightingFragment extends Fragment implements RoomControl
 
 		@Override
 		public void onChat(final String bodyMsg) {
-			handler.post(new Runnable() {
-				@Override
-				public void run() {
-					try {
-						if (!TextUtils.isEmpty(bodyMsg)){
-							Light result = JsonMapperUtils.toObject(bodyMsg, Light.class);
-							handleOperResult(result);
-						}
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-				}
-			});
 
 		}
 
@@ -133,7 +119,25 @@ public class RoomControlLightingFragment extends Fragment implements RoomControl
 		}
 
 		@Override
-		public void onDevise(JSONObject devise) {
+		public void onDevise(final JSONObject devise) {
+
+			handler.post(new Runnable() {
+				@Override
+				public void run() {
+					try {
+						if (devise!=null){
+							Light result = JsonMapperUtils.toObject(devise.toString(), Light.class);
+							if (api_type.equals("POST")){
+								handlePostResult(result);
+							} else if (api_type.equals("GET")){
+								handleGetResult(result);
+							}
+						}
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			});
 
 		}
 	};
@@ -168,6 +172,9 @@ public class RoomControlLightingFragment extends Fragment implements RoomControl
 
 		}
 	};
+	private DialogFragment progressDialog;
+	private GetLightingStatusTask getRoomStatusTask;
+	private LOAD_STATUS_ENUM load_status_enum = LOAD_STATUS_ENUM.INIT;
 
 	public RoomControlLightingFragment(VerticalChangedCallback callback, Light light) {
 		this.light = light;
@@ -187,15 +194,7 @@ public class RoomControlLightingFragment extends Fragment implements RoomControl
 		tv_mode_detail = ((TextView) view.findViewById(R.id.tv_mode_detail));
 		tv_mode_detail.setVisibility(View.VISIBLE);
 		tv_mode_detail.setText("当前灯光模式：明亮模式");
-		if (light != null){
-			for (int i = 0; i < mode_patterns.length; i++) {
-				if (light.pattern.equals(mode_patterns[i])){
-					tv_mode_detail.setText(String.format("当前灯光模式：%s", mode_names[i]));
-					operaMode = i;
-					curMode = i;
-				}
-			}
-		}
+
 
 		// behind
 		iv_img = ((ImageView) view.findViewById(R.id.iv_img));
@@ -209,14 +208,6 @@ public class RoomControlLightingFragment extends Fragment implements RoomControl
 		btn_apply = (Button) view.findViewById(R.id.btn_apply);
 		btn_apply.setOnClickListener(ImgClickListener);
 
-		if (light != null){
-			for (int i = 0; i < mode_patterns.length; i++) {
-				if (light.pattern.equals(mode_patterns[i])){
-					iv_img.setImageResource(mode_imgs[i]);
-					tv_mode_hint.setText(mode_names[i]);
-				}
-			}
-		}
 
 		mLayout = (SlidingUpPanelLayout) view.findViewById(R.id.sliding_layout);
 		dragview = view.findViewById(R.id.room_control_behind_indicator);
@@ -260,39 +251,26 @@ public class RoomControlLightingFragment extends Fragment implements RoomControl
 	}
 
 	@Override
+	public void onActivityCreated(Bundle savedInstanceState) {
+		super.onActivityCreated(savedInstanceState);
+
+	}
+
+	@Override
 	public void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
 	}
 
-	private void setTvAnimation(TextView textView) {
+	private void initData(Light light) {
+		if (light != null){
+			for (int i = 0; i < mode_patterns.length; i++) {
+				if (light.pattern.equals(mode_patterns[i])){
+					iv_img.setImageResource(mode_imgs[i]);
+					tv_mode_hint.setText(mode_names[i]);
+				}
+			}
+		}
 
-		Animation ani = new AlphaAnimation(0f, 1f);
-		ani.setDuration(1500);
-		ani.setRepeatMode(Animation.REVERSE);
-		ani.setRepeatCount(Animation.INFINITE);
-		textView.startAnimation(ani);
-	}
-
-	@Deprecated
-	public List<View> getLightingView(final FragmentActivity fragmentActivity, LayoutInflater inflater) {
-
-		List<View> mList = new ArrayList<View>();
-		mList.add(getAbove(inflater));
-		mList.add(getLightingBehind(inflater));
-
-		return mList;
-	}
-
-	@Deprecated
-	private View getAbove(LayoutInflater inflater) {
-		final View view = inflater.inflate(R.layout.room_control_above, null);
-		big_icon = ((ImageView) view.findViewById(R.id.iv_big_logo));
-		big_icon.setImageResource(R.drawable.room_control_above_lighting);
-		tv_mode = (TextView) view.findViewById(R.id.tv_mode_tile);
-		tv_mode.setText("灯光控制");
-		tv_mode_detail = ((TextView) view.findViewById(R.id.tv_mode_detail));
-		tv_mode_detail.setVisibility(View.VISIBLE);
-		tv_mode_detail.setText("当前灯光模式：明亮模式");
 		if (light != null){
 			for (int i = 0; i < mode_patterns.length; i++) {
 				if (light.pattern.equals(mode_patterns[i])){
@@ -302,45 +280,21 @@ public class RoomControlLightingFragment extends Fragment implements RoomControl
 				}
 			}
 		}
-		return view;
-	}
 
-	@Deprecated
-	private View getLightingBehind(LayoutInflater inflater) {
-		final View view = inflater.inflate(R.layout.room_control_lighting_behind, null);
-		iv_img = ((ImageView) view.findViewById(R.id.iv_img));
-		iv_img.setImageResource(R.drawable.room_control_lighting_bright_mode);
-		tv_mode_hint = (TextView) view.findViewById(R.id.tv_mode_hint);
-		tv_mode_hint.setText("明亮模式");
-		ib_previous = ((ImageButton) view.findViewById(R.id.ib_previous));
-		ib_next = ((ImageButton) view.findViewById(R.id.ib_next));
-		ib_previous.setOnClickListener(ImgClickListener);
-		ib_next.setOnClickListener(ImgClickListener);
-		btn_apply = (Button) view.findViewById(R.id.btn_apply);
-		btn_apply.setOnClickListener(ImgClickListener);
-
-		if (light != null){
-			for (int i = 0; i < mode_patterns.length; i++) {
-				if (light.pattern.equals(mode_patterns[i])){
-					iv_img.setImageResource(mode_imgs[i]);
-					tv_mode_hint.setText(mode_names[i]);
-				}
-			}
-		}
-		return view;
 	}
 
 	private void set(String pattern) {
+		api_type = "POST";
 		task = new SetLightTask(getActivity(), new SetLightTask.TaskCallBack() {
 			@Override
 			public void onCallBack(Light result) {
-				handleOperResult(result);
+				handlePostResult(result);
 			}
 		});
 		task.execute(pattern);
 	}
 
-	private void handleOperResult(Light result) {
+	private void handlePostResult(Light result) {
 		if (getActivity() == null){
 			return;
 		}
@@ -365,12 +319,61 @@ public class RoomControlLightingFragment extends Fragment implements RoomControl
 	@Override
 	public void onUpdateSelect() {
 		ChatHelper.getHelper().setCallback(clientCallback);
+		if (load_status_enum != LOAD_STATUS_ENUM.SUCCUSS)
+			updateRoomState();
+		Log.e("@#$");
 	}
-
 
 	@Override
 	public void onUpdateUnselcet() {
 		ChatHelper.getHelper().setCallback(null);
 
 	}
+
+	private void updateRoomState() {
+		api_type = "GET";
+		progressDialog = ProgressDialogFragment.createBuilder(getActivity(), getActivity().getSupportFragmentManager()
+		).setMessage("正在加载中...").setTitle("提示")
+				.setCancelable(true).show();
+		getRoomStatusTask = new GetLightingStatusTask(getActivity(), new GetLightingStatusTask.TaskCallBack() {
+			@Override
+			public void onCallBack(Light result) {
+				handleGetResult(result);
+			}
+		});
+		getRoomStatusTask.execute();
+	}
+
+	private void handleGetResult(Light result) {
+		if (getActivity() == null) return;
+		load_status_enum = LOAD_STATUS_ENUM.FAIL;
+		if (progressDialog != null && progressDialog.getActivity() != null){
+			progressDialog.dismiss();
+			progressDialog = null;
+		}
+		if (result == null){
+			if (!NetWorkHelper.checkNetState(getActivity()))
+				Toast.makeText(getActivity(), getActivity().getString(R.string.httpProblem), 450).show();
+			else
+				Toast.makeText(getActivity(), getActivity().getString(R.string.unkownError), 450).show();
+		} else if (result.status == 401){
+
+			Utility.showTokenErrorDialog(getActivity(), "" + result.message);
+		} else if (result.status == 403){
+			try {
+				Constant.SYN_TIME_INTERVAL = new SimpleDateFormat("yyyyMMddHHmmss").parse(result.sys_time)
+						.getTime() - System.currentTimeMillis();
+				updateRoomState();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+		} else if (result.status != 200)
+			Toast.makeText(getActivity(), "" + result.message, 450).show();
+		else {
+			load_status_enum = LOAD_STATUS_ENUM.SUCCUSS;
+			initData(result);
+		}
+	}
+
 }

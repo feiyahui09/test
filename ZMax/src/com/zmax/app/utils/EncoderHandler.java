@@ -83,16 +83,16 @@ public class EncoderHandler {
 	
 	public static String getPublicKey(String pms_hotel_id, String req_time) {
 		String req_time_s = req_time.substring(0, 8);
-		Log.i(req_time + "      " + req_time_s);
+//		Log.i(req_time + "      " + req_time_s);
 		String md5str = "zmax" + req_time_s;
-		Log.i("md5 encode str :   " + md5str);
+//		Log.i("md5 encode str :   " + md5str);
 		String md5_result = EncoderHandler.encode("MD5", md5str);
-		Log.i("md5 result  str :   " + md5_result);
+//		Log.i("md5 result  str :   " + md5_result);
 		
 		String shaStr = pms_hotel_id + req_time + md5_result;
-		Log.i("sha encode str :   " + shaStr);
+//		Log.i("sha encode str :   " + shaStr);
 		String sha_result = EncoderHandler.encode("SHA1", shaStr);
-		Log.i("sha encode result  :   " + sha_result);
+//		Log.i("sha encode result  :   " + sha_result);
 		
 		return sha_result;
 	}

@@ -2,8 +2,8 @@ package com.zmax.app.ui.fragment;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,26 +15,28 @@ import com.zmax.app.chat.ChatHelper;
 import com.zmax.app.chat.ClientCallback;
 import com.zmax.app.model.Television;
 import com.zmax.app.net.NetWorkHelper;
+import com.zmax.app.task.GetTelevisionTask;
+import com.zmax.app.task.LOAD_STATUS_ENUM;
 import com.zmax.app.task.SetTelevisionTask;
 import com.zmax.app.ui.RoomControlActivity;
 import com.zmax.app.ui.RoomControlActivity.VerticalChangedCallback;
+import com.zmax.app.utils.Constant;
 import com.zmax.app.utils.JsonMapperUtils;
 import com.zmax.app.utils.Log;
 import com.zmax.app.utils.Utility;
 import com.zmax.app.widget.SlidingUpPanelLayout;
 import com.zmax.app.widget.SlidingUpPanelLayout.PanelSlideListener;
+import eu.inmite.android.lib.dialogs.ProgressDialogFragment;
 import io.socket.IOAcknowledge;
 import io.socket.IOCallback;
 import io.socket.SocketIOException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.text.SimpleDateFormat;
 
 public class RoomControlTVFragment extends Fragment implements RoomControlActivity.IUpdateRoomState {
 
 	protected View view;
-	private Handler handler=new Handler();
 	OnClickListener onClickListener = new OnClickListener() {
 
 		@Override
@@ -96,9 +98,11 @@ public class RoomControlTVFragment extends Fragment implements RoomControlActivi
 			}
 		}
 	};
+	String api_type = "GET";
+	private LOAD_STATUS_ENUM load_status_enum = LOAD_STATUS_ENUM.INIT;
+	private Handler handler = new Handler();
 	private VerticalChangedCallback callback;
 	private SetTelevisionTask task;
-	private Television television;
 	private boolean isEnable;
 	private SlidingUpPanelLayout mLayout;
 	private IOCallback ioCallback = new IOCallback() {
@@ -152,19 +156,6 @@ public class RoomControlTVFragment extends Fragment implements RoomControlActivi
 
 		@Override
 		public void onChat(final String bodyMsg) {
-			handler.post(new Runnable() {
-				@Override
-				public void run() {
-					try {
-						if (!TextUtils.isEmpty(bodyMsg)){
-							Television television = JsonMapperUtils.toObject(bodyMsg, Television.class);
-							handleOperResult(television, push_button);
-						}
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-				}
-			});
 
 		}
 
@@ -184,10 +175,31 @@ public class RoomControlTVFragment extends Fragment implements RoomControlActivi
 		}
 
 		@Override
-		public void onDevise(JSONObject devise) {
+		public void onDevise(final JSONObject devise) {
+
+			handler.post(new Runnable() {
+				@Override
+				public void run() {
+					try {
+						if (devise!=null){
+							Television television = JsonMapperUtils.toObject(devise.toString(), Television.class);
+							if (api_type.equals("POST")){
+								handlePostResult(television, push_button);
+							} else if (api_type.equals("GET")){
+								handelGetResult(television);
+
+							}
+						}
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			});
 
 		}
 	};
+	private DialogFragment progressDialog;
+	private GetTelevisionTask getRoomStatusTask;
 
 	/**
 	 * behind views
@@ -197,7 +209,6 @@ public class RoomControlTVFragment extends Fragment implements RoomControlActivi
 
 	public RoomControlTVFragment(VerticalChangedCallback callback, Television television) {
 		this.callback = callback;
-		this.television = television;
 		setRetainInstance(true);
 	}
 
@@ -275,7 +286,6 @@ public class RoomControlTVFragment extends Fragment implements RoomControlActivi
 			}
 		});
 		rb_orient.setChecked(true);
-		initData();
 
 		mLayout = (SlidingUpPanelLayout) view.findViewById(R.id.sliding_layout);
 		final TextView tv_hint_above = (TextView) view.findViewById(R.id.tv_hint_above);
@@ -315,25 +325,10 @@ public class RoomControlTVFragment extends Fragment implements RoomControlActivi
 		return view;
 	}
 
-	private void initData() {
+	private void initData(Television television) {
 
 		if (television == null) return;
 		isEnable = television.status == 1 ? true : false;
-	}
-
-	@Override
-	public void onSaveInstanceState(Bundle outState) {
-		super.onSaveInstanceState(outState);
-	}
-
-	@Deprecated
-	public List<View> getTVView(final FragmentActivity fragmentActivity, LayoutInflater inflater) {
-
-		List<View> mList = new ArrayList<View>();
-		mList.add(getAbove(inflater));
-		mList.add(getTVBehind(inflater));
-
-		return mList;
 	}
 
 	@Deprecated
@@ -349,88 +344,20 @@ public class RoomControlTVFragment extends Fragment implements RoomControlActivi
 		return view;
 	}
 
-	@Deprecated
-	private View getTVBehind(LayoutInflater inflater) {
-		final LinearLayout ll_digital, ll_orient;
-		RadioGroup rg_model;
-		RadioButton rb_orient, rb_digital;
-		final View view = inflater.inflate(R.layout.room_control_tv_behind, null);
-		View ib_on, btn_at, btn_volu, btn_chd, btn_vold, btn_chu, btn_no_0, btn_no_1, btn_no_2, btn_no_3, btn_no_4,
-				btn_no_5, btn_no_6, btn_no_7, btn_no_8, btn_no_9;
-		CheckBox cb_sil;
-
-		cb_sil = (CheckBox) view.findViewById(R.id.cb_sil);
-		ll_digital = (LinearLayout) view.findViewById(R.id.ll_digital);
-		ll_orient = (LinearLayout) view.findViewById(R.id.ll_orient);
-		rg_model = ((RadioGroup) view.findViewById(R.id.rg_model));
-		rb_orient = ((RadioButton) view.findViewById(R.id.rb_orient));
-		rb_digital = ((RadioButton) view.findViewById(R.id.rb_digital));
-
-		ib_on = view.findViewById(R.id.ib_on);
-		btn_at = view.findViewById(R.id.btn_at);
-		btn_volu = view.findViewById(R.id.btn_volu);
-		btn_chd = view.findViewById(R.id.btn_chd);
-		btn_vold = view.findViewById(R.id.btn_vold);
-		btn_chu = view.findViewById(R.id.btn_chu);
-		btn_no_0 = view.findViewById(R.id.btn_no_0);
-		btn_no_1 = view.findViewById(R.id.btn_no_1);
-		btn_no_2 = view.findViewById(R.id.btn_no_2);
-		btn_no_3 = view.findViewById(R.id.btn_no_3);
-		btn_no_4 = view.findViewById(R.id.btn_no_4);
-		btn_no_5 = view.findViewById(R.id.btn_no_5);
-		btn_no_6 = view.findViewById(R.id.btn_no_6);
-		btn_no_7 = view.findViewById(R.id.btn_no_7);
-		btn_no_8 = view.findViewById(R.id.btn_no_8);
-		btn_no_9 = view.findViewById(R.id.btn_no_9);
-
-		ib_on.setOnClickListener(onClickListener);
-		btn_at.setOnClickListener(onClickListener);
-		btn_volu.setOnClickListener(onClickListener);
-		btn_chd.setOnClickListener(onClickListener);
-		btn_vold.setOnClickListener(onClickListener);
-		btn_chu.setOnClickListener(onClickListener);
-		btn_no_0.setOnClickListener(onClickListener);
-		btn_no_1.setOnClickListener(onClickListener);
-		btn_no_2.setOnClickListener(onClickListener);
-		btn_no_3.setOnClickListener(onClickListener);
-		btn_no_4.setOnClickListener(onClickListener);
-		btn_no_5.setOnClickListener(onClickListener);
-		btn_no_6.setOnClickListener(onClickListener);
-		btn_no_7.setOnClickListener(onClickListener);
-		btn_no_8.setOnClickListener(onClickListener);
-		btn_no_9.setOnClickListener(onClickListener);
-		cb_sil.setOnClickListener(onClickListener);
-
-		rg_model.setOnCheckedChangeListener(new android.widget.RadioGroup.OnCheckedChangeListener() {
-			@Override
-			public void onCheckedChanged(RadioGroup group, int checkedId) {
-				if (checkedId == R.id.rb_digital){
-					ll_digital.setVisibility(View.VISIBLE);
-					ll_orient.setVisibility(View.GONE);
-				} else if (checkedId == R.id.rb_orient){
-					ll_digital.setVisibility(View.GONE);
-					ll_orient.setVisibility(View.VISIBLE);
-				}
-			}
-		});
-		rb_orient.setChecked(true);
-		initData();
-		return view;
-	}
-
 	private void set(final String push_button) {
 		if (!isEnable && !push_button.equals("on")) return;
+		api_type = "POST";
 		task = new SetTelevisionTask(getActivity(), new SetTelevisionTask.TaskCallBack() {
 			@Override
 			public void onCallBack(Television result) {
-				handleOperResult(result, push_button);
+				handlePostResult(result, push_button);
 			}
 		});
 		this.push_button = push_button;
 		task.execute(this.push_button);
 	}
 
-	private void handleOperResult(Television result, String push_button) {
+	private void handlePostResult(Television result, String push_button) {
 		if (getActivity() == null){
 			return;
 		}
@@ -451,10 +378,12 @@ public class RoomControlTVFragment extends Fragment implements RoomControlActivi
 		}
 	}
 
-
 	@Override
 	public void onUpdateSelect() {
 		ChatHelper.getHelper().setCallback(clientCallback);
+		if (load_status_enum != LOAD_STATUS_ENUM.SUCCUSS)
+			updateRoomState();
+		Log.e("@#$");
 	}
 
 	@Override
@@ -462,4 +391,53 @@ public class RoomControlTVFragment extends Fragment implements RoomControlActivi
 		ChatHelper.getHelper().setCallback(null);
 
 	}
+
+	@Override
+	public void onActivityCreated(Bundle savedInstanceState) {
+		super.onActivityCreated(savedInstanceState);
+	}
+
+	private void updateRoomState() {
+		api_type = "GET";
+		progressDialog = ProgressDialogFragment.createBuilder(getActivity(), getActivity().getSupportFragmentManager()
+		).setMessage("正在加载中...").setTitle("提示")
+				.setCancelable(true).show();
+		getRoomStatusTask = new GetTelevisionTask(getActivity(), new GetTelevisionTask.TaskCallBack() {
+			@Override
+			public void onCallBack(Television result) {
+				handelGetResult(result);
+			}
+		});
+		getRoomStatusTask.execute();
+	}
+
+	private void handelGetResult(Television result) {
+		if (getActivity() == null) return;
+		load_status_enum = LOAD_STATUS_ENUM.FAIL;
+		if (progressDialog != null && progressDialog.getActivity() != null) progressDialog.dismiss();
+		if (result == null){
+			if (!NetWorkHelper.checkNetState(getActivity()))
+				Toast.makeText(getActivity(), getActivity().getString(R.string.httpProblem), 450).show();
+			else
+				Toast.makeText(getActivity(), getActivity().getString(R.string.unkownError), 450).show();
+		} else if (result.status == 401){
+
+			Utility.showTokenErrorDialog(getActivity(), "" + result.message);
+		} else if (result.status == 403){
+			try {
+				Constant.SYN_TIME_INTERVAL = new SimpleDateFormat("yyyyMMddHHmmss").parse(result.sys_time)
+						.getTime() - System.currentTimeMillis();
+				updateRoomState();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+		} else if (result.status != 200)
+			Toast.makeText(getActivity(), "" + result.message, 450).show();
+		else {
+			load_status_enum = LOAD_STATUS_ENUM.SUCCUSS;
+			initData(result);
+		}
+	}
+
 }

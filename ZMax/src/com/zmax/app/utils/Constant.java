@@ -29,7 +29,7 @@ public class Constant {
 
 	// public static final String ZMAX_URL = "http://zmax.bestapp.us/api/v1/";
     // // 正式环境
-    public static String ZMAX_URL = "http://zmaxtest.bestapp.us/api/v1/";
+	  public static String ZMAX_URL = "http://zmaxtest.bestapp.us/api/v1/";
     // 测试环境
     public static final String TEST_ICON_URI = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQQGKJtgkUvw47FeyYwTia3chxBqChjxqKgRmX_QItRWAhVqJjc";
 

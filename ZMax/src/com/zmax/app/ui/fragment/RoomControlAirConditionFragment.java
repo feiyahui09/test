@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.text.TextUtils;
@@ -18,30 +19,33 @@ import com.zmax.app.R;
 import com.zmax.app.chat.ChatHelper;
 import com.zmax.app.chat.ClientCallback;
 import com.zmax.app.model.AirCondition;
-import com.zmax.app.model.Light;
 import com.zmax.app.net.NetWorkHelper;
+import com.zmax.app.task.GetAirConditionStatusTask;
+import com.zmax.app.task.LOAD_STATUS_ENUM;
 import com.zmax.app.task.SetAirConditionTask;
 import com.zmax.app.ui.RoomControlActivity;
 import com.zmax.app.ui.RoomControlActivity.VerticalChangedCallback;
+import com.zmax.app.utils.Constant;
 import com.zmax.app.utils.JsonMapperUtils;
 import com.zmax.app.utils.Log;
 import com.zmax.app.utils.Utility;
 import com.zmax.app.widget.SlidingUpPanelLayout;
 import com.zmax.app.widget.SlidingUpPanelLayout.PanelSlideListener;
+import eu.inmite.android.lib.dialogs.ProgressDialogFragment;
 import io.socket.IOAcknowledge;
 import io.socket.IOCallback;
 import io.socket.SocketIOException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class RoomControlAirConditionFragment extends Fragment implements RoomControlActivity.IUpdateRoomState {
 
+	  String api_type = "GET";
 	protected View view;
-	private Handler handler=new Handler();
-
 	TextView tv_temperature, tv_air_blower, tv_schema;
 	OnClickListener onClickListener = new OnClickListener() {
 
@@ -72,9 +76,9 @@ public class RoomControlAirConditionFragment extends Fragment implements RoomCon
 			}
 		}
 	};
+	private Handler handler = new Handler();
 	private VerticalChangedCallback callback;
 	private SetAirConditionTask task;
-	private AirCondition airCondition;
 	private boolean isEnable;
 	private SlidingUpPanelLayout mLayout;
 	/**
@@ -120,19 +124,6 @@ public class RoomControlAirConditionFragment extends Fragment implements RoomCon
 
 		@Override
 		public void onChat(final String bodyMsg) {
-			handler.post(new Runnable() {
-				@Override
-				public void run() {
-					try {
-						if (!TextUtils.isEmpty(bodyMsg)){
-							AirCondition result = JsonMapperUtils.toObject(bodyMsg, AirCondition.class);
-							handelOperResult(result);
-						}
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-				}
-			});
 		}
 
 		@Override
@@ -151,8 +142,25 @@ public class RoomControlAirConditionFragment extends Fragment implements RoomCon
 		}
 
 		@Override
-		public void onDevise(JSONObject devise) {
+		public void onDevise(final JSONObject devise) {
 
+			handler.post(new Runnable() {
+				@Override
+				public void run() {
+					try {
+						if (devise!=null){
+							AirCondition result = JsonMapperUtils.toObject(devise.toString(), AirCondition.class);
+							if (api_type.equals("POST")){
+								handelPostResult(result);
+							} else if (api_type.equals("GET")){
+								handleGetResult(result);
+							}
+						}
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			});
 		}
 	};
 	private IOCallback ioCallback = new IOCallback() {
@@ -188,11 +196,12 @@ public class RoomControlAirConditionFragment extends Fragment implements RoomCon
 	};
 	private String opera_type;
 	private Object[] params;
-
+	private DialogFragment progressDialog;
+	private GetAirConditionStatusTask getRoomStatusTask;
+	private LOAD_STATUS_ENUM load_status_enum = LOAD_STATUS_ENUM.INIT;
 
 	public RoomControlAirConditionFragment(VerticalChangedCallback callback, AirCondition airCondition) {
 		this.callback = callback;
-		this.airCondition = airCondition;
 		setRetainInstance(true);
 	}
 
@@ -236,7 +245,6 @@ public class RoomControlAirConditionFragment extends Fragment implements RoomCon
 		ib_tmp_down.setOnClickListener(onClickListener);
 		ib_wind_up.setOnClickListener(onClickListener);
 
-		initData();
 		final TextView tv_hint_above = (TextView) view.findViewById(R.id.tv_hint_above);
 		final ImageView iv_hint_above = (ImageView) view.findViewById(R.id.iv_hint_above);
 		mLayout = (SlidingUpPanelLayout) view.findViewById(R.id.sliding_layout);
@@ -333,11 +341,10 @@ public class RoomControlAirConditionFragment extends Fragment implements RoomCon
 		ib_tmp_down.setOnClickListener(onClickListener);
 		ib_wind_up.setOnClickListener(onClickListener);
 
-		initData();
 		return view;
 	}
 
-	private void initData() {
+	private void initData(AirCondition airCondition) {
 		if (airCondition == null) return;
 		onStatusChanged(airCondition.status);
 		if (airCondition.status == 1){
@@ -356,6 +363,7 @@ public class RoomControlAirConditionFragment extends Fragment implements RoomCon
 	 *                   可选，控制温度加减
 	 */
 	private synchronized void set(final String opera_type, Object... params) {
+		api_type="POST";
 		this.opera_type = opera_type;
 		this.params = params;
 		if (this.opera_type.equals("air_blower")){
@@ -388,7 +396,7 @@ public class RoomControlAirConditionFragment extends Fragment implements RoomCon
 		task = new SetAirConditionTask(getActivity(), new SetAirConditionTask.TaskCallBack() {
 			@Override
 			public void onCallBack(AirCondition result) {
-				handelOperResult(result);
+				handelPostResult(result);
 			}
 		});
 
@@ -413,7 +421,7 @@ public class RoomControlAirConditionFragment extends Fragment implements RoomCon
 		task.execute(this.opera_type, opera_data);
 	}
 
-	private void handelOperResult(AirCondition result) {
+	private void handelPostResult(AirCondition result) {
 		if (getActivity() == null){
 			return;
 		}
@@ -423,13 +431,13 @@ public class RoomControlAirConditionFragment extends Fragment implements RoomCon
 			else
 				Utility.toastResult(getActivity(), getActivity().getString(R.string.unkownError));
 		} else if (result.status == 200){
-			if ( opera_type.equals("air_blower")){
+			if (opera_type.equals("air_blower")){
 				cur_air_blower = opera_air_blower;
 				setTvAirBlower();
-			} else if ( opera_type.equals("temperature")){
+			} else if (opera_type.equals("temperature")){
 				cur_temperature = opera_temperature;
 				setTvTemperature();
-			} else if ( opera_type.equals("schema")){
+			} else if (opera_type.equals("schema")){
 				cur_schema = opera_schema;
 				setTvSchema();
 			} else if (opera_type.equals("status")){
@@ -500,11 +508,63 @@ public class RoomControlAirConditionFragment extends Fragment implements RoomCon
 	@Override
 	public void onUpdateSelect() {
 		ChatHelper.getHelper().setCallback(clientCallback);
+		if (load_status_enum != LOAD_STATUS_ENUM.SUCCUSS)
+			updateRoomState();
+		Log.e("@#$");
 	}
 
 	@Override
 	public void onUpdateUnselcet() {
 		ChatHelper.getHelper().setCallback(null);
 
+	}
+
+	@Override
+	public void onActivityCreated(Bundle savedInstanceState) {
+		super.onActivityCreated(savedInstanceState);
+	}
+
+	private void updateRoomState() {
+			api_type="GET";
+		progressDialog = ProgressDialogFragment.createBuilder(getActivity(), getActivity().getSupportFragmentManager()
+		).setMessage("正在加载中.." +
+				".").setTitle("提示")
+				.setCancelable(true).show();
+		getRoomStatusTask = new GetAirConditionStatusTask(getActivity(), new GetAirConditionStatusTask.TaskCallBack() {
+			@Override
+			public void onCallBack(AirCondition result) {
+				handleGetResult(result);
+			}
+		});
+		getRoomStatusTask.execute();
+	}
+
+	private void handleGetResult(AirCondition result) {
+		if (getActivity() == null) return;
+		load_status_enum = LOAD_STATUS_ENUM.FAIL;
+		if (progressDialog != null) progressDialog.dismiss();
+		if (result == null){
+			if (!NetWorkHelper.checkNetState(getActivity()))
+				Toast.makeText(getActivity(), getActivity().getString(R.string.httpProblem), 450).show();
+			else
+				Toast.makeText(getActivity(), getActivity().getString(R.string.unkownError), 450).show();
+		} else if (result.status == 401){
+
+			Utility.showTokenErrorDialog(getActivity(), "" + result.message);
+		} else if (result.status == 403){
+			try {
+				Constant.SYN_TIME_INTERVAL = new SimpleDateFormat("yyyyMMddHHmmss").parse(result.sys_time)
+						.getTime() - System.currentTimeMillis();
+				updateRoomState();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+		} else if (result.status != 200)
+			Toast.makeText(getActivity(), "" + result.message, 450).show();
+		else {
+			load_status_enum = LOAD_STATUS_ENUM.SUCCUSS;
+			initData(result);
+		}
 	}
 }
