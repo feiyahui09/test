@@ -63,12 +63,15 @@ public class RoomControlActivity extends BaseFragmentActivity implements ISimple
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.room_control);
 		initHeader();
+
 		initChatPomelo();
 
 	}
 
 	private void initChatPomelo() {
-
+		progressDialog = ProgressDialogFragment.createBuilder(this, getSupportFragmentManager()).setMessage("正在加载中.." +
+				".").setTitle("提示")
+				.setCancelable(true).show();
 		chatHelper = ChatHelper.getHelper();
 		try {
 			chatHelper.init(this, Constant.Chat.CHAT_SERVER_IP, Constant.Chat.CHAT_SERVER_PORT,
@@ -85,6 +88,8 @@ public class RoomControlActivity extends BaseFragmentActivity implements ISimple
 							handler.post(new Runnable() {
 								@Override
 								public void run() {
+									if (progressDialog != null && progressDialog.getActivity() != null)
+										progressDialog.dismiss();
 									init();
 									adapter.addTab(new RoomControlLightingFragment(callback, null));
 									adapter.addTab(new RoomControlAirConditionFragment(callback, null));
