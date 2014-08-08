@@ -819,8 +819,8 @@ public class ChatRoomActivity extends BaseFragmentActivity implements OnClickLis
 		}
 
 		@Override
-		public void onDevise(JSONObject devise) {
-			Log.i("devise  "+devise.toString());
+		public void onZmax(JSONObject devise) {
+			Log.i("device  "+devise.toString());
 		}
 
 		@Override

@@ -32,4 +32,6 @@ public class AirCondition  extends BaseModel implements Serializable {
 	 */
 	public int respone_status;
 	public String message;
+	public String device;
+
 }

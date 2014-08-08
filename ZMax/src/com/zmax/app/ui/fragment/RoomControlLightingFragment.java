@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -81,98 +80,7 @@ public class RoomControlLightingFragment extends Fragment implements RoomControl
 			}
 		}
 	};
-	private ClientCallback clientCallback = new ClientCallback() {
-
-		@Override
-		public void onGateEnter(JSONObject msg) {
-
-		}
-
-		@Override
-		public void onConnectorEnter(JSONObject msg) {
-
-		}
-
-		@Override
-		public void onEnterFailed(Exception e) {
-
-		}
-
-		@Override
-		public void onChat(final String bodyMsg) {
-
-		}
-
-		@Override
-		public void onKick(JSONObject bodyMsg) {
-
-		}
-
-		@Override
-		public void onSendFailed(Exception e) {
-
-		}
-
-		@Override
-		public void onForbidden(String errorMessage) {
-
-		}
-
-		@Override
-		public void onDevise(final JSONObject devise) {
-
-			handler.post(new Runnable() {
-				@Override
-				public void run() {
-					try {
-						if (devise!=null){
-							Light result = JsonMapperUtils.toObject(devise.toString(), Light.class);
-							if (api_type.equals("POST")){
-								handlePostResult(result);
-							} else if (api_type.equals("GET")){
-								handleGetResult(result);
-							}
-						}
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-				}
-			});
-
-		}
-	};
-	private IOCallback ioCallback = new IOCallback() {
-		@Override
-		public void onDisconnect() {
-
-		}
-
-		@Override
-		public void onConnect() {
-
-		}
-
-		@Override
-		public void onMessage(String s, IOAcknowledge ioAcknowledge) {
-
-		}
-
-		@Override
-		public void onMessage(JSONObject jsonObject, IOAcknowledge ioAcknowledge) {
-
-		}
-
-		@Override
-		public void on(String s, IOAcknowledge ioAcknowledge, Object... objects) {
-
-		}
-
-		@Override
-		public void onError(SocketIOException e) {
-
-		}
-	};
-	private DialogFragment progressDialog;
+ 	private DialogFragment progressDialog;
 	private GetLightingStatusTask getRoomStatusTask;
 	private LOAD_STATUS_ENUM load_status_enum = LOAD_STATUS_ENUM.INIT;
 
@@ -317,17 +225,21 @@ public class RoomControlLightingFragment extends Fragment implements RoomControl
 	}
 
 	@Override
-	public void onUpdateSelect() {
-		ChatHelper.getHelper().setCallback(clientCallback);
-		if (load_status_enum != LOAD_STATUS_ENUM.SUCCUSS)
-			updateRoomState();
-		Log.e("@#$");
+	public void onSelect() {
+			if (load_status_enum != LOAD_STATUS_ENUM.SUCCUSS)
+				updateRoomState();
+			Log.e("@#$");
+
 	}
 
 	@Override
-	public void onUpdateUnselcet() {
-		ChatHelper.getHelper().setCallback(null);
-
+	public void onUpdate(JSONObject jsonResult) {
+		Light result = JsonMapperUtils.toObject(jsonResult.toString(), Light.class);
+		if (api_type.equals("POST")){
+			handlePostResult(result);
+		} else if (api_type.equals("GET")){
+			handleGetResult(result);
+		}
 	}
 
 	private void updateRoomState() {

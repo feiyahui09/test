@@ -26,6 +26,7 @@ import com.zmax.app.ui.fragment.RoomControlAirConditionFragment;
 import com.zmax.app.ui.fragment.RoomControlLightingFragment;
 import com.zmax.app.ui.fragment.RoomControlTVFragment;
 import com.zmax.app.utils.Constant;
+import com.zmax.app.utils.Log;
 import com.zmax.app.utils.Utility;
 import com.zmax.app.widget.SmartViewPager;
 import eu.inmite.android.lib.dialogs.ISimpleDialogListener;
@@ -118,6 +119,7 @@ public class RoomControlActivity extends BaseFragmentActivity implements ISimple
 
 						@Override
 						public void onKick(JSONObject bodyMsg) {
+							Log.i(bodyMsg.toString());
 
 						}
 
@@ -132,7 +134,27 @@ public class RoomControlActivity extends BaseFragmentActivity implements ISimple
 						}
 
 						@Override
-						public void onDevise(JSONObject devise) {
+						public void onZmax(final JSONObject result) {
+							Log.i(result.toString());
+							handler.post(new Runnable() {
+								@Override
+								public void run() {
+									try {
+										if (result != null && result.has("device")){
+											String device = result.optString("device");
+											if (device.equals("scene")){
+												((IUpdateRoomState) adapter.getItem(0)).onUpdate(result);
+											} else if (device.equals("air_condiction")){
+												((IUpdateRoomState) adapter.getItem(1)).onUpdate(result);
+											} else if (device.equals("television")){
+												((IUpdateRoomState) adapter.getItem(2)).onUpdate(result);
+											}
+										}
+									} catch (Exception e) {
+										e.printStackTrace();
+									}
+								}
+							});
 
 						}
 					}, new IOCallback() {
@@ -266,8 +288,7 @@ public class RoomControlActivity extends BaseFragmentActivity implements ISimple
 					if (fragment instanceof IUpdateRoomState){
 						IUpdateRoomState iUpdateRoomState = (IUpdateRoomState) fragment;
 						if (i == position)
-							iUpdateRoomState.onUpdateSelect();
-						else iUpdateRoomState.onUpdateUnselcet();
+							iUpdateRoomState.onSelect();
 					}
 				}
 			}
@@ -391,9 +412,9 @@ public class RoomControlActivity extends BaseFragmentActivity implements ISimple
 
 
 	public interface IUpdateRoomState {
-		public void onUpdateSelect();
+		public void onSelect();
 
-		public void onUpdateUnselcet();
+		public void onUpdate(JSONObject result);
 
 	}
 

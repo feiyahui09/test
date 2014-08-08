@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -105,100 +104,8 @@ public class RoomControlTVFragment extends Fragment implements RoomControlActivi
 	private SetTelevisionTask task;
 	private boolean isEnable;
 	private SlidingUpPanelLayout mLayout;
-	private IOCallback ioCallback = new IOCallback() {
-		@Override
-		public void onDisconnect() {
-
-		}
-
-		@Override
-		public void onConnect() {
-
-		}
-
-		@Override
-		public void onMessage(String s, IOAcknowledge ioAcknowledge) {
-
-		}
-
-		@Override
-		public void onMessage(JSONObject jsonObject, IOAcknowledge ioAcknowledge) {
-
-		}
-
-		@Override
-		public void on(String s, IOAcknowledge ioAcknowledge, Object... objects) {
-
-		}
-
-		@Override
-		public void onError(SocketIOException e) {
-
-		}
-	};
-	private String push_button;
-	private ClientCallback clientCallback = new ClientCallback() {
-
-		@Override
-		public void onGateEnter(JSONObject msg) {
-
-		}
-
-		@Override
-		public void onConnectorEnter(JSONObject msg) {
-
-		}
-
-		@Override
-		public void onEnterFailed(Exception e) {
-
-		}
-
-		@Override
-		public void onChat(final String bodyMsg) {
-
-		}
-
-		@Override
-		public void onKick(JSONObject bodyMsg) {
-
-		}
-
-		@Override
-		public void onSendFailed(Exception e) {
-
-		}
-
-		@Override
-		public void onForbidden(String errorMessage) {
-
-		}
-
-		@Override
-		public void onDevise(final JSONObject devise) {
-
-			handler.post(new Runnable() {
-				@Override
-				public void run() {
-					try {
-						if (devise!=null){
-							Television television = JsonMapperUtils.toObject(devise.toString(), Television.class);
-							if (api_type.equals("POST")){
-								handlePostResult(television, push_button);
-							} else if (api_type.equals("GET")){
-								handelGetResult(television);
-
-							}
-						}
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-				}
-			});
-
-		}
-	};
-	private DialogFragment progressDialog;
+ 	private String push_button;
+ 	private DialogFragment progressDialog;
 	private GetTelevisionTask getRoomStatusTask;
 
 	/**
@@ -379,17 +286,23 @@ public class RoomControlTVFragment extends Fragment implements RoomControlActivi
 	}
 
 	@Override
-	public void onUpdateSelect() {
-		ChatHelper.getHelper().setCallback(clientCallback);
+	public void onSelect() {
 		if (load_status_enum != LOAD_STATUS_ENUM.SUCCUSS)
 			updateRoomState();
 		Log.e("@#$");
 	}
 
 	@Override
-	public void onUpdateUnselcet() {
-		ChatHelper.getHelper().setCallback(null);
+	public void onUpdate(JSONObject jsonObject) {
+		Television television = JsonMapperUtils.toObject(jsonObject.toString(), Television.class);
+		if (television == null || !television.device.equals("television"))
+			return;
+		if (api_type.equals("POST")){
+			handlePostResult(television, push_button);
+		} else if (api_type.equals("GET")){
+			handelGetResult(television);
 
+		}
 	}
 
 	@Override

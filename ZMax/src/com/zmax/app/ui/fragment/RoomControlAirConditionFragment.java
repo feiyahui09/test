@@ -7,7 +7,6 @@ import android.os.Handler;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -105,96 +104,7 @@ public class RoomControlAirConditionFragment extends Fragment implements RoomCon
 	private int opera_temperature = 26;
 	private String opera_schema = "nat";
 	private int opera_status = 0;
-	private ClientCallback clientCallback = new ClientCallback() {
-
-		@Override
-		public void onGateEnter(JSONObject msg) {
-
-		}
-
-		@Override
-		public void onConnectorEnter(JSONObject msg) {
-
-		}
-
-		@Override
-		public void onEnterFailed(Exception e) {
-
-		}
-
-		@Override
-		public void onChat(final String bodyMsg) {
-		}
-
-		@Override
-		public void onKick(JSONObject bodyMsg) {
-
-		}
-
-		@Override
-		public void onSendFailed(Exception e) {
-
-		}
-
-		@Override
-		public void onForbidden(String errorMessage) {
-
-		}
-
-		@Override
-		public void onDevise(final JSONObject devise) {
-
-			handler.post(new Runnable() {
-				@Override
-				public void run() {
-					try {
-						if (devise!=null){
-							AirCondition result = JsonMapperUtils.toObject(devise.toString(), AirCondition.class);
-							if (api_type.equals("POST")){
-								handelPostResult(result);
-							} else if (api_type.equals("GET")){
-								handleGetResult(result);
-							}
-						}
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-				}
-			});
-		}
-	};
-	private IOCallback ioCallback = new IOCallback() {
-		@Override
-		public void onDisconnect() {
-
-		}
-
-		@Override
-		public void onConnect() {
-
-		}
-
-		@Override
-		public void onMessage(String s, IOAcknowledge ioAcknowledge) {
-
-		}
-
-		@Override
-		public void onMessage(JSONObject jsonObject, IOAcknowledge ioAcknowledge) {
-
-		}
-
-		@Override
-		public void on(String s, IOAcknowledge ioAcknowledge, Object... objects) {
-
-		}
-
-		@Override
-		public void onError(SocketIOException e) {
-
-		}
-	};
-	private String opera_type;
+ 	private String opera_type;
 	private Object[] params;
 	private DialogFragment progressDialog;
 	private GetAirConditionStatusTask getRoomStatusTask;
@@ -506,17 +416,22 @@ public class RoomControlAirConditionFragment extends Fragment implements RoomCon
 	}
 
 	@Override
-	public void onUpdateSelect() {
-		ChatHelper.getHelper().setCallback(clientCallback);
+	public void onSelect() {
 		if (load_status_enum != LOAD_STATUS_ENUM.SUCCUSS)
 			updateRoomState();
 		Log.e("@#$");
 	}
 
 	@Override
-	public void onUpdateUnselcet() {
-		ChatHelper.getHelper().setCallback(null);
-
+	public void onUpdate(JSONObject jsonObject) {
+		AirCondition result = JsonMapperUtils.toObject(jsonObject.toString(), AirCondition.class);
+		if (result == null || !result.device.equals("air_condiction"))
+			return;
+		if (api_type.equals("POST")){
+			handelPostResult(result);
+		} else if (api_type.equals("GET")){
+			handleGetResult(result);
+		}
 	}
 
 	@Override

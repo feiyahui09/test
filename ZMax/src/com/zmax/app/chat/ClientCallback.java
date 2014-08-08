@@ -19,5 +19,5 @@ public interface ClientCallback {
 	
 	public void onForbidden(String  errorMessage);
 
-	public void onDevise(JSONObject devise);
+	public void onZmax(JSONObject devise);
 }

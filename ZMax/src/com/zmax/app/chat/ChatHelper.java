@@ -93,9 +93,9 @@ public class ChatHelper {
 								@Override
 								public void receiveData(DataEvent event) {
 									JSONObject msg = event.getMessage();
-									Log.i("onKick: " + msg.toString());
+									Log.i("onZmax: " + msg.toString());
 									if (clientCallback != null){
-										clientCallback.onDevise(msg.optJSONObject("devise"));
+										clientCallback.onZmax(msg.optJSONObject("body"));
 									}
 								}
 							});
@@ -156,6 +156,8 @@ public class ChatHelper {
 
 	public void setCallback(  ClientCallback clientCallback) {
 		this.clientCallback = clientCallback;
+		client.init(ioCallback, clientCallback);
+
 	}
 
 }
