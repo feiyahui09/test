@@ -81,11 +81,6 @@ public class RoomControlActivity extends BaseFragmentActivity implements ISimple
 					Constant.getLogin().gender, new ClientCallback() {
 						@Override
 						public void onGateEnter(JSONObject msg) {
-
-						}
-
-						@Override
-						public void onConnectorEnter(JSONObject msg) {
 							handler.post(new Runnable() {
 								@Override
 								public void run() {
@@ -96,9 +91,24 @@ public class RoomControlActivity extends BaseFragmentActivity implements ISimple
 									adapter.addTab(new RoomControlAirConditionFragment(callback, null));
 									adapter.addTab(new RoomControlTVFragment(callback, null));
 									adapter.notifyDataSetChanged();
-									pager.setCurrentItem(0);
+
 								}
 							});
+							handler.postDelayed(new Runnable() {
+								@Override
+								public void run() {
+									try {
+										onPagerSelect(0);
+									} catch (Exception e) {
+										e.printStackTrace();
+									}
+								}
+							}, 500);
+						}
+
+						@Override
+						public void onConnectorEnter(JSONObject msg) {
+
 						}
 
 						@Override
@@ -280,17 +290,7 @@ public class RoomControlActivity extends BaseFragmentActivity implements ISimple
 
 			@Override
 			public void onPageSelected(int position) {
-				curPageIndex = position;
-				showIndicator();
-				ArrayList<Fragment> fragments = adapter.getFragments();
-				for (int i = 0; i < fragments.size(); i++) {
-					Fragment fragment = fragments.get(i);
-					if (fragment instanceof IUpdateRoomState){
-						IUpdateRoomState iUpdateRoomState = (IUpdateRoomState) fragment;
-						if (i == position)
-							iUpdateRoomState.onSelect();
-					}
-				}
+				onPagerSelect(position);
 			}
 
 			@Override
@@ -329,6 +329,20 @@ public class RoomControlActivity extends BaseFragmentActivity implements ISimple
 
 			}
 		};
+	}
+
+	private void onPagerSelect(int position) {
+		curPageIndex = position;
+		showIndicator();
+		ArrayList<Fragment> fragments = adapter.getFragments();
+		for (int i = 0; i < fragments.size(); i++) {
+			Fragment fragment = fragments.get(i);
+			if (fragment instanceof IUpdateRoomState){
+				IUpdateRoomState iUpdateRoomState = (IUpdateRoomState) fragment;
+				if (i == position)
+					iUpdateRoomState.onSelect();
+			}
+		}
 	}
 
 	private void initData(RoomStatus result) {

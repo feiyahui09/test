@@ -1,147 +1,169 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:orientation="vertical" >
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:orientation="vertical"
+		>
 
-    <include layout="@layout/detail_header" />
 
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-      
-        android:orientation="vertical" >
+	<RelativeLayout
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:orientation="vertical"
+			android:padding="10dp"
+			>
 
-        <TextView
-            android:id="@+id/tv_date_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" 
-              android:background="@color/green"
-             android:layout_gravity="center"
-            android:text="住1晚">
-        </TextView>
-    </LinearLayout>
+		<TextView
+				android:id="@+id/tv_sel_duration"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:textColor="@color/lightred"
+				android:layout_centerInParent="true"
+				android:text="住 1 晚"
+		        android:textSize="24dp"
+				/>
 
-    <!-- <com.ziipin.homeinn.view.CalendarView -->
-    <!-- xmlns:calendar="http://schemas.android.com/apk/res/com.ziipin.homeinn" -->
-    <!-- calendar:shownWeekCount="4" -->
-    <!-- android:id="@+id/date_sel_calendar" -->
-    <!-- android:layout_width="fill_parent" -->
-    <!-- android:layout_height="wrap_content" -->
-    <!-- calendar:weekNumberColor="#fff" -->
-    <!-- calendar:showWeekNumber="false"/> -->
+		<TextView
+				android:id="@+id/tv_ok"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_alignParentRight="true"
+				android:layout_centerVertical="true"
+				android:text="完成"
+				android:textSize="18dp"
+				android:textColor="@color/lightred"
+				/>
+	</RelativeLayout>
 
-    <RelativeLayout
-        android:id="@+id/header"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal" >
+	<RelativeLayout
+			android:id="@+id/header"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:orientation="horizontal"
+	        android:padding="10dp"
+			>
 
-        <ImageView
-            android:id="@+id/previous"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:clickable="true"
-            android:contentDescription="@string/pic_des"
-            android:padding="5dp"
-            android:src="@drawable/previous_tag" />
+		<ImageView
+				android:id="@+id/iv_previous"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_alignParentLeft="true"
+				android:layout_centerVertical="true"
+				android:clickable="true"
+				android:contentDescription="@string/pic_des"
+				android:minHeight="20dp"
+				android:minWidth="20dp"
+				android:src="@drawable/previous_tag"
+				/>
 
-        <TextView
-            android:id="@+id/date_month"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:padding="5dp"
-            android:textSize="24sp"
-            android:textStyle="bold" />
+		<TextView
+				android:id="@+id/tv_date_month"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_centerInParent="true"
+				android:padding="5dp"
+				android:textSize="24sp"
+		        android:text="2014年9月"
+		        android:textColor="@color/lightred"
+				/>
 
-        <ImageView
-            android:id="@+id/next"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:clickable="true"
-            android:contentDescription="@string/pic_des"
-            android:padding="5dp"
-            android:src="@drawable/previous_tag" />
-    </RelativeLayout>
+		<ImageView
+				android:id="@+id/iv_next"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_alignParentRight="true"
+				android:layout_centerVertical="true"
+				android:clickable="true"
+				android:minHeight="20dp"
+				android:minWidth="20dp"
+				android:contentDescription="@string/pic_des"
+				android:src="@drawable/next_tag"
+				/>
+	</RelativeLayout>
 
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:padding="2dp" >
+	<LinearLayout
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:padding="2dp"
+			>
 
-        <TextView
-            android:layout_width="0dip"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="周日" />
+		<TextView
+				android:layout_width="0dip"
+				android:layout_height="wrap_content"
+				android:layout_weight="1"
+				android:gravity="center"
+				android:text="周日"
+				/>
 
-        <TextView
-            android:layout_width="0dip"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="周一" />
+		<TextView
+				android:layout_width="0dip"
+				android:layout_height="wrap_content"
+				android:layout_weight="1"
+				android:gravity="center"
+				android:text="周一"
+				/>
 
-        <TextView
-            android:layout_width="0dip"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="周二" />
+		<TextView
+				android:layout_width="0dip"
+				android:layout_height="wrap_content"
+				android:layout_weight="1"
+				android:gravity="center"
+				android:text="周二"
+				/>
 
-        <TextView
-            android:layout_width="0dip"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="周三" />
+		<TextView
+				android:layout_width="0dip"
+				android:layout_height="wrap_content"
+				android:layout_weight="1"
+				android:gravity="center"
+				android:text="周三"
+				/>
 
-        <TextView
-            android:layout_width="0dip"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="周四" />
+		<TextView
+				android:layout_width="0dip"
+				android:layout_height="wrap_content"
+				android:layout_weight="1"
+				android:gravity="center"
+				android:text="周四"
+				/>
 
-        <TextView
-            android:layout_width="0dip"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="周五" />
+		<TextView
+				android:layout_width="0dip"
+				android:layout_height="wrap_content"
+				android:layout_weight="1"
+				android:gravity="center"
+				android:text="周五"
+				/>
 
-        <TextView
-            android:layout_width="0dip"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="周六" />
-    </LinearLayout>
+		<TextView
+				android:layout_width="0dip"
+				android:layout_height="wrap_content"
+				android:layout_weight="1"
+				android:gravity="center"
+				android:text="周六"
+				/>
+	</LinearLayout>
 
-    <ListView
-        android:id="@+id/date_grid"
-        android:layout_width="fill_parent"
-        android:layout_height="306dp"
-        android:background="#d1c5b8"
-        android:cacheColorHint="@android:color/transparent"
-        android:divider="@null"
-        android:dividerHeight="1dp"
-        android:fadingEdge="none"
-        android:fadingEdgeLength="0dp"
-        android:listSelector="@null"
-        android:scrollbars="none" />
+	<ListView
+			android:id="@+id/date_grid"
+			android:layout_width="fill_parent"
+			android:layout_height="306dp"
+			android:background="@color/calendar_bg"
+			android:cacheColorHint="@android:color/transparent"
+			android:divider="@null"
+			android:dividerHeight="1dp"
+			android:fadingEdge="none"
+			android:fadingEdgeLength="0dp"
+			android:listSelector="@null"
+			android:scrollbars="none"
+			/>
 
-    <TextView
-        android:id="@+id/tv_bottom_more"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/hotel_date_pick_info" >
-    </TextView>
+	<TextView
+			android:id="@+id/tv_bottom_more"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:text="@string/hotel_date_pick_info"
+			>
+	</TextView>
 
 </LinearLayout>

@@ -463,10 +463,10 @@ public class RoomControlAirConditionFragment extends Fragment implements RoomCon
 				Toast.makeText(getActivity(), getActivity().getString(R.string.httpProblem), 450).show();
 			else
 				Toast.makeText(getActivity(), getActivity().getString(R.string.unkownError), 450).show();
-		} else if (result.status == 401){
+		} else if (result.respone_status == 401){
 
 			Utility.showTokenErrorDialog(getActivity(), "" + result.message);
-		} else if (result.status == 403){
+		} else if (result.respone_status == 403){
 			try {
 				Constant.SYN_TIME_INTERVAL = new SimpleDateFormat("yyyyMMddHHmmss").parse(result.sys_time)
 						.getTime() - System.currentTimeMillis();
@@ -475,7 +475,7 @@ public class RoomControlAirConditionFragment extends Fragment implements RoomCon
 				e.printStackTrace();
 			}
 
-		} else if (result.status != 200)
+		} else if (result.respone_status != 200)
 			Toast.makeText(getActivity(), "" + result.message, 450).show();
 		else {
 			load_status_enum = LOAD_STATUS_ENUM.SUCCUSS;

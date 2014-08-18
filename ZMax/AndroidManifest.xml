@@ -106,7 +106,7 @@
         <activity
             android:name="com.zmax.app.ui.HotelDatePickActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme" />
+            android:theme="@style/AppDialog_Bottom" />
         <activity
             android:name="com.zmax.app.ui.AboutActivity"
             android:screenOrientation="portrait"

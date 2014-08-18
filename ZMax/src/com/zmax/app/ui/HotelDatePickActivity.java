@@ -39,9 +39,9 @@ public class HotelDatePickActivity extends BaseActivity {
 	private DateTextAdapter adapter;
 	
 	private ListView listView;
-	private TextView title, monthText, tv_date_time;
+	private TextView   monthText, tv_sel_duration;
 	
-	private View next, previous;
+	private View iv_next, iv_previous;
 	
 	private int startSel, days = 0;
 	private Map<Integer, Integer> selections = new HashMap<Integer, Integer>();
@@ -74,16 +74,15 @@ public class HotelDatePickActivity extends BaseActivity {
 		dateNumFormatter = getString(R.string.date_sel_text);
 		adapter = new DateTextAdapter();
 		setContentView(R.layout.hotel_date_pick);
-		title = (TextView) findViewById(R.id.tv_title);
-		monthText = (TextView) findViewById(R.id.date_month);
-		tv_date_time = (TextView) findViewById(R.id.tv_date_time);
-		(previous = findViewById(R.id.previous)).setOnClickListener(new View.OnClickListener() {
+		monthText = (TextView) findViewById(R.id.tv_date_month);
+		tv_sel_duration = (TextView) findViewById(R.id.tv_sel_duration);
+		(iv_previous = findViewById(R.id.iv_previous)).setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				skipMonth(false);
 			}
 		});
-		(next = findViewById(R.id.next)).setOnClickListener(new View.OnClickListener() {
+		(iv_next = findViewById(R.id.iv_next)).setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				skipMonth(true);
@@ -184,15 +183,15 @@ public class HotelDatePickActivity extends BaseActivity {
 			}
 		});
 		
-		findViewById(R.id.btn_share).setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				tv_date_time.setText("住" + getSelDays() + "晚" + "sel:" + startSel);
-				// Toast.makeText(DateChoiceDialog.this, "", toa)
-			}
-		});
+//		findViewById(R.id.btn_share).setOnClickListener(new View.OnClickListener() {
+//			@Override
+//			public void onClick(View v) {
+//				tv_sel_duration.setText("住" + getSelDays() + "晚" + "sel:" + startSel);
+//				// Toast.makeText(DateChoiceDialog.this, "", toa)
+//			}
+//		});
 		
-		findViewById(R.id.btn_back).setOnClickListener(new View.OnClickListener() {
+		findViewById(R.id.tv_ok).setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				finish();
@@ -234,10 +233,10 @@ public class HotelDatePickActivity extends BaseActivity {
 		setMonth(c);
 		// 获取选择起始点所在的月份..
 		currentMonth = c.get(Calendar.MONTH) + 1;
-		previous.setEnabled(true);
-		next.setEnabled(true);
-		if (isStart()) previous.setEnabled(false);
-		if (isEnd()) next.setEnabled(false);
+		iv_previous.setEnabled(true);
+		iv_next.setEnabled(true);
+		if (isStart()) iv_previous.setEnabled(false);
+		if (isEnd()) iv_next.setEnabled(false);
 		// 非空判定
 		if (selections.get(currentMonth) != null) listView.setSelection(selections.get(currentMonth));
 		// 起始的位置
@@ -245,8 +244,8 @@ public class HotelDatePickActivity extends BaseActivity {
 	}
 	
 	private void skipMonth(boolean isDown) {
-		next.setEnabled(true);
-		previous.setEnabled(true);
+		iv_next.setEnabled(true);
+		iv_previous.setEnabled(true);
 		int sels;
 		if (isDown) {
 			currentMonth++;
@@ -259,10 +258,10 @@ public class HotelDatePickActivity extends BaseActivity {
 			sels = selections.get(currentMonth);
 		}
 		if (isEnd()) {
-			next.setEnabled(false);
+			iv_next.setEnabled(false);
 		}
 		if (isStart()) {
-			previous.setEnabled(false);
+			iv_previous.setEnabled(false);
 		}
 		scrollLines = sels;
 		setMonth(adapter.getItem(sels));
@@ -273,14 +272,14 @@ public class HotelDatePickActivity extends BaseActivity {
 	private void skip2Month(int month) {
 		if (month < 1) month = 12;
 		if (month > 12) month = 1;
-		next.setEnabled(true);
-		previous.setEnabled(true);
+		iv_next.setEnabled(true);
+		iv_previous.setEnabled(true);
 		currentMonth = month;
 		if (isEnd()) {
-			next.setEnabled(false);
+			iv_next.setEnabled(false);
 		}
 		if (isStart()) {
-			previous.setEnabled(false);
+			iv_previous.setEnabled(false);
 		}
 		int sels = selections.get(month);
 		scrollLines = sels;
@@ -291,7 +290,6 @@ public class HotelDatePickActivity extends BaseActivity {
 	
 	private void setSelDayText(int days) {
 		String topTitle = String.format(dateNumFormatter, days + "");
-		title.setText(topTitle);
 	}
 	
 	private Calendar[] makeDates(Calendar date) {
@@ -449,11 +447,11 @@ public class HotelDatePickActivity extends BaseActivity {
 				}
 				
 				if (position * 7 + i == startPos) {
-//					tagGrop.getChildAt(i).setBackgroundResource(R.drawable.date_tag_start);
+ 					tagGrop.getChildAt(i).setBackgroundResource(R.drawable.date_tag_start);
 					tagGrop.getChildAt(i).setVisibility(View.VISIBLE);
 				}
 				else if (position * 7 + i == endPos) {
-//					tagGrop.getChildAt(i).setBackgroundResource(R.drawable.date_tag_end);
+ 					tagGrop.getChildAt(i).setBackgroundResource(R.drawable.date_tag_end);
 					tagGrop.getChildAt(i).setVisibility(View.VISIBLE);
 				}
 				else

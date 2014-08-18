@@ -1,19 +1,153 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent" >
 
-    <com.zmax.app.widget.VerticalViewPager
-        android:id="@+id/vvp_hotel"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+<RelativeLayout
+		xmlns:android="http://schemas.android.com/apk/res/android"
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent"
+		>
 
-    <LinearLayout
-        android:id="@+id/indicator"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical|right"
-        android:layout_marginBottom="6dp"
-        android:orientation="vertical" />
+	<RelativeLayout
+			android:id="@+id/rl_date_sel_banner"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:paddingRight="15dp"
+			android:paddingLeft="15dp"
+			android:paddingTop="3dp"
+			android:paddingBottom="3dp"
+			android:background="@drawable/date_sel_banner_bg"
+			>
 
-</FrameLayout>
+		<RelativeLayout
+				android:id="@+id/rl_begin"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_centerVertical="true"
+				>
+
+			<TextView
+					android:id="@+id/tv_begin_day"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="17"
+					android:textSize="26dp"
+					android:textColor="@color/calendar_selected_day_bg"
+					android:layout_marginRight="5dp"
+					/>
+
+			<TextView
+					android:id="@+id/tv_begin_week_day"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="周一"
+					android:textSize="13dp"
+					android:textColor="@color/white"
+					android:layout_toRightOf="@+id/tv_begin_day"
+					android:layout_alignParentTop="true"
+					/>
+
+			<TextView
+					android:id="@+id/tv_begin_month"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="02月"
+					android:textSize="13dp"
+					android:textColor="@color/white"
+					android:layout_toRightOf="@+id/tv_begin_day"
+					android:layout_below="@+id/tv_begin_week_day"
+					/>
+		</RelativeLayout>
+
+		<TextView
+				android:id="@+id/tv_divider"
+				android:layout_toRightOf="@+id/rl_begin"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="/"
+				android:textSize="36dp"
+				android:textColor="@color/white"
+				android:layout_margin="6dp"
+				android:layout_centerVertical="true"
+
+				/>
+
+		<RelativeLayout
+				android:id="@+id/rl_end"
+				android:layout_toRightOf="@+id/tv_divider"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_centerVertical="true"
+				>
+
+			<TextView
+					android:id="@+id/tv_end_day"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="17"
+					android:textSize="26dp"
+					android:textColor="@color/calendar_selected_day_bg"
+					android:layout_marginRight="5dp"
+					/>
+
+			<TextView
+					android:id="@+id/tv_end_week_day"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="周一"
+					android:textSize="13dp"
+					android:textColor="@color/white"
+					android:layout_toRightOf="@+id/tv_end_day"
+					android:layout_alignParentTop="true"
+					/>
+
+			<TextView
+					android:id="@+id/tv_end_month"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="02月"
+					android:textSize="13dp"
+					android:textColor="@color/white"
+					android:layout_toRightOf="@+id/tv_end_day"
+					android:layout_below="@+id/tv_end_week_day"
+					/>
+		</RelativeLayout>
+
+
+		<TextView
+				android:id="@+id/tv_sel_duration"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_alignParentRight="true"
+				android:layout_centerVertical="true"
+				android:drawableRight="@drawable/blue_right_pointer"
+				android:text="住一晚"
+				android:textSize="18dp"
+				android:drawablePadding="10dp"
+				android:textColor="@color/calendar_selected_day_bg"
+				/>
+
+	</RelativeLayout>
+
+	<FrameLayout
+			android:layout_below="@+id/rl_date_sel_banner"
+			android:layout_width="fill_parent"
+			android:layout_height="fill_parent"
+			>
+
+		<com.zmax.app.widget.VerticalViewPager
+				android:id="@+id/vvp_hotel"
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				/>
+
+		<LinearLayout
+				android:id="@+id/indicator"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_gravity="center_vertical|right"
+				android:layout_marginBottom="6dp"
+				android:orientation="vertical"
+				/>
+
+	</FrameLayout>
+
+</RelativeLayout>
