@@ -1,5 +1,6 @@
 package com.zmax.app.ui.fragment;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
@@ -17,7 +18,6 @@ import com.zmax.app.model.Hotel;
 import com.zmax.app.model.HotelList;
 import com.zmax.app.net.NetWorkHelper;
 import com.zmax.app.task.GetHotelListTask;
-import com.zmax.app.ui.HotelDatePickActivity;
 import com.zmax.app.ui.WebViewActivity;
 import com.zmax.app.ui.base.BaseSlidingFragmentActivity.HotelBookVisivleCallback;
 import com.zmax.app.utils.Constant;
@@ -25,14 +25,14 @@ import com.zmax.app.utils.Constant.LOAD_STATE;
 import com.zmax.app.utils.DateTimeUtils;
 import com.zmax.app.utils.Log;
 import com.zmax.app.utils.Utility;
+import com.zmax.app.widget.DateChoiceDialog;
+import com.zmax.app.widget.PreferenceManager;
 import com.zmax.app.widget.VerticalViewPager;
 import com.zmax.app.widget.VerticalViewPager.OnPageChangeListener;
 import eu.inmite.android.lib.dialogs.ProgressDialogFragment;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 public class HotelBookFragment extends Fragment implements OnPageChangeListener, OnItemClickListener,
 		HotelBookVisivleCallback {
@@ -73,8 +73,17 @@ public class HotelBookFragment extends Fragment implements OnPageChangeListener,
 		rl_date_sel_banner.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent intent = new Intent(getActivity(), HotelDatePickActivity.class);
-				getActivity().startActivity(intent);
+
+				DateChoiceDialog dateChoiceDialog = new DateChoiceDialog(getActivity());
+				dateChoiceDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+					@Override
+					public void onDismiss(DialogInterface dialog) {
+						intiDate(PreferenceManager.getStartCal(), PreferenceManager.getEndCal(),
+								PreferenceManager.getSelDay());
+					}
+				});
+				dateChoiceDialog.show();
+
 			}
 		});
 		pager = (VerticalViewPager) view.findViewById(R.id.vvp_hotel);
@@ -88,6 +97,66 @@ public class HotelBookFragment extends Fragment implements OnPageChangeListener,
 	}
 
 	@Override
+	public void onResume() {
+		super.onResume();
+		Log.i("");
+
+	}
+
+	private void intiDate(Calendar startCal, Calendar endCal, int selDay) {
+		tv_begin_day.setText("" + startCal.get(Calendar.DATE));
+		tv_begin_week_day.setText("" + getDayOfWeek(startCal.get(Calendar.DAY_OF_WEEK)));
+		tv_begin_month.setText(startCal.get(Calendar.MONTH) + 1 + "月");
+
+		tv_end_day.setText("" + endCal.get(Calendar.DATE));
+		tv_end_week_day.setText("" + getDayOfWeek(endCal.get(Calendar.DAY_OF_WEEK)));
+		tv_end_month.setText(endCal.get(Calendar.MONTH) + 1 + "月");
+		tv_sel_duration.setText(String.format("住%s晚", selDay));
+	}
+
+	private void initPreferDate() {
+		PreferenceManager.setSelDay(1);
+		Calendar startcal = Calendar.getInstance(Locale.CHINA);
+		PreferenceManager.setStartCal(startcal);
+		PreferenceManager.setStartDateStr(new SimpleDateFormat("yyyy-MM-dd").format(startcal.getTime()));
+
+		Calendar endcal = Calendar.getInstance(Locale.CHINA);
+		endcal.add(Calendar.DAY_OF_YEAR, 1);
+		PreferenceManager.setEndCal(endcal);
+		PreferenceManager.setEndDateStr(new SimpleDateFormat("yyyy-MM-dd").format(endcal.getTime()));
+	}
+
+	private String getDayOfWeek(int day_pos) {
+		Log.i("@# day_pos              " + day_pos);
+		String string = null;
+		switch (day_pos) {
+			case 2:
+				string = "周一";
+				break;
+			case 3:
+				string = "周二";
+				break;
+			case 4:
+				string = "周三";
+				break;
+			case 5:
+				string = "周四";
+				break;
+			case 6:
+				string = "周五";
+				break;
+			case 7:
+				string = "周六";
+				break;
+			case 1:
+				string = "周日";
+				break;
+
+		}
+		return string;
+	}
+
+	@Override
 	public void setUserVisibleHint(boolean isVisibleToUser) {
 		super.setUserVisibleHint(isVisibleToUser);
 	}
@@ -95,13 +164,16 @@ public class HotelBookFragment extends Fragment implements OnPageChangeListener,
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
+		Log.i("");
+		initPreferDate();
+		intiDate(PreferenceManager.getStartCal(), PreferenceManager.getEndCal(), PreferenceManager.getSelDay());
+
 		progressDialog = ProgressDialogFragment.createBuilder(getActivity(), getFragmentManager()).setMessage("正在加载中" +
 				"." +
 				"." +
 				".").setTitle("提示")
 				.setCancelable(true).show();
 		state = LOAD_STATE.LOADING;
-		initDataSel();
 		getHotelListTask = new GetHotelListTask(getActivity(), new GetHotelListTask.TaskCallBack() {
 			@Override
 			public void onCallBack(HotelList hotelList, HotelList upcomingHotelList) {
@@ -132,10 +204,6 @@ public class HotelBookFragment extends Fragment implements OnPageChangeListener,
 		getHotelListTask.execute(Constant.CUR_CITY, "1", "" + Constant.PER_NUM_GET_HOTELLIST);
 	}
 
-	private void initDataSel() {
-
-
-	}
 
 	private void initPagerIndicator(int size, LinearLayout indicator) {
 		if (size <= 0) return;

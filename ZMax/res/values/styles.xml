@@ -165,6 +165,7 @@
         <item name="android:textSize">14sp</item>
         <item name="android:ellipsize">end</item>
         <item name="android:singleLine">true</item>
+	    <item name="android:maxLength">16</item>
         <item name="android:layout_marginRight">15dp</item>
         <item name="android:layout_marginLeft">15dp</item>
         <item name="android:paddingLeft">25dp</item>
@@ -179,6 +180,7 @@
 		<item name="android:textColorHint">#a0a09f</item>
 		<item name="android:textSize">14sp</item>
 		<item name="android:ellipsize">end</item>
+		<item name="android:maxLength">16</item>
 		<item name="android:singleLine">true</item>
 		<item name="android:layout_marginRight">45dp</item>
 		<item name="android:layout_marginLeft">45dp</item>
