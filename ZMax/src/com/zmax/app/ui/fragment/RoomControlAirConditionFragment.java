@@ -423,7 +423,7 @@ public class RoomControlAirConditionFragment extends Fragment implements RoomCon
 	}
 
 	@Override
-	public void onUpdate(JSONObject jsonObject) {
+	public void onUpdateByPomelo(JSONObject jsonObject) {
 		AirCondition result = JsonMapperUtils.toObject(jsonObject.toString(), AirCondition.class);
 		if (result == null || !result.device.equals("air_condiction"))
 			return;

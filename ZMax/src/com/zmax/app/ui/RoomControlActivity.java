@@ -64,9 +64,30 @@ public class RoomControlActivity extends BaseFragmentActivity implements ISimple
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.room_control);
 		initHeader();
+//		initChatPomelo();
+		try {
+			updateRoomStatus();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
-		initChatPomelo();
-
+	private void updateRoomStatus() {
+		init();
+		adapter.addTab(new RoomControlLightingFragment(callback, null));
+		adapter.addTab(new RoomControlAirConditionFragment(callback, null));
+		adapter.addTab(new RoomControlTVFragment(callback, null));
+		adapter.notifyDataSetChanged();
+		handler.postDelayed(new Runnable() {
+			@Override
+			public void run() {
+				try {
+					onPagerSelect(0);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}, 500);
 	}
 
 	private void initChatPomelo() {
@@ -153,11 +174,11 @@ public class RoomControlActivity extends BaseFragmentActivity implements ISimple
 										if (result != null && result.has("device")){
 											String device = result.optString("device");
 											if (device.equals("scene")){
-												((IUpdateRoomState) adapter.getItem(0)).onUpdate(result);
+												((IUpdateRoomState) adapter.getItem(0)).onUpdateByPomelo(result);
 											} else if (device.equals("air_condiction")){
-												((IUpdateRoomState) adapter.getItem(1)).onUpdate(result);
+												((IUpdateRoomState) adapter.getItem(1)).onUpdateByPomelo(result);
 											} else if (device.equals("television")){
-												((IUpdateRoomState) adapter.getItem(2)).onUpdate(result);
+												((IUpdateRoomState) adapter.getItem(2)).onUpdateByPomelo(result);
 											}
 										}
 									} catch (Exception e) {
@@ -428,7 +449,7 @@ public class RoomControlActivity extends BaseFragmentActivity implements ISimple
 	public interface IUpdateRoomState {
 		public void onSelect();
 
-		public void onUpdate(JSONObject result);
+		public void onUpdateByPomelo(JSONObject result);
 
 	}
 

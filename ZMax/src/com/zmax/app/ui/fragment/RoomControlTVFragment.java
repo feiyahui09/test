@@ -293,7 +293,7 @@ public class RoomControlTVFragment extends Fragment implements RoomControlActivi
 	}
 
 	@Override
-	public void onUpdate(JSONObject jsonObject) {
+	public void onUpdateByPomelo(JSONObject jsonObject) {
 		Television television = JsonMapperUtils.toObject(jsonObject.toString(), Television.class);
 		if (television == null || !television.device.equals("television"))
 			return;

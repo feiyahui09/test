@@ -233,7 +233,7 @@ public class RoomControlLightingFragment extends Fragment implements RoomControl
 	}
 
 	@Override
-	public void onUpdate(JSONObject jsonResult) {
+	public void onUpdateByPomelo(JSONObject jsonResult) {
 		Light result = JsonMapperUtils.toObject(jsonResult.toString(), Light.class);
 		if (api_type.equals("POST")){
 			handlePostResult(result);
