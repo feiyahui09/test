@@ -65,8 +65,8 @@ public class PlayInZmaxLoginFragment extends Fragment {
 					Utility.toastResult(getActivity(), "房间号不能为空哦！");
 				else if (Utility.isETNull(et_namecard))
 					Utility.toastResult(getActivity(), "身份证号码不能为空哦！");
-//				else if (et_namecard.getText().toString().trim().length() != 18)
-//					Utility.toastResult(getActivity(), "请填入18位身份证号码！");
+				else if (et_namecard.getText().toString().trim().length() != 18)
+					Utility.toastResult(getActivity(), "请填入18位身份证号码！");
 				else {
 					goPlayZmax(selected_pms_hotel_id, et_room_number.getText().toString().trim(),
 							et_namecard.getText().toString().trim());

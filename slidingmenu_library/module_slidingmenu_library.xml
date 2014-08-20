@@ -8,8 +8,8 @@
   
   <property name="compiler.args.slidingmenu_library" value="-encoding UTF-8 -source 1.6 ${compiler.args}"/>
   
-  <property name="slidingmenu_library.output.dir" value="${module.slidingmenu_library.basedir}/../HuiChi_2.x/out/production/slidingmenu_library"/>
-  <property name="slidingmenu_library.testoutput.dir" value="${module.slidingmenu_library.basedir}/../HuiChi_2.x/out/test/slidingmenu_library"/>
+  <property name="slidingmenu_library.output.dir" value="${module.slidingmenu_library.basedir}/../ZMax/out/production/slidingmenu_library"/>
+  <property name="slidingmenu_library.testoutput.dir" value="${module.slidingmenu_library.basedir}/../ZMax/out/test/slidingmenu_library"/>
   
   <path id="slidingmenu_library.module.bootclasspath">
     <!-- Paths to be included in compilation bootclasspath -->
@@ -48,8 +48,8 @@
   
   <path id="slidingmenu_library.module.sourcepath">
     <dirset dir="${module.slidingmenu_library.basedir}">
-      <include name="gen"/>
       <include name="src"/>
+      <include name="gen"/>
     </dirset>
   </path>
   
@@ -67,11 +67,11 @@
     </javac2>
     
     <copy todir="${slidingmenu_library.output.dir}">
-      <fileset dir="${module.slidingmenu_library.basedir}/gen">
+      <fileset dir="${module.slidingmenu_library.basedir}/src">
         <patternset refid="compiler.resources"/>
         <type type="file"/>
       </fileset>
-      <fileset dir="${module.slidingmenu_library.basedir}/src">
+      <fileset dir="${module.slidingmenu_library.basedir}/gen">
         <patternset refid="compiler.resources"/>
         <type type="file"/>
       </fileset>
