@@ -11,7 +11,7 @@ import java.util.Calendar;
 public class MDate {
 	private Calendar date;
 	private int delt;
-	private int days;
+	private int days=1;
 	
 	public Calendar getDate() {
 		return date;

@@ -1,223 +1,254 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:orientation="vertical" >
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+              android:orientation="vertical"
+		>
 
-    <include layout="@layout/room_control_behind_indicator" />
+	<include layout="@layout/room_control_behind_indicator"/>
 
-    <RelativeLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/room_control_tv_control_square_bg"
-        android:paddingLeft="@dimen/room_control_tv_paddingLeft"
-        android:paddingBottom="@dimen/room_control_tv_paddingBottom"
-        android:paddingRight="@dimen/room_control_tv_paddingLeft" >
+	<RelativeLayout
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:background="@drawable/room_control_tv_control_square_bg"
+			android:paddingLeft="@dimen/room_control_tv_paddingLeft"
+			android:paddingBottom="@dimen/room_control_tv_paddingBottom"
+			android:paddingRight="@dimen/room_control_tv_paddingLeft"
+			>
 
-        <LinearLayout
-            android:id="@+id/ll_orient"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:visibility="visible" >
+		<LinearLayout
+				android:id="@+id/ll_orient"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:orientation="vertical"
+				android:visibility="visible"
+				>
 
-            <RelativeLayout
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content" >
+			<RelativeLayout
+					android:layout_width="fill_parent"
+					android:layout_height="wrap_content"
+					>
 
-                <ImageButton
-                    android:id="@+id/ib_on"
-                    style="@style/room_control_round_button"
-                    android:layout_alignParentLeft="true"
-                    android:layout_centerVertical="true"
-                    android:src="@drawable/room_control_power_btn"
-                    android:text="1" />
+				<ImageButton
+						android:id="@+id/ib_on"
+						style="@style/room_control_round_button"
+						android:layout_alignParentLeft="true"
+						android:layout_centerVertical="true"
+						android:src="@drawable/room_control_power_btn"
+						android:text="1"
+						/>
 
-                <Button
-                    android:id="@+id/btn_at"
-                    style="@style/room_control_round_button"
-                    android:layout_centerInParent="true"
-                    android:text="TV/AV"
-                    android:textColor="#a6a6a6"
-                    android:textSize="16sp" />
+				<Button
+						android:id="@+id/btn_at"
+						style="@style/room_control_round_button"
+						android:layout_centerInParent="true"
+						android:text="TV/AV"
+						android:textColor="#a6a6a6"
+						android:textSize="16sp"
+						android:visibility="gone"
+						/>
 
-                <CheckBox
-                    android:id="@+id/cb_sil"
-                    style="@style/room_control_round_button"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:button="@drawable/room_control_tv_control_sound_sel" />
-            </RelativeLayout>
+				<CheckBox
+						android:id="@+id/cb_sil"
+						style="@style/room_control_round_button"
+						android:layout_alignParentRight="true"
+						android:layout_centerVertical="true"
+						android:button="@drawable/room_control_tv_control_sound_sel"
+						/>
+			</RelativeLayout>
 
-            <RelativeLayout
-                android:layout_width="@dimen/room_control_tv_control_bg_height"
-                android:layout_height="@dimen/room_control_tv_control_bg_height"
-                android:layout_gravity="center"
-                android:layout_marginTop="47dp"
-                android:background="@drawable/room_control_tv_control_digital_bg" >
+			<RelativeLayout
+					android:layout_width="@dimen/room_control_tv_control_bg_height"
+					android:layout_height="@dimen/room_control_tv_control_bg_height"
+					android:layout_gravity="center"
+					android:layout_marginTop="47dp"
+					android:background="@drawable/room_control_tv_control_digital_bg"
+					>
 
-                <Button
-                    android:id="@+id/btn_volu"
-                    style="@style/room_control_digital_button"
-                    android:layout_alignParentTop="true"
-                    android:layout_centerHorizontal="true"
-                    android:text="VOL+" />
+				<Button
+						android:id="@+id/btn_volu"
+						style="@style/room_control_digital_button"
+						android:layout_alignParentTop="true"
+						android:layout_centerHorizontal="true"
+						android:text="VOL+"
+						/>
 
-                <Button
-                    android:id="@+id/btn_chd"
-                    style="@style/room_control_digital_button"
-                    android:layout_alignParentLeft="true"
-                    android:layout_centerVertical="true"
-                    android:text="CH-" />
+				<Button
+						android:id="@+id/btn_chd"
+						style="@style/room_control_digital_button"
+						android:layout_alignParentLeft="true"
+						android:layout_centerVertical="true"
+						android:text="CH-"
+						/>
 
-                <Button
-                    android:id="@+id/btn_vold"
-                    style="@style/room_control_digital_button"
-                    android:layout_alignParentBottom="true"
-                    android:layout_centerHorizontal="true"
-                    android:text="VOL-" />
+				<Button
+						android:id="@+id/btn_vold"
+						style="@style/room_control_digital_button"
+						android:layout_alignParentBottom="true"
+						android:layout_centerHorizontal="true"
+						android:text="VOL-"
+						/>
 
-                <Button
-                    android:id="@+id/btn_chu"
-                    style="@style/room_control_digital_button"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:text="CH+" />
-            </RelativeLayout>
-        </LinearLayout>
+				<Button
+						android:id="@+id/btn_chu"
+						style="@style/room_control_digital_button"
+						android:layout_alignParentRight="true"
+						android:layout_centerVertical="true"
+						android:text="CH+"
+						/>
+			</RelativeLayout>
+		</LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/ll_digital"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/room_control_behind_indicator"
-            android:orientation="vertical"
-            android:visibility="gone" >
+		<LinearLayout
+				android:id="@+id/ll_digital"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:layout_below="@+id/room_control_behind_indicator"
+				android:orientation="vertical"
+				android:visibility="gone"
+				>
 
-            <RelativeLayout
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content" >
+			<RelativeLayout
+					android:layout_width="fill_parent"
+					android:layout_height="wrap_content"
+					>
 
-                <Button
-                    android:id="@+id/btn_no_1"
-                    style="@style/room_control_round_button"
-                    android:layout_alignParentLeft="true"
-                    android:layout_centerVertical="true"
-                    android:text="1" />
+				<Button
+						android:id="@+id/btn_no_1"
+						style="@style/room_control_round_button"
+						android:layout_alignParentLeft="true"
+						android:layout_centerVertical="true"
+						android:text="1"
+						/>
 
-                <Button
-                    android:id="@+id/btn_no_2"
-                    style="@style/room_control_round_button"
-                    android:layout_centerInParent="true"
-                    android:text="2" />
+				<Button
+						android:id="@+id/btn_no_2"
+						style="@style/room_control_round_button"
+						android:layout_centerInParent="true"
+						android:text="2"
+						/>
 
-                <Button
-                    android:id="@+id/btn_no_3"
-                    style="@style/room_control_round_button"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:text="3" />
-            </RelativeLayout>
+				<Button
+						android:id="@+id/btn_no_3"
+						style="@style/room_control_round_button"
+						android:layout_alignParentRight="true"
+						android:layout_centerVertical="true"
+						android:text="3"
+						/>
+			</RelativeLayout>
 
-            <RelativeLayout
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp" >
+			<RelativeLayout
+					android:layout_width="fill_parent"
+					android:layout_height="wrap_content"
+					android:layout_marginTop="10dp"
+					>
 
-                <Button
-                    android:id="@+id/btn_no_4"
-                    style="@style/room_control_round_button"
-                    android:layout_alignParentLeft="true"
-                    android:layout_centerVertical="true"
-                    android:text="4" />
+				<Button
+						android:id="@+id/btn_no_4"
+						style="@style/room_control_round_button"
+						android:layout_alignParentLeft="true"
+						android:layout_centerVertical="true"
+						android:text="4"
+						/>
 
-                <Button
-                    android:id="@+id/btn_no_5"
-                    style="@style/room_control_round_button"
-                    android:layout_centerInParent="true"
-                    android:text="5" />
+				<Button
+						android:id="@+id/btn_no_5"
+						style="@style/room_control_round_button"
+						android:layout_centerInParent="true"
+						android:text="5"
+						/>
 
-                <Button
-                    android:id="@+id/btn_no_6"
-                    style="@style/room_control_round_button"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:text="6" />
-            </RelativeLayout>
+				<Button
+						android:id="@+id/btn_no_6"
+						style="@style/room_control_round_button"
+						android:layout_alignParentRight="true"
+						android:layout_centerVertical="true"
+						android:text="6"
+						/>
+			</RelativeLayout>
 
-            <RelativeLayout
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp" >
+			<RelativeLayout
+					android:layout_width="fill_parent"
+					android:layout_height="wrap_content"
+					android:layout_marginTop="10dp"
+					>
 
-                <Button
-                    android:id="@+id/btn_no_7"
-                    style="@style/room_control_round_button"
-                    android:layout_alignParentLeft="true"
-                    android:layout_centerVertical="true"
-                    android:text="7" />
+				<Button
+						android:id="@+id/btn_no_7"
+						style="@style/room_control_round_button"
+						android:layout_alignParentLeft="true"
+						android:layout_centerVertical="true"
+						android:text="7"
+						/>
 
-                <Button
-                    android:id="@+id/btn_no_8"
-                    style="@style/room_control_round_button"
-                    android:layout_centerInParent="true"
-                    android:text="8" />
+				<Button
+						android:id="@+id/btn_no_8"
+						style="@style/room_control_round_button"
+						android:layout_centerInParent="true"
+						android:text="8"
+						/>
 
-                <Button
-                    android:id="@+id/btn_no_9"
-                    style="@style/room_control_round_button"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:text="9" />
-            </RelativeLayout>
+				<Button
+						android:id="@+id/btn_no_9"
+						style="@style/room_control_round_button"
+						android:layout_alignParentRight="true"
+						android:layout_centerVertical="true"
+						android:text="9"
+						/>
+			</RelativeLayout>
 
-            <RelativeLayout
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp" >
+			<RelativeLayout
+					android:layout_width="fill_parent"
+					android:layout_height="wrap_content"
+					android:layout_marginTop="10dp"
+					>
 
-                <Button
-                    android:id="@+id/btn_no_0"
-                    style="@style/room_control_round_button"
-                    android:layout_centerInParent="true"
-                    android:text="0" />
-            </RelativeLayout>
-        </LinearLayout>
+				<Button
+						android:id="@+id/btn_no_0"
+						style="@style/room_control_round_button"
+						android:layout_centerInParent="true"
+						android:text="0"
+						/>
+			</RelativeLayout>
+		</LinearLayout>
 
-        <RadioGroup
-            android:id="@+id/rg_model"
-            android:layout_width="215dp"
-            android:layout_height="40dp"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:background="@drawable/room_control_tv_control_btn_bg"
-            android:orientation="horizontal" >
+		<RadioGroup
+				android:id="@+id/rg_model"
+				android:layout_width="215dp"
+				android:layout_height="40dp"
+				android:layout_alignParentBottom="true"
+				android:layout_centerHorizontal="true"
+				android:background="@drawable/room_control_tv_control_btn_bg"
+				android:orientation="horizontal"
+				>
 
-            <RadioButton
-                android:id="@+id/rb_orient"
-                android:layout_width="0dp"
-                android:layout_height="fill_parent"
-                android:layout_weight="1"
-                android:background="@drawable/room_control_tv_control_btn_sel"
-                android:button="@null"
-                android:checked="true"
-                android:gravity="center"
-                android:text="方向键盘"
-                android:textColor="@color/room_control_tv_model_text_color_sel"
-                android:textSize="14sp" />
+			<RadioButton
+					android:id="@+id/rb_orient"
+					android:layout_width="0dp"
+					android:layout_height="fill_parent"
+					android:layout_weight="1"
+					android:background="@drawable/room_control_tv_control_btn_sel"
+					android:button="@null"
+					android:checked="true"
+					android:gravity="center"
+					android:text="方向键盘"
+					android:textColor="@color/room_control_tv_model_text_color_sel"
+					android:textSize="14sp"
+					/>
 
-            <RadioButton
-                android:id="@+id/rb_digital"
-                android:layout_width="0dp"
-                android:layout_height="fill_parent"
-                android:layout_weight="1"
-                android:background="@drawable/room_control_tv_control_btn_sel"
-                android:button="@null"
-                android:gravity="center"
-                android:text="数字键盘"
-                android:textColor="@color/room_control_tv_model_text_color_sel"
-                android:textSize="14sp" />
-        </RadioGroup>
-    </RelativeLayout>
+			<RadioButton
+					android:id="@+id/rb_digital"
+					android:layout_width="0dp"
+					android:layout_height="fill_parent"
+					android:layout_weight="1"
+					android:background="@drawable/room_control_tv_control_btn_sel"
+					android:button="@null"
+					android:gravity="center"
+					android:text="数字键盘"
+					android:textColor="@color/room_control_tv_model_text_color_sel"
+					android:textSize="14sp"
+					/>
+		</RadioGroup>
+	</RelativeLayout>
 
 </LinearLayout>

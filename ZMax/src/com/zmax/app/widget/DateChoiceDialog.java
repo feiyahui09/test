@@ -192,6 +192,9 @@ public class DateChoiceDialog extends Dialog {
 				dismiss();
 			}
 		});
+
+
+
 	}
 
 	@Override
@@ -306,6 +309,7 @@ public class DateChoiceDialog extends Dialog {
 		Calendar temp = Calendar.getInstance();
 		temp.set(date.get(Calendar.YEAR), date.get(Calendar.MONTH), 1);
 		startDay = startPos = temp.get(Calendar.DAY_OF_WEEK) + date.get(Calendar.DAY_OF_MONTH) - 2;
+			endDay=endPos=startPos+1;
 		// 向前填满一个月
 		for (int i = startPos; i >= 0; i--) {
 			Calendar c = Calendar.getInstance();
