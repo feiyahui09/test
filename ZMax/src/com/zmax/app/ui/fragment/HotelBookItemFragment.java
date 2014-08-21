@@ -43,7 +43,7 @@ public class HotelBookItemFragment extends Fragment implements PagerAdapter.IPag
 		((TextView) view.findViewById(R.id.tv_title)).setText("" + hotel.name);
 		iv_img = (ImageView) view.findViewById(R.id.iv_img);
 		tv_book = (TextView) view.findViewById(R.id.tv_book);
-		tv_book.setOnClickListener(new OnClickListener() {
+		view.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				Intent intent = new Intent(getActivity(), WebViewActivity.class);

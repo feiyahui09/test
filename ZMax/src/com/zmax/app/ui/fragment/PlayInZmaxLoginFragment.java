@@ -204,7 +204,7 @@ public class PlayInZmaxLoginFragment extends Fragment {
 		Map<String, Object> fieldValues = new HashMap<String, Object>();
 		fieldValues.put("isUpcoming", false);
 		hotels = DBAccessor.queryAll(Hotel.class, fieldValues);
-		return hotels;
+		return null;
 	}
 
 	private List<String> getHotelNames(List<Hotel> hotels) {
