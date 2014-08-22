@@ -154,12 +154,6 @@ public class PlayInZmaxFragment extends Fragment implements OnClickListener {
 	public void onClick(View v) {
 
 
-		if (login.fk_status == 0){
-			SimpleDialogFragment.createBuilder(getActivity(), getActivity().getSupportFragmentManager()).
-					setPositiveButtonText("确定")
-					.setTitle("提示").setMessage("智能房控即将上线，请敬请期待！").show();
-			return;
-		}
 		Intent intent = new Intent();
 
 		switch (v.getId()) {
@@ -180,6 +174,13 @@ public class PlayInZmaxFragment extends Fragment implements OnClickListener {
 				}
 				break;
 			case R.id.btn_room:
+
+				if (login.fk_status == 0){
+					SimpleDialogFragment.createBuilder(getActivity(), getActivity().getSupportFragmentManager()).
+							setPositiveButtonText("确定")
+							.setTitle("提示").setMessage("智能房控即将上线，请敬请期待！").show();
+					return;
+				}
 				intent.setClass(getActivity(), RoomControlActivity.class);
 				startActivity(intent);
 				break;
