@@ -1,8 +1,5 @@
 package com.zmax.app.ui.fragment;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -17,26 +14,23 @@ import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
-
 import com.zmax.app.R;
-import com.zmax.app.chat.ChatRoomActivity;
 import com.zmax.app.chat.ChatIndexActivity;
-import com.zmax.app.model.BaseModel;
+import com.zmax.app.chat.ChatRoomActivity;
 import com.zmax.app.model.Login;
 import com.zmax.app.model.VertifyNameResult;
 import com.zmax.app.net.NetWorkHelper;
 import com.zmax.app.task.ModifyChatUserInfoTask;
 import com.zmax.app.ui.ActsInHotelActivity;
-import com.zmax.app.ui.MainActivity;
 import com.zmax.app.ui.RoomControlActivity;
-import com.zmax.app.utils.Constant;
-import com.zmax.app.utils.DateTimeUtils;
-import com.zmax.app.utils.DefaultShared;
-import com.zmax.app.utils.Log;
-import com.zmax.app.utils.Utility;
+import com.zmax.app.utils.*;
+import eu.inmite.android.lib.dialogs.SimpleDialogFragment;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class PlayInZmaxFragment extends Fragment implements OnClickListener {
-	
+
 	private View view;
 	private SeekBar seekbar;
 	private Button btn_act, btn_chat, btn_room;
@@ -45,16 +39,16 @@ public class PlayInZmaxFragment extends Fragment implements OnClickListener {
 	private Login login;
 	private ProgressDialog progressDialog;
 	private ModifyChatUserInfoTask modifyChatUserInfoTask;
-	
+
 	private boolean isNameDup = false;
-	
+
 	public PlayInZmaxFragment() {
 		setRetainInstance(true);
 	}
-	
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		
+
 		login = Constant.getLogin();
 		view = inflater.inflate(R.layout.playzmax, null);
 		btn_act = (Button) view.findViewById(R.id.btn_act);
@@ -66,56 +60,56 @@ public class PlayInZmaxFragment extends Fragment implements OnClickListener {
 		tv_nick_name = (TextView) view.findViewById(R.id.tv_nick_name);
 		tv_hotel = (TextView) view.findViewById(R.id.tv_hotel);
 		tv_room_num = (TextView) view.findViewById(R.id.tv_room_num);
-		
+
 		tv_start_day = (TextView) view.findViewById(R.id.tv_start_day);
 		tv_start_week_day = (TextView) view.findViewById(R.id.tv_start_week_day);
 		tv_start_month = (TextView) view.findViewById(R.id.tv_start_month);
 		tv_end_day = (TextView) view.findViewById(R.id.tv_end_day);
 		tv_end_week_day = (TextView) view.findViewById(R.id.tv_end_week_day);
 		tv_end_month = (TextView) view.findViewById(R.id.tv_end_month);
-		
+
 		// seekbar can't move
 		seekbar = (SeekBar) view.findViewById(R.id.sb_date);
 		seekbar.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
 			int originalProgress;
-			
+
 			@Override
 			public void onStopTrackingTouch(SeekBar seekBar) {
 			}
-			
+
 			@Override
 			public void onStartTrackingTouch(SeekBar seekBar) {
 				originalProgress = seekBar.getProgress();
 			}
-			
+
 			@Override
 			public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-				if (fromUser == true) {
+				if (fromUser == true){
 					seekBar.setProgress(originalProgress);
 				}
 			}
 		});
-		
+
 		tv_nick_name.setText(login.name);
 		tv_hotel.setText("" + login.hotel_location + login.hotel_name);
 		tv_room_num.setText(login.room_num + "房");
-		
+
 		String startStr = login.start_time, endStr = login.end_time;
 		// String startStr = "20140416164431", endStr ="20140417164431";
-		
+
 		tv_start_day.setText(startStr.substring(6, 8));
 		tv_start_month.setText(startStr.substring(4, 6) + "月");
 		tv_start_week_day.setText(DateTimeUtils.getWeekOfDate(startStr));
 		tv_end_day.setText(endStr.substring(6, 8));
 		tv_end_month.setText(endStr.substring(4, 6) + "月");
 		tv_end_week_day.setText(DateTimeUtils.getWeekOfDate(endStr));
-		
+
 		String curStr = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
-		
+
 		Log.d("startStr  : " + startStr);
 		Log.d("endStr   : " + endStr);
 		Log.d("curStr    : " + curStr);
-		
+
 		int progress = 0;
 		if (curStr.compareTo(startStr) <= 0)
 			progress = 0;
@@ -125,16 +119,16 @@ public class PlayInZmaxFragment extends Fragment implements OnClickListener {
 			long totallDuration = Long.valueOf(endStr) - Long.valueOf(startStr);
 			long curDuration = Long.valueOf(curStr) - Long.valueOf(startStr);
 			progress = (int) (curDuration * 1.0 / totallDuration * 100);
-			
+
 			Log.d("curDuration    : " + curDuration);
 			Log.d("totallDuration : " + totallDuration);
 			Log.d("progress         : " + progress);
 		}
 		seekbar.setProgress(progress);
-		
+
 		return view;
 	}
-	
+
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -143,23 +137,31 @@ public class PlayInZmaxFragment extends Fragment implements OnClickListener {
 		// vertifyDup(getActivity(), login.user_id + "", login.gender + "",
 		// login.nick_name, false);
 	}
-	
+
 	@Override
 	public void onDestroyView() {
 		// if (callback != null) callback.onLogoutViewDestroy();
 		// ((MainActivity) getActivity()).hideLogoutView(true);
 		super.onDestroyView();
 	}
-	
+
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
 	}
-	
+
 	@Override
 	public void onClick(View v) {
+
+
+		if (login.fk_status == 0){
+			SimpleDialogFragment.createBuilder(getActivity(), getActivity().getSupportFragmentManager()).
+					setPositiveButtonText("确定")
+					.setTitle("提示").setMessage("智能房控即将上线，请敬请期待！").show();
+			return;
+		}
 		Intent intent = new Intent();
-		
+
 		switch (v.getId()) {
 			case R.id.btn_act:
 				intent.setClass(getActivity(), ActsInHotelActivity.class);
@@ -167,11 +169,10 @@ public class PlayInZmaxFragment extends Fragment implements OnClickListener {
 				startActivity(intent);
 				break;
 			case R.id.btn_chat:
-				if (TextUtils.isEmpty(login.nick_name) || TextUtils.isEmpty(login.auth_token)) {
+				if (TextUtils.isEmpty(login.nick_name) || TextUtils.isEmpty(login.auth_token)){
 					intent.setClass(getActivity(), ChatIndexActivity.class);
 					startActivity(intent);
-				}
-				else {
+				} else {
 					// vertifyDup(getActivity(), login.user_id + "",
 					// login.gender + "", login.nick_name, true);
 					intent.setClass(getActivity(), ChatRoomActivity.class);
@@ -182,22 +183,23 @@ public class PlayInZmaxFragment extends Fragment implements OnClickListener {
 				intent.setClass(getActivity(), RoomControlActivity.class);
 				startActivity(intent);
 				break;
-			
+
 			default:
 				break;
 		}
 	}
-	
+
 	@Deprecated
 	private void saveSelfInfo(int user_id, String gender, String name) {
 		DefaultShared.putInt(Constant.Chat.SELF_ID, user_id);
 		DefaultShared.putString(Constant.Chat.SELF_GENDER, gender);
 		DefaultShared.putString(Constant.Chat.SELF_NAME, name);
 	}
-	
+
 	// 验证已保存的名字是否有重复
 	@Deprecated
-	private void vertifyDup(final Context context, String user_id, String gender, String nick_name, final boolean isShowProgress) {
+	private void vertifyDup(final Context context, String user_id, String gender, String nick_name,
+			final boolean isShowProgress) {
 		progressDialog = new ProgressDialog(context);
 		progressDialog.setTitle("提示");
 		progressDialog.setCancelable(false);
@@ -209,26 +211,22 @@ public class PlayInZmaxFragment extends Fragment implements OnClickListener {
 				isNameDup = true;
 				if (progressDialog != null && progressDialog.isShowing()) progressDialog.cancel();
 				if (getActivity() == null) return;
-				if (result == null) {
-					if (NetWorkHelper.checkNetState(context)) {
+				if (result == null){
+					if (NetWorkHelper.checkNetState(context)){
 						Utility.toastNetworkFailed(context);
-					}
-					else {
+					} else {
 						Utility.toastFailedResult(context);
 					}
-				}
-				else if (result.status == 200) {
+				} else if (result.status == 200){
 					isNameDup = false;
-					if (isShowProgress) {
+					if (isShowProgress){
 						Intent intent = new Intent();
 						intent.setClass(getActivity(), ChatIndexActivity.class);
 						startActivity(intent);
 					}
-				}
-				else if (result.status == 404) {
+				} else if (result.status == 404){
 					Utility.toastResult(context, result.message);
-				}
-				else {
+				} else {
 					Utility.toastResult(context, result.message);
 				}
 			}
