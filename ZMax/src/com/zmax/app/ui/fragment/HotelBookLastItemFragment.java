@@ -1,10 +1,5 @@
 package com.zmax.app.ui.fragment;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -13,10 +8,13 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
-
 import com.zmax.app.R;
 import com.zmax.app.model.Hotel;
-import com.zmax.app.utils.DateTimeUtils;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class HotelBookLastItemFragment extends Fragment {
 	List<Hotel> hotels;
@@ -37,7 +35,7 @@ public class HotelBookLastItemFragment extends Fragment {
 		for (int i = 0; i < hotels.size(); i++) {
 			Hotel hotel = hotels.get(i);
 			Map<String, String> map = new HashMap<String, String>();
-			map.put("date", DateTimeUtils.friendly_time(hotel.open_date));
+			map.put("date",hotel.city);
 			map.put("name", hotel.name);
 			lists.add(map);
 		}

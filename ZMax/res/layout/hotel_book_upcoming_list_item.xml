@@ -14,7 +14,7 @@
         android:gravity="center"
         android:text="2014-06-12"
         android:textColor="#ffffff"
-        android:textSize="18sp" />
+        android:textSize="21dp" />
 
     <ImageView
         android:layout_width="fill_parent"
@@ -34,6 +34,6 @@
         android:singleLine="true"
         android:text="北京王府井路"
         android:textColor="#ffffff"
-        android:textSize="22sp" />
+        android:textSize="21dp" />
 
 </LinearLayout>

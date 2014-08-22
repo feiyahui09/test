@@ -1,10 +1,7 @@
 package com.zmax.app.db;
 
-import java.sql.SQLException;
-
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
-
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.support.ConnectionSource;
@@ -14,6 +11,8 @@ import com.zmax.app.model.Act;
 import com.zmax.app.model.CityLocation;
 import com.zmax.app.model.Hotel;
 import com.zmax.app.utils.Log;
+
+import java.sql.SQLException;
 
 /**
  * 数据库创建和升级入口
@@ -27,7 +26,7 @@ public class DBHelper extends OrmLiteSqliteOpenHelper {
 	
 	private static final String tag = DBHelper.class.getName();
 	
-	private static final int DATABASE_VERSION = 1;// zheli
+	private static final int DATABASE_VERSION = 2;// zheli
 	
 	private static final String DATABASE_NAME = "db_zmax_app";
 	

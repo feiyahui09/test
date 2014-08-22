@@ -1,9 +1,9 @@
 package com.zmax.app.model;
 
-import java.io.Serializable;
-
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
+
+import java.io.Serializable;
 
 @DatabaseTable(tableName = "hotel")
 public class Hotel implements Serializable {
@@ -31,4 +31,6 @@ public class Hotel implements Serializable {
 	public String poster;
 	@DatabaseField
 	public String pms_hotel_id;
+	@DatabaseField
+	public String city;
 }
