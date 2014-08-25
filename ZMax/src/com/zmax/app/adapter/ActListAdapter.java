@@ -1,8 +1,5 @@
 package com.zmax.app.adapter;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.app.Activity;
 import android.content.Context;
 import android.text.TextUtils;
@@ -12,12 +9,14 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.zmax.app.R;
 import com.zmax.app.model.Act;
 import com.zmax.app.utils.DateTimeUtils;
 import com.zmax.app.utils.Utility;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ActListAdapter extends BaseAdapter {
 	
@@ -126,7 +125,12 @@ public class ActListAdapter extends BaseAdapter {
 		ImageLoader.getInstance().displayImage(Utility.getImgUrlOnDensity(mContext,act.poster), holder.img_thu);
 		holder.tv_city.setText("" + act.cities);
 		act.duration = fromDateStr(act.start_date, act.end_date);
+
+		if(act.is_avaliable==1)
 		holder.tv_date.setText("" + fromDateStrSimple(act.start_date, act.end_date));
+		else
+			holder.tv_date.setText("往期活动"  );
+
 		holder.tv_name.setText("" + act.name);
 		return convertView;
 	}
@@ -156,7 +160,10 @@ public class ActListAdapter extends BaseAdapter {
 		ImageLoader.getInstance().displayImage(Utility.getImgUrlOnDensity(mContext,act.poster), holder.img_thu);
 		holder.tv_city.setText("" + act.cities);
 		act.duration = fromDateStr(act.start_date, act.end_date);
-		holder.tv_date.setText("" + fromDateStrSimple(act.start_date, act.end_date));
+		if(act.is_avaliable==1)
+			holder.tv_date.setText("" + fromDateStrSimple(act.start_date, act.end_date));
+		else
+			holder.tv_date.setText("往期活动"  );
 		holder.tv_name.setText("" + act.name);
 		
 		return convertView;
