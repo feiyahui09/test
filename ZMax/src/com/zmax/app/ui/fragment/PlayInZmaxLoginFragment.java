@@ -1,11 +1,10 @@
 package com.zmax.app.ui.fragment;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -27,6 +26,7 @@ import com.zmax.app.utils.Constant;
 import com.zmax.app.utils.Log;
 import com.zmax.app.utils.PhoneUtil;
 import com.zmax.app.utils.Utility;
+import eu.inmite.android.lib.dialogs.ProgressDialogFragment;
 
 import java.util.*;
 
@@ -39,7 +39,7 @@ public class PlayInZmaxLoginFragment extends Fragment {
 	private LoginPlayZmaxTask loginPlayZmaxTask;
 	private String selected_pms_hotel_id;
 	private GetHotelListTask getHotelListTask;
-	private ProgressDialog progressDialog;
+	private DialogFragment progressDialog;
 	private Button btn_guide;
 	private EditText et_room_number, et_namecard;
 	private InputMethodManager imm;
@@ -61,6 +61,7 @@ public class PlayInZmaxLoginFragment extends Fragment {
 
 			@Override
 			public void onClick(View v) {
+				hideIMM();
 				if (Utility.isETNull(et_room_number))
 					Utility.toastResult(getActivity(), "房间号不能为空哦！");
 				else if (Utility.isETNull(et_namecard))
@@ -123,10 +124,15 @@ public class PlayInZmaxLoginFragment extends Fragment {
 			fromHotelsSpinner(hotels);
 		} else {
 			sp_hotels.setEnabled(false);
+			progressDialog = ProgressDialogFragment.createBuilder(getActivity(),
+					getActivity().getSupportFragmentManager()).setMessage("正在更新酒店列表...").setTitle("提示")
+					.setCancelable(true).show();
 			getHotelListTask = new GetHotelListTask(getActivity(), new GetHotelListTask.TaskCallBack() {
 				@Override
 				public void onCallBack(HotelList hotelList, HotelList upcomingHotelList) {
 					if (getActivity() == null) return;
+					if (progressDialog != null && progressDialog.getActivity() != null) progressDialog.dismiss();
+
 					if (hotelList != null && hotelList.status == 200){
 						fromHotelsSpinner(hotelList.hotels);
 						saveHotel(hotelList.hotels, false);
@@ -154,10 +160,14 @@ public class PlayInZmaxLoginFragment extends Fragment {
 			Utility.toastNetworkFailed(getActivity());
 			return;
 		}
+		progressDialog = ProgressDialogFragment.createBuilder(getActivity(),
+				getActivity().getSupportFragmentManager()).setMessage("正在登录中...").setTitle("提示")
+				.setCancelable(true).show();
 		loginPlayZmaxTask = new LoginPlayZmaxTask(getActivity(), new LoginPlayZmaxTask.TaskCallBack() {
 			@Override
 			public void onCallBack(Login loginResult) {
 				if (getActivity() == null) return;
+				if (progressDialog != null && progressDialog.getActivity() != null) progressDialog.dismiss();
 
 				if (loginResult != null && loginResult.status == 200){
 					Constant.saveLogin(loginResult);
@@ -181,7 +191,7 @@ public class PlayInZmaxLoginFragment extends Fragment {
 		final MyAdapter adapter = new MyAdapter(getActivity(),
 				R.layout.playzmax_login_spinner_item, R.id.tv_hotel_name,
 				getHotelNames(hotels));
- 	    adapter.setDropDownViewResource(R.layout.playzmax_login_dropdown_spinner_item);
+		adapter.setDropDownViewResource(R.layout.playzmax_login_dropdown_spinner_item);
 		sp_hotels.setOnItemSelectedListener(new OnItemSelectedListener() {
 			@Override
 			public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -257,7 +267,8 @@ public class PlayInZmaxLoginFragment extends Fragment {
 			row = inflater.inflate(_resource, null);
 			TextView _textView = (TextView) row.findViewById(_textViewResourceId);
 			_textView.setText(_navigations.get(position));
-			AbsListView.LayoutParams layoutParams = new AbsListView.LayoutParams(PhoneUtil.getScreenW(_context) -1 * (PhoneUtil.dip2px(_context, 28)),
+			AbsListView.LayoutParams layoutParams = new AbsListView.LayoutParams(PhoneUtil.getScreenW(_context) - 1 *
+					(PhoneUtil.dip2px(_context, 28)),
 					AbsListView.LayoutParams.WRAP_CONTENT);
 			row.setLayoutParams(layoutParams);
 			return row;
