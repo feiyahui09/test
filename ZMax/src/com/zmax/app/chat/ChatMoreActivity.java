@@ -1,7 +1,5 @@
 package com.zmax.app.chat;
 
-import java.io.File;
-
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,7 +11,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.TextView;
-
 import com.zmax.app.R;
 import com.zmax.app.ui.MainActivity;
 import com.zmax.app.ui.base.BaseActivity;
@@ -21,6 +18,8 @@ import com.zmax.app.utils.Constant;
 import com.zmax.app.utils.FileUtil;
 import com.zmax.app.utils.Log;
 import com.zmax.app.utils.Utility;
+
+import java.io.File;
 
 public class ChatMoreActivity extends BaseActivity {
 	private RadioButton btn_man, btn_feman;
@@ -70,6 +69,7 @@ public class ChatMoreActivity extends BaseActivity {
 			@Override
 			public void onClick(View v) {
 				startActivity(new Intent(mContext, ChatSettingActivity.class));
+
 			}
 		});
 		

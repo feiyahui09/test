@@ -11,26 +11,16 @@ import android.text.TextUtils;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.RadioButton;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
-import android.widget.Toast;
-
+import android.widget.*;
 import com.zmax.app.R;
-import com.zmax.app.model.BaseModel;
 import com.zmax.app.model.VertifyNameResult;
 import com.zmax.app.net.NetWorkHelper;
 import com.zmax.app.task.ModifyChatUserInfoTask;
-import com.zmax.app.ui.base.BaseActivity;
 import com.zmax.app.utils.Constant;
 import com.zmax.app.utils.DefaultShared;
 import com.zmax.app.utils.Utility;
 
 import java.text.SimpleDateFormat;
-import java.util.logging.Handler;
 
 public class ChatSettingActivity extends FragmentActivity {
 	private RadioButton btn_man, btn_feman;
@@ -223,7 +213,10 @@ public class ChatSettingActivity extends FragmentActivity {
                     handler.postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            startActivity(new Intent(mContext, ChatRoomActivity.class));
+	                        Intent intent = new Intent(mContext, ChatRoomActivity.class);
+	                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+	                        startActivity(intent);
+
                             finish();
                         }
                     }, 500);

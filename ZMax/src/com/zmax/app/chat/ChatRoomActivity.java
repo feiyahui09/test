@@ -1,16 +1,5 @@
 package com.zmax.app.chat;
 
-import io.socket.IOAcknowledge;
-import io.socket.IOCallback;
-import io.socket.SocketIOException;
-
-import java.io.File;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
-import org.json.JSONObject;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ContentUris;
@@ -21,10 +10,7 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
-import android.os.Build;
-import android.os.Bundle;
-import android.os.Environment;
-import android.os.Handler;
+import android.os.*;
 import android.os.Message;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
@@ -37,16 +23,8 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.GridView;
-import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.TextView;
+import android.widget.*;
 import android.widget.TextView.OnEditorActionListener;
-import android.widget.Toast;
-
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.zmax.app.R;
 import com.zmax.app.ZMaxApplication;
@@ -57,18 +35,19 @@ import com.zmax.app.net.NetWorkHelper;
 import com.zmax.app.task.UploadImgTask;
 import com.zmax.app.ui.MainActivity;
 import com.zmax.app.ui.base.BaseFragmentActivity;
-import com.zmax.app.utils.Constant;
-import com.zmax.app.utils.FileUtil;
-import com.zmax.app.utils.ImageUtils;
-import com.zmax.app.utils.JsonMapperUtils;
-import com.zmax.app.utils.Log;
-import com.zmax.app.utils.MediaUtils;
-import com.zmax.app.utils.PhoneUtil;
-import com.zmax.app.utils.Utility;
-
+import com.zmax.app.utils.*;
 import eu.inmite.android.lib.dialogs.ISimpleDialogListener;
 import eu.inmite.android.lib.dialogs.ProgressDialogFragment;
 import eu.inmite.android.lib.dialogs.SimpleDialogFragment;
+import io.socket.IOAcknowledge;
+import io.socket.IOCallback;
+import io.socket.SocketIOException;
+import org.json.JSONObject;
+
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class ChatRoomActivity extends BaseFragmentActivity implements OnClickListener, ISimpleDialogListener {
 	private Context mContext;
@@ -118,7 +97,7 @@ public class ChatRoomActivity extends BaseFragmentActivity implements OnClickLis
 		btn_Share.setOnClickListener(this);
 		btn_Back.setOnClickListener(this);
 		
-		tv_title.setText("服务器");
+		tv_title.setText("聊天室");
 		et_edit = (EditText) findViewById(R.id.et_edit);
 		et_edit.setOnClickListener(this);
 		et_edit.setOnEditorActionListener(new OnEditorActionListener() {
@@ -273,7 +252,7 @@ public class ChatRoomActivity extends BaseFragmentActivity implements OnClickLis
 			case R.id.btn_share:
 				hideAndHideIMM();
 				startActivity(new Intent(mContext, ChatMoreActivity.class));
-				
+
 				break;
 			case R.id.et_edit:
 				showIMM();
