@@ -1,7 +1,5 @@
 package com.zmax.app.ui;
 
-import java.util.List;
-
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,10 +7,9 @@ import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
-import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
-
+import android.widget.TextView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.PauseOnScrollListener;
 import com.zmax.app.R;
@@ -21,12 +18,13 @@ import com.zmax.app.model.Act;
 import com.zmax.app.model.ActList;
 import com.zmax.app.net.NetWorkHelper;
 import com.zmax.app.task.GetActListInHotelTask;
-import com.zmax.app.task.GetActListTask;
 import com.zmax.app.ui.base.BaseActivity;
 import com.zmax.app.utils.Constant;
 import com.zmax.app.utils.Utility;
 import com.zmax.app.widget.XListView;
 import com.zmax.app.widget.XListView.IXListViewListener;
+
+import java.util.List;
 
 public class ActsInHotelActivity extends BaseActivity implements IXListViewListener, OnItemClickListener {
 	private Context mContext;
@@ -50,7 +48,7 @@ public class ActsInHotelActivity extends BaseActivity implements IXListViewListe
 	
 	private void init() {
 		tv_title = (TextView) findViewById(R.id.tv_title);
-		tv_title.setText("酒店附近的活动");
+		tv_title.setText("所在酒店的活动");
 		btn_Back = (Button) findViewById(R.id.btn_back);
 		btn_Back.setOnClickListener(new OnClickListener() {
 			@Override

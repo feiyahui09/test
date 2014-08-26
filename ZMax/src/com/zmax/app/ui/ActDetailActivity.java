@@ -14,6 +14,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.assist.ImageLoadingListener;
@@ -50,22 +51,6 @@ public class ActDetailActivity extends BaseFragmentActivity {
         // TODO Auto-generated method stub
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_detail);
-        // Log.i("[maxMemory]:  " + Runtime.getRuntime().maxMemory() / 1000 +
-        // " k");
-        // Log.i("[totalMemory]:  " + Runtime.getRuntime().totalMemory() / 1000
-        // + " k");
-        // Log.i("[freeMemory]:   " + Runtime.getRuntime().freeMemory() / 1000 +
-        // " k");
-        // ImageLoader.getInstance().clearMemoryCache();
-        // // System.gc();
-        //
-        // Log.i("after  [maxMemory]:  " + Runtime.getRuntime().maxMemory() /
-        // 1000 + " k");
-        // Log.i("after  [totalMemory]:  " + Runtime.getRuntime().totalMemory()
-        // / 1000 + " k");
-        // Log.i("after  [freeMemory]:   " + Runtime.getRuntime().freeMemory() /
-        // 1000 + " k");
-
         init(savedInstanceState);
         initHeader();
     }
@@ -243,7 +228,7 @@ public class ActDetailActivity extends BaseFragmentActivity {
     }
 
     private void initHeader() {
-        btn_Back = (Button) findViewById(R.id.btn_more);
+        btn_Back = (Button) findViewById(R.id.btn_back);
         btn_Back.setBackgroundResource(R.drawable.top_back_sel);
         btn_Share = (Button) findViewById(R.id.btn_share);
         btn_Share.setVisibility(View.VISIBLE);
@@ -261,6 +246,7 @@ public class ActDetailActivity extends BaseFragmentActivity {
 
             }
         });
+	    ((TextView)findViewById(R.id.tv_title)).setText("活动详情");
 
     }
 
