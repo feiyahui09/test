@@ -1,24 +1,14 @@
 package com.zmax.app.ui;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.os.Handler;
-import android.text.Html;
 import android.text.TextUtils;
-import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.TextView;
-
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.assist.FailReason;
-import com.nostra13.universalimageloader.core.assist.ImageLoadingListener;
 import com.umeng.analytics.MobclickAgent;
 import com.zmax.app.R;
 import com.zmax.app.model.Documents;
@@ -28,7 +18,6 @@ import com.zmax.app.ui.base.BaseActivity;
 import com.zmax.app.utils.Constant;
 import com.zmax.app.utils.DefaultShared;
 import com.zmax.app.utils.JsonMapperUtils;
-import com.zmax.app.utils.Log;
 import com.zmax.app.utils.Utility;
 
 public class DocumentsActivity extends BaseActivity {
@@ -124,7 +113,7 @@ public class DocumentsActivity extends BaseActivity {
 		// wv_content.getSettings().setDefaultFontSize(21);
 		wv_content.setFocusableInTouchMode(false);
 		wv_content.setFocusable(false);
-		wv_content.setBackgroundColor(Color.parseColor("#EBEBEB"));
+		wv_content.setBackgroundColor(Color.parseColor("#FFFFFF"));
 		wv_content.setWebViewClient(Utility.getWebViewClient());
 		wv_content.loadDataWithBaseURL(null, document.content, "text/html", "utf-8", null);
 	}
