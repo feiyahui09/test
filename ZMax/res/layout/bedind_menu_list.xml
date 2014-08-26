@@ -1,103 +1,132 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="match_parent"
-    android:background="@color/black"
-    android:orientation="vertical" >
+              android:layout_width="fill_parent"
+              android:layout_height="match_parent"
+              android:background="@color/black"
+              android:orientation="vertical"
+		>
 
-    <RelativeLayout
-        android:layout_width="fill_parent"
-        android:layout_height="@dimen/menu_top_height" >
+	<RelativeLayout
+			android:layout_width="fill_parent"
+			android:layout_height="@dimen/menu_top_height"
+			>
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:background="@drawable/menu_logo" />
-    </RelativeLayout>
+		<ImageView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_centerInParent="true"
+				android:background="@drawable/menu_logo"
+				/>
+	</RelativeLayout>
 
-    <ImageView
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/menu_divider" />
+	<ImageView
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:background="@drawable/menu_divider"
+			/>
 
-    <LinearLayout
-        android:id="@+id/ll_menu_index"
-        style="@style/menu_item_ll" >
+	<LinearLayout
+			android:id="@+id/ll_menu_index"
+			style="@style/menu_item_ll"
+			>
 
-        <ImageView
-            style="@style/menu_imageview"
-            android:background="@drawable/menu_index_sel" />
+		<ImageView
+				android:id="@+id/iv_menu_index"
+				style="@style/menu_imageview"
+				android:background="@drawable/menu_index_sel"
+				/>
 
-        <TextView
-            style="@style/menu_textview"
-            android:text="@string/menu_index" />
-    </LinearLayout>
+		<TextView
+				android:id="@+id/tv_menu_index"
+				style="@style/menu_textview"
+				android:text="@string/menu_index"
+				/>
+	</LinearLayout>
 
-    <ImageView
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/menu_divider" />
+	<ImageView
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:background="@drawable/menu_divider"
+			/>
 
-    <LinearLayout
-        android:id="@+id/ll_menu_playzmax"
-        style="@style/menu_item_ll" >
+	<LinearLayout
+			android:id="@+id/ll_menu_playzmax"
+			style="@style/menu_item_ll"
+			>
 
-        <ImageView
-            style="@style/menu_imageview"
-            android:background="@drawable/menu_playzmax_sel" />
+		<ImageView
+				android:id="@+id/iv_menu_playzmax"
+				style="@style/menu_imageview"
+				android:background="@drawable/menu_playzmax_sel"
+				/>
 
-        <TextView
-            style="@style/menu_textview"
-            android:text="@string/menu_playzmax" />
-    </LinearLayout>
+		<TextView
+				android:id="@+id/tv_menu_playzmax"
+				style="@style/menu_textview"
+				android:text="@string/menu_playzmax"
+				/>
+	</LinearLayout>
 
-    <ImageView
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/menu_divider" />
+	<ImageView
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:background="@drawable/menu_divider"
+			/>
 
-    <LinearLayout
-        android:id="@+id/ll_menu_myaccount"
-        style="@style/menu_item_ll" >
+	<LinearLayout
+			android:id="@+id/ll_menu_myaccount"
+			style="@style/menu_item_ll"
+			>
 
-        <ImageView
-            style="@style/menu_imageview"
-            android:background="@drawable/menu_myaccount_sel" />
+		<ImageView
+				android:id="@+id/iv_menu_myaccount"
+				style="@style/menu_imageview"
+				android:background="@drawable/menu_myaccount_sel"
+				/>
 
-        <TextView
-            style="@style/menu_textview"
-            android:text="@string/menu_myaccount" />
-    </LinearLayout>
+		<TextView
+				android:id="@+id/tv_menu_myaccount"
+				style="@style/menu_textview"
+				android:text="@string/menu_myaccount"
+				/>
+	</LinearLayout>
 
-    <ImageView
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/menu_divider" />
+	<ImageView
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:background="@drawable/menu_divider"
+			/>
 
-    <LinearLayout
-        android:id="@+id/ll_menu_setting"
-        style="@style/menu_item_ll" >
+	<LinearLayout
+			android:id="@+id/ll_menu_setting"
+			style="@style/menu_item_ll"
+			>
 
-        <ImageView
-            style="@style/menu_imageview"
-            android:background="@drawable/menu_setting_sel" />
+		<ImageView
+				android:id="@+id/iv_menu_setting"
+				style="@style/menu_imageview"
+				android:background="@drawable/menu_setting_sel"
+				/>
 
-        <TextView
-            style="@style/menu_textview"
-            android:text="@string/menu_setting" />
-    </LinearLayout>
+		<TextView
+				android:id="@+id/tv_menu_setting"
+				style="@style/menu_textview"
+				android:text="@string/menu_setting"
+				/>
+	</LinearLayout>
 
-    <ImageView
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/menu_divider" />
+	<ImageView
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:background="@drawable/menu_divider"
+			/>
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="@dimen/menu_bottom_margin_top"
-        android:background="@drawable/menu_bottom_logo" />
+	<ImageView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_gravity="center_horizontal"
+			android:layout_marginTop="@dimen/menu_bottom_margin_top"
+			android:background="@drawable/menu_bottom_logo"
+			/>
 
 </LinearLayout>
