@@ -62,10 +62,10 @@ public class ChatRoomActivity extends BaseFragmentActivity implements OnClickLis
 	private DialogFragment dialog;
 	UploadImgTask uploadImgTask;
 
-	private static final long CHAT_MUTE_DURATION = 10 * 60 * 1000;// default 10
-	private static long last_chat_time = 0;
-	private static String self_user_name = "围观淡定哥";
-	private static int self_user_gender = 1;
+	private static final long CHAT_MUTE_DURATION = 1 * 60 * 1000;// default 1
+	private   long last_chat_time = 0;
+	private   String self_user_name = "围观淡定哥";
+	private   int self_user_gender = 1;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -77,7 +77,6 @@ public class ChatRoomActivity extends BaseFragmentActivity implements OnClickLis
 		initChatPomelo();
 		
 	}
-	
 	private void init() {
 		mContext = this;
 		imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);

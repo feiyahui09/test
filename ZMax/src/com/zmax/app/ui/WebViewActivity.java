@@ -57,7 +57,6 @@ public class WebViewActivity extends BaseActivity {
 	private void initHotelDetal() {
 		String hotel_id = getIntent().getStringExtra(Constant.WAP.HOTEL_ID_KEY);
 		String fromDate = getIntent().getStringExtra(Constant.WAP.FROM_DATE_KEY);
-
 		String toDate = getIntent().getStringExtra(Constant.WAP.TO_DATE_KEY);
 
 		if (!TextUtils.isEmpty(hotel_id)){
@@ -81,6 +80,12 @@ public class WebViewActivity extends BaseActivity {
 				finish();
 			}
 		});
+
+
+		if (getIntent().getAction().equals(Constant.WAP.ACTION_HOTEL)){
+			TextView tv_title = (TextView) group.findViewById(R.id.tv_title);
+			tv_title.setText("酒店详情");
+		}
 		return group;
 	}
 
