@@ -1,6 +1,5 @@
 package com.zmax.app.ui.fragment;
 
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -13,6 +12,7 @@ import android.widget.TextView;
 import com.zmax.app.R;
 import com.zmax.app.ui.MainActivity;
 import com.zmax.app.utils.Constant;
+import com.zmax.app.utils.Utility;
 
 public class MoreMenuFragment extends Fragment implements OnClickListener {
 	private LinearLayout ll_menu_index, ll_menu_playzmax, ll_menu_myaccount, ll_menu_setting;
@@ -40,6 +40,7 @@ public class MoreMenuFragment extends Fragment implements OnClickListener {
 		iv_menu_playzmax = (ImageView) v.findViewById(R.id.iv_menu_playzmax);
 		iv_menu_myaccount = (ImageView) v.findViewById(R.id.iv_menu_myaccount);
 		iv_menu_setting = (ImageView) v.findViewById(R.id.iv_menu_setting);
+		if(Utility.isVersionOk())
 		iv_menu_index.setBackground(getResources().getDrawable(R.drawable.menu_index_actived));
 
 		tv_menu_index = (TextView) v.findViewById(R.id.tv_menu_index);
@@ -61,7 +62,7 @@ public class MoreMenuFragment extends Fragment implements OnClickListener {
 		switch (v.getId()) {
 			case R.id.ll_menu_index:
 				((TabSelectedListener) getActivity()).handleSeleceted(R.id.btn_activities, true);
-				if (isVersionOk()){
+				if (Utility.isVersionOk()){
 					unCheckAll();
 					iv_menu_index.setBackground(getResources().getDrawable(R.drawable.menu_index_actived));
 					tv_menu_index.setTextColor(getResources().getColor(R.color.default_menu_actived));
@@ -78,7 +79,7 @@ public class MoreMenuFragment extends Fragment implements OnClickListener {
 					// newContent = new PlayInZmaxFragment();
 				}
 
-				if (isVersionOk()){
+				if (Utility.isVersionOk()){
 					unCheckAll();
 					iv_menu_playzmax.setBackground(getResources().getDrawable(R.drawable.menu_playzmax_actived));
 					tv_menu_playzmax.setTextColor(getResources().getColor(R.color.default_menu_actived));
@@ -87,7 +88,7 @@ public class MoreMenuFragment extends Fragment implements OnClickListener {
 				break;
 			case R.id.ll_menu_myaccount:
 				((TabSelectedListener) getActivity()).handleSeleceted(v.getId(), true);
-				if (isVersionOk()){
+				if (Utility.isVersionOk()){
 					unCheckAll();
 					iv_menu_myaccount.setBackground(getResources().getDrawable(R.drawable.menu_myaccount_actived));
 					tv_menu_myaccount.setTextColor(getResources().getColor(R.color.default_menu_actived));
@@ -96,7 +97,7 @@ public class MoreMenuFragment extends Fragment implements OnClickListener {
 				break;
 			case R.id.ll_menu_setting:
 				((TabSelectedListener) getActivity()).handleSeleceted(v.getId(), true);
-				if (isVersionOk()){
+				if (Utility.isVersionOk()){
 					unCheckAll();
 					iv_menu_setting.setBackground(getResources().getDrawable(R.drawable.menu_setting_actived));
 					tv_menu_setting.setTextColor(getResources().getColor(R.color.default_menu_actived));
@@ -125,11 +126,6 @@ public class MoreMenuFragment extends Fragment implements OnClickListener {
 
 	}
 
-	private boolean isVersionOk() {
-		int sysVersion = Build.VERSION.SDK_INT;
-		if (sysVersion >= 16) return true;
-		return false;
-	}
 
 	@Deprecated
 	private void switchFragment(Fragment fragment) {

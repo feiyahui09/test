@@ -1,32 +1,34 @@
 package com.zmax.app.utils;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Random;
-
-import android.graphics.Bitmap;
-import org.codehaus.jackson.map.ser.ToStringSerializer;
-
-import com.zmax.app.R;
-import com.zmax.app.ZMaxApplication;
-import com.zmax.app.model.Login;
-import com.zmax.app.net.NetWorkHelper;
-import com.zmax.app.task.GetActListTask;
-
-import eu.inmite.android.lib.dialogs.SimpleDialogFragment;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Build;
 import android.support.v4.app.FragmentActivity;
 import android.text.TextUtils;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
+import com.zmax.app.R;
+import eu.inmite.android.lib.dialogs.SimpleDialogFragment;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Random;
 
 public class Utility {
-	
+	/**
+	 * 4 compact of the  Imageview 's setbackground method
+	 * @return
+	 */
+	public static boolean isVersionOk() {
+		int sysVersion = Build.VERSION.SDK_INT;
+		if (sysVersion >= 16) return true;
+		return false;
+	}
+
 	public static void goDialPhone(Context context, String phoNum) {
 		Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + phoNum));
 		intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
