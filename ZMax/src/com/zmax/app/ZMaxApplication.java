@@ -15,9 +15,9 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
-import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 import com.zmax.app.utils.FileUtil;
 
+import java.io.File;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.io.Writer;
@@ -39,39 +39,52 @@ public class ZMaxApplication extends Application {
 		ImageLoaderConfiguration config;
 		DisplayImageOptions options;
 		if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.HONEYCOMB){
-			options = new DisplayImageOptions.Builder().cacheOnDisc().delayBeforeLoading(100)
-					.displayer(new FadeInBitmapDisplayer(650)).showImageOnLoading(R.drawable.default_loading_img)
-					.showImageForEmptyUri(R.drawable.default_loading_fail_img).showImageOnFail(R.drawable
-							.default_loading_fail_img).
-							bitmapConfig(Bitmap.Config.RGB_565).imageScaleType(ImageScaleType.IN_SAMPLE_INT).build();
-			config = new ImageLoaderConfiguration.Builder(mInstance).threadPriority(Thread.NORM_PRIORITY - 2)
-					.denyCacheImageMultipleSizesInMemory().discCacheExtraOptions(480, 800, CompressFormat.PNG, 90,
-							null)
-					.discCacheFileNameGenerator(new HashCodeFileNameGenerator()).tasksProcessingOrder
-							(QueueProcessingType.LIFO)
-					.discCache(new UnlimitedDiscCache(FileUtil.getSdcardDir())).discCacheSize(4 * 1024 * 1024)
-					.discCacheFileCount(100)
-					.defaultDisplayImageOptions(options).memoryCache(new WeakMemoryCache()).build();
+			options = new DisplayImageOptions.Builder().cacheOnDisc().showImageOnLoading(R.drawable
+					.default_loading_img).showImageOnFail(R.drawable.default_loading_img).showImageForEmptyUri(R
+					.drawable.default_loading_img).
+					bitmapConfig(Bitmap.Config.RGB_565).imageScaleType(ImageScaleType.IN_SAMPLE_INT).build();
+			File sdcardDir = FileUtil.getSdcardDir();
+			if (sdcardDir == null){
+				config = new ImageLoaderConfiguration.Builder(mInstance).threadPriority(Thread.NORM_PRIORITY - 2)
+						.denyCacheImageMultipleSizesInMemory().discCacheExtraOptions(480, 800,
+								Bitmap.CompressFormat.PNG, 90, null).discCacheFileNameGenerator(new
+								HashCodeFileNameGenerator()).tasksProcessingOrder(QueueProcessingType.LIFO)
+						.discCacheSize(4 * 1024 * 1024).discCacheFileCount(100).defaultDisplayImageOptions(options)
+						.memoryCache(new WeakMemoryCache()).build();
+			} else {
+				config = new ImageLoaderConfiguration.Builder(mInstance).threadPriority(Thread.NORM_PRIORITY - 2)
+						.denyCacheImageMultipleSizesInMemory().discCacheExtraOptions(480, 800,
+								Bitmap.CompressFormat.PNG, 90, null).discCacheFileNameGenerator(new
+								HashCodeFileNameGenerator()).tasksProcessingOrder(QueueProcessingType.LIFO).discCache
+								(new UnlimitedDiscCache(sdcardDir)).discCacheSize(4 * 1024 * 1024).discCacheFileCount
+								(100).defaultDisplayImageOptions(options).memoryCache(new WeakMemoryCache()).build();
+			}
 
 		} else {
 
-			options = new DisplayImageOptions.Builder().cacheInMemory().cacheOnDisc().delayBeforeLoading(100)
-					.displayer(new FadeInBitmapDisplayer(650)).showImageOnLoading(R.drawable.default_loading_img)
-					.showImageForEmptyUri(R.drawable.default_loading_fail_img).showImageOnFail(R.drawable
-							.default_loading_fail_img).build();
-			config = new ImageLoaderConfiguration.Builder(mInstance).threadPriority(Thread.NORM_PRIORITY - 2)
-					.denyCacheImageMultipleSizesInMemory().discCacheExtraOptions(480, 800, CompressFormat.PNG, 90,
-							null)
-					.discCacheFileNameGenerator(new HashCodeFileNameGenerator()).tasksProcessingOrder
-							(QueueProcessingType.LIFO)
-					.discCache(new UnlimitedDiscCache(FileUtil.getSdcardDir())).discCacheSize(4 * 1024 * 1024)
-					.discCacheFileCount(100)
-					.defaultDisplayImageOptions(options).build();
+			options = new DisplayImageOptions.Builder().cacheInMemory().cacheOnDisc().showImageOnLoading(R.drawable
+					.default_loading_img).showImageForEmptyUri(R.drawable.default_loading_img).showImageOnFail(R
+					.drawable.default_loading_img).build();
+			File sdcardDir = FileUtil.getSdcardDir();
+			if (sdcardDir == null){
+				config = new ImageLoaderConfiguration.Builder(mInstance).threadPriority(Thread.NORM_PRIORITY - 2)
+						.denyCacheImageMultipleSizesInMemory().discCacheExtraOptions(480, 800,
+								Bitmap.CompressFormat.PNG, 90, null).discCacheFileNameGenerator(new
+								HashCodeFileNameGenerator()).tasksProcessingOrder(QueueProcessingType.LIFO)
+						.discCacheSize(4 * 1024 * 1024).discCacheFileCount(100).defaultDisplayImageOptions(options)
+						.build();
+			} else {
+				config = new ImageLoaderConfiguration.Builder(mInstance).threadPriority(Thread.NORM_PRIORITY - 2)
+						.denyCacheImageMultipleSizesInMemory().discCacheExtraOptions(480, 800,
+								Bitmap.CompressFormat.PNG, 90, null).discCacheFileNameGenerator(new
+								HashCodeFileNameGenerator()).tasksProcessingOrder(QueueProcessingType.LIFO).discCache
+								(new UnlimitedDiscCache(sdcardDir)).discCacheSize(4 * 1024 * 1024).discCacheFileCount
+								(100).defaultDisplayImageOptions(options).build();
+			}
 		}
 		ImageLoader.getInstance().init(config);
 		com.nostra13.universalimageloader.utils.L.disableLogging();
 	}
-
 
 	public static void initImageLoader4Chat() {
 		ImageLoaderConfiguration config;

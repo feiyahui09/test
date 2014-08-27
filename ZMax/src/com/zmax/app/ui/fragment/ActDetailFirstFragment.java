@@ -99,6 +99,7 @@ public class ActDetailFirstFragment extends Fragment implements RefreshDataCallB
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
+	                    if(getActivity()!=null)
                         ((ActDetailActivity) getActivity()).hideOrShowPointer(true);
                     }
                 }, 500);

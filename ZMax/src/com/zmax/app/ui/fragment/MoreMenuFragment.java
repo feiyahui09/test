@@ -126,8 +126,8 @@ public class MoreMenuFragment extends Fragment implements OnClickListener {
 	}
 
 	private boolean isVersionOk() {
-		int sysVersion = Integer.parseInt(Build.VERSION.SDK);
-		if (sysVersion >= 15) return true;
+		int sysVersion = Build.VERSION.SDK_INT;
+		if (sysVersion >= 16) return true;
 		return false;
 	}
 
