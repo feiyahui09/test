@@ -76,6 +76,7 @@ public class DateChoiceDialog extends Dialog {
 	}
 
 	public int getSelDays() {
+		if (selDays == 0) selDays = 1;
 		return selDays;
 	}
 
@@ -180,7 +181,7 @@ public class DateChoiceDialog extends Dialog {
 		findViewById(R.id.btn_done).setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				if (second)
+//				if (second)
 					PreferenceManager.setDates(PreferenceManager.getMainDates(), getDelta(), getSelDays());
 				dismiss();
 			}
@@ -192,7 +193,6 @@ public class DateChoiceDialog extends Dialog {
 				dismiss();
 			}
 		});
-
 
 
 	}
@@ -298,8 +298,8 @@ public class DateChoiceDialog extends Dialog {
 //    }
 
 	private void setSelDayText(int days) {
-
-		title.setText(String.format("住 %s 晚",selDays));
+		if(days==0)days=1;
+		title.setText(String.format("住 %s 晚", days));
 
 	}
 
@@ -309,7 +309,7 @@ public class DateChoiceDialog extends Dialog {
 		Calendar temp = Calendar.getInstance();
 		temp.set(date.get(Calendar.YEAR), date.get(Calendar.MONTH), 1);
 		startDay = startPos = temp.get(Calendar.DAY_OF_WEEK) + date.get(Calendar.DAY_OF_MONTH) - 2;
-			endDay=endPos=startPos+1;
+		endDay = endPos = startPos + 1;
 		// 向前填满一个月
 		for (int i = startPos; i >= 0; i--) {
 			Calendar c = Calendar.getInstance();
@@ -442,7 +442,7 @@ public class DateChoiceDialog extends Dialog {
 						text.setTextSize(TypedValue.COMPLEX_UNIT_SP, FESTIVAL_SIZE);
 						text.setText(festival.get(date)[0]);
 					}
- 				if (position * 7 + i < startDay || position * 7 + i > endDay){
+					if (position * 7 + i < startDay || position * 7 + i > endDay){
 						text.setEnabled(false);
 						text.setTextColor(getContext().getResources().getColor(R.color.unable_date_color));
 					} else {
