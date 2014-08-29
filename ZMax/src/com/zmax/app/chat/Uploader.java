@@ -1,14 +1,13 @@
 package com.zmax.app.chat;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
-
+import android.graphics.Bitmap;
+import android.text.TextUtils;
+import android.util.Base64;
+import com.zmax.app.model.UploadResult;
+import com.zmax.app.utils.Constant;
+import com.zmax.app.utils.EncoderHandler;
+import com.zmax.app.utils.JsonMapperUtils;
+import com.zmax.app.utils.Log;
 import org.apache.commons.io.FileUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -28,15 +27,14 @@ import org.apache.http.util.EntityUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.graphics.Bitmap;
-import android.text.TextUtils;
-import android.util.Base64;
-
-import com.zmax.app.model.UploadResult;
-import com.zmax.app.utils.Constant;
-import com.zmax.app.utils.EncoderHandler;
-import com.zmax.app.utils.JsonMapperUtils;
-import com.zmax.app.utils.Log;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
 
 public class Uploader {
     private String url;
@@ -142,8 +140,8 @@ public class Uploader {
             resp = client.execute(post);
             HttpEntity resEnt = resp.getEntity();
             String result = EntityUtils.toString(resEnt);
-            uploadResult = JsonMapperUtils.toObject(result, UploadResult.class);
-            Log.i("result:  " + result);
+	        Log.i("result:  " + result);
+	        uploadResult = JsonMapperUtils.toObject(result, UploadResult.class);
         } catch (Exception e) {
             uploadResult = null;
             e.printStackTrace();

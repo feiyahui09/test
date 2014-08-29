@@ -80,7 +80,7 @@ public class DateTimeUtils {
 	private final static ThreadLocal<SimpleDateFormat> dateFormater4 = new ThreadLocal<SimpleDateFormat>() {
 		@Override
 		protected SimpleDateFormat initialValue() {
-			return new SimpleDateFormat("yyyyMMddHHmm");
+			return new SimpleDateFormat("yyyyMMddHHmmss");
 		}
 	};
 	private final static ThreadLocal<SimpleDateFormat> dateFormater3 = new ThreadLocal<SimpleDateFormat>() {
@@ -180,12 +180,12 @@ public class DateTimeUtils {
 	}
 	
 	public static String getWeekOfDate(String sdate) {
-		
+
 		Date dt = toDatePrecisely(sdate);
 		String[] weekDays = { "周日", "周一", "周二", "周三", "周四", "周五", "周六" };
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(dt);
-		
+
 		int w = cal.get(Calendar.DAY_OF_WEEK) - 1;
 		if (w < 0) w = 0;
 		
