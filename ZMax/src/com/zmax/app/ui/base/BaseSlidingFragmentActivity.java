@@ -99,10 +99,10 @@ public class BaseSlidingFragmentActivity extends SlidingFragmentActivity impleme
 		// // switchContent(new ActListFragment(R.color.red));
 		// }
 		if (mContent == null) mContent = new DefaultFragment();
-		getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, mContent).commit();
+		getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, mContent).commitAllowingStateLoss();
 
 		// set the Behind View Fragment
-		getSupportFragmentManager().beginTransaction().replace(R.id.menu_frame, new MoreMenuFragment()).commit();
+		getSupportFragmentManager().beginTransaction().replace(R.id.menu_frame, new MoreMenuFragment()).commitAllowingStateLoss();
 
 		// customize the SlidingMenu
 		SlidingMenu sm = getSlidingMenu();
@@ -324,7 +324,7 @@ public class BaseSlidingFragmentActivity extends SlidingFragmentActivity impleme
 		} else
 			findViewById(R.id.above_content_second_header).setVisibility(View.GONE);
 
-		getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, mContent).commit();
+		getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, mContent).commitAllowingStateLoss();
 		Handler h = new Handler();
 		h.postDelayed(new Runnable() {
 			public void run() {
@@ -384,7 +384,7 @@ public class BaseSlidingFragmentActivity extends SlidingFragmentActivity impleme
 				Log.i("@@  " + mClass.getSimpleName() + " -- instantiate,new ");
 				mFragment = Fragment.instantiate(mActivity, mClass.getName(), mArgs);
 				ft.add(R.id.content_frame, mFragment, mTag);
-				ft.commit();
+				ft.commitAllowingStateLoss();
 			} else {
 				Log.i("@@  " + mClass.getSimpleName() + " --  not instantiate,use old ");
 				ft.show(mFragment);
