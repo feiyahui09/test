@@ -2,8 +2,6 @@ package com.zmax.app.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.view.ViewPager;
-
 import com.umeng.analytics.MobclickAgent;
 import com.zmax.app.R;
 import com.zmax.app.adapter.WelcomePagerAdapter;
@@ -59,6 +57,7 @@ public class WelcomeActivity extends BaseFragmentActivity {
 			public void onStartAPP() {
 				if (getIntent().getAction() != null && getIntent().getAction().equals(Constant.ACTION_WELCOME_FROM_INDEX)) {
 					Intent intent = new Intent(WelcomeActivity.this, MainActivity.class);
+					intent.setAction(Constant.DialogCode.ACTION_BACK_INDEX);
 					intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 					startActivity(intent);
 					finish();
