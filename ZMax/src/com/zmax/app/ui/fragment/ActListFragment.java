@@ -1,9 +1,6 @@
 package com.zmax.app.ui.fragment;
 
-import java.util.List;
-
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.DialogFragment;
@@ -13,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.PauseOnScrollListener;
 import com.zmax.app.R;
@@ -30,8 +26,9 @@ import com.zmax.app.utils.Log;
 import com.zmax.app.utils.Utility;
 import com.zmax.app.widget.XListView;
 import com.zmax.app.widget.XListView.IXListViewListener;
-
 import eu.inmite.android.lib.dialogs.ProgressDialogFragment;
+
+import java.util.List;
 
 public class ActListFragment extends Fragment implements IXListViewListener, OnItemClickListener {
 	
@@ -84,18 +81,11 @@ public class ActListFragment extends Fragment implements IXListViewListener, OnI
 	public void onActivityCreated(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onActivityCreated(savedInstanceState);
-		int index = 0, top = 0;
-		handler.postDelayed(new Runnable() {
-			@Override
-			public void run() {
-				if (state == LOAD_STATE.LOADING && getActivity() != null)
+				if (state == LOAD_STATE.LOADING && getActivity() != null){
 					progressDialog = ProgressDialogFragment.createBuilder(getActivity(), getFragmentManager()).setMessage("正在加载中...")
 							.setTitle("提示").setCancelable(true).show();
-			}
-		}, 350);
+			};
 		onRefresh();
-		Log.i("@@");
-		
 	}
 	
 	@Override
@@ -215,5 +205,9 @@ public class ActListFragment extends Fragment implements IXListViewListener, OnI
 			e.printStackTrace();
 		}
 	}
-	
+	@Override
+	public void onPause() {
+		super.onPause();
+		if (progressDialog != null && progressDialog.getActivity() != null) progressDialog.dismiss();
+	}
 }

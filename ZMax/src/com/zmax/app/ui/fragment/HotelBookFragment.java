@@ -162,6 +162,12 @@ public class HotelBookFragment extends Fragment implements OnPageChangeListener,
 	}
 
 	@Override
+	public void onPause() {
+		super.onPause();
+		if (progressDialog != null && progressDialog.getActivity() != null) progressDialog.dismiss();
+	}
+
+	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 		Log.i("");
@@ -169,9 +175,7 @@ public class HotelBookFragment extends Fragment implements OnPageChangeListener,
 		intiDate(PreferenceManager.getStartCal(), PreferenceManager.getEndCal(), PreferenceManager.getSelDay());
 
 		progressDialog = ProgressDialogFragment.createBuilder(getActivity(), getFragmentManager()).setMessage("正在加载中" +
-				"." +
-				"." +
-				".").setTitle("提示")
+				"...").setTitle("提示")
 				.setCancelable(true).show();
 		state = LOAD_STATE.LOADING;
 		getHotelListTask = new GetHotelListTask(getActivity(), new GetHotelListTask.TaskCallBack() {
