@@ -457,7 +457,7 @@ public class RoomControlAirConditionFragment extends Fragment implements RoomCon
 	private void handleGetResult(AirCondition result) {
 		if (getActivity() == null) return;
 		load_status_enum = LOAD_STATUS_ENUM.FAIL;
-		if (progressDialog != null) progressDialog.dismiss();
+		if (progressDialog != null) progressDialog.dismissAllowingStateLoss();
 		if (result == null){
 			if (!NetWorkHelper.checkNetState(getActivity()))
 				Toast.makeText(getActivity(), getActivity().getString(R.string.httpProblem), 450).show();

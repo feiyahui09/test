@@ -41,7 +41,7 @@ public class MainActivity extends BaseSlidingFragmentActivity implements ISimple
 	protected void onPause() {
 		// TODO Auto-generated method stub
 		super.onPause();
-		if (progressDialog != null && progressDialog.getActivity() != null) progressDialog.dismiss();
+		if (progressDialog != null && progressDialog.getActivity() != null) progressDialog.dismissAllowingStateLoss();
 		removeStickyBroadcast(new Intent(Constant.FEEDBACK_SENDED_ACTION));
 		MobclickAgent.onPause(this);
 	}

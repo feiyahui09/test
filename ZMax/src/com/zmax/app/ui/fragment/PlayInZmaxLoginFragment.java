@@ -131,7 +131,7 @@ public class PlayInZmaxLoginFragment extends Fragment {
 				@Override
 				public void onCallBack(HotelList hotelList, HotelList upcomingHotelList) {
 					if (getActivity() == null) return;
-					if (progressDialog != null && progressDialog.getActivity() != null) progressDialog.dismiss();
+					if (progressDialog != null && progressDialog.getActivity() != null) progressDialog.dismissAllowingStateLoss();
 
 					if (hotelList != null && hotelList.status == 200){
 						fromHotelsSpinner(hotelList.hotels);
@@ -167,7 +167,7 @@ public class PlayInZmaxLoginFragment extends Fragment {
 			@Override
 			public void onCallBack(Login loginResult) {
 				if (getActivity() == null) return;
-				if (progressDialog != null && progressDialog.getActivity() != null) progressDialog.dismiss();
+				if (progressDialog != null && progressDialog.getActivity() != null) progressDialog.dismissAllowingStateLoss();
 
 				if (loginResult != null && loginResult.status == 200){
 					Constant.saveLogin(loginResult);

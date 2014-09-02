@@ -260,7 +260,7 @@ public class RoomControlLightingFragment extends Fragment implements RoomControl
 		if (getActivity() == null) return;
 		load_status_enum = LOAD_STATUS_ENUM.FAIL;
 		if (progressDialog != null && progressDialog.getActivity() != null){
-			progressDialog.dismiss();
+			progressDialog.dismissAllowingStateLoss();
 			progressDialog = null;
 		}
 		if (result == null){

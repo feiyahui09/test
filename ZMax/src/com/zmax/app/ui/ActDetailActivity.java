@@ -135,7 +135,7 @@ public class ActDetailActivity extends BaseFragmentActivity {
 
             @Override
             public void onCallBack(ActDetail result) {
-                if (progressDialog != null && progressDialog.getActivity() != null) progressDialog.dismiss();
+                if (progressDialog != null && progressDialog.getActivity() != null) progressDialog.dismissAllowingStateLoss();
 
                 if (result != null && result.status == 200 && result.event != null) {
                     detailContent = result.event;

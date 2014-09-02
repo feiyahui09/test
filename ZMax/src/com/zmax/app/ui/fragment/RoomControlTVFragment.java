@@ -327,7 +327,7 @@ public class RoomControlTVFragment extends Fragment implements RoomControlActivi
 	private void handelGetResult(Television result) {
 		if (getActivity() == null) return;
 		load_status_enum = LOAD_STATUS_ENUM.FAIL;
-		if (progressDialog != null && progressDialog.getActivity() != null) progressDialog.dismiss();
+		if (progressDialog != null && progressDialog.getActivity() != null) progressDialog.dismissAllowingStateLoss();
 		if (result == null){
 			if (!NetWorkHelper.checkNetState(getActivity()))
 				Toast.makeText(getActivity(), getActivity().getString(R.string.httpProblem), 450).show();

@@ -106,7 +106,7 @@ public class RoomControlActivity extends BaseFragmentActivity implements ISimple
 								@Override
 								public void run() {
 									if (progressDialog != null && progressDialog.getActivity() != null)
-										progressDialog.dismiss();
+										progressDialog.dismissAllowingStateLoss();
 									init();
 									adapter.addTab(new RoomControlLightingFragment(callback, null));
 									adapter.addTab(new RoomControlAirConditionFragment(callback, null));
@@ -252,7 +252,7 @@ public class RoomControlActivity extends BaseFragmentActivity implements ISimple
 		getRoomStatusTask = new GetRoomStatusTask(this, new GetRoomStatusTask.TaskCallBack() {
 			@Override
 			public void onCallBack(RoomStatus result) {
-				if (progressDialog != null && progressDialog.getActivity() != null) progressDialog.dismiss();
+				if (progressDialog != null && progressDialog.getActivity() != null) progressDialog.dismissAllowingStateLoss();
 				if (result == null){
 					if (!NetWorkHelper.checkNetState(mContext))
 						Toast.makeText(mContext, mContext.getString(R.string.httpProblem), 450).show();

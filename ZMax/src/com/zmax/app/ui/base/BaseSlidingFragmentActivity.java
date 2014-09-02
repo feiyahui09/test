@@ -177,7 +177,7 @@ public class BaseSlidingFragmentActivity extends SlidingFragmentActivity impleme
 				new ZmaxLogOut(BaseSlidingFragmentActivity.this, new ZmaxLogOut.TaskCallBack() {
 					@Override
 					public void onCallBack(BaseModel result) {
-						if (progressDialog != null && progressDialog.getActivity() != null) progressDialog.dismiss();
+						if (progressDialog != null && progressDialog.getActivity() != null) progressDialog.dismissAllowingStateLoss();
 
 						if (result != null && result.status == 200){
 							Constant.saveLogin(null);

@@ -686,7 +686,7 @@ public class ChatRoomActivity extends BaseFragmentActivity implements OnClickLis
 					handler.post(new Runnable() {
 						@Override
 						public void run() {
-							if (dialog != null && dialog.getActivity() != null) dialog.dismiss();
+							if (dialog != null && dialog.getActivity() != null) dialog.dismissAllowingStateLoss();
 							Utility.toastResult(mContext, "欢迎!");
 						}
 					});
@@ -704,7 +704,7 @@ public class ChatRoomActivity extends BaseFragmentActivity implements OnClickLis
 		public void onConnectorEnter(final JSONObject body) {
 			
 			if (body == null) {
-				if (dialog != null && dialog.getActivity() != null) dialog.dismiss();
+				if (dialog != null && dialog.getActivity() != null) dialog.dismissAllowingStateLoss();
 				dialog = SimpleDialogFragment.createBuilder(mContext, getSupportFragmentManager()).setPositiveButtonText("确定")
 						.setTitle("提示").setMessage(getString(R.string.unkownError)).setCancelable(false)
 						.setRequestCode(Constant.DialogCode.TYPE_UNKOWNERROR).show();

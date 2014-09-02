@@ -164,7 +164,7 @@ public class HotelBookFragment extends Fragment implements OnPageChangeListener,
 	@Override
 	public void onPause() {
 		super.onPause();
-		if (progressDialog != null && progressDialog.getActivity() != null) progressDialog.dismiss();
+		if (progressDialog != null && progressDialog.getActivity() != null) progressDialog.dismissAllowingStateLoss();
 	}
 
 	@Override
@@ -182,7 +182,7 @@ public class HotelBookFragment extends Fragment implements OnPageChangeListener,
 			@Override
 			public void onCallBack(HotelList hotelList, HotelList upcomingHotelList) {
 				if (getActivity() == null) return;
-				if (progressDialog != null && progressDialog.getActivity() != null) progressDialog.dismiss();
+				if (progressDialog != null && progressDialog.getActivity() != null) progressDialog.dismissAllowingStateLoss();
 				state = LOAD_STATE.SUCCESS;
 				if (hotelList != null && hotelList.status == 200){
 					List<Hotel> _hotelList = hotelList.hotels;

@@ -135,7 +135,7 @@ public class ActListFragment extends Fragment implements IXListViewListener, OnI
 				if (getActivity() == null) {
 					return;
 				}
-				if (progressDialog != null && progressDialog.getActivity() != null) progressDialog.dismiss();
+				if (progressDialog != null && progressDialog.getActivity() != null) progressDialog.dismissAllowingStateLoss();
 				state = LOAD_STATE.SUCCESS;
 				if (result != null && result.status == 200) {
 					final List<Act> actList = result.events;
@@ -208,6 +208,6 @@ public class ActListFragment extends Fragment implements IXListViewListener, OnI
 	@Override
 	public void onPause() {
 		super.onPause();
-		if (progressDialog != null && progressDialog.getActivity() != null) progressDialog.dismiss();
+		if (progressDialog != null && progressDialog.getActivity() != null) progressDialog.dismissAllowingStateLoss();
 	}
 }
