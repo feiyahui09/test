@@ -6,13 +6,12 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.ImageView;
-import android.widget.TextView;
+import android.widget.*;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.zmax.app.R;
 import com.zmax.app.model.Act;
 import com.zmax.app.utils.DateTimeUtils;
+import com.zmax.app.utils.PhoneUtil;
 import com.zmax.app.utils.Utility;
 
 import java.util.ArrayList;
@@ -132,6 +131,9 @@ public class ActListAdapter extends BaseAdapter {
 			holder.tv_date.setText("往期活动"  );
 
 		holder.tv_name.setText("" + act.name);
+		int minHeight = PhoneUtil.getScreenW(mContext) * 520 / 720;
+		convertView.setLayoutParams(new AbsListView . LayoutParams(AbsListView.LayoutParams.FILL_PARENT,
+				minHeight));
 		return convertView;
 	}
 	
@@ -158,6 +160,7 @@ public class ActListAdapter extends BaseAdapter {
 			holder = (ViewHolder) convertView.getTag(R.id.item_odd);
 		}
 		ImageLoader.getInstance().displayImage(Utility.getImgUrlOnDensity(mContext,act.poster), holder.img_thu);
+
 		holder.tv_city.setText("" + act.cities);
 		act.duration = fromDateStr(act.start_date, act.end_date);
 		if(act.is_avaliable==1)
@@ -165,7 +168,9 @@ public class ActListAdapter extends BaseAdapter {
 		else
 			holder.tv_date.setText("往期活动"  );
 		holder.tv_name.setText("" + act.name);
-		
+		int minHeight = PhoneUtil.getScreenW(mContext) * 520 / 720;
+		convertView.setLayoutParams(new AbsListView . LayoutParams(AbsListView.LayoutParams.FILL_PARENT,
+				minHeight));
 		return convertView;
 	}
 	
