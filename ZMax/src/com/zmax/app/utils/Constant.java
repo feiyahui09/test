@@ -18,9 +18,9 @@ import java.util.*;
 
 public class Constant {
 
-	public static String ZMAX_URL = "http://app.zmaxhotels.cc/api/v1/";
+	//public static String ZMAX_URL = "http://app.zmaxhotels.cc/api/v1/";
 	// public static final String ZMAX_URL = "http://zmax.bestapp.us/api/v1/";
-	//public static String ZMAX_URL = "http://zmaxtest.bestapp.us/api/v1/";
+	public static String ZMAX_URL = "http://zmaxtest.bestapp.us/api/v1/";
 
 
 
@@ -274,7 +274,7 @@ public class Constant {
 
 	public static class Share {
 
-		public static final String SHARE_URL = "zmax.bestapp.us/app/download";
+		public static final String SHARE_URL = "http://app.zmaxhotels.cc/app/download";
 		public static String SHARE_TITLE = "share_title";
 		public static String SHARE_CONTENT = "share_content";
 
@@ -282,8 +282,8 @@ public class Constant {
 
 	public static class Chat {
 		//test
-		//public static final String CHAT_SERVER_IP = "14.23.159.74";
-			public static final String CHAT_SERVER_IP = "http://app.zmaxhotels.cc";
+		public static final String CHAT_SERVER_IP = "14.23.159.74";
+		//	public static final String CHAT_SERVER_IP = "http://app.zmaxhotels.cc";
 
 		public static final int CHAT_SERVER_PORT = 3014;
 		public static final int EMOTION_DIMEN = 23;
