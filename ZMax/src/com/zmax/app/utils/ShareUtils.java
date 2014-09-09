@@ -1,22 +1,18 @@
 package com.zmax.app.utils;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.util.HashMap;
-
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
 import android.graphics.BitmapFactory;
 import android.os.Handler;
-import android.widget.Toast;
 import cn.sharesdk.framework.Platform;
 import cn.sharesdk.framework.PlatformActionListener;
-import cn.sharesdk.framework.Platform.ShareParams;
 import cn.sharesdk.onekeyshare.OnekeyShare;
-import cn.sharesdk.onekeyshare.ShareContentCustomizeCallback;
-
 import com.zmax.app.R;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.util.HashMap;
 
 public class ShareUtils {
 	
@@ -60,7 +56,7 @@ public class ShareUtils {
 		oks.setText(Constant.Share.SHARE_CONTENT);
 		oks.setImagePath(SHARE_IMAGE);
 		// oks.setImageUrl(MainActivity.TEST_IMAGE_URL);
-		oks.setUrl("http://www.sharesdk.cn");
+		oks.setUrl(Constant.Share.SHARE_URL);
 		// oks.setFilePath(MainActivity.TEST_IMAGE);
 		// oks.setComment(context.getString(R.string.share));
 		// oks.setSite(context.getString(R.string.app_name));
