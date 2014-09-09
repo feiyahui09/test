@@ -5,7 +5,10 @@
 -verbose
 -dontwarn
 -optimizations !code/simplification/arithmetic,!field/*,!class/merging/*
--keepattributes InnerClasses,LineNumberTable
+-keepattributes *Annotation*,InnerClasses,LineNumberTable
+
+-keepattributes Signature
+-keep class  com.zmax.app.** { *; }
 
 -keep public class * extends android.app.Activity
 -keep public class * extends android.app.Application
@@ -60,17 +63,31 @@
 -dontwarn com.nostra13.universalimageloader.**  
 -keep class com.nostra13.universalimageloader.** { *; }
 
--libraryjars libs/baidumapapi_v2_4_0.jar
--dontwarn com.baidu.**  
--keep class com.baidu.** { *; }
--keep class vi.com.gdi.bgl.android
-
--libraryjars libs/locSDK_3.1.jar
--dontwarn com.baidu.location.**  
--keep class com.baidu.location.** { *; }
 
 -libraryjars libs/ormlite-core-4.40.jar
 -libraryjars libs/ormlite-android-4.40.jar
 -dontwarn  com.j256.ormlite.**  
 -keep class  com.j256.ormlite.** { *; }
-  
+
+-libraryjars libs/umeng-analytics-v5.2.3.jar
+-dontwarn  com.umeng.analytics.**
+-keep class  com.umeng.analytics.** { *; }
+
+
+-libraryjars libs/Android_Location_V1.1.1.jar
+-dontwarn  com.amap.api.location.**
+-dontwarn  com.aps.**
+-keep class  com.amap.api.location.** { *; }
+-keep class  com.aps.** { *; }
+
+-libraryjars libs/httpmime-4.3.3.jar
+-dontwarn  org.apache.http.entity.mime.**
+-keep class  org.apache.http.entity.mime.** { *; }
+
+-libraryjars libs/httpmime-4.3.3.jar
+-dontwarn  org.apache.commons.io.**
+-keep class  org.apache.commons.io.** { *; }
+
+-libraryjars libs/socketio.jar
+-dontwarn  io.socket.**
+-keep class  io.socket.** { *; }
